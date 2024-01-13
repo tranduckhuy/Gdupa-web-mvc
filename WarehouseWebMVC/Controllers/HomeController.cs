@@ -1,24 +1,19 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using WarehouseWebMVC.Models;
 
 namespace WarehouseWebMVC.Controllers
 {
-    public class PaymentController : Controller
+    public class HomeController : Controller
     {
-        private readonly ILogger<PaymentController> _logger;
+        private readonly ILogger<HomeController> _logger;
 
-        public PaymentController(ILogger<PaymentController> logger)
+        public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
         }
 
-        public IActionResult Payment()
-        {
-            return View();
-        }
-
-        public IActionResult AddPayment()
+        public IActionResult Index()
         {
             return View();
         }

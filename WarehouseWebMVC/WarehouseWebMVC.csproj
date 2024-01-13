@@ -8,25 +8,33 @@
 
   <ItemGroup>
     <Compile Remove="Views\AddPayment\**" />
+    <Compile Remove="Views\Error\**" />
     <Compile Remove="Views\ForgetPassword\**" />
+    <Compile Remove="Views\InvoiceDetail\**" />
     <Compile Remove="Views\Language\**" />
     <Compile Remove="Views\Login\**" />
     <Compile Remove="Views\Register\**" />
     <Compile Remove="Views\Setting\**" />
     <Content Remove="Views\AddPayment\**" />
+    <Content Remove="Views\Error\**" />
     <Content Remove="Views\ForgetPassword\**" />
+    <Content Remove="Views\InvoiceDetail\**" />
     <Content Remove="Views\Language\**" />
     <Content Remove="Views\Login\**" />
     <Content Remove="Views\Register\**" />
     <Content Remove="Views\Setting\**" />
     <EmbeddedResource Remove="Views\AddPayment\**" />
+    <EmbeddedResource Remove="Views\Error\**" />
     <EmbeddedResource Remove="Views\ForgetPassword\**" />
+    <EmbeddedResource Remove="Views\InvoiceDetail\**" />
     <EmbeddedResource Remove="Views\Language\**" />
     <EmbeddedResource Remove="Views\Login\**" />
     <EmbeddedResource Remove="Views\Register\**" />
     <EmbeddedResource Remove="Views\Setting\**" />
     <None Remove="Views\AddPayment\**" />
+    <None Remove="Views\Error\**" />
     <None Remove="Views\ForgetPassword\**" />
+    <None Remove="Views\InvoiceDetail\**" />
     <None Remove="Views\Language\**" />
     <None Remove="Views\Login\**" />
     <None Remove="Views\Register\**" />
@@ -46,9 +54,7 @@
   <ItemGroup>
     <Folder Include="Views\Dashboard\" />
     <Folder Include="Views\Invoice\" />
-    <Folder Include="Views\InvoiceDetail\" />
     <Folder Include="Views\FAQ\" />
-    <Folder Include="Views\Error\" />
     <Folder Include="Views\Terms\" />
     <Folder Include="Views\Payment\" />
   </ItemGroup>

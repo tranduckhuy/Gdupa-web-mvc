@@ -18,7 +18,11 @@ namespace WarehouseWebMVC.Controllers
 			return View();
 		}
 
+<<<<<<< Updated upstream:WarehouseWebMVC/Controllers/CustomerController.cs
 		public IActionResult CustomerInformation()
+=======
+		public IActionResult UserInformation()
+>>>>>>> Stashed changes:WarehouseWebMVC/Controllers/UserController.cs
 		{
 			return View();
 		}

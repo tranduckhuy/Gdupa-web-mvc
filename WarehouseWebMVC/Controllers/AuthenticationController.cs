@@ -4,21 +4,21 @@ using WarehouseWebMVC.Models;
 
 namespace WarehouseWebMVC.Controllers
 {
-    public class PaymentController : Controller
+    public class AuthenticationController : Controller
     {
-        private readonly ILogger<PaymentController> _logger;
+        private readonly ILogger<AuthenticationController> _logger;
 
-        public PaymentController(ILogger<PaymentController> logger)
+        public AuthenticationController(ILogger<AuthenticationController> logger)
         {
             _logger = logger;
         }
 
-        public IActionResult Payment()
+        public IActionResult Login()
         {
             return View();
         }
 
-        public IActionResult AddPayment()
+        public IActionResult Register()
         {
             return View();
         }

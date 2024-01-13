@@ -6,6 +6,7 @@ using WarehouseWebMVC.Services;
 
 namespace WarehouseWebMVC.Controllers
 {
+<<<<<<< Updated upstream
 	public class ProductController : Controller
 	{
 		private readonly ILogger<ProductController> _logger;
@@ -107,4 +108,41 @@ namespace WarehouseWebMVC.Controllers
 			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
 		}
 	}
+=======
+    public class ProductController : Controller
+    {
+        private readonly ILogger<ProductController> _logger;
+
+        public ProductController(ILogger<ProductController> logger)
+        {
+            _logger = logger;
+        }
+
+        public IActionResult Product()
+        {
+            return View();
+        }
+
+        public IActionResult ProductDetail()
+        {
+            return View();
+        }
+
+        public IActionResult AddProduct()
+        {
+            return View();
+        }
+
+        public IActionResult UpdateProduct()
+        {
+            return View();
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+    }
+>>>>>>> Stashed changes
 }
