@@ -1,6 +1,6 @@
 ﻿namespace WarehouseWebMVC.Service
 {
-    public class IUserService
+    public interface IUserService
     {
     }
 }

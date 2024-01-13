@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WarehouseWebMVC.Models;
+using WarehouseWebMVC.Models.Domain;
 
 namespace WarehouseWebMVC.Data
 {

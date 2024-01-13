@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using WarehouseWebMVC.Data;
+using WarehouseWebMVC.MappingProfiles;
+using WarehouseWebMVC.Services;
+using WarehouseWebMVC.Services.Impl;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +11,9 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<DataContext>(
 		options => options.UseSqlite(builder.Configuration.GetConnectionString("WarehouseDB"))
 	);
+
+builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
+builder.Services.AddScoped<IProductService, ProductService>();
 
 var app = builder.Build();
 

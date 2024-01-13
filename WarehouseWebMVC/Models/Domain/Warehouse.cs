@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace WarehouseWebMVC.Models
+namespace WarehouseWebMVC.Models.Domain
 {
     public class Warehouse
     {

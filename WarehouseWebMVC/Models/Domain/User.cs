@@ -1,12 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace WarehouseWebMVC.Models
+namespace WarehouseWebMVC.Models.Domain
 {
-    public class Supplier
+    public class User
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long SupplierId { get; set; }
+        public long UserId { get; set; }
         [Required]
         [StringLength(255)]
         public string Name { get; set; } = string.Empty;
@@ -19,9 +19,13 @@ namespace WarehouseWebMVC.Models
         [StringLength(20)]
         public string Phone { get; set; } = string.Empty;
         [Required]
-        public string Fax { get; set; } = string.Empty;
+        [StringLength(255)]
+        public string Password { get; set; } = string.Empty;
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public DateTime CreatedAt { get; set; }
 
         public ICollection<Invoice> Invoices { get; } = new List<Invoice>();
-        public ICollection<Product> Products { get; } = new List<Product>();
+        public ICollection<ExpenseReport> SentExpenseReports { get; set; } = new List<ExpenseReport>();
+        public ICollection<ExpenseReport> ReceivedExpenseReports { get; set; } = new List<ExpenseReport>();
     }
 }

@@ -4,16 +4,21 @@ using WarehouseWebMVC.Models;
 
 namespace WarehouseWebMVC.Controllers
 {
-	public class UserController : Controller
+	public class CustomerController : Controller
 	{
-		private readonly ILogger<UserController> _logger;
+		private readonly ILogger<CustomerController> _logger;
 
-		public UserController(ILogger<UserController> logger)
+		public CustomerController(ILogger<CustomerController> logger)
 		{
 			_logger = logger;
 		}
 
 		public IActionResult Customer()
+		{
+			return View();
+		}
+
+		public IActionResult CustomerInformation()
 		{
 			return View();
 		}
