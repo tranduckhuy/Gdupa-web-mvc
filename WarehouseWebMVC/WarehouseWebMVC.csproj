@@ -7,11 +7,42 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Language\**" />
+    <Compile Remove="Views\Setting\**" />
+    <Content Remove="Views\Language\**" />
+    <Content Remove="Views\Setting\**" />
+    <EmbeddedResource Remove="Views\Language\**" />
+    <EmbeddedResource Remove="Views\Setting\**" />
+    <None Remove="Views\Language\**" />
+    <None Remove="Views\Setting\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.14" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.14">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\Dashboard\" />
+    <Folder Include="Views\Customer\" />
+    <Folder Include="Views\Invoice\" />
+    <Folder Include="Views\InvoiceDetail\" />
+    <Folder Include="Views\AddProduct\" />
+    <Folder Include="Views\AddPayment\" />
+    <Folder Include="Views\Login\" />
+    <Folder Include="Views\ForgetPassword\" />
+    <Folder Include="Views\FAQ\" />
+    <Folder Include="Views\Terms\" />
+    <Folder Include="Views\Register\" />
+    <Folder Include="Views\VendorGrid\" />
+    <Folder Include="Views\ProductDetail\" />
+    <Folder Include="Views\UpdateProduct\" />
+    <Folder Include="Views\Payment\" />
+    <Folder Include="Views\Product\" />
+    <Folder Include="Views\VendorList\" />
   </ItemGroup>
 
 </Project>
