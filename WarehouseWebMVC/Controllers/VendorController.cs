@@ -4,16 +4,16 @@ using WarehouseWebMVC.Models;
 
 namespace WarehouseWebMVC.Controllers
 {
-	public class InvoiceDetailController : Controller
+	public class VendorController : Controller
 	{
-		private readonly ILogger<InvoiceDetailController> _logger;
+		private readonly ILogger<VendorController> _logger;
 
-		public InvoiceDetailController(ILogger<InvoiceDetailController> logger)
+		public VendorController(ILogger<VendorController> logger)
 		{
 			_logger = logger;
 		}
 
-		public IActionResult InvoiceDetail()
+		public IActionResult VendorGrid()
 		{
 			return View();
 		}

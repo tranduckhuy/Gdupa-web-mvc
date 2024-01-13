@@ -7,13 +7,29 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\AddPayment\**" />
+    <Compile Remove="Views\ForgetPassword\**" />
     <Compile Remove="Views\Language\**" />
+    <Compile Remove="Views\Login\**" />
+    <Compile Remove="Views\Register\**" />
     <Compile Remove="Views\Setting\**" />
+    <Content Remove="Views\AddPayment\**" />
+    <Content Remove="Views\ForgetPassword\**" />
     <Content Remove="Views\Language\**" />
+    <Content Remove="Views\Login\**" />
+    <Content Remove="Views\Register\**" />
     <Content Remove="Views\Setting\**" />
+    <EmbeddedResource Remove="Views\AddPayment\**" />
+    <EmbeddedResource Remove="Views\ForgetPassword\**" />
     <EmbeddedResource Remove="Views\Language\**" />
+    <EmbeddedResource Remove="Views\Login\**" />
+    <EmbeddedResource Remove="Views\Register\**" />
     <EmbeddedResource Remove="Views\Setting\**" />
+    <None Remove="Views\AddPayment\**" />
+    <None Remove="Views\ForgetPassword\**" />
     <None Remove="Views\Language\**" />
+    <None Remove="Views\Login\**" />
+    <None Remove="Views\Register\**" />
     <None Remove="Views\Setting\**" />
   </ItemGroup>
 
@@ -27,22 +43,12 @@
 
   <ItemGroup>
     <Folder Include="Views\Dashboard\" />
-    <Folder Include="Views\Customer\" />
     <Folder Include="Views\Invoice\" />
     <Folder Include="Views\InvoiceDetail\" />
-    <Folder Include="Views\AddProduct\" />
-    <Folder Include="Views\AddPayment\" />
-    <Folder Include="Views\Login\" />
-    <Folder Include="Views\ForgetPassword\" />
     <Folder Include="Views\FAQ\" />
+    <Folder Include="Views\Error\" />
     <Folder Include="Views\Terms\" />
-    <Folder Include="Views\Register\" />
-    <Folder Include="Views\VendorGrid\" />
-    <Folder Include="Views\ProductDetail\" />
-    <Folder Include="Views\UpdateProduct\" />
     <Folder Include="Views\Payment\" />
-    <Folder Include="Views\Product\" />
-    <Folder Include="Views\VendorList\" />
   </ItemGroup>
 
 </Project>
