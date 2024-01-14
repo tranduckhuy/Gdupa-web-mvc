@@ -25,6 +25,9 @@
             <div class="container">
                 <div class="signup-content">
                     <div class="signup-form">
+                        <a asp-area="" asp-controller="Authentication" asp-action="Login" style="text-decoration: none; color: #000; font-size: 20px;">
+                            <i class="zmdi zmdi-arrow-left"></i>
+                        </a>
                         <h2 class="form-title">Sign Up</h2>
                         <form method="POST" class="register-form" id="register-form">
                             <div class="form-group">
@@ -54,7 +57,7 @@
                     </div>
                     <div class="signup-image">
                         <figure><img src="/assets/images/signup-image.jpg" alt="sing up image"></figure>
-                        <a href="#" class="signup-image-link">I am already member</a>
+                        <a asp-area="" asp-controller="Authentication" asp-action="Login" class="signup-image-link">I am already member</a>
                     </div>
                 </div>
             </div>

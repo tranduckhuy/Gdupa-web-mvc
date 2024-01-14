@@ -10,8 +10,8 @@ namespace WarehouseWebMVC.Data
         public DbSet<InvoiceDetail> InvoicesDetails { get; set; }
         public DbSet<ExpenseReport> Expenses { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
-        public DbSet<Warehouse> Warehouse { get; set; }
         public DbSet<Category> Category { get; set; }
+        public DbSet<Brand> Brand { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductImg> ProductImgs { get; set; }
 
@@ -35,6 +35,28 @@ namespace WarehouseWebMVC.Data
                 .HasForeignKey(e => e.SupplierId)
                 .IsRequired();
 
+            // Default DateTime
+            modelBuilder.Entity<User>()
+                .Property(e => e.CreatedAt)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+            modelBuilder.Entity<Product>()
+                .Property(e => e.CreatedAt)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP"); 
+
+            modelBuilder.Entity<Product>()
+                .Property(e => e.ModifiedAt)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+            modelBuilder.Entity<Invoice>()
+                .Property(e => e.CreatedAt)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+            modelBuilder.Entity<ExpenseReport>()
+                .Property(e => e.CreatedAt)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            // ---
+
             {
                 // Configure relationships
                 modelBuilder.Entity<ExpenseReport>()
@@ -50,15 +72,13 @@ namespace WarehouseWebMVC.Data
                     .OnDelete(DeleteBehavior.NoAction);
             }
 
-            modelBuilder.Entity<Product>()
-                .HasMany(e => e.Warehouses)
-                .WithMany(e => e.Products);
-
             modelBuilder.Entity<InvoiceDetail>()
             .HasOne(p => p.Product)
             .WithMany()
             .HasForeignKey(p => p.ProductId)
             .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Seed();
         }
 
     }

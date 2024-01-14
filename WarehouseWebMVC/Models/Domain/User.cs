@@ -21,7 +21,10 @@ namespace WarehouseWebMVC.Models.Domain
         [Required]
         [StringLength(255)]
         public string Password { get; set; } = string.Empty;
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Required]
+        [StringLength(10)]
+        public string Role { get; set; } = string.Empty;
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime CreatedAt { get; set; }
 
         public ICollection<Invoice> Invoices { get; } = new List<Invoice>();

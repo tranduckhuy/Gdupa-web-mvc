@@ -1,0 +1,39 @@
+﻿@using WarehouseWebMVC.Models.DTOs
+
+@model List<ProductDTO>
+
+<div class="container">
+    <h1>List product</h1>
+    <table class="table table-sm">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Unit</th>
+                <th scope="col">Category</th>
+                <th scope="col">Brand</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <th scope="row">@product.ProductId</th>
+                    <td>@product.Name</td>
+                    <td>@product.Price</td>
+                    <td>@product.StockQuantity</td>
+                    <td>@product.Unit</td>
+                    <td>@product.Category.Name</td>
+                    <td>@product.Brand.Name</td>
+                    <td>
+                        <a asp-controller="Product" asp-action="TestDetail" asp-route-productId="@product.ProductId">Details</a>
+                        <a asp-action="TestEdit" asp-controller="Product">Edit</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
