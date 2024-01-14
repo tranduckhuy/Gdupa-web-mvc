@@ -61,8 +61,18 @@
         </section>
 
     </div>
-
+    <div id="preloader"></div>
     <script src="/js/lib/jquery.min.js"></script>
     <script src="/js/lib/jquery-ui.min.js"></script>
+    <script>
+        let preloader = document.getElementById('preloader');
+        if (preloader) {
+            window.addEventListener('load', () => {
+                setTimeout(() => {
+                    preloader.remove();
+                }, 500);
+            });
+        }
+    </script>
 </body>
 </html>
