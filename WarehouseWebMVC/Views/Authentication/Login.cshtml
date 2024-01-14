@@ -16,6 +16,11 @@
 
     <!-- Main css -->
     <link rel="stylesheet" href="/assets/css/main-login.css">
+    <style>
+        .forgot-link:hover{
+            color: #4292dc !important;
+        }
+    </style>
 </head>
 <body style="overflow: hidden;">
     <div class="main" style="padding: 50px 0 0 0;">
@@ -26,7 +31,6 @@
                 <div class="signin-content">
                     <div class="signin-image">
                         <fiingure><img src="/assets/images/signin-image.jpg" alt="sign image"></fiingure>
-                        <a asp-area="" asp-controller="Authentication" asp-action="Register" class="signup-image-link">Create an account</a>
                     </div>
 
                     <div class="signin-form">
@@ -45,7 +49,8 @@
                             </div>
                             <div class="form-group">
                                 <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" />
-                                <label for="remember-me" class="label-agree-term"><span><span></span></span>Remember me</label>
+                                <label for="remember-me" class="label-agree-term"><span></span>Remember me</label>
+                                <span style="margin-left: 4px;"><a class="forgot-link" asp-area="" asp-controller="Authentication" asp-action="ForgotPassword" style="color: #111;">Forget Password?</a></span>
                             </div>
                             <div class="form-group form-button">
                                 <input type="submit" name="signin" id="signin" class="form-submit" value="Log in"/>
