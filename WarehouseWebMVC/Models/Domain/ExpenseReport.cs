@@ -12,8 +12,8 @@ namespace WarehouseWebMVC.Models.Domain
         public string Reason { get; set; } = string.Empty;
         [Required]
         public double Total { get; set; }
-        [Required, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public DateTime CreatedDate { get; set; }
+        [Required, DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public DateTime CreatedAt { get; set; }
 
         public long SenderId { get; set; }
         public long ReceiverId { get; set; }

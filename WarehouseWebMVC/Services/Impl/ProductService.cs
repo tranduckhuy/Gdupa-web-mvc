@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 using WarehouseWebMVC.Data;
 using WarehouseWebMVC.Models.Domain;
 using WarehouseWebMVC.Models.DTOs;
@@ -48,16 +49,22 @@ namespace WarehouseWebMVC.Services.Impl
 		public List<ProductDTO> GetAll()
 		{
 			var products = _dataContext.Products
+				.Include(p => p.Category)
+				.Include(p => p.Brand)
 				.Include(p => p.ProductImgs);
 
 			var productsDto = _mapper.Map<List<ProductDTO>>(products);
-			return productsDto;
+
+            return productsDto;
 		}
 
 		public ProductDTO GetById(long id)
 		{
 			var product = _dataContext.Products
-				.Include(p => p.ProductImgs)
+                .Include(p => p.Category)
+                .Include(p => p.Brand)
+				.Include(p => p.Supplier)
+                .Include(p => p.ProductImgs)
 				.FirstOrDefault(p => p.ProductId == id);
 
 			return product != null ? _mapper.Map<ProductDTO>(product) : null!;

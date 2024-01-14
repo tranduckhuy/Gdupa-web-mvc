@@ -1,0 +1,26 @@
+﻿@model WarehouseWebMVC.Models.DTOs.ProductDTO
+
+<div class="container">
+    <h1>Detail product</h1>
+    <div class="card" style="width: 18rem;">
+        <img src="@Model.ProductImgs.ElementAt(0).ImageURL" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">Name: @Model.Name</h5>
+            <p class="card-text">Description: @Model.Description</p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Supplier: @Model.Supplier.Name</li>
+            <li class="list-group-item">Category: @Model.Category.Name</li>
+            <li class="list-group-item">Brand: @Model.Brand.Name</li>
+            <li class="list-group-item">Quantity: @Model.StockQuantity</li>
+            <li class="list-group-item">Unit: @Model.Unit</li>
+            <li class="list-group-item">Price: @Model.Price</li>
+            <li class="list-group-item">Created At: @Model.CreatedAt</li>
+            <li class="list-group-item">Modified At: @Model.ModifiedAt</li>
+        </ul>
+        <div class="card-body">
+            <a href="/Product/TestList" class="card-link">List</a>
+        </div>
+    </div>
+</div>
+

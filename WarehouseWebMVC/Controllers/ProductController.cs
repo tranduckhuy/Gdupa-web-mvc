@@ -6,6 +6,7 @@ using WarehouseWebMVC.Services;
 
 namespace WarehouseWebMVC.Controllers
 {
+    //[Route("Product/[action]")]
     public class ProductController : Controller
     {
         private readonly ILogger<ProductController> _logger;
@@ -20,7 +21,8 @@ namespace WarehouseWebMVC.Controllers
         [HttpGet]
         public IActionResult Product()
         {
-            return View();
+            List<ProductDTO> products = _productService.GetAll();
+            return View(products);
         }
 
         [HttpGet]
@@ -48,7 +50,7 @@ namespace WarehouseWebMVC.Controllers
             {
                 if (_productService.Add(productDTO) != null)
                 {
-                    return View("Product");
+                    return RedirectToAction("Product");
                 }
                 else
                 {
@@ -69,7 +71,7 @@ namespace WarehouseWebMVC.Controllers
             {
                 if (_productService.Update(productDTO))
                 {
-                    return View("Product");
+                    return RedirectToAction("Product");
                 }
                 else
                 {
@@ -90,16 +92,18 @@ namespace WarehouseWebMVC.Controllers
             {
                 if (_productService.Delete(productId))
                 {
-                    return View("Product");
+                    return RedirectToAction("Product");
                 }
                 else
                 {
-                    return View("Product", new { Message = "Error" });
+                    // chưa xử lý
+                    return RedirectToAction("Product");
                 }
             }
             else
             {
-                return View("Product", new { Message = "Error" });
+                // chưa xử lý
+                return RedirectToAction("Product");
             }
         }
 
@@ -107,6 +111,28 @@ namespace WarehouseWebMVC.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        //Test
+        [HttpGet]
+        public IActionResult TestList()
+        {
+            List<ProductDTO> products = _productService.GetAll();
+            return View(products);
+        }
+
+        //Test
+        [HttpGet("{productId}")]
+        public IActionResult TestDetail(long productId)
+        {
+            ProductDTO productDTO = _productService.GetById(productId);
+
+            if (productDTO == null)
+            {
+                return RedirectToAction("TestList");
+            }
+
+            return View("TestDetail", productDTO);
         }
     }
 }

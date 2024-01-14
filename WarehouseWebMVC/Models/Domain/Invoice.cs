@@ -9,7 +9,7 @@ namespace WarehouseWebMVC.Models.Domain
         public long InvoiceId { get; set; }
         [Required]
         public double Total { get; set; }
-        [Required, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime CreatedAt { get; set; }
 
         public long UserId { get; set; }
