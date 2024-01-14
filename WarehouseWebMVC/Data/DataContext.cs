@@ -55,6 +55,9 @@ namespace WarehouseWebMVC.Data
             modelBuilder.Entity<ExpenseReport>()
                 .Property(e => e.CreatedAt)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            modelBuilder.Entity<Warehouse>()
+                .Property(e => e.CreatedAt)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
             // ---
 
             {

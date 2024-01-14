@@ -84,7 +84,6 @@ namespace WarehouseWebMVC.Migrations
                     Name = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
                     Description = table.Column<string>(type: "TEXT", nullable: false),
                     Price = table.Column<double>(type: "REAL", nullable: false),
-                    StockQuantity = table.Column<int>(type: "INTEGER", nullable: false),
                     Unit = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
                     ModifiedAt = table.Column<DateTime>(type: "TEXT", nullable: true, defaultValueSql: "CURRENT_TIMESTAMP"),
@@ -191,6 +190,29 @@ namespace WarehouseWebMVC.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Warehouse",
+                columns: table => new
+                {
+                    WarehouseId = table.Column<long>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Quantity = table.Column<int>(type: "INTEGER", nullable: false),
+                    QuantityAtBeginPeriod = table.Column<int>(type: "INTEGER", nullable: false),
+                    PriceImport = table.Column<double>(type: "REAL", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    ProductId = table.Column<long>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Warehouse", x => x.WarehouseId);
+                    table.ForeignKey(
+                        name: "FK_Warehouse_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "ProductId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "InvoicesDetails",
                 columns: table => new
                 {
@@ -283,14 +305,14 @@ namespace WarehouseWebMVC.Migrations
 
             migrationBuilder.InsertData(
                 table: "Products",
-                columns: new[] { "ProductId", "BrandId", "CategoryId", "Description", "Name", "Price", "StockQuantity", "SupplierId", "Unit" },
+                columns: new[] { "ProductId", "BrandId", "CategoryId", "Description", "Name", "Price", "SupplierId", "Unit" },
                 values: new object[,]
                 {
-                    { 1L, 1L, 1L, "18GB Unified Memory, 512GB SSD Storage. Works with iPhone/iPad; Space Black", "Apple 2023 MacBook Pro Laptop M3 Pro", 1399.99, 10, 1L, "Piece" },
-                    { 2L, 1L, 2L, "iPhone 15 Pro Max has a strong and light aerospace-grade titanium design with a textured matte-glass back.&nbsp;", "Apple iPhone 15 Pro Max (512 GB)", 1199.99, 3, 1L, "Piece" },
-                    { 3L, 3L, 3L, "Designed by Bruce Kilgore and introduced in 1982, the Air Force 1 was the first-ever basketball shoe to feature Nike Air technology", "Air Force 1", 115.0, 20, 2L, "Pair" },
-                    { 4L, 4L, 3L, "With these adidas NMD_R1 shoes, all it takes is seconds. Seconds, and you're comfortable, ready to go, out the door.", "NMD_R1 SHOES", 150.0, 0, 3L, "Pair" },
-                    { 5L, 4L, 3L, "More than just a shoe, it's a statement. The adidas Forum hit the scene in '84 and gained major love on both the hardwood and in the music biz.", "FORUM LOW SHOES", 99.989999999999995, 16, 3L, "Pair" }
+                    { 1L, 1L, 1L, "18GB Unified Memory, 512GB SSD Storage. Works with iPhone/iPad; Space Black", "Apple 2023 MacBook Pro Laptop M3 Pro", 1399.99, 1L, "Piece" },
+                    { 2L, 1L, 2L, "iPhone 15 Pro Max has a strong and light aerospace-grade titanium design with a textured matte-glass back.&nbsp;", "Apple iPhone 15 Pro Max (512 GB)", 1199.99, 1L, "Piece" },
+                    { 3L, 3L, 3L, "Designed by Bruce Kilgore and introduced in 1982, the Air Force 1 was the first-ever basketball shoe to feature Nike Air technology", "Air Force 1", 115.0, 2L, "Pair" },
+                    { 4L, 4L, 3L, "With these adidas NMD_R1 shoes, all it takes is seconds. Seconds, and you're comfortable, ready to go, out the door.", "NMD_R1 SHOES", 150.0, 3L, "Pair" },
+                    { 5L, 4L, 3L, "More than just a shoe, it's a statement. The adidas Forum hit the scene in '84 and gained major love on both the hardwood and in the music biz.", "FORUM LOW SHOES", 99.989999999999995, 3L, "Pair" }
                 });
 
             migrationBuilder.InsertData(
@@ -319,6 +341,17 @@ namespace WarehouseWebMVC.Migrations
                     { 8L, "https://firebasestorage.googleapis.com/v0/b/xhobbe-98105.appspot.com/o/logo%2FNMD_R1_Shoes_White_HQ4451_01_standard.avif?alt=media&token=16bdfe85-910a-4ae5-b120-27f28e06dc71", 4L },
                     { 9L, "https://firebasestorage.googleapis.com/v0/b/xhobbe-98105.appspot.com/o/logo%2FForum_Low_Shoes_White_FY7755_01_standard.avif?alt=media&token=e9cf282a-e6bc-445f-89e7-f270b768f500", 5L },
                     { 10L, "https://firebasestorage.googleapis.com/v0/b/xhobbe-98105.appspot.com/o/logo%2FForum_Low_Shoes_White_FY7755_02_standard_hover.avif?alt=media&token=06650fd5-295c-45b3-b698-8b320d76a7f0", 5L }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Warehouse",
+                columns: new[] { "WarehouseId", "PriceImport", "ProductId", "Quantity", "QuantityAtBeginPeriod" },
+                values: new object[,]
+                {
+                    { 1L, 1399.99, 1L, 10, 0 },
+                    { 2L, 1199.99, 2L, 3, 0 },
+                    { 3L, 115.0, 3L, 20, 0 },
+                    { 4L, 99.989999999999995, 4L, 16, 0 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -370,6 +403,11 @@ namespace WarehouseWebMVC.Migrations
                 name: "IX_Products_SupplierId",
                 table: "Products",
                 column: "SupplierId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Warehouse_ProductId",
+                table: "Warehouse",
+                column: "ProductId");
         }
 
         /// <inheritdoc />
@@ -383,6 +421,9 @@ namespace WarehouseWebMVC.Migrations
 
             migrationBuilder.DropTable(
                 name: "ProductImgs");
+
+            migrationBuilder.DropTable(
+                name: "Warehouse");
 
             migrationBuilder.DropTable(
                 name: "Invoices");

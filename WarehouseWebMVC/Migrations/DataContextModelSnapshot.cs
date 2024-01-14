@@ -298,9 +298,6 @@ namespace WarehouseWebMVC.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("REAL");
 
-                    b.Property<int>("StockQuantity")
-                        .HasColumnType("INTEGER");
-
                     b.Property<long>("SupplierId")
                         .HasColumnType("INTEGER");
 
@@ -329,7 +326,6 @@ namespace WarehouseWebMVC.Migrations
                             Description = "18GB Unified Memory, 512GB SSD Storage. Works with iPhone/iPad; Space Black",
                             Name = "Apple 2023 MacBook Pro Laptop M3 Pro",
                             Price = 1399.99,
-                            StockQuantity = 10,
                             SupplierId = 1L,
                             Unit = "Piece"
                         },
@@ -342,7 +338,6 @@ namespace WarehouseWebMVC.Migrations
                             Description = "iPhone 15 Pro Max has a strong and light aerospace-grade titanium design with a textured matte-glass back.&nbsp;",
                             Name = "Apple iPhone 15 Pro Max (512 GB)",
                             Price = 1199.99,
-                            StockQuantity = 3,
                             SupplierId = 1L,
                             Unit = "Piece"
                         },
@@ -355,7 +350,6 @@ namespace WarehouseWebMVC.Migrations
                             Description = "Designed by Bruce Kilgore and introduced in 1982, the Air Force 1 was the first-ever basketball shoe to feature Nike Air technology",
                             Name = "Air Force 1",
                             Price = 115.0,
-                            StockQuantity = 20,
                             SupplierId = 2L,
                             Unit = "Pair"
                         },
@@ -368,7 +362,6 @@ namespace WarehouseWebMVC.Migrations
                             Description = "With these adidas NMD_R1 shoes, all it takes is seconds. Seconds, and you're comfortable, ready to go, out the door.",
                             Name = "NMD_R1 SHOES",
                             Price = 150.0,
-                            StockQuantity = 0,
                             SupplierId = 3L,
                             Unit = "Pair"
                         },
@@ -381,7 +374,6 @@ namespace WarehouseWebMVC.Migrations
                             Description = "More than just a shoe, it's a statement. The adidas Forum hit the scene in '84 and gained major love on both the hardwood and in the music biz.",
                             Name = "FORUM LOW SHOES",
                             Price = 99.989999999999995,
-                            StockQuantity = 16,
                             SupplierId = 3L,
                             Unit = "Pair"
                         });
@@ -645,6 +637,74 @@ namespace WarehouseWebMVC.Migrations
                         });
                 });
 
+            modelBuilder.Entity("WarehouseWebMVC.Models.Domain.Warehouse", b =>
+                {
+                    b.Property<long>("WarehouseId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<double>("PriceImport")
+                        .HasColumnType("REAL");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("QuantityAtBeginPeriod")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("WarehouseId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Warehouse");
+
+                    b.HasData(
+                        new
+                        {
+                            WarehouseId = 1L,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PriceImport = 1399.99,
+                            ProductId = 1L,
+                            Quantity = 10,
+                            QuantityAtBeginPeriod = 0
+                        },
+                        new
+                        {
+                            WarehouseId = 2L,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PriceImport = 1199.99,
+                            ProductId = 2L,
+                            Quantity = 3,
+                            QuantityAtBeginPeriod = 0
+                        },
+                        new
+                        {
+                            WarehouseId = 3L,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PriceImport = 115.0,
+                            ProductId = 3L,
+                            Quantity = 20,
+                            QuantityAtBeginPeriod = 0
+                        },
+                        new
+                        {
+                            WarehouseId = 4L,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PriceImport = 99.989999999999995,
+                            ProductId = 4L,
+                            Quantity = 16,
+                            QuantityAtBeginPeriod = 0
+                        });
+                });
+
             modelBuilder.Entity("WarehouseWebMVC.Models.Domain.ExpenseReport", b =>
                 {
                     b.HasOne("WarehouseWebMVC.Models.Domain.User", "Receiver")
@@ -740,6 +800,17 @@ namespace WarehouseWebMVC.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("WarehouseWebMVC.Models.Domain.Warehouse", b =>
+                {
+                    b.HasOne("WarehouseWebMVC.Models.Domain.Product", "Product")
+                        .WithMany("Warehouses")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("WarehouseWebMVC.Models.Domain.Brand", b =>
                 {
                     b.Navigation("Products");
@@ -758,6 +829,8 @@ namespace WarehouseWebMVC.Migrations
             modelBuilder.Entity("WarehouseWebMVC.Models.Domain.Product", b =>
                 {
                     b.Navigation("ProductImgs");
+
+                    b.Navigation("Warehouses");
                 });
 
             modelBuilder.Entity("WarehouseWebMVC.Models.Domain.Supplier", b =>

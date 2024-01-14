@@ -97,27 +97,27 @@ namespace WarehouseWebMVC.Data
                 new Product { 
                     ProductId = 1, Name = "Apple 2023 MacBook Pro Laptop M3 Pro", 
                     Description = "18GB Unified Memory, 512GB SSD Storage. Works with iPhone/iPad; Space Black",
-                    SupplierId = 1, Price = 1399.99, CategoryId = 1, BrandId = 1, StockQuantity = 10, Unit = "Piece"
+                    SupplierId = 1, Price = 1399.99, CategoryId = 1, BrandId = 1, Unit = "Piece"
                 },
                 new Product { 
                     ProductId = 2, Name = "Apple iPhone 15 Pro Max (512 GB)", 
                     Description = "iPhone 15 Pro Max has a strong and light aerospace-grade titanium design with a textured matte-glass back.&nbsp;",
-                    SupplierId = 1, Price = 1199.99, CategoryId = 2, BrandId = 1, StockQuantity = 3, Unit = "Piece"
+                    SupplierId = 1, Price = 1199.99, CategoryId = 2, BrandId = 1, Unit = "Piece"
                 },
                 new Product { 
                     ProductId = 3, Name = "Air Force 1", 
                     Description = "Designed by Bruce Kilgore and introduced in 1982, the Air Force 1 was the first-ever basketball shoe to feature Nike Air technology",
-                    SupplierId = 2, Price = 115.00, CategoryId = 3, BrandId = 3, StockQuantity = 20, Unit = "Pair"
+                    SupplierId = 2, Price = 115.00, CategoryId = 3, BrandId = 3, Unit = "Pair"
                 },
                 new Product { 
                     ProductId = 4, Name = "NMD_R1 SHOES", 
                     Description = "With these adidas NMD_R1 shoes, all it takes is seconds. Seconds, and you're comfortable, ready to go, out the door.",
-                    SupplierId = 3, Price = 150, CategoryId = 3, BrandId = 4, StockQuantity = 0, Unit = "Pair"
+                    SupplierId = 3, Price = 150, CategoryId = 3, BrandId = 4, Unit = "Pair"
                 },
                 new Product { 
                     ProductId = 5, Name = "FORUM LOW SHOES", 
                     Description = "More than just a shoe, it's a statement. The adidas Forum hit the scene in '84 and gained major love on both the hardwood and in the music biz.",
-                    SupplierId = 3, Price = 99.99, CategoryId = 3, BrandId = 4, StockQuantity = 16, Unit = "Pair"
+                    SupplierId = 3, Price = 99.99, CategoryId = 3, BrandId = 4, Unit = "Pair"
                 }
             );
 
@@ -161,6 +161,13 @@ namespace WarehouseWebMVC.Data
                 new ExpenseReport { ExpenseReportId = 1, Reason = "Enter new Laptops and Phones into warehouse", Total = 17599.87, SenderId = 1, ReceiverId = 2 },
                 new ExpenseReport { ExpenseReportId = 2, Reason = "Enter new Shoes into warehouse", Total = 2300, SenderId = 1, ReceiverId = 3, },
                 new ExpenseReport { ExpenseReportId = 3, Reason = "Enter new Shoes into warehouse", Total = 1999.84, SenderId = 2, ReceiverId = 4 }
+            );
+
+            modelBuilder.Entity<Warehouse>().HasData(
+                new Warehouse { WarehouseId = 1, ProductId = 1, Quantity = 10, QuantityAtBeginPeriod = 0, PriceImport = 1399.99 },
+                new Warehouse { WarehouseId = 2, ProductId = 2, Quantity = 3, QuantityAtBeginPeriod = 0, PriceImport = 1199.99 },
+                new Warehouse { WarehouseId = 3, ProductId = 3, Quantity = 20, QuantityAtBeginPeriod = 0, PriceImport = 115 },
+                new Warehouse { WarehouseId = 4, ProductId = 4, Quantity = 16, QuantityAtBeginPeriod = 0, PriceImport = 99.99 }
             );
         }
     }

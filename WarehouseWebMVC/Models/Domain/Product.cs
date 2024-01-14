@@ -21,9 +21,6 @@ namespace WarehouseWebMVC.Models.Domain
         public double Price { get; set; }
 
         [Required]
-        public int StockQuantity { get; set; }
-
-        [Required]
         [StringLength(20)]
         public string Unit { get; set; } = string.Empty;
 
@@ -40,6 +37,7 @@ namespace WarehouseWebMVC.Models.Domain
         public long BrandId { get; set; }
         public Brand Brand { get; set; } = null!;
 
+        public ICollection<Warehouse> Warehouses { get; set; } = new List<Warehouse>();
         public ICollection<ProductImg> ProductImgs { get; set; } = new List<ProductImg>();
 
     }
