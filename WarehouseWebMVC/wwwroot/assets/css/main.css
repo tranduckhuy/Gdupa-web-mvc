@@ -2816,7 +2816,7 @@ Version:	1.0.0
     right: 12px;
     top: 8px;
     color: #6176FE;
-    font-size: 19px;
+    font-size: 18px;
 }
 
 .dataTables_filter input {
@@ -3017,7 +3017,7 @@ Version:	1.0.0
 }
 
 .sherah-table__main--front tbody {
-    height: 330px;
+    height: 250px;
     overflow-y: scroll;
 }
 
