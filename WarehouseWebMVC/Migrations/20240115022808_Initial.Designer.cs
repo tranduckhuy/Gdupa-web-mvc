@@ -11,7 +11,7 @@ using WarehouseWebMVC.Data;
 namespace WarehouseWebMVC.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240114162444_Initial")]
+    [Migration("20240115022808_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -663,6 +663,9 @@ namespace WarehouseWebMVC.Migrations
                     b.Property<int>("QuantityAtBeginPeriod")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("QuantityImport")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("WarehouseId");
 
                     b.HasIndex("ProductId");
@@ -677,7 +680,8 @@ namespace WarehouseWebMVC.Migrations
                             PriceImport = 1399.99,
                             ProductId = 1L,
                             Quantity = 10,
-                            QuantityAtBeginPeriod = 0
+                            QuantityAtBeginPeriod = 0,
+                            QuantityImport = 10
                         },
                         new
                         {
@@ -686,7 +690,8 @@ namespace WarehouseWebMVC.Migrations
                             PriceImport = 1199.99,
                             ProductId = 2L,
                             Quantity = 3,
-                            QuantityAtBeginPeriod = 0
+                            QuantityAtBeginPeriod = 0,
+                            QuantityImport = 3
                         },
                         new
                         {
@@ -695,7 +700,8 @@ namespace WarehouseWebMVC.Migrations
                             PriceImport = 115.0,
                             ProductId = 3L,
                             Quantity = 20,
-                            QuantityAtBeginPeriod = 0
+                            QuantityAtBeginPeriod = 0,
+                            QuantityImport = 20
                         },
                         new
                         {
@@ -704,7 +710,8 @@ namespace WarehouseWebMVC.Migrations
                             PriceImport = 99.989999999999995,
                             ProductId = 4L,
                             Quantity = 16,
-                            QuantityAtBeginPeriod = 0
+                            QuantityAtBeginPeriod = 0,
+                            QuantityImport = 16
                         });
                 });
 

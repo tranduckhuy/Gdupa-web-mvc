@@ -2,8 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using WarehouseWebMVC.Data;
+using WarehouseWebMVC.Models;
 using WarehouseWebMVC.Models.Domain;
 using WarehouseWebMVC.Models.DTOs;
+using WarehouseWebMVC.ViewModels;
 
 namespace WarehouseWebMVC.Services.Impl
 {
@@ -46,16 +48,28 @@ namespace WarehouseWebMVC.Services.Impl
 			return true;
 		}
 
-		public List<ProductDTO> GetAll()
+		public ProductViewModel GetAll(int page)
 		{
 			var products = _dataContext.Products
 				.Include(p => p.Category)
 				.Include(p => p.Brand)
 				.Include(p => p.ProductImgs);
 
-			var productsDto = _mapper.Map<List<ProductDTO>>(products);
+			var totalProducts = products.Count();
+			const int pageSize = 2;
+			var pageable = new Pageable(totalProducts, page, pageSize);
 
-            return productsDto;
+			int skipAmount = (page - 1) * pageSize;
+            
+			var productsDto = _mapper.Map<List<ProductDTO>>(products)
+				.Skip(skipAmount)
+				.Take(pageSize)
+				.OrderBy(p => p.ProductId)
+				.ToList();
+
+			var productViewModel = new ProductViewModel { Products = productsDto, Pageable = pageable };
+
+            return productViewModel;
 		}
 
 		public ProductDTO GetById(long id)

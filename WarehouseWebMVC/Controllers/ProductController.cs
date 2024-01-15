@@ -3,6 +3,7 @@ using System.Diagnostics;
 using WarehouseWebMVC.Models;
 using WarehouseWebMVC.Models.DTOs;
 using WarehouseWebMVC.Services;
+using WarehouseWebMVC.ViewModels;
 
 namespace WarehouseWebMVC.Controllers
 {
@@ -18,11 +19,11 @@ namespace WarehouseWebMVC.Controllers
             _productService = productService;
         }
 
-        [HttpGet]
-        public IActionResult Product()
+        [HttpGet("{page}")]
+        public IActionResult Product(int page = 1)
         {
-            List<ProductDTO> products = _productService.GetAll();
-            return View(products);
+            ProductViewModel productViewModel = _productService.GetAll(page);
+            return View(productViewModel);
         }
 
         [HttpGet]
@@ -115,10 +116,10 @@ namespace WarehouseWebMVC.Controllers
 
         //Test
         [HttpGet]
-        public IActionResult TestList()
+        public IActionResult TestList(int page = 1)
         {
-            List<ProductDTO> products = _productService.GetAll();
-            return View(products);
+            ProductViewModel productViewModel = _productService.GetAll(page);
+            return View(productViewModel);
         }
 
         //Test

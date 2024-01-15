@@ -1,6 +1,4 @@
-﻿@using WarehouseWebMVC.Models.DTOs
-
-@model List<ProductDTO>
+﻿@model WarehouseWebMVC.ViewModels.ProductViewModel
 
 <div class="container">
     <h1>List product</h1>
@@ -18,7 +16,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var product in Model)
+            @foreach (var product in Model.Products)
             {
                 <tr>
                     <th scope="row">@product.ProductId</th>
@@ -35,4 +33,9 @@
             }
         </tbody>
     </table>
+    <h3>Paging</h3>
+    <a asp-controller="Product" asp-action="TestList" asp-route-page="@Model.Pageable.StartPage">Start page: @Model.Pageable.StartPage</a>
+    <a asp-controller="Product" asp-action="TestList" asp-route-page="@Model.Pageable.CurrentPage">Current page: @Model.Pageable.CurrentPage</a>
+    <a asp-controller="Product" asp-action="TestList" asp-route-page="@Model.Pageable.EndPage">End page: @Model.Pageable.EndPage</a>
+    <h5>TotalProducts: @Model.Pageable.TotalItems</h5>
 </div>

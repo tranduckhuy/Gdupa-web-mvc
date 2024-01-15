@@ -12,6 +12,8 @@ namespace WarehouseWebMVC.Models.Domain
         [Required]
         public int QuantityAtBeginPeriod { get; set; }
         [Required]
+        public int QuantityImport { get; set; }
+        [Required]
         public double PriceImport { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime CreatedAt { get; set; }

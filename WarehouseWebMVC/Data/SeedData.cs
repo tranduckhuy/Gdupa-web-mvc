@@ -164,10 +164,10 @@ namespace WarehouseWebMVC.Data
             );
 
             modelBuilder.Entity<Warehouse>().HasData(
-                new Warehouse { WarehouseId = 1, ProductId = 1, Quantity = 10, QuantityAtBeginPeriod = 0, PriceImport = 1399.99 },
-                new Warehouse { WarehouseId = 2, ProductId = 2, Quantity = 3, QuantityAtBeginPeriod = 0, PriceImport = 1199.99 },
-                new Warehouse { WarehouseId = 3, ProductId = 3, Quantity = 20, QuantityAtBeginPeriod = 0, PriceImport = 115 },
-                new Warehouse { WarehouseId = 4, ProductId = 4, Quantity = 16, QuantityAtBeginPeriod = 0, PriceImport = 99.99 }
+                new Warehouse { WarehouseId = 1, ProductId = 1, Quantity = 10, QuantityAtBeginPeriod = 0, QuantityImport = 10, PriceImport = 1399.99 },
+                new Warehouse { WarehouseId = 2, ProductId = 2, Quantity = 3, QuantityAtBeginPeriod = 0, QuantityImport = 3, PriceImport = 1199.99 },
+                new Warehouse { WarehouseId = 3, ProductId = 3, Quantity = 20, QuantityAtBeginPeriod = 0, QuantityImport = 20, PriceImport = 115 },
+                new Warehouse { WarehouseId = 4, ProductId = 4, Quantity = 16, QuantityAtBeginPeriod = 0, QuantityImport = 16, PriceImport = 99.99 }
             );
         }
     }

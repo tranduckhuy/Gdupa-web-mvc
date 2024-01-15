@@ -197,6 +197,7 @@ namespace WarehouseWebMVC.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Quantity = table.Column<int>(type: "INTEGER", nullable: false),
                     QuantityAtBeginPeriod = table.Column<int>(type: "INTEGER", nullable: false),
+                    QuantityImport = table.Column<int>(type: "INTEGER", nullable: false),
                     PriceImport = table.Column<double>(type: "REAL", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
                     ProductId = table.Column<long>(type: "INTEGER", nullable: false)
@@ -345,13 +346,13 @@ namespace WarehouseWebMVC.Migrations
 
             migrationBuilder.InsertData(
                 table: "Warehouse",
-                columns: new[] { "WarehouseId", "PriceImport", "ProductId", "Quantity", "QuantityAtBeginPeriod" },
+                columns: new[] { "WarehouseId", "PriceImport", "ProductId", "Quantity", "QuantityAtBeginPeriod", "QuantityImport" },
                 values: new object[,]
                 {
-                    { 1L, 1399.99, 1L, 10, 0 },
-                    { 2L, 1199.99, 2L, 3, 0 },
-                    { 3L, 115.0, 3L, 20, 0 },
-                    { 4L, 99.989999999999995, 4L, 16, 0 }
+                    { 1L, 1399.99, 1L, 10, 0, 10 },
+                    { 2L, 1199.99, 2L, 3, 0, 3 },
+                    { 3L, 115.0, 3L, 20, 0, 20 },
+                    { 4L, 99.989999999999995, 4L, 16, 0, 16 }
                 });
 
             migrationBuilder.CreateIndex(
