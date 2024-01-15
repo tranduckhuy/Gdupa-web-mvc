@@ -1,8 +1,9 @@
-@using WarehouseWebMVC.Models.Domain;
+@using WarehouseWebMVC.Models.DTOs;
 @{
     ViewData["Title"] = "Products";
 }
 
+@model List<ProductDTO>;
 <!-- sherah Dashboard -->
 <section class="sherah-adashboard sherah-show">
 				<div class="container">
@@ -30,44 +31,45 @@
                                             <!-- sherah Table Head -->
                                             <thead class="sherah-table__head">
                                                 <tr>
-                                                    <th class="sherah-table__column-1 sherah-table__h1">Product ID</th>
-                                                    <th class="sherah-table__column-2 sherah-table__h2">Product Name</th>
+                                                    <th class="sherah-table__column-1 sherah-table__h1">Product Name</th>
+                                                    <th class="sherah-table__column-2 sherah-table__h2">Supplier Name</th>
                                                     <th class="sherah-table__column-3 sherah-table__h3">Price</th>
-                                                    <th class="sherah-table__column-4 sherah-table__h4">Stock</th>
-                                                    <th class="sherah-table__column-5 sherah-table__h5">Unit</th>
-                                                    <th class="sherah-table__column-6 sherah-table__h6">Category</th>
+                                                    <th class="sherah-table__column-4 sherah-table__h4">Category</th>
+                                                    <th class="sherah-table__column-5 sherah-table__h5">Trademark</th>
+                                                    <th class="sherah-table__column-6 sherah-table__h6">Unit</th>
 													<th class="sherah-table__column-7 sherah-table__h7">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody class="sherah-table__body">
-                                                <tr>
+                                                @foreach(var product in Model){
+                                                    <tr>
                                                     <td class="sherah-table__column-1 sherah-table__data-1">
                                                         <div class="sherah-language-form__input">
                                                             <input class="sherah-language-form__check" id="checkbox" name="checkbox" type="checkbox">
-                                                            <p class="crany-table__product--number"><a href="#" class="sherah-color1">#Kz025418</a></p>
+                                                            <p class="crany-table__product--number"><a href="#" class="sherah-color1">@product.Name</a></p>
                                                         </div>
                                                     </td>
                                                     <td class="sherah-table__column-2 sherah-table__data-2">
 														<div class="sherah-table__product-content">
-															<p class="sherah-table__product-desc">Product 1</p>
+															<p class="sherah-table__product-desc">@product.Supplier.Name</p>
 														</div>
                                                     </td>
                                                     <td class="sherah-table__column-3 sherah-table__data-3">
-                                                        <p class="sherah-table__product-desc">$99.99</p>
+                                                        <p class="sherah-table__product-desc">$@product.Price</p>
                                                     </td>
                                                     <td class="sherah-table__column-4 sherah-table__data-4">
 														<div class="sherah-table__product-content">
-														    <p class="sherah-table__product-desc">10</p>
+														    <p class="sherah-table__product-desc">@product.Category.Name</p>
 														</div>
                                                     </td>
                                                     <td class="sherah-table__column-5 sherah-table__data-5">
 														<div class="sherah-table__product-content">
-															<p class="sherah-table__product-desc">Unit</p>
+															<p class="sherah-table__product-desc">@product.Brand.Name</p>
 														</div>
                                                     </td>
                                                     <td class="sherah-table__column-6 sherah-table__data-6">
 														<div class="sherah-table__product-content">
-															<p class="sherah-table__product-desc">Category 1</p>
+															<p class="sherah-table__product-desc">@product.Unit</p>
 														</div>
                                                     </td>
 													<td class="sherah-table__column-7 sherah-table__data-7">
@@ -91,6 +93,7 @@
 														</div>
                                                     </td>
                                                 </tr>
+                                                }
                                             </tbody>
                                         </table>
 									</div>
