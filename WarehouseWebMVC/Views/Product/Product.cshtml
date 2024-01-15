@@ -96,6 +96,17 @@
                                             </tbody>
                                         </table>
 									</div>
+                                    <div class="row mg-top-40">
+                                       <div class="sherah-pagination">
+                                          <ul class="sherah-pagination__list">
+                                    <li class="sherah-pagination__button"><a href="/Product/Product?page=@(Model.Pageable.CurrentPage > 1 ? Model.Pageable.CurrentPage - 1 : 1)"><i class="fas fa-angle-left"></i></a></li>
+                                            @for(var i = Model.Pageable.StartPage; i <= Model.Pageable.EndPage; i++){
+                                                <li class="@(Model.Pageable.CurrentPage == i ? "active" : "")"><a href="/Product/Product?page=@i">@i</a></li>
+                                            }
+                                            <li class="sherah-pagination__button"><a href="/Product/Product?page=@(Model.Pageable.CurrentPage > Model.Pageable.EndPage ? Model.Pageable.CurrentPage + 1 : Model.Pageable.EndPage)"><i class="fas fa-angle-right"></i></a></li>
+                                          </ul>
+                                       </div>
+                                    </div>
 								</div>
 								<!-- End Dashboard Inner -->
 							</div>
