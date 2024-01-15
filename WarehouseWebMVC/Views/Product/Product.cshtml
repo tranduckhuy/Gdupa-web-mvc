@@ -1,9 +1,8 @@
-@using WarehouseWebMVC.Models.DTOs;
 @{
     ViewData["Title"] = "Products";
 }
 
-@model List<ProductDTO>;
+@model WarehouseWebMVC.ViewModels.ProductViewModel;
 <!-- sherah Dashboard -->
 <section class="sherah-adashboard sherah-show">
 				<div class="container">
@@ -41,38 +40,38 @@
                                                 </tr>
                                             </thead>
                                             <tbody class="sherah-table__body">
-                                                @foreach(var product in Model){
+                                                @foreach(var product in Model.Products){
                                                     <tr>
-                                                    <td class="sherah-table__column-1 sherah-table__data-1">
+                                                    <td class="sherah-table__column-1 sherah-table__data-1" style="width: 30%;">
                                                         <div class="sherah-language-form__input">
                                                             <input class="sherah-language-form__check" id="checkbox" name="checkbox" type="checkbox">
-                                                            <p class="crany-table__product--number"><a href="#" class="sherah-color1">@product.Name</a></p>
+                                                            <p class="crany-table__product--number"><a href="#" class="sherah-color1" style="font-size: 1rem;">@product.Name</a></p>
                                                         </div>
                                                     </td>
-                                                    <td class="sherah-table__column-2 sherah-table__data-2">
+                                                    <td class="sherah-table__column-2 sherah-table__data-2" style="width: 15%;">
 														<div class="sherah-table__product-content">
 															<p class="sherah-table__product-desc">@product.Supplier.Name</p>
 														</div>
                                                     </td>
-                                                    <td class="sherah-table__column-3 sherah-table__data-3">
+                                                    <td class="sherah-table__column-3 sherah-table__data-3" style="width: 8%;">
                                                         <p class="sherah-table__product-desc">$@product.Price</p>
                                                     </td>
-                                                    <td class="sherah-table__column-4 sherah-table__data-4">
+                                                    <td class="sherah-table__column-4 sherah-table__data-4" style="width: 10%;">
 														<div class="sherah-table__product-content">
 														    <p class="sherah-table__product-desc">@product.Category.Name</p>
 														</div>
                                                     </td>
-                                                    <td class="sherah-table__column-5 sherah-table__data-5">
+                                                    <td class="sherah-table__column-5 sherah-table__data-5" style="width: 10%;">
 														<div class="sherah-table__product-content">
 															<p class="sherah-table__product-desc">@product.Brand.Name</p>
 														</div>
                                                     </td>
-                                                    <td class="sherah-table__column-6 sherah-table__data-6">
+                                                    <td class="sherah-table__column-6 sherah-table__data-6" style="width: 8%;">
 														<div class="sherah-table__product-content">
 															<p class="sherah-table__product-desc">@product.Unit</p>
 														</div>
                                                     </td>
-													<td class="sherah-table__column-7 sherah-table__data-7">
+													<td class="sherah-table__column-7 sherah-table__data-7" style="width: 15%;">
 														<div class="sherah-table__status__group">
 															<a asp-area="" asp-controller="Product" asp-action="ProductDetail" class="sherah-table__action sherah-color1 sherah-color1__bg--opactity">
 																<i class="fa-regular fa-eye"></i>

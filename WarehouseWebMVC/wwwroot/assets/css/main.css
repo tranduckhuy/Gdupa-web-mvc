@@ -2734,6 +2734,7 @@ Version:	1.0.0
 
     .sherah-table__right .sherah-header__form-inner {
         width: 290px;
+        sherah-table__column-3
     }
 
 #sherah-table__main_filter {
