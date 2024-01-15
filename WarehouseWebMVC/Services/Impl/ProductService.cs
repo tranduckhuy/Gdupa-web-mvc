@@ -50,23 +50,28 @@ namespace WarehouseWebMVC.Services.Impl
 
 		public ProductViewModel GetAll(int page)
 		{
+			
+			var totalProducts = _dataContext.Products.Count();
+			const int pageSize = 2;
+            if (page < 1)
+            {
+                page = 1;
+            }
+            var pageable = new Pageable(totalProducts, page, pageSize);
+
+			int skipAmount = (pageable.CurrentPage - 1) * pageSize;
+            
 			var products = _dataContext.Products
-				.Include(p => p.Supplier)
+				.Skip(skipAmount)
+                .Take(pageSize)
+                .Include(p => p.Supplier)
 				.Include(p => p.Category)
 				.Include(p => p.Brand)
-				.Include(p => p.ProductImgs);
-
-			var totalProducts = products.Count();
-			const int pageSize = 2;
-			var pageable = new Pageable(totalProducts, page, pageSize);
-
-			int skipAmount = (page - 1) * pageSize;
-            
-			var productsDto = _mapper.Map<List<ProductDTO>>(products)
-				.Skip(skipAmount)
-				.Take(pageSize)
+				.Include(p => p.ProductImgs)
 				.OrderBy(p => p.ProductId)
-				.ToList();
+                .ToList();
+
+            var productsDto = _mapper.Map<List<ProductDTO>>(products);
 
 			var productViewModel = new ProductViewModel { Products = productsDto, Pageable = pageable };
 
