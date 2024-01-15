@@ -12,6 +12,5 @@
 		lengthMenu: 'Showing _MENU_',
 		searchPlaceholder: 'Search...',
 		search: '<span class="sherah-data-table-label">Search</span>',
-
 	}
 });

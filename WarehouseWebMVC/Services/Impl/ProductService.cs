@@ -51,6 +51,7 @@ namespace WarehouseWebMVC.Services.Impl
 		public ProductViewModel GetAll(int page)
 		{
 			var products = _dataContext.Products
+				.Include(p => p.Supplier)
 				.Include(p => p.Category)
 				.Include(p => p.Brand)
 				.Include(p => p.ProductImgs);

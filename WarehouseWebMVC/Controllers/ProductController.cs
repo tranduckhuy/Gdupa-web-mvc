@@ -19,7 +19,7 @@ namespace WarehouseWebMVC.Controllers
             _productService = productService;
         }
 
-        [HttpGet("{page}")]
+        [HttpGet]
         public IActionResult Product(int page = 1)
         {
             ProductViewModel productViewModel = _productService.GetAll(page);
