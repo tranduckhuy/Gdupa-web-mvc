@@ -28,6 +28,7 @@
                     <td>
                         <a asp-controller="Product" asp-action="TestDetail" asp-route-productId="@product.ProductId">Details</a>
                         <a asp-action="TestEdit" asp-controller="Product">Edit</a>
+                        <a href="/Product/DeleteProduct?productId=@product.ProductId">Delete</a>
                     </td>
                 </tr>
             }
