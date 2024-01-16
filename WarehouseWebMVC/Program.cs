@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using WarehouseWebMVC.Data;
 using WarehouseWebMVC.MappingProfiles;
+using WarehouseWebMVC.Service;
 using WarehouseWebMVC.Services;
 using WarehouseWebMVC.Services.Impl;
 
@@ -14,6 +15,7 @@ builder.Services.AddDbContext<DataContext>(
 
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 
