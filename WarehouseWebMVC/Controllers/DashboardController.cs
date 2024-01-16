@@ -21,7 +21,10 @@ namespace WarehouseWebMVC.Controllers
                 Response.Headers.Add("Cache-Control", "no-store, no-cache, must-revalidate, post-check=0, pre-check=0");
                 Response.Headers.Add("Pragma", "no-cache");
                 Response.Headers.Add("Expires", "0");
-                return View();
+                ViewBag.User = HttpContext.Session.GetString("User");
+                ViewBag.Name = HttpContext.Session.GetString("Name");
+				ViewBag.Address = HttpContext.Session.GetString("Address");
+				return View();
             }
             return RedirectToAction("Login", "Authentication");
         }

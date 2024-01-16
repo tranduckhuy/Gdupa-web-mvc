@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using WarehouseWebMVC.Data;
+using WarehouseWebMVC.Models.Domain;
 using WarehouseWebMVC.Models.DTOs;
 using WarehouseWebMVC.Service;
 
@@ -28,4 +29,9 @@ public class UserService : IUserService
 
         return false;
     }
+
+    public User GetUserByEmail(UserDTO userDTO)
+    {
+		return _dataContext.Users.FirstOrDefault(u => u.Email == userDTO.Email);
+	}
 }

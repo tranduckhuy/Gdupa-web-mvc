@@ -60,7 +60,10 @@ namespace WarehouseWebMVC.Controllers
 				var loginSuccess = _userService.CheckLogin(userDTO);
 				if (loginSuccess)
 				{
+					var user = _userService.GetUserByEmail(userDTO);
 					HttpContext.Session.SetString("User", userDTO.Email.ToString());
+					HttpContext.Session.SetString("Name", user.Name.ToString());
+					HttpContext.Session.SetString("Address", user.Address.ToString());
 					return RedirectToAction("Dashboard", "Dashboard");
 				}
 			}
