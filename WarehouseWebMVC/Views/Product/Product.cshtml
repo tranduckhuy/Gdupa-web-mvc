@@ -2,6 +2,16 @@
     ViewData["Title"] = "Products";
 }
 
+@{
+    var message = TempData["Message"] as string;
+}
+@if (!string.IsNullOrEmpty(message))
+{
+    <div class="alert alert-success">
+        @ViewBag.Message
+    </div>
+}
+
 @model WarehouseWebMVC.ViewModels.ProductViewModel;
 <!-- sherah Dashboard -->
 <section class="sherah-adashboard sherah-show">

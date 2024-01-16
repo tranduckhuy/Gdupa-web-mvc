@@ -1,14 +1,15 @@
-﻿using WarehouseWebMVC.Models.DTOs;
+﻿using WarehouseWebMVC.Models.DTOs.ProductDTO;
 using WarehouseWebMVC.ViewModels;
 
 namespace WarehouseWebMVC.Services
 {
-	public interface IProductService
+    public interface IProductService
 	{
 		ProductViewModel GetAll(int page);
-		ProductDTO GetById(long productId);
-		ProductDTO Add(ProductDTO productDTO);
-		bool Update(ProductDTO productDTO);
+        CRUProductVM GetById(long productId);
+        CRUProductVM Add(CRUProductVM addProductVM);
+		bool Update(CRUProductVM addProductVM);
 		bool Delete(long id);
-	}
+		CRUProductVM GetInfoAddProduct();
+    }
 }

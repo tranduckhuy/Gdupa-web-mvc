@@ -1,14 +1,14 @@
 ﻿@model WarehouseWebMVC.ViewModels.ProductViewModel
 
-<div class="container">
+<div style="margin-left: 300px;">
     <h1>List product</h1>
+    <div><a style="background-color: cornflowerblue; color: white; padding: 6px 10px" href="/Product/TestAdd">Add Product</a></div>
     <table class="table table-sm">
         <thead>
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
                 <th scope="col">Price</th>
-                <th scope="col">Quantity</th>
                 <th scope="col">Unit</th>
                 <th scope="col">Category</th>
                 <th scope="col">Brand</th>
@@ -28,6 +28,7 @@
                     <td>
                         <a asp-controller="Product" asp-action="TestDetail" asp-route-productId="@product.ProductId">Details</a>
                         <a asp-action="TestEdit" asp-controller="Product">Edit</a>
+                        <a href="/Product/DeleteProduct?productId=@product.ProductId">Delete</a>
                     </td>
                 </tr>
             }

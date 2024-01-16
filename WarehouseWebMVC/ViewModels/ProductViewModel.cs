@@ -1,5 +1,5 @@
 ﻿using WarehouseWebMVC.Models;
-using WarehouseWebMVC.Models.DTOs;
+using WarehouseWebMVC.Models.DTOs.ProductDTO;
 
 namespace WarehouseWebMVC.ViewModels
 {

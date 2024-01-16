@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using WarehouseWebMVC.Models;
-using WarehouseWebMVC.Models.DTOs;
+using WarehouseWebMVC.Models.Domain;
+using WarehouseWebMVC.Models.DTOs.ProductDTO;
 using WarehouseWebMVC.Services;
 using WarehouseWebMVC.ViewModels;
 
 namespace WarehouseWebMVC.Controllers
 {
-    //[Route("Product/[action]")]
     public class ProductController : Controller
     {
         private readonly ILogger<ProductController> _logger;
@@ -27,15 +27,29 @@ namespace WarehouseWebMVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult AddProduct()
+        public IActionResult TestList(int page = 1)
         {
-            return View();
+            ProductViewModel productViewModel = _productService.GetAll(page);
+            return View(productViewModel);
         }
 
         [HttpGet]
-        public IActionResult UpdateProduct()
+        public IActionResult AddProduct()
         {
-            return View();
+            var addProductVM = _productService.GetInfoAddProduct();
+            return View(addProductVM);
+        }
+
+        [HttpGet]
+        public IActionResult UpdateProduct(long productId)
+        {
+            var updateProduct = _productService.GetById(productId);
+            if (updateProduct.Product == null)
+            {
+                TempData["Message"] = "Product not found. Please select a valid product.";
+                return RedirectToAction("Product");
+            }
+            return View("UpdateProduct", updateProduct);
         }
 
         [HttpGet]
@@ -45,67 +59,39 @@ namespace WarehouseWebMVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddProduct(ProductDTO productDTO)
+        public IActionResult AddProduct([FromForm] CRUProductVM addProductVM)
         {
-            if (ModelState.IsValid)
+            if (_productService.Add(addProductVM) != null)
             {
-                if (_productService.Add(productDTO) != null)
-                {
-                    return RedirectToAction("Product");
-                }
-                else
-                {
-                    return View("AddProduct", new { Message = "Error", Data = productDTO });
-                }
-
+                TempData["Message"] = "Product added successfully";
+                return RedirectToAction("Product");
             }
-            else
-            {
-                return View("AddProduct", new { Message = "Error" });
-            }
+            TempData["Message"] = "Failed to add the product";
+            return View("AddProduct", addProductVM);
         }
 
         [HttpPut]
-        public IActionResult UpdateProduct(ProductDTO productDTO)
+        public IActionResult UpdateProduct([FromForm] CRUProductVM addProductVM)
         {
-            if (ModelState.IsValid)
+            if (_productService.Add(addProductVM) != null)
             {
-                if (_productService.Update(productDTO))
-                {
-                    return RedirectToAction("Product");
-                }
-                else
-                {
-                    return View("UpdateProduct", new { Message = "Error", Data = productDTO });
-                }
-
-            }
-            else
-            {
-                return View("UpdateProduct", new { Message = "Error" });
-            }
-        }
-
-        [HttpDelete]
-        public IActionResult DeleteProduct(long productId)
-        {
-            if (ModelState.IsValid)
-            {
-                if (_productService.Delete(productId))
-                {
-                    return RedirectToAction("Product");
-                }
-                else
-                {
-                    // chưa xử lý
-                    return RedirectToAction("Product");
-                }
-            }
-            else
-            {
-                // chưa xử lý
+                TempData["Message"] = "Product updated successfully";
                 return RedirectToAction("Product");
             }
+            TempData["Message"] = "Failed to add the product";
+            return View("UpdateProduct", addProductVM);
+        }
+
+        [HttpGet]
+        public IActionResult DeleteProduct(long productId)
+        {
+            if (_productService.Delete(productId))
+            {
+                TempData["Message"] = "Product deleted successfully";
+                return RedirectToAction("Product");
+            }
+            TempData["Message"] = "Failed to delete the product";
+            return RedirectToAction("Product");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -114,26 +100,5 @@ namespace WarehouseWebMVC.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        //Test
-        [HttpGet]
-        public IActionResult TestList(int page = 1)
-        {
-            ProductViewModel productViewModel = _productService.GetAll(page);
-            return View(productViewModel);
-        }
-
-        //Test
-        [HttpGet("{productId}")]
-        public IActionResult TestDetail(long productId)
-        {
-            ProductDTO productDTO = _productService.GetById(productId);
-
-            if (productDTO == null)
-            {
-                return RedirectToAction("TestList");
-            }
-
-            return View("TestDetail", productDTO);
-        }
     }
 }
