@@ -8,6 +8,19 @@
 
 @model WarehouseWebMVC.ViewModels.ProductViewModel;
 <div id="toast"></div>
+@if (!string.IsNullOrEmpty(message))
+{
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            toast({
+                title: "Success",
+                message: "Product deleted successfully",
+                type: "success",
+                duration: 3000,
+            });
+        });
+    </script>
+}
 
 <!-- sherah Dashboard -->
 <section class="sherah-adashboard sherah-show">
@@ -161,14 +174,4 @@
     </div>
 </section>
 <!-- End sherah Dashboard -->
-@if (!string.IsNullOrEmpty(message))
-{
-    <script>
-        toast({
-            title: "Success",
-            message: @ViewBag.Message,
-            type: "success",
-            duration: 3000,
-        });
-    </script>
-}
+

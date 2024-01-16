@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using WarehouseWebMVC.Models;
 using WarehouseWebMVC.Models.Domain;
@@ -8,46 +9,64 @@ using WarehouseWebMVC.Services.Impl;
 
 namespace WarehouseWebMVC.Controllers
 {
-    public class AuthenticationController : Controller
-    {
-        private readonly ILogger<AuthenticationController> _logger;
+	public class AuthenticationController : Controller
+	{
+		private readonly ILogger<AuthenticationController> _logger;
 
-        private readonly IUserService _userService;
+		private readonly IUserService _userService;
 
-        public AuthenticationController(ILogger<AuthenticationController> logger, IUserService userService)
+		public AuthenticationController(ILogger<AuthenticationController> logger, IUserService userService)
+		{
+			_logger = logger;
+			_userService = userService;
+		}
+
+		[HttpGet]
+		public IActionResult Login()
+		{
+			if (HttpContext.Session.GetString("User") == null)
+			{
+				return View();
+			}
+			else
+			{
+				return RedirectToAction("Dashboard", "Dashboard");
+			}
+		}
+
+        public IActionResult Logout()
         {
-            _logger = logger;
-            _userService = userService;
-        }
-
-        public IActionResult Login()
-        {
-            return View();
+			HttpContext.Session.Clear();
+			HttpContext.Session.Remove("User");
+            return RedirectToAction("Index", "Home", new { v = DateTime.Now.Ticks });
         }
 
         public IActionResult ForgotPassword()
-        {
-            return View();
-        }
+		{
+			return View();
+		}
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+		public IActionResult Error()
+		{
+			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+		}
 
-        [HttpPost]
-        public IActionResult Login(UserDTO userDTO)
-        {
-            var loginSuccess = _userService.CheckLogin(userDTO);
-            if (loginSuccess)
-            {
-                return RedirectToAction("Dashboard", "Dashboard");
-            }
+		[HttpPost]
+		public IActionResult Login(UserDTO userDTO)
+		{
+			if (HttpContext.Session.GetString("User") == null)
+			{
+				var loginSuccess = _userService.CheckLogin(userDTO);
+				if (loginSuccess)
+				{
+					HttpContext.Session.SetString("User", userDTO.Email.ToString());
+					return RedirectToAction("Dashboard", "Dashboard");
+				}
+			}
+			ModelState.AddModelError(string.Empty, "Login fail!!");
+			return View("Login");
+		}
 
-            ModelState.AddModelError(string.Empty, "Login fail!!");
-            return View("Login");
-        }
-
-    }
+	}
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Diagnostics;
 using WarehouseWebMVC.Models;
 using WarehouseWebMVC.Models.Domain;
@@ -19,11 +20,19 @@ namespace WarehouseWebMVC.Controllers
             _productService = productService;
         }
 
+        [Filter]
         [HttpGet]
         public IActionResult Product(int page = 1)
         {
-            ProductViewModel productViewModel = _productService.GetAll(page);
-            return View(productViewModel);
+            if (HttpContext.Session.GetString("User") != null)
+            {
+                Response.Headers.Add("Cache-Control", "no-store, no-cache, must-revalidate, post-check=0, pre-check=0");
+                Response.Headers.Add("Pragma", "no-cache");
+                Response.Headers.Add("Expires", "0");
+                ProductViewModel productViewModel = _productService.GetAll(page);
+                return View(productViewModel);
+            }
+            return RedirectToAction("Login", "Authentication");
         }
 
         [HttpGet]
@@ -33,29 +42,53 @@ namespace WarehouseWebMVC.Controllers
             return View(productViewModel);
         }
 
+        [Filter]
         [HttpGet]
         public IActionResult AddProduct()
         {
-            var addProductVM = _productService.GetInfoAddProduct();
-            return View(addProductVM);
+            if (HttpContext.Session.GetString("User") != null)
+            {
+                Response.Headers.Add("Cache-Control", "no-store, no-cache, must-revalidate, post-check=0, pre-check=0");
+                Response.Headers.Add("Pragma", "no-cache");
+                Response.Headers.Add("Expires", "0");
+                var addProductVM = _productService.GetInfoAddProduct();
+                return View(addProductVM);
+            }
+            return RedirectToAction("Login", "Authentication");
         }
 
+        [Filter]
         [HttpGet]
         public IActionResult UpdateProduct(long productId)
         {
-            var updateProduct = _productService.GetById(productId);
-            if (updateProduct.Product == null)
+            if (HttpContext.Session.GetString("User") != null)
             {
-                TempData["Message"] = "Product not found. Please select a valid product.";
-                return RedirectToAction("Product");
+                Response.Headers.Add("Cache-Control", "no-store, no-cache, must-revalidate, post-check=0, pre-check=0");
+                Response.Headers.Add("Pragma", "no-cache");
+                Response.Headers.Add("Expires", "0");
+                var updateProduct = _productService.GetById(productId);
+                if (updateProduct.Product == null)
+                {
+                    TempData["Message"] = "Product not found. Please select a valid product.";
+                    return RedirectToAction("Product");
+                }
+                return View("UpdateProduct", updateProduct);
             }
-            return View("UpdateProduct", updateProduct);
+            return RedirectToAction("Login", "Authentication");
         }
 
+        [Filter]
         [HttpGet]
         public IActionResult ProductDetail()
         {
-            return View();
+            if (HttpContext.Session.GetString("User") != null)
+            {
+                Response.Headers.Add("Cache-Control", "no-store, no-cache, must-revalidate, post-check=0, pre-check=0");
+                Response.Headers.Add("Pragma", "no-cache");
+                Response.Headers.Add("Expires", "0");
+                return View();
+            }
+            return RedirectToAction("Login", "Authentication");
         }
 
         [HttpPost]
