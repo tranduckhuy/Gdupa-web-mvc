@@ -23,6 +23,11 @@ namespace WarehouseWebMVC.Controllers
 			return View();
 		}
 
+		public IActionResult SupplierInformation()
+		{
+			return View();
+		}
+
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 		public IActionResult Error()
 		{

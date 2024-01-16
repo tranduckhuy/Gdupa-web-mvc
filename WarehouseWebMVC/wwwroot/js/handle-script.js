@@ -17,7 +17,9 @@
                 confirmButtonText: 'OK'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = './Product/DeleteProduct?id=' + id;
+                    var currentPath = window.location.pathname;
+                    var newPath = currentPath.replace("/Product/Product", "/Product/DeleteProduct") + '?id=' + id;
+                    window.location.href = newPath;
                 }
             });
         }
