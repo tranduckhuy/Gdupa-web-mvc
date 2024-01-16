@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace WarehouseWebMVC.Models.DTOs;
+﻿namespace WarehouseWebMVC.Models.DTOs;
 
 public class UserDTO
 {
