@@ -1,6 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using WarehouseWebMVC.Models;
+using WarehouseWebMVC.Models.Domain;
+using WarehouseWebMVC.Models.DTOs;
+using WarehouseWebMVC.Service;
+using WarehouseWebMVC.Services.Impl;
 
 namespace WarehouseWebMVC.Controllers
 {
@@ -8,17 +12,15 @@ namespace WarehouseWebMVC.Controllers
     {
         private readonly ILogger<AuthenticationController> _logger;
 
-        public AuthenticationController(ILogger<AuthenticationController> logger)
+        private readonly IUserService _userService;
+
+        public AuthenticationController(ILogger<AuthenticationController> logger, IUserService userService)
         {
             _logger = logger;
+            _userService = userService;
         }
 
         public IActionResult Login()
-        {
-            return View();
-        }
-
-        public IActionResult Register()
         {
             return View();
         }
@@ -33,5 +35,19 @@ namespace WarehouseWebMVC.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        [HttpPost]
+        public IActionResult Login(UserDTO userDTO)
+        {
+            var loginSuccess = _userService.CheckLogin(userDTO);
+            if (loginSuccess)
+            {
+                return RedirectToAction("Dashboard", "Dashboard");
+            }
+
+            ModelState.AddModelError(string.Empty, "Login fail!!");
+            return View("Login");
+        }
+
     }
 }

@@ -1,6 +1,8 @@
-﻿namespace WarehouseWebMVC.Service
+﻿using WarehouseWebMVC.Models.DTOs;
+
+namespace WarehouseWebMVC.Service;
+
+public interface IUserService
 {
-    public interface IUserService
-    {
-    }
+    public bool CheckLogin(UserDTO userDTO);
 }
