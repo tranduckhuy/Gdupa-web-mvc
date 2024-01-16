@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using WarehouseWebMVC.Models;
+using WarehouseWebMVC.Models.Domain;
 using WarehouseWebMVC.Models.DTOs;
 using WarehouseWebMVC.Services;
 using WarehouseWebMVC.ViewModels;
@@ -45,24 +46,13 @@ namespace WarehouseWebMVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddProduct(ProductDTO productDTO)
+        public IActionResult AddProduct([FromForm] ProductDTO productDTO)
         {
-            if (ModelState.IsValid)
+            if (_productService.Add(productDTO) != null)
             {
-                if (_productService.Add(productDTO) != null)
-                {
-                    return RedirectToAction("Product");
-                }
-                else
-                {
-                    return View("AddProduct", new { Message = "Error", Data = productDTO });
-                }
-
+                return RedirectToAction("Product");
             }
-            else
-            {
-                return View("AddProduct", new { Message = "Error" });
-            }
+            return View("AddProduct", new { Message = "Error", Data = productDTO });
         }
 
         [HttpPut]
@@ -122,6 +112,12 @@ namespace WarehouseWebMVC.Controllers
             return View(productViewModel);
         }
 
+        [HttpGet]
+        public IActionResult TestAdd()
+        {
+            return View();
+        }
+
         //Test
         [HttpGet("{productId}")]
         public IActionResult TestDetail(long productId)
@@ -134,6 +130,18 @@ namespace WarehouseWebMVC.Controllers
             }
 
             return View("TestDetail", productDTO);
+        }
+
+        [HttpPost]
+        public IActionResult TestAdd([FromForm] ProductDTO productDTO)
+        {
+            if (_productService.Add(productDTO) != null)
+            {
+                TempData["Message"] = "Product added successfully";
+                return RedirectToAction("Product");
+            }
+            TempData["ErrorMessage"] = "Failed to add product";
+            return View("AddProduct");
         }
     }
 }
