@@ -7,12 +7,9 @@
 @{
     var message = TempData["Message"] as string;
 }
-@if (!string.IsNullOrEmpty(message))
-{
-    <div class="alert alert-success">
-        @ViewBag.Message
-    </div>
-}
+
+<div id="toast"></div>
+
 <!-- sherah Dashboard -->
 <section class="sherah-adashboard sherah-show">
     <div class="container">
@@ -60,7 +57,8 @@
                                                     <div class="form-group">
                                                         <label class="sherah-wc__form-label">Supplier*</label>
                                                         <select class="form-group__input" aria-label="Default select example">
-                                                            @foreach (var supplier in Model.Suppliers) {
+                                                            @foreach (var supplier in Model.Suppliers)
+                                                            {
                                                                 <option selected="" value="@supplier.SupplierId">@supplier.Name</option>
                                                             }
                                                         </select>
@@ -72,28 +70,6 @@
                                                         <div class="form-group__input">
                                                             <textarea class="tinymce" id="description" asp-for="Product.Description" placeholder="Type here" type="text" name="description"></textarea>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6 col-md-6 col-12">
-                                                    <div class="form-group">
-                                                        <label class="sherah-wc__form-label">Category*</label>
-                                                        <select class="form-group__input" aria-label="Default select example">
-                                                            @foreach (var category in Model.Categorys)
-                                                            {
-                                                                <option selected="" value="@category.CategoryId">@category.Name</option>
-                                                            }
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6 col-md-6 col-12">
-                                                    <div class="form-group">
-                                                        <label class="sherah-wc__form-label">Brand*</label>
-                                                        <select class="form-group__input" aria-label="Default select example">
-                                                            @foreach (var brand in Model.Brands)
-                                                            {
-                                                                <option selected="" value="@brand.BrandId">@brand.Name</option>
-                                                            }
-                                                        </select>
                                                     </div>
                                                 </div>
                                             </div>
@@ -124,20 +100,35 @@
                                         <div class="product-form-box sherah-border mg-top-30">
                                             <h4 class="form-title m-0">Specification</h4>
                                             <div class="row">
-                                                <div class="col-lg-6 col-md-6 col-12">
+                                                <div class="col-lg-4 col-md-6 col-12">
                                                     <div class="form-group">
-                                                        <label class="sherah-wc__form-label">Stock</label>
-                                                        <div class="form-group__input">
-                                                            <input class="sherah-wc__form-input" placeholder="Type here" type="text" name="p_title">
-                                                        </div>
+                                                        <label class="sherah-wc__form-label">Category*</label>
+                                                        <select class="form-group__input" aria-label="Default select example">
+                                                            @foreach (var category in Model.Categorys)
+                                                            {
+                                                                <option selected="" value="@category.CategoryId">@category.Name</option>
+                                                            }
+                                                        </select>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-6 col-md-6 col-12">
+                                                <div class="col-lg-4 col-md-6 col-12">
+                                                    <div class="form-group">
+                                                        <label class="sherah-wc__form-label">Brand*</label>
+                                                        <select class="form-group__input" aria-label="Default select example">
+                                                            @foreach (var brand in Model.Brands)
+                                                            {
+                                                                <option selected="" value="@brand.BrandId">@brand.Name</option>
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-6 col-12">
                                                     <div class="form-group">
                                                         <label class="sherah-wc__form-label">Unit</label>
-                                                        <div class="form-group__input">
-                                                            <input class="sherah-wc__form-input" asp-for="Product.Unit" placeholder="Type here" type="text" name="p_title">
-                                                        </div>
+                                                        <select class="form-group__input" aria-label="Default select example">
+                                                            <option selected="" value="1">Piece</option>
+                                                            <option selected="" value="2">Pair</option>
+                                                        </select>
                                                     </div>
                                                 </div>
                                             </div>
@@ -216,3 +207,14 @@
     </div>
 </section>
 <!-- End sherah Dashboard -->
+@if (!string.IsNullOrEmpty(message))
+{
+    <script>
+        toast({
+            title: "Success",
+            message: @ViewBag.Message,
+            type: "success",
+            duration: 3000,
+        });
+    </script>
+}
