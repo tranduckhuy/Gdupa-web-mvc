@@ -761,7 +761,7 @@ namespace WarehouseWebMVC.Migrations
                     b.HasOne("WarehouseWebMVC.Models.Domain.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Invoice");
@@ -810,7 +810,7 @@ namespace WarehouseWebMVC.Migrations
             modelBuilder.Entity("WarehouseWebMVC.Models.Domain.Warehouse", b =>
                 {
                     b.HasOne("WarehouseWebMVC.Models.Domain.Product", "Product")
-                        .WithMany("Warehouses")
+                        .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -836,8 +836,6 @@ namespace WarehouseWebMVC.Migrations
             modelBuilder.Entity("WarehouseWebMVC.Models.Domain.Product", b =>
                 {
                     b.Navigation("ProductImgs");
-
-                    b.Navigation("Warehouses");
                 });
 
             modelBuilder.Entity("WarehouseWebMVC.Models.Domain.Supplier", b =>

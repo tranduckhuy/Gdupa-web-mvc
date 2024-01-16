@@ -17,6 +17,7 @@ namespace WarehouseWebMVC.Models.Domain
         public double PriceImport { get; set; }
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime CreatedAt { get; set; }
+        // foreign key ProductId
         public long ProductId { get; set; }
         public Product Product { get; set; } = null!;
 

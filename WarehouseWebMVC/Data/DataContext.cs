@@ -76,10 +76,14 @@ namespace WarehouseWebMVC.Data
             }
 
             modelBuilder.Entity<InvoiceDetail>()
-            .HasOne(p => p.Product)
+            .HasOne(invoiceDetail => invoiceDetail.Product)
             .WithMany()
-            .HasForeignKey(p => p.ProductId)
-            .OnDelete(DeleteBehavior.NoAction);
+            .HasForeignKey(p => p.ProductId);
+
+            modelBuilder.Entity<Warehouse>()
+            .HasOne(warehouse => warehouse.Product)
+            .WithMany()
+            .HasForeignKey(warehouse => warehouse.ProductId);
 
             modelBuilder.Seed();
         }
