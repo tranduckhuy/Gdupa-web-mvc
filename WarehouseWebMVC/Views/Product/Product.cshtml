@@ -57,9 +57,9 @@
                                         <th class="sherah-table__column-2 sherah-table__h2" style="width: 15%;padding-left:10px;">Supplier Name</th>
                                         <th class="sherah-table__column-3 sherah-table__h3" style="width: 10%;padding-left:10px;">Price</th>
                                         <th class="sherah-table__column-4 sherah-table__h4" style="width: 10%;padding-left:0;">Category</th>
-                                        <th class="sherah-table__column-5 sherah-table__h5" style="width: 10%;padding-left:0;">Brand</th>
-                                        <th class="sherah-table__column-6 sherah-table__h6" style="width: 10%;padding-left:0;">Unit</th>
-                                        <th class="sherah-table__column-7 sherah-table__h7" style="width: 15%;padding-left:0;">Action</th>
+                                        <th class="sherah-table__column-5 sherah-table__h5" style="width: 10%;padding-left:5px;">Brand</th>
+                                        <th class="sherah-table__column-6 sherah-table__h6" style="width: 10%;padding-left:5px;">Unit</th>
+                                        <th class="sherah-table__column-7 sherah-table__h7" style="width: 15%;padding-left:5px;">Action</th>
                                     </tr>
                                 </thead>
                                 <!--style="height: 100%;"-->
@@ -78,20 +78,20 @@
                                                     <p class="sherah-table__product-desc"><a asp-area="" asp-controller="Supplier" asp-action="SupplierList" class="sherah-color1" style="font-size: 1rem; font-weight: 400">@product.Supplier.Name</a></p>
                                                 </div>
                                             </td>
-                                            <td class="sherah-table__column-3 sherah-table__data-3" style="width: 10%;min-width:80px;padding:12px;text-align:left;">
+                                            <td class="sherah-table__column-3 sherah-table__data-3" style="width: 10%;min-width:80px;padding:12px 12px 12px 0;text-align:left;">
                                                 <p class="sherah-table__product-desc">$@product.Price</p>
                                             </td>
-                                            <td class="sherah-table__column-4 sherah-table__data-4" style="width: 10%;min-width:80px;padding:12px;text-align:left;">
+                                            <td class="sherah-table__column-4 sherah-table__data-4" style="width: 10%;min-width:80px;padding:12px 12px 12px 0;text-align:left;">
                                                 <div class="sherah-table__product-content">
                                                     <p class="sherah-table__product-desc">@product.Category.Name</p>
                                                 </div>
                                             </td>
-                                            <td class="sherah-table__column-5 sherah-table__data-5" style="width: 10%;min-width:80px;padding:12px;text-align:left;">
+                                            <td class="sherah-table__column-5 sherah-table__data-5" style="width: 10%;min-width:80px;padding:12px 12px 12px 0;text-align:left;">
                                                 <div class="sherah-table__product-content">
                                                     <p class="sherah-table__product-desc">@product.Brand.Name</p>
                                                 </div>
                                             </td>
-                                            <td class="sherah-table__column-6 sherah-table__data-6" style="width: 10%;min-width:80px;padding:12px;text-align:left;">
+                                            <td class="sherah-table__column-6 sherah-table__data-6" style="width: 10%;min-width:80px;padding:12px 12px 12px 0;text-align:left;">
                                                 <div class="sherah-table__product-content">
                                                     <p class="sherah-table__product-desc">@product.Unit</p>
                                                 </div>
