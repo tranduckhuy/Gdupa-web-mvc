@@ -222,15 +222,3 @@
         </div>
     </div>
 </section>
-<!-- End sherah Dashboard -->
-@if (!string.IsNullOrEmpty(message))
-{
-    <script>
-        toast({
-            title: "Success",
-            message: @ViewBag.Message,
-            type: "success",
-            duration: 3000,
-        });
-    </script>
-}
