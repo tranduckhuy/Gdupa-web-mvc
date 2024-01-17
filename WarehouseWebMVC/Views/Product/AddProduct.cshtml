@@ -9,6 +9,22 @@
 }
 
 <div id="toast"></div>
+@if (!string.IsNullOrEmpty(message))
+{
+    if ("Failed".Equals(message))
+    {
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                toast({
+                    title: "Failed",
+                    message: "Oops! Action failed. Please try again.",
+                    type: "danger",
+                    duration: 3000,
+                });
+            });
+        </script>
+    }
+}
 
 <!-- sherah Dashboard -->
 <section class="sherah-adashboard sherah-show">
@@ -207,14 +223,3 @@
     </div>
 </section>
 <!-- End sherah Dashboard -->
-@if (!string.IsNullOrEmpty(message))
-{
-    <script>
-        toast({
-            title: "Success",
-            message: @ViewBag.Message,
-            type: "success",
-            duration: 3000,
-        });
-    </script>
-}

@@ -1,5 +1,6 @@
 @{
     Layout = "/Views/Shared/_LayoutHome.cshtml";
+    var isLoggedIn = !string.IsNullOrEmpty(ViewBag.User);
 }
 <!-- ======= Hero Section ======= -->
 <section id="hero" class="d-flex align-items-center">
@@ -10,7 +11,15 @@
                 <h1>Better Solutions For Your Business</h1>
                 <h2>We are a team of leading experts in the field of e-commerce Warehouse Management and optimization.</h2>
                 <div class="d-flex justify-content-center justify-content-lg-start">
-                    <a asp-area="" asp-controller="Authentication" asp-action="Login" class="btn-get-started">Sign In</a>
+                   
+                    @if (isLoggedIn)
+                    {
+                        <a asp-area="" asp-controller="Dashboard" asp-action="Dashboard" class="btn-get-started">Dashboard</a>
+                    }
+                    else
+                    {
+                        <a asp-area="" asp-controller="Authentication" asp-action="Login" class="btn-get-started">Sign In</a>
+                    }
                     <a href="https://www.youtube.com/watch?v=JV0dEgbX5yk" class="glightbox btn-watch-video"><i class="bi bi-play-circle"></i><span>Watch Video</span></a>
                 </div>
             </div>
