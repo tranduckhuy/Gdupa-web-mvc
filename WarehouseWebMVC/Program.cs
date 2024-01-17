@@ -16,6 +16,8 @@ builder.Services.AddDbContext<DataContext>(
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IWarehouseService, WarehouseSerivce>();
+
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(20);

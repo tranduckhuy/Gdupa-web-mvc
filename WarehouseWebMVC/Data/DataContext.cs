@@ -14,6 +14,7 @@ namespace WarehouseWebMVC.Data
         public DbSet<Brand> Brand { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductImg> ProductImgs { get; set; }
+        public DbSet<Warehouse> Warehouse { get; set; }
 
         public DataContext() { }
 
