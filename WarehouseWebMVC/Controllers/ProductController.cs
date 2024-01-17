@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Diagnostics;
+using WarehouseWebMVC.Data;
 using WarehouseWebMVC.Models;
 using WarehouseWebMVC.Models.Domain;
 using WarehouseWebMVC.Models.DTOs.ProductDTO;
@@ -32,6 +33,7 @@ namespace WarehouseWebMVC.Controllers
                 ProductViewModel productViewModel = _productService.GetAll(page);
                 return View(productViewModel);
             }
+            TempData["Message"] = AppConstant.MESSAGE_NOT_LOGIN;
             return RedirectToAction("Login", "Authentication");
         }
 
@@ -54,6 +56,7 @@ namespace WarehouseWebMVC.Controllers
                 var addProductVM = _productService.GetInfoAddProduct();
                 return View(addProductVM);
             }
+            TempData["Message"] = AppConstant.MESSAGE_NOT_LOGIN;
             return RedirectToAction("Login", "Authentication");
         }
 
@@ -69,11 +72,12 @@ namespace WarehouseWebMVC.Controllers
                 var updateProduct = _productService.GetById(productId);
                 if (updateProduct.Product == null)
                 {
-                    TempData["Message"] = "Product not found. Please select a valid product.";
+                    TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
                     return RedirectToAction("Product");
                 }
                 return View("UpdateProduct", updateProduct);
             }
+            TempData["Message"] = AppConstant.MESSAGE_NOT_LOGIN;
             return RedirectToAction("Login", "Authentication");
         }
 
@@ -88,6 +92,7 @@ namespace WarehouseWebMVC.Controllers
                 Response.Headers.Add("Expires", "0");
                 return View();
             }
+            TempData["Message"] = AppConstant.MESSAGE_NOT_LOGIN;
             return RedirectToAction("Login", "Authentication");
         }
 
@@ -96,10 +101,10 @@ namespace WarehouseWebMVC.Controllers
         {
             if (_productService.Add(addProductVM) != null)
             {
-                TempData["Message"] = "Product added successfully";
+                TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
                 return RedirectToAction("Product");
             }
-            TempData["Message"] = "Failed to add the product";
+            TempData["Message"] = AppConstant.MESSAGE_FAILED;
             return View("AddProduct", addProductVM);
         }
 
@@ -108,10 +113,10 @@ namespace WarehouseWebMVC.Controllers
         {
             if (_productService.Add(addProductVM) != null)
             {
-                TempData["Message"] = "Product updated successfully";
+                TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
                 return RedirectToAction("Product");
             }
-            TempData["Message"] = "Failed to add the product";
+            TempData["Message"] = AppConstant.MESSAGE_FAILED;
             return View("UpdateProduct", addProductVM);
         }
 
@@ -120,10 +125,10 @@ namespace WarehouseWebMVC.Controllers
         {
             if (_productService.Delete(productId))
             {
-                TempData["Message"] = "Product deleted successfully";
+                TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
                 return RedirectToAction("Product");
             }
-            TempData["Message"] = "Failed to delete the product";
+            TempData["Message"] = AppConstant.MESSAGE_FAILED;
             return RedirectToAction("Product");
         }
 

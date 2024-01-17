@@ -363,5 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 
 # ignore appsetting
-WarehouseWebMVC/appsettings.json
 /WarehouseWebMVC/appsettings.json
