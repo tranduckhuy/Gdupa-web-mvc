@@ -10,16 +10,31 @@
 <div id="toast"></div>
 @if (!string.IsNullOrEmpty(message))
 {
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            toast({
-                title: "Success",
-                message: "Product deleted successfully",
-                type: "success",
-                duration: 3000,
+    if ("Success".Equals(message))
+    {
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                toast({
+                    title: "Success",
+                    message: "Success! Action complete.",
+                    type: "success",
+                    duration: 3000,
+                });
             });
-        });
-    </script>
+        </script>
+    } else if ("Failed".Equals(message))
+    {
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                toast({
+                    title: "Failed",
+                    message: "Oops! Action failed. Please try again.",
+                    type: "danger",
+                    duration: 3000,
+                });
+            });
+        </script>
+    }
 }
 
 <!-- sherah Dashboard -->
