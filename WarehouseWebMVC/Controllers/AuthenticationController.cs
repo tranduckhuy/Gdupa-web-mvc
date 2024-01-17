@@ -98,7 +98,7 @@ public class AuthenticationController : Controller
                 return RedirectToAction("Dashboard", "Dashboard");
             } else
             {
-                TempData["Message"] = "Login Failed!!";
+                TempData["Message"] = "Wrong account or password!!";
                 return RedirectToAction("Login");
             }
         }
