@@ -1,5 +1,3 @@
-
-
 /* global firebase */
 
 const firebaseConfig = {
@@ -12,28 +10,49 @@ const firebaseConfig = {
     measurementId: "G-PRCMHB6MQL"
 };
 
-
 firebase.initializeApp(firebaseConfig);
 
 // get elements
-var uploader1 = document.getElementById('uploader1');
-var uploader2 = document.getElementById('uploader2');
 var fileButton1 = document.getElementById('productImage1');
 var fileButton2 = document.getElementById('productImage2');
 
+// Function to create ProgressBar
+function createProgressBar(containerId) {
+    return new ProgressBar.Line(containerId, {
+        strokeWidth: 4,
+        easing: 'easeInOut',
+        duration: 1400,
+        color: '#FFEA82',
+        trailColor: '#eee',
+        trailWidth: 1,
+        svgStyle: { width: '100%', height: '100%' },
+        text: {
+            style: {
+                color: '#999',
+                position: 'absolute',
+                left: '40%',
+                top: '50%',
+                padding: 0,
+                margin: 0,
+                transform: null
+            },
+            autoStyleContainer: false
+        },
+        from: { color: '#FFEA82' },
+        to: { color: '#ED6A5A' },
+        step: (state, bar) => {
+            bar.setText(Math.round(bar.value() * 100) + ' %');
+        }
+    });
+}
+
 // listen for file selection
-fileButton1.addEventListener('change', e => addImage(e, "proImage1", "imgDiv1", uploader1));
-fileButton2.addEventListener('change', e => addImage(e, "proImage2", "imgDiv2", uploader2));
+fileButton1.addEventListener('change', e => addImage(e, "proImage1", "imgDiv1", "progress-container1"));
+fileButton2.addEventListener('change', e => addImage(e, "proImage2", "imgDiv2", "progress-container2"));
 
-function addImage(e, imageId, containerId, uploader) {
-
-    // what happened
-    console.log('file upload event', e);
-
+function addImage(e, imageId, containerId, progressBarContainer) {
     // get file
     var file = e.target.files[0];
-    console.log('e.target: ', e.target);
-    console.log('e.target.files: ', e.target.files);
 
     // create a storage ref
     const storageRef = firebase.storage().ref();
@@ -43,27 +62,18 @@ function addImage(e, imageId, containerId, uploader) {
     // Upload the file with the unique filename
     var uploadTask = storageRef.child('productImage/' + uniqueFilename).put(file);
 
+    // Display the progress bar
+    progressBarContainer.innerHTML = '';
+    var progressBar = createProgressBar('#' + progressBarContainer);
 
     // The part below is largely copy-pasted from the 'Full Example' section from
     // https://firebase.google.com/docs/storage/web/upload-files
 
     // update progress bar
     uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
-        function (snapshot) {
-            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            uploader.value = progress;
-            console.log('Upload is ' + progress + '% done');
-            switch (snapshot.state) {
-                case firebase.storage.TaskState.PAUSED: // or 'paused'
-                    console.log('Upload is paused');
-                    break;
-                case firebase.storage.TaskState.RUNNING: // or 'running'
-                    console.log('Upload is running');
-                    break;
-            }
+        function () {
+            progressBar.animate(1.0); // Number from 0.0 to 1.0
         }, function (error) {
-
             // A full list of error codes is available at
             // https://firebase.google.com/docs/storage/web/handle-errors
             switch (error.code) {
@@ -81,7 +91,6 @@ function addImage(e, imageId, containerId, uploader) {
             // Upload completed successfully, now we can get the download URL
             // save this link somewhere, e.g. put it in an input field
             var downloadURL = uploadTask.snapshot.downloadURL;
-            console.log('downloadURL ===>', downloadURL);
             let divLocation = document.getElementById(containerId);
 
             let oldImg = divLocation.querySelector("img");
@@ -95,6 +104,9 @@ function addImage(e, imageId, containerId, uploader) {
             imgElement.src = downloadURL;
             divLocation.append(imgElement);
             document.getElementById(imageId).value = downloadURL;
+
+            var divProgressBar = document.getElementById(progressBarContainer);
+            divProgressBar.innerHTML = '' // Remove progress bar when done
         });
 }
 
