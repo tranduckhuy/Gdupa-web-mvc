@@ -51,6 +51,11 @@ public class AuthenticationController : Controller
         return View();
     }
 
+    public IActionResult ResetPassword()
+    {
+        return View();
+    }
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
@@ -89,11 +94,15 @@ public class AuthenticationController : Controller
                     Response.Cookies.Delete("rememberMePassword");
                     Response.Cookies.Delete("rememberMeChecked");
                 }
+                TempData["Message"] = "Login Successfully!!";
                 return RedirectToAction("Dashboard", "Dashboard");
+            } else
+            {
+                TempData["Message"] = "Login Failed!!";
+                return RedirectToAction("Login");
             }
         }
-        ModelState.AddModelError(string.Empty, "Login fail!!");
-        return View("Login");
+        return RedirectToAction("Login");
     }
 
 }

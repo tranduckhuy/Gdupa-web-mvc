@@ -2,6 +2,23 @@
 	ViewData["Title"] = "Dashborad";
 	Layout = "_Layout";
 }
+@{
+	var message = TempData["Message"] as string;
+}
+<div id="toast"></div>
+@if (!string.IsNullOrEmpty(message))
+{
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			toast({
+				title: "Success",
+				message: '@message',
+				type: "success",
+				duration: 3000,
+			});
+		});
+	</script>
+}
 
 <!-- Start Dashboard -->
 <section class="sherah-adashboard sherah-show">
