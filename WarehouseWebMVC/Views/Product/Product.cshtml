@@ -132,10 +132,10 @@
                                             </td>
                                             <td class="sherah-table__column-7 sherah-table__data-7" style="width: 15%;min-width:120px;padding:12px 12px 12px 0;margin-left:10px;">
                                                 <div class="sherah-table__status__group" style="justify-content:unset">
-                                                    <a asp-area="" asp-controller="Product" asp-action="ProductDetail" class="sherah-table__action sherah-color1 sherah-color1__bg--opactity">
+                                                    <a href="/Product/ProductDetail?productId=@product.ProductId" class="sherah-table__action sherah-color1 sherah-color1__bg--opactity">
                                                         <i class="fa-regular fa-eye"></i>
                                                     </a>
-                                                    <a asp-area="" asp-controller="Product" asp-action="UpdateProduct" class="sherah-table__action sherah-color4 sherah-color4__bg--opactity">
+                                                    <a href="/Product/UpdateProduct?productId=@product.ProductId" class="sherah-table__action sherah-color4 sherah-color4__bg--opactity">
                                                         <i class="fa-regular fa-pen-to-square"></i>
                                                     </a>
                                                     <a href="#" onclick="handleDelete(@product.ProductId)" class="sherah-table__action sherah-color2 sherah-color2__bg--offset">

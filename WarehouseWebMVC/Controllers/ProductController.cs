@@ -69,7 +69,7 @@ namespace WarehouseWebMVC.Controllers
                 Response.Headers.Add("Cache-Control", "no-store, no-cache, must-revalidate, post-check=0, pre-check=0");
                 Response.Headers.Add("Pragma", "no-cache");
                 Response.Headers.Add("Expires", "0");
-                var updateProduct = _productService.GetById(productId);
+                var updateProduct = _productService.GetByIdForCRU(productId);
                 if (updateProduct.Product == null)
                 {
                     TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
@@ -83,14 +83,20 @@ namespace WarehouseWebMVC.Controllers
 
         [Filter]
         [HttpGet]
-        public IActionResult ProductDetail()
+        public IActionResult ProductDetail(long productId)
         {
             if (HttpContext.Session.GetString("User") != null)
             {
                 Response.Headers.Add("Cache-Control", "no-store, no-cache, must-revalidate, post-check=0, pre-check=0");
                 Response.Headers.Add("Pragma", "no-cache");
                 Response.Headers.Add("Expires", "0");
-                return View();
+                var product = _productService.GetById(productId);
+                if (product == null)
+                {
+                    TempData["Message"] = AppConstant.MESSAGE_FAILED;
+                    return RedirectToAction("Product");
+                }
+                return View(product);
             }
             TempData["Message"] = AppConstant.MESSAGE_NOT_LOGIN;
             return RedirectToAction("Login", "Authentication");

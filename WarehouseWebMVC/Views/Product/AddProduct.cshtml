@@ -75,7 +75,7 @@
                                                         <select class="form-group__input" aria-label="Default select example">
                                                             @foreach (var supplier in Model.Suppliers)
                                                             {
-                                                                <option selected="" value="@supplier.SupplierId">@supplier.Name</option>
+                                                                <option value="@supplier.SupplierId">@supplier.Name</option>
                                                             }
                                                         </select>
                                                     </div>
@@ -122,7 +122,7 @@
                                                         <select class="form-group__input" aria-label="Default select example">
                                                             @foreach (var category in Model.Categorys)
                                                             {
-                                                                <option selected="" value="@category.CategoryId">@category.Name</option>
+                                                                <option value="@category.CategoryId">@category.Name</option>
                                                             }
                                                         </select>
                                                     </div>
@@ -133,7 +133,7 @@
                                                         <select class="form-group__input" aria-label="Default select example">
                                                             @foreach (var brand in Model.Brands)
                                                             {
-                                                                <option selected="" value="@brand.BrandId">@brand.Name</option>
+                                                                <option value="@brand.BrandId">@brand.Name</option>
                                                             }
                                                         </select>
                                                     </div>
@@ -142,8 +142,8 @@
                                                     <div class="form-group">
                                                         <label class="sherah-wc__form-label">Unit</label>
                                                         <select class="form-group__input" aria-label="Default select example">
-                                                            <option selected="" value="1">Piece</option>
-                                                            <option selected="" value="2">Pair</option>
+                                                            <option value="1">Piece</option>
+                                                            <option value="2">Pair</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -223,14 +223,3 @@
     </div>
 </section>
 <!-- End sherah Dashboard -->
-@if (!string.IsNullOrEmpty(message))
-{
-    <script>
-        toast({
-            title: "Success",
-            message: @ViewBag.Message,
-            type: "success",
-            duration: 3000,
-        });
-    </script>
-}

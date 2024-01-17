@@ -80,14 +80,14 @@ public class ProductService : IProductService
         return productViewModel;
     }
 
-    public CRUProductVM GetById(long id)
+    public CRUProductVM GetByIdForCRU(long productId)
     {
         var product = _dataContext.Products
             .Include(p => p.Category)
             .Include(p => p.Brand)
             .Include(p => p.Supplier)
             .Include(p => p.ProductImgs)
-            .FirstOrDefault(p => p.ProductId == id);
+            .FirstOrDefault(p => p.ProductId == productId);
 
         var productDTO = product != null ? _mapper.Map<CURProductDTO>(product) : null!;
         if (productDTO != null)
@@ -97,6 +97,18 @@ public class ProductService : IProductService
             return productVM;
         }
         return null!;
+    }
+
+    public ProductDTO GetById(long productId)
+    {
+        var product = _dataContext.Products
+            .Include(p => p.Category)
+            .Include(p => p.Brand)
+            .Include(p => p.Supplier)
+            .Include(p => p.ProductImgs)
+            .FirstOrDefault(p => p.ProductId == productId);
+
+        return product != null ? _mapper.Map<ProductDTO>(product) : null!;
     }
 
     public CRUProductVM GetInfoAddProduct()

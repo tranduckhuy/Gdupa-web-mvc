@@ -6,7 +6,8 @@ namespace WarehouseWebMVC.Services
     public interface IProductService
 	{
 		ProductViewModel GetAll(int page);
-        CRUProductVM GetById(long productId);
+        CRUProductVM GetByIdForCRU(long productId);
+        ProductDTO GetById(long productId);
         CRUProductVM Add(CRUProductVM addProductVM);
 		bool Update(CRUProductVM addProductVM);
 		bool Delete(long id);
