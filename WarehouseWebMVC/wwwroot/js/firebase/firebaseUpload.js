@@ -30,11 +30,11 @@ function createProgressBar(containerId) {
             style: {
                 color: '#999',
                 position: 'absolute',
-                left: '40%',
-                top: '50%',
+                left: '50%',
+                top: '8px',
                 padding: 0,
                 margin: 0,
-                transform: null
+                transform: 'translateX(0, -50%)'
             },
             autoStyleContainer: false
         },
@@ -106,7 +106,9 @@ function addImage(e, imageId, containerId, progressBarContainer) {
             document.getElementById(imageId).value = downloadURL;
 
             var divProgressBar = document.getElementById(progressBarContainer);
-            divProgressBar.innerHTML = '' // Remove progress bar when done
+            setTimeout(function () {
+                divProgressBar.innerHTML = '';
+            }, 1500)
         });
 }
 
