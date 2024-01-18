@@ -46,15 +46,67 @@ public class AuthenticationController : Controller
         return RedirectToAction("Index", "Home", new { v = DateTime.Now.Ticks });
     }
 
+    [HttpGet]
     public IActionResult ForgotPassword()
     {
-        return View();
+       return View();
     }
 
+    [HttpGet]
     public IActionResult ResetPassword()
     {
         return View();
     }
+
+    [HttpPost]
+    public IActionResult ResetPassword(UserDTO userDTO)
+    {
+        if (userDTO.NewPassword != userDTO.ConfirmPassword)
+        {
+            TempData["Message"] = "New password and confirm password do not match.";
+            return RedirectToAction("ResetPassword", new { token = userDTO.ResetToken });
+        }
+
+        var success = _userService.ResetPassword(userDTO.NewPassword, HttpContext.Session);
+
+        if (success)
+        {
+            TempData["Message"] = "Password reset successfully. You can now log in with your new password.";
+            return RedirectToAction("Login");
+        }
+        else
+        {
+            TempData["Message"] = "Invalid or expired reset password token.";
+            return RedirectToAction("ForgotPassword");
+        }
+    }
+
+    [HttpPost]
+    public IActionResult ForgotPassword(UserDTO userDTO)
+    {
+        var userEmail = userDTO.Email;
+
+        if (string.IsNullOrEmpty(userEmail))
+        {
+            TempData["Message"] = "Please provide a valid email address.";
+            return RedirectToAction("ForgotPassword");
+        }
+
+        var sentSuccessfully = _userService.SendResetPasswordEmail(userEmail, HttpContext.Session, HttpContext);
+
+        if (sentSuccessfully)
+        {
+            TempData["Message"] = "An email with instructions to reset your password has been sent to your email address.";
+            return RedirectToAction("ForgotPassword");
+        }
+        else
+        {
+            TempData["Message"] = "Invalid email address. Please try again.";
+            return RedirectToAction("ForgotPassword");
+        }
+    }
+
+
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
