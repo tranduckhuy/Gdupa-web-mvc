@@ -6,5 +6,6 @@
         public const string MESSAGE_SUCCESSFUL = "Success";
         public const string MESSAGE_NOT_LOGIN = "NotLoginYet";
         public const string MESSAGE_WRONG_INFO = "WrongInfo";
+        public const string MESSAGE_NULL = "Null";
     }
 }

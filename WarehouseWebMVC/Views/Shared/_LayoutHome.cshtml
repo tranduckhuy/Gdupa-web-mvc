@@ -1,5 +1,6 @@
 @{
-    var isLoggedIn = !string.IsNullOrEmpty(ViewBag.User);
+    var isLoggedIn = !string.IsNullOrEmpty(ViewContext.HttpContext.Session.GetString("User"));
+    var name = ViewContext.HttpContext.Session.GetString("Name");
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -51,7 +52,7 @@
                     <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
                     @if (isLoggedIn)
                     {
-                        <li><a class="nav-link scrollto" asp-area="" asp-controller="Dashboard" asp-action="Dashboard">@ViewBag.Name</a></li>
+                        <li><a asp-area="" asp-controller="Dashboard" asp-action="Dashboard">@name</a></li>
                     }
                     else
                     {

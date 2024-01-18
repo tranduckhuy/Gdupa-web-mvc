@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using WarehouseWebMVC.Data;
 using WarehouseWebMVC.Models;
 using WarehouseWebMVC.Models.DTOs;
 using WarehouseWebMVC.Service;
@@ -61,9 +62,18 @@ public class AuthenticationController : Controller
     [HttpPost]
     public IActionResult ResetPassword(UserDTO userDTO)
     {
-        if (userDTO.NewPassword != userDTO.ConfirmPassword)
+        var newPassword = userDTO.NewPassword;
+        var confirmPassword = userDTO.ConfirmPassword;
+
+        if(newPassword == null ||  confirmPassword == null)
         {
-            TempData["Message"] = "New password and confirm password do not match.";
+            TempData["Message"] = AppConstant.MESSAGE_NULL;
+            return RedirectToAction("ResetPassword", new { token = userDTO.ResetToken });
+        }
+
+        if (newPassword != confirmPassword)
+        {
+            TempData["Message"] = AppConstant.MESSAGE_WRONG_INFO;
             return RedirectToAction("ResetPassword", new { token = userDTO.ResetToken });
         }
 
@@ -71,12 +81,12 @@ public class AuthenticationController : Controller
 
         if (success)
         {
-            TempData["Message"] = "Password reset successfully. You can now log in with your new password.";
+            TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
             return RedirectToAction("Login");
         }
         else
         {
-            TempData["Message"] = "Invalid or expired reset password token.";
+            TempData["Message"] = AppConstant.MESSAGE_FAILED;
             return RedirectToAction("ForgotPassword");
         }
     }
@@ -85,10 +95,9 @@ public class AuthenticationController : Controller
     public IActionResult ForgotPassword(UserDTO userDTO)
     {
         var userEmail = userDTO.Email;
-
-        if (string.IsNullOrEmpty(userEmail))
+        if (userEmail == null)
         {
-            TempData["Message"] = "Please provide a valid email address.";
+            TempData["Message"] = AppConstant.MESSAGE_NULL;
             return RedirectToAction("ForgotPassword");
         }
 
@@ -96,65 +105,63 @@ public class AuthenticationController : Controller
 
         if (sentSuccessfully)
         {
-            TempData["Message"] = "An email with instructions to reset your password has been sent to your email address.";
+            TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
             return RedirectToAction("ForgotPassword");
         }
         else
         {
-            TempData["Message"] = "Invalid email address. Please try again.";
+            TempData["Message"] = AppConstant.MESSAGE_WRONG_INFO;
             return RedirectToAction("ForgotPassword");
         }
     }
 
+	[HttpPost]
+	public IActionResult Login(UserDTO userDTO)
+	{
+		if (HttpContext.Session.GetString("User") == null)
+		{
+			var loginSuccess = _userService.CheckLogin(userDTO);
+			if (loginSuccess)
+			{
+				var user = _userService.GetUserByEmail(userDTO);
+				HttpContext.Session.SetString("User", userDTO.Email.ToString());
+				HttpContext.Session.SetString("Name", user.Name.ToString());
+				HttpContext.Session.SetString("Address", user.Address.ToString());
+				var rememberMe = Request.Form["remember-me"].Count > 0;
+				if (rememberMe)
+				{
+					var rememberMeCookie = new CookieOptions
+					{
+						Expires = DateTime.Now.AddDays(30),
+						IsEssential = true
+					};
 
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+					Response.Cookies.Append("rememberMeEmail", userDTO.Email.ToString(), rememberMeCookie);
+					Response.Cookies.Append("rememberMePassword", userDTO.Password.ToString(), rememberMeCookie);
+					Response.Cookies.Append("rememberMeChecked", rememberMe.ToString(), rememberMeCookie);
+				}
+				else
+				{
+					Response.Cookies.Delete("rememberMeEmail");
+					Response.Cookies.Delete("rememberMePassword");
+					Response.Cookies.Delete("rememberMeChecked");
+				}
+				TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
+				return RedirectToAction("Dashboard", "Dashboard");
+			}
+			else
+			{
+				TempData["Message"] = AppConstant.MESSAGE_FAILED;
+				return RedirectToAction("Login");
+			}
+		}
+		return RedirectToAction("Login");
+	}
+
+	[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
-
-    [HttpPost]
-    public IActionResult Login(UserDTO userDTO)
-    {
-        if (HttpContext.Session.GetString("User") == null)
-        {
-            var loginSuccess = _userService.CheckLogin(userDTO);
-            if (loginSuccess)
-            {
-                var user = _userService.GetUserByEmail(userDTO);
-                HttpContext.Session.SetString("User", userDTO.Email.ToString());
-                HttpContext.Session.SetString("Name", user.Name.ToString());
-                HttpContext.Session.SetString("Address", user.Address.ToString());
-                var rememberMe = Request.Form["remember-me"].Count > 0;
-                if (rememberMe)
-                {
-                    var rememberMeCookie = new CookieOptions
-                    {
-                        Expires = DateTime.Now.AddDays(30),
-                        IsEssential = true
-                    };
-
-
-                    Response.Cookies.Append("rememberMeEmail", userDTO.Email.ToString(), rememberMeCookie);
-                    Response.Cookies.Append("rememberMePassword", userDTO.Password.ToString(), rememberMeCookie);
-                    Response.Cookies.Append("rememberMeChecked", rememberMe.ToString(), rememberMeCookie);
-                }
-                else
-                {
-                    Response.Cookies.Delete("rememberMeEmail");
-                    Response.Cookies.Delete("rememberMePassword");
-                    Response.Cookies.Delete("rememberMeChecked");
-                }
-                TempData["Message"] = "Login Successfully!!";
-                return RedirectToAction("Dashboard", "Dashboard");
-            } else
-            {
-                TempData["Message"] = "Wrong account or password!!";
-                return RedirectToAction("Login");
-            }
-        }
-        return RedirectToAction("Login");
-    }
-
 }

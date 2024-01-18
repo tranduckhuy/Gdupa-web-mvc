@@ -890,14 +890,14 @@ Version:	1.0.0
 }
 
 .sherah-dropdown-card.sherah-dropdown-card__profile {
-    right: 110px;
+    right: 0;
     max-width: 240px;
     top: 68px;
     left: initial;
 }
 
     .sherah-dropdown-card.sherah-dropdown-card__profile .sherah-dropdown-arrow {
-        right: 20px;
+        right: 90px;
     }
 
 .sherah-wallet__list-single {
