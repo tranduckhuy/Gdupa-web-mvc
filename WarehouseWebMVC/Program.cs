@@ -4,6 +4,7 @@ using WarehouseWebMVC.MappingProfiles;
 using WarehouseWebMVC.Service;
 using WarehouseWebMVC.Services;
 using WarehouseWebMVC.Services.Impl;
+using WarehouseWebMVC.Services.Mail;
 
 var builder = WebApplication.CreateBuilder(args);
 

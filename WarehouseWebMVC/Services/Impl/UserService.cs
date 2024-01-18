@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using WarehouseWebMVC.Data;
 using WarehouseWebMVC.Models.Domain;
-using WarehouseWebMVC.Models.DTOs;
+using WarehouseWebMVC.Models.DTOs.UserDTO;
 using WarehouseWebMVC.Service;
+using WarehouseWebMVC.Services.Mail;
 
 namespace WarehouseWebMVC.Services.Impl;
 

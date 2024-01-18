@@ -1,5 +1,5 @@
 ﻿using WarehouseWebMVC.Models.Domain;
-using WarehouseWebMVC.Models.DTOs;
+using WarehouseWebMVC.Models.DTOs.UserDTO;
 
 namespace WarehouseWebMVC.Service;
 

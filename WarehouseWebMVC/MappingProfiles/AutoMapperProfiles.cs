@@ -2,14 +2,13 @@
 using WarehouseWebMVC.Models.Domain;
 using WarehouseWebMVC.Models.DTOs.ProductDTO;
 
-namespace WarehouseWebMVC.MappingProfiles
-{
-    public class AutoMapperProfiles : Profile
+namespace WarehouseWebMVC.MappingProfiles;
+
+public class AutoMapperProfiles : Profile
 	{
-        public AutoMapperProfiles()
-        {
+    public AutoMapperProfiles()
+    {
 			CreateMap<Product, ProductDTO>().ReverseMap();
-            CreateMap<Product, CURProductDTO>().ReverseMap();
-        }
+        CreateMap<Product, CURProductDTO>().ReverseMap();
     }
 }

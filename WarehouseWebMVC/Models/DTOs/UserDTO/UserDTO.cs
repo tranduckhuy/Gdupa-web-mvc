@@ -1,4 +1,4 @@
-﻿namespace WarehouseWebMVC.Models.DTOs;
+﻿namespace WarehouseWebMVC.Models.DTOs.UserDTO;
 
 public class UserDTO
 {

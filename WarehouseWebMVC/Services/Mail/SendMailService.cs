@@ -2,14 +2,14 @@
 using Microsoft.Extensions.Options;
 using MimeKit;
 
-namespace WarehouseWebMVC.Services;
+namespace WarehouseWebMVC.Services.Mail;
 
 public class SendMailService
 {
-    MailSettings _mailSettings {  get; set; }
+    MailSettings _mailSettings { get; set; }
 
-    public SendMailService(IOptions<MailSettings> mailSettings) 
-    { 
+    public SendMailService(IOptions<MailSettings> mailSettings)
+    {
         _mailSettings = mailSettings.Value;
     }
 
@@ -33,7 +33,8 @@ public class SendMailService
             await smtp.ConnectAsync(_mailSettings.Host, _mailSettings.Port, SecureSocketOptions.StartTls);
             await smtp.AuthenticateAsync(_mailSettings.Email, _mailSettings.Password);
             await smtp.SendAsync(email);
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             Console.WriteLine(e.Message);
             return "Error " + e.Message;
@@ -49,7 +50,7 @@ public class MailContent
 {
     public string To { get; set; }
 
-    public string Subject { get; set; } 
+    public string Subject { get; set; }
 
     public string Body { get; set; }
 }

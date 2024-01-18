@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using WarehouseWebMVC.Data;
 using WarehouseWebMVC.Models;
-using WarehouseWebMVC.Models.DTOs;
+using WarehouseWebMVC.Models.DTOs.UserDTO;
 using WarehouseWebMVC.Service;
 
 namespace WarehouseWebMVC.Controllers;
