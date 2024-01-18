@@ -10,6 +10,6 @@
         if (xhr.status === 200) {
             console.log(xhr.responseText);
         }
-    };
+    });
     xhr.send(formData);
 });

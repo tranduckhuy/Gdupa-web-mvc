@@ -9,7 +9,7 @@ namespace WarehouseWebMVC.MappingProfiles
         public AutoMapperProfiles()
         {
 			CreateMap<Product, ProductDTO>().ReverseMap();
-			CreateMap<Product, CURProductDTO>().ReverseMap();
+            CreateMap<Product, CURProductDTO>().ReverseMap();
         }
     }
 }

@@ -30,7 +30,7 @@ function createProgressBar(containerId) {
             style: {
                 color: '#999',
                 position: 'absolute',
-                left: '50%',
+                left: '40%',
                 top: '8px',
                 padding: 0,
                 margin: 0,
