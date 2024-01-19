@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WarehouseWebMVC.Data;
 using WarehouseWebMVC.Models;
@@ -19,16 +20,30 @@ public class ProductService : IProductService
         _mapper = mapper;
     }
 
-    public CRUProductVM Add(CRUProductVM AddProductVM)
+    public AddProductDTO Add(AddProductDTO addProductDTO)
     {
         try
         {
-            var product = _mapper.Map<Product>(AddProductVM.Product);
+            var product = _mapper.Map<Product>(addProductDTO);
             if (product != null)
             {
+                // Add product base information
                 _dataContext.Products.Add(product);
                 _dataContext.SaveChanges();
-                return AddProductVM;
+                
+                // Add product images
+                var productId = product.ProductId;
+                _dataContext.ProductImgs.Add(new ProductImg { 
+                    ProductId = productId, 
+                    ImageURL = addProductDTO.ImageURL1 
+                });
+                _dataContext.ProductImgs.Add(new ProductImg
+                {
+                    ProductId = productId,
+                    ImageURL = addProductDTO.ImageURL2
+                });
+                _dataContext.SaveChanges();
+                return addProductDTO;
             }
             return null!;
         }
@@ -89,7 +104,7 @@ public class ProductService : IProductService
             .Include(p => p.ProductImgs)
             .FirstOrDefault(p => p.ProductId == productId);
 
-        var productDTO = product != null ? _mapper.Map<CURProductDTO>(product) : null!;
+        var productDTO = product != null ? _mapper.Map<AddProductDTO>(product) : null!;
         if (productDTO != null)
         {
             var productVM = GetInfoAddProduct();
@@ -116,35 +131,53 @@ public class ProductService : IProductService
         var categories = _dataContext.Category.ToList();
         var suplliers = _dataContext.Suppliers.ToList();
         var brands = _dataContext.Brand.ToList();
+        var units = new List<SelectListItem>();
+        units.Add(new SelectListItem { Text = "Piece", Value = "Piece"});
+        units.Add(new SelectListItem { Text = "Pair", Value = "Pair"});
 
         return new CRUProductVM
         {
-            Categorys = categories,
+            Categories = categories,
             Suppliers = suplliers,
-            Brands = brands
+            Brands = brands,
+            Units = units
         };
     }
 
-    public bool Update(CRUProductVM addProductVM)
-    {
-        try
-        {
-            var existingProduct = _dataContext.Products.FirstOrDefault(p => p.ProductId == addProductVM.Product.ProductId);
+	public bool Update(AddProductDTO updateProductDTO)
+	{
+		try
+		{
+			var existingProduct = _dataContext.Products
+				.Include(p => p.ProductImgs)
+				.FirstOrDefault(p => p.ProductId == updateProductDTO.ProductId);
 
-            if (existingProduct == null)
-            {
-                return false;
-            }
-            var product = _mapper.Map<Product>(addProductVM.Product);
-            _dataContext.Entry(product).State = EntityState.Modified;
-            _dataContext.SaveChanges();
+			if (existingProduct == null)
+			{
+				return false;
+			}
 
-            return true;
-        }
-        catch (Exception)
-        {
-            return false;
-        }
-    }
+			if (updateProductDTO.ImageURL1 != null)
+			{
+				existingProduct.ProductImgs.ElementAt(0).ImageURL = updateProductDTO.ImageURL1;
+			}
+			if (updateProductDTO.ImageURL2 != null)
+			{
+				existingProduct.ProductImgs.ElementAt(1).ImageURL = updateProductDTO.ImageURL2;
+			}
+
+			updateProductDTO.ProductImgs.Add(existingProduct.ProductImgs.ElementAt(0));
+            updateProductDTO.ProductImgs.Add(existingProduct.ProductImgs.ElementAt(1));
+			
+			_mapper.Map(updateProductDTO, existingProduct);
+            var product = existingProduct;
+			_dataContext.SaveChanges();
+			return true;
+		}
+		catch (Exception)
+		{
+			return false;
+		}
+	}
 
 }

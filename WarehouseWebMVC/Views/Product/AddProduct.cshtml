@@ -1,4 +1,5 @@
-@model WarehouseWebMVC.ViewModels.CRUProductVM
+@model WarehouseWebMVC.Models.DTOs.ProductDTO.AddProductDTO
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
     ViewData["Title"] = "Products";
@@ -59,7 +60,7 @@
                                                     <div class="form-group">
                                                         <label class="sherah-wc__form-label">Product Name</label>
                                                         <div class="form-group__input">
-                                                            <input asp-for="Product.Name" class="sherah-wc__form-input" placeholder="Type here" type="text" name="p_title">
+                                                            <input asp-for="Name" class="sherah-wc__form-input" placeholder="Type here" type="text">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -67,26 +68,21 @@
                                                     <div class="form-group">
                                                         <label class="sherah-wc__form-label">Price</label>
                                                         <div class="form-group__input">
-                                                            <input asp-for="Product.Price" class="sherah-wc__form-input" placeholder="Type here" type="text" name="p_title">
+                                                            <input asp-for="Price" class="sherah-wc__form-input" placeholder="Type here" type="text">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-12">
                                                     <div class="form-group">
                                                         <label class="sherah-wc__form-label">Supplier*</label>
-                                                        <select class="form-group__input" aria-label="Default select example">
-                                                            @foreach (var supplier in Model.Suppliers)
-                                                            {
-                                                                <option value="@supplier.SupplierId">@supplier.Name</option>
-                                                            }
-                                                        </select>
+                                                        <select asp-for="SupplierId" asp-items="ViewBag.Suppliers" class="form-group__input" aria-label="Default select example"></select>
                                                     </div>
                                                 </div>
                                                 <div class="col-12">
                                                     <div class="form-group">
                                                         <label class="sherah-wc__form-label">About Description</label>
                                                         <div class="form-group__input">
-                                                            <textarea class="tinymce" id="description" asp-for="Product.Description" placeholder="Type here" type="text" name="description"></textarea>
+                                                            <textarea class="tinymce" id="description" asp-for="Description" placeholder="Type here" type="text"></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -121,32 +117,19 @@
                                                 <div class="col-lg-4 col-md-6 col-12">
                                                     <div class="form-group">
                                                         <label class="sherah-wc__form-label">Category*</label>
-                                                        <select class="form-group__input" aria-label="Default select example">
-                                                            @foreach (var category in Model.Categorys)
-                                                            {
-                                                                <option value="@category.CategoryId">@category.Name</option>
-                                                            }
-                                                        </select>
+                                                        <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-group__input" aria-label="Default select example"></select>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-4 col-md-6 col-12">
                                                     <div class="form-group">
                                                         <label class="sherah-wc__form-label">Brand*</label>
-                                                        <select class="form-group__input" aria-label="Default select example">
-                                                            @foreach (var brand in Model.Brands)
-                                                            {
-                                                                <option value="@brand.BrandId">@brand.Name</option>
-                                                            }
-                                                        </select>
+                                                        <select asp-for="BrandId" asp-items="ViewBag.Brands" class="form-group__input" aria-label="Default select example"></select>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-4 col-md-6 col-12">
                                                     <div class="form-group">
                                                         <label class="sherah-wc__form-label">Unit</label>
-                                                        <select class="form-group__input" aria-label="Default select example">
-                                                            <option value="1">Piece</option>
-                                                            <option value="2">Pair</option>
-                                                        </select>
+                                                        <select asp-for="Unit" asp-items="ViewBag.Units" class="form-group__input" aria-label="Default select example"></select>
                                                     </div>
                                                 </div>
                                             </div>
@@ -159,7 +142,7 @@
                                         <div class="image-upload-group">
                                             <div class="image-upload-group__single image-upload-group__single--upload">
                                                 <input type="file" class="btn-check" value="upload" id="productImage1">
-                                                <input name="proImage1" type="text" id="proImage1" style="display: none">
+                                                <input asp-for="ImageURL1" type="text" id="proImage1" style="display: none">
                                                 <label class="image-upload-label" for="productImage1" style="padding:20px 0;">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="91.787" height="84.116" viewBox="0 0 91.787 84.116">
                                                         <g id="Group_1021" data-name="Group 1021" transform="translate(891.292 39.276)">
@@ -174,7 +157,7 @@
                                             </div>
                                             <div class="image-upload-group__single image-upload-group__single--upload">
                                                 <input type="file" class="btn-check" value="upload" id="productImage2">
-                                                <input name="proImage2" type="text" id="proImage2" style="display: none">
+                                                <input asp-for="ImageURL2" type="text" id="proImage2" style="display: none">
                                                 <label class="image-upload-label" for="productImage2" style="padding:20px 0;">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="91.787" height="84.116" viewBox="0 0 91.787 84.116">
                                                         <g id="Group_1021" data-name="Group 1021" transform="translate(891.292 39.276)">

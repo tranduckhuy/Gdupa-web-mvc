@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Diagnostics;
 using WarehouseWebMVC.Data;
 using WarehouseWebMVC.Models;
+using WarehouseWebMVC.Models.DTOs.ProductDTO;
 using WarehouseWebMVC.Services;
 using WarehouseWebMVC.ViewModels;
 
@@ -51,7 +53,11 @@ public class ProductController : Controller
             Response.Headers.Add("Pragma", "no-cache");
             Response.Headers.Add("Expires", "0");
             var addProductVM = _productService.GetInfoAddProduct();
-            return View(addProductVM);
+            ViewBag.Suppliers = new SelectList(addProductVM.Suppliers, "SupplierId", "Name");
+            ViewBag.Categories = new SelectList(addProductVM.Categories, "CategoryId", "Name");
+            ViewBag.Brands = new SelectList(addProductVM.Brands, "BrandId", "Name");
+            ViewBag.Units = addProductVM.Units;
+            return View();
         }
         TempData["Message"] = AppConstant.MESSAGE_NOT_LOGIN;
         return RedirectToAction("Login", "Authentication");
@@ -69,10 +75,14 @@ public class ProductController : Controller
             var updateProduct = _productService.GetByIdForCRU(productId);
             if (updateProduct.Product == null)
             {
-                TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
+                TempData["Message"] = AppConstant.MESSAGE_FAILED;
                 return RedirectToAction("Product");
             }
-            return View("UpdateProduct", updateProduct);
+            ViewBag.Suppliers = new SelectList(updateProduct.Suppliers, "SupplierId", "Name");
+            ViewBag.Categories = new SelectList(updateProduct.Categories, "CategoryId", "Name");
+            ViewBag.Brands = new SelectList(updateProduct.Brands, "BrandId", "Name");
+            ViewBag.Units = updateProduct.Units;
+            return View("UpdateProduct", updateProduct.Product);
         }
         TempData["Message"] = AppConstant.MESSAGE_NOT_LOGIN;
         return RedirectToAction("Login", "Authentication");
@@ -100,27 +110,32 @@ public class ProductController : Controller
     }
 
     [HttpPost]
-    public IActionResult AddProduct([FromForm] CRUProductVM addProductVM)
+    public IActionResult AddProduct([FromForm] AddProductDTO addProductDTO)
     {
-        if (_productService.Add(addProductVM) != null)
+        if (_productService.Add(addProductDTO) != null)
         {
             TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
             return RedirectToAction("Product");
         }
         TempData["Message"] = AppConstant.MESSAGE_FAILED;
-        return View("AddProduct", addProductVM);
+        var addProductVM = _productService.GetInfoAddProduct();
+        ViewBag.Suppliers = new SelectList(addProductVM.Suppliers, "SupplierId", "Name");
+        ViewBag.Categories = new SelectList(addProductVM.Categories, "CategoryId", "Name");
+        ViewBag.Brands = new SelectList(addProductVM.Brands, "BrandId", "Name");
+        ViewBag.Units = addProductVM.Units;
+        return View();
     }
 
-    [HttpPut]
-    public IActionResult UpdateProduct([FromForm] CRUProductVM addProductVM)
+    [HttpPost]
+    public IActionResult UpdateProduct([FromForm] AddProductDTO updateProductDTO)
     {
-        if (_productService.Add(addProductVM) != null)
+        if (_productService.Update(updateProductDTO))
         {
             TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
             return RedirectToAction("Product");
         }
         TempData["Message"] = AppConstant.MESSAGE_FAILED;
-        return View("UpdateProduct", addProductVM);
+        return RedirectToAction("UpdateProduct", "Product", new { productId = updateProductDTO.ProductId });
     }
 
     [HttpGet]
@@ -140,5 +155,4 @@ public class ProductController : Controller
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
-
 }

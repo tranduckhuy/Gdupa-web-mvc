@@ -84,7 +84,7 @@
                                     <div class="product-detail-body__content">
                                         <h2 class="product-detail-body__title">@Model.Name</h2>
                                         <div class="product-detail-body__text">
-                                            @Model.Description
+                                            @Html.Raw(Model.Description)
                                         </div>
                                         <div class="sherah-border-btm pd-top-40 mg-btm-40"></div>
                                         <div class="sherah-products-meta">
@@ -92,6 +92,7 @@
                                                 <li><span class="p-list-title">Supplier :</span> @Model.Supplier.Name </li>
                                                 <li><span class="p-list-title">Category : </span> @Model.Category.Name </li>
                                                 <li><span class="p-list-title">Brand :</span> @Model.Brand.Name </li>
+                                                <li><span class="p-list-title">Unit :</span> @Model.Unit </li>
                                                 <li>
                                                     <span class="p-list-title">Share:</span>
                                                     <ul class="sherah-contact-info sherah-contact-social">

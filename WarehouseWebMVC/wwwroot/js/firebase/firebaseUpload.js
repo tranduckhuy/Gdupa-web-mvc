@@ -93,7 +93,7 @@ function addImage(e, imageId, containerId, progressBarContainer) {
             var downloadURL = uploadTask.snapshot.downloadURL;
             let divLocation = document.getElementById(containerId);
 
-            let oldImg = divLocation.querySelector("img");
+            let oldImg = divLocation.querySelector("div");
             if (oldImg) {
                 oldImg.parentNode.removeChild(oldImg);
             }
