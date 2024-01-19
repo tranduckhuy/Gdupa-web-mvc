@@ -125,9 +125,12 @@ public class AuthenticationController : Controller
 			{
 				var user = _userService.GetUserByEmail(userDTO);
 				HttpContext.Session.SetString("User", userDTO.Email.ToString());
-				HttpContext.Session.SetString("Name", user.Name.ToString());
-				HttpContext.Session.SetString("Address", user.Address.ToString());
-				var rememberMe = Request.Form["remember-me"].Count > 0;
+                if (user != null)
+                {
+                    HttpContext.Session.SetString("Name", user.Name.ToString());
+                    HttpContext.Session.SetString("Address", user.Address.ToString());
+                }
+                var rememberMe = Request.Form["remember-me"].Count > 0;
 				if (rememberMe)
 				{
 					var rememberMeCookie = new CookieOptions
