@@ -98,11 +98,14 @@ function addImage(e, imageId, containerId, progressBarContainer) {
                 oldImg.parentNode.removeChild(oldImg);
             }
 
+            let divImage = document.createElement("div");
             let imgElement = document.createElement("img");
+            divImage.style.padding = "10px";
             imgElement.style.maxWidth = "200px";
             imgElement.style.maxHeight = "250px";
             imgElement.src = downloadURL;
-            divLocation.append(imgElement);
+            divLocation.append(divImage);
+            divImage.append(imgElement);
             document.getElementById(imageId).value = downloadURL;
 
             var divProgressBar = document.getElementById(progressBarContainer);
