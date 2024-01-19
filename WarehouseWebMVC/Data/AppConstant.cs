@@ -7,4 +7,5 @@ public class AppConstant
     public const string MESSAGE_NOT_LOGIN = "NotLoginYet";
     public const string MESSAGE_WRONG_INFO = "WrongInfo";
     public const string MESSAGE_NULL = "Null";
+    public const string NOT_FOUND = "NotFound";
 }

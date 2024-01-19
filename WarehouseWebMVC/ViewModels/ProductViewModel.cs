@@ -1,4 +1,5 @@
-﻿using WarehouseWebMVC.Models;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using WarehouseWebMVC.Models;
 using WarehouseWebMVC.Models.DTOs.ProductDTO;
 
 namespace WarehouseWebMVC.ViewModels

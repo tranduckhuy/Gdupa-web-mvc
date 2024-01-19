@@ -112,10 +112,13 @@ public class ProductController : Controller
     [HttpPost]
     public IActionResult AddProduct([FromForm] AddProductDTO addProductDTO)
     {
-        if (_productService.Add(addProductDTO) != null)
+        if (ModelState.IsValid)
         {
-            TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
-            return RedirectToAction("Product");
+            if (_productService.Add(addProductDTO) != null)
+            {
+                TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
+                return RedirectToAction("Product");
+            }
         }
         TempData["Message"] = AppConstant.MESSAGE_FAILED;
         var addProductVM = _productService.GetInfoAddProduct();
@@ -129,10 +132,13 @@ public class ProductController : Controller
     [HttpPost]
     public IActionResult UpdateProduct([FromForm] AddProductDTO updateProductDTO)
     {
-        if (_productService.Update(updateProductDTO))
+        if (ModelState.IsValid)
         {
-            TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
-            return RedirectToAction("Product");
+            if (_productService.Update(updateProductDTO))
+            {
+                TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
+                return RedirectToAction("Product");
+            }
         }
         TempData["Message"] = AppConstant.MESSAGE_FAILED;
         return RedirectToAction("UpdateProduct", "Product", new { productId = updateProductDTO.ProductId });
@@ -151,6 +157,22 @@ public class ProductController : Controller
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+
+    [HttpPost]
+    public IActionResult SearchProduct(string searchType, string searchValue)
+    {
+        if (ModelState.IsValid)
+        {
+            var searchProducts = _productService.SearchProduct(searchType, searchValue);
+            if (searchProducts != null)
+            {
+                return View("Product", searchProducts);
+            }
+        }
+        TempData["Message"] = AppConstant.NOT_FOUND;
+        return RedirectToAction("Product");
+    }
+
     public IActionResult Error()
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
