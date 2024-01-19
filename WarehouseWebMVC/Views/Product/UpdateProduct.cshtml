@@ -12,12 +12,14 @@
     {
         <script>
             document.addEventListener('DOMContentLoaded', function () {
-                toast({
-                    title: "Failed",
-                    message: "Oops! Action failed. Please try again.",
-                    type: "danger",
-                    duration: 3000,
-                });
+                setTimeout(function () {
+                    toast({
+                        title: "Failed",
+                        message: "Oops! Action failed. Please try again.",
+                        type: "danger",
+                        duration: 3000,
+                    });
+                }, 600);
             });
         </script>
     }

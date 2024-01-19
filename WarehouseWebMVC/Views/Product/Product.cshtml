@@ -14,24 +14,28 @@
     {
         <script>
             document.addEventListener('DOMContentLoaded', function () {
-                toast({
-                    title: "Success",
-                    message: "Success! Action complete.",
-                    type: "success",
-                    duration: 3000,
-                });
+                setTimeout(function () {
+                    toast({
+                        title: "Success",
+                        message: "Success ! Action complete.",
+                        type: "success",
+                        duration: 3000,
+                    });
+                }, 600);
             });
         </script>
     } else if ("Failed".Equals(message))
     {
         <script>
             document.addEventListener('DOMContentLoaded', function () {
-                toast({
-                    title: "Failed",
-                    message: "Oops! Action failed. Please try again.",
-                    type: "danger",
-                    duration: 3000,
-                });
+                setTimeout(function () {
+                    toast({
+                        title: "Failed",
+                        message: "Oops! Action failed. Please try again.",
+                        type: "danger",
+                        duration: 3000,
+                    });
+                }, 600);
             });
         </script>
     }

@@ -123,12 +123,15 @@ public class AuthenticationController : Controller
 			var loginSuccess = _userService.CheckLogin(userDTO);
 			if (loginSuccess)
 			{
-				var user = _userService.GetUserByEmail(userDTO);
+				var user = _userService.GetUserByEmail(userDTO.Email.ToString());
 				HttpContext.Session.SetString("User", userDTO.Email.ToString());
                 if (user != null)
                 {
                     HttpContext.Session.SetString("Name", user.Name.ToString());
                     HttpContext.Session.SetString("Address", user.Address.ToString());
+                } else
+                {
+                    throw new Exception("User null exception!");
                 }
                 var rememberMe = Request.Form["remember-me"].Count > 0;
 				if (rememberMe)

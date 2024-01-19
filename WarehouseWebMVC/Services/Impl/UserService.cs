@@ -27,9 +27,9 @@ public class UserService : IUserService
         return user != null && user.Password == userDTO.Password;
     }
 
-    public User GetUserByEmail(UserDTO userDTO)
+    public User GetUserByEmail(string email)
     {
-        return _dataContext.Users.FirstOrDefault(u => u.Email == userDTO.Email);
+        return _dataContext.Users.FirstOrDefault(u => u.Email == email);
     }
 
     public bool SendResetPasswordEmail(string userEmail, ISession session, HttpContext httpContext)

@@ -7,7 +7,7 @@ public interface IUserService
 {
     public bool CheckLogin(UserDTO userDTO);
 
-    public User GetUserByEmail(UserDTO userDTO);
+    public User GetUserByEmail(string email);
 
     public bool SendResetPasswordEmail(string userEmail, ISession session, HttpContext httpContext);
 

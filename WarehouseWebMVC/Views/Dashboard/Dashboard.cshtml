@@ -12,12 +12,14 @@
 	{
 		<script>
 			document.addEventListener('DOMContentLoaded', function () {
-				toast({
-					title: "Success",
-					message: "Login successfully.",
-					type: "success",
-					duration: 3000,
-				});
+				setTimeout(function () {
+					toast({
+						title: "Success",
+						message: "Login successfully.",
+						type: "success",
+						duration: 3000,
+					});
+				}, 600);
 			});
 		</script>
 	}
