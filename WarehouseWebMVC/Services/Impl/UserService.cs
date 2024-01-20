@@ -29,7 +29,7 @@ public class UserService : IUserService
 
     public User GetUserByEmail(string email)
     {
-        return _dataContext.Users.FirstOrDefault(u => u.Email == email);
+        return _dataContext.Users.FirstOrDefault(u => u.Email == email)!;
     }
 
     public bool SendResetPasswordEmail(string userEmail, ISession session, HttpContext httpContext)

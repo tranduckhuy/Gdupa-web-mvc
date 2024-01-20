@@ -16,7 +16,8 @@ public static class SeedData
                 Address = "Quy Nhon",
                 Phone = "0123456789",
                 Password = "123456",
-                Role = "BE"
+                Avatar = "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky5.jpg?alt=media&token=89ff6391-2c89-4e62-a40e-1f96c5414071",
+				Role = "BE"
             },
             new User
             {
@@ -26,6 +27,7 @@ public static class SeedData
                 Address = "Quy Nhon",
                 Phone = "0123456788",
                 Password = "123456",
+                Avatar = "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky1.jpg?alt=media&token=20f7f936-db7d-4498-9245-50875cc9f546",
                 Role = "FE"
             },
             new User
@@ -36,6 +38,7 @@ public static class SeedData
                 Address = "Quy Nhon",
                 Phone = "0123456787",
                 Password = "123456",
+                Avatar = "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky2.jpg?alt=media&token=67c90174-f0e6-4251-acdb-e17d9d88e8ec",
                 Role = "FE"
             },
             new User
@@ -46,7 +49,8 @@ public static class SeedData
                 Address = "Quy Nhon",
                 Phone = "0123456786",
                 Password = "123456",
-                Role = "BE"
+                Avatar = "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky3.jpg?alt=media&token=2b2622f9-9b99-4ab4-bbc9-aa3c66dd7b24",
+				Role = "BE"
             },
             new User
             {
@@ -56,7 +60,8 @@ public static class SeedData
                 Address = "Quy Nhon",
                 Phone = "0123456785",
                 Password = "123456",
-                Role = "FE"
+                Avatar = "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky4.jpg?alt=media&token=cbd4f161-7102-4ce1-b9f2-1ccf0c9edf57",
+				Role = "FE"
             },
             new User
             {
@@ -66,7 +71,8 @@ public static class SeedData
                 Address = "Quy Nhon",
                 Phone = "0123456784",
                 Password = "123456",
-                Role = "BE"
+                Avatar = "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky6.webp?alt=media&token=85db917a-6c50-4860-948d-266409314974",
+				Role = "BE"
             }
         );
 

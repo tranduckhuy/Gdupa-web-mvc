@@ -4,17 +4,17 @@ using WarehouseWebMVC.Models;
 
 namespace WarehouseWebMVC.Controllers;
 
-public class PaymentController : Controller
+public class ExpenseController : Controller
 {
-    private readonly ILogger<PaymentController> _logger;
+    private readonly ILogger<ExpenseController> _logger;
 
-    public PaymentController(ILogger<PaymentController> logger)
+    public ExpenseController(ILogger<ExpenseController> logger)
     {
         _logger = logger;
     }
 
     [Filter]
-    public IActionResult Payment()
+    public IActionResult Expense()
     {
         if (HttpContext.Session.GetString("User") != null)
         {
@@ -27,7 +27,7 @@ public class PaymentController : Controller
     }
 
     [Filter]
-    public IActionResult AddPayment()
+    public IActionResult AddExpense()
     {
         if (HttpContext.Session.GetString("User") != null)
         {

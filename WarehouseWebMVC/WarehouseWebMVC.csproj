@@ -24,7 +24,6 @@
     <Folder Include="Views\Invoice\" />
     <Folder Include="Views\FAQ\" />
     <Folder Include="Views\Terms\" />
-    <Folder Include="Views\Payment\" />
   </ItemGroup>
 
 </Project>

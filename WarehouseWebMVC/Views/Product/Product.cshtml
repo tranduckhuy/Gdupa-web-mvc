@@ -57,7 +57,7 @@
 }
 
 <!-- sherah Dashboard -->
-<section class="sherah-adashboard sherah-show">
+<section class="sherah-adashboard sherah-show" style="padding-bottom: 10px;">
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -78,7 +78,7 @@
                                 <a asp-area="" asp-controller="Product" asp-action="AddProduct" class="sherah-btn sherah-gbcolor">Add Product</a>
                             </div>
                         </div>
-                        <div class="sherah-table sherah-page-inner sherah-border sherah-default-bg mg-top-10" style="padding-top: 0;">
+                        <div class="sherah-table sherah-page-inner sherah-border sherah-default-bg mg-top-10" style="padding-top: 0; padding-bottom: 16px;">
                             <div class="row">
                                 <div class="col-sm-12 col-md-8"></div>
                                 <div class="col-sm-12 col-md-4">
@@ -107,19 +107,19 @@
                             <table id="sherah-table__main-product" class="sherah-table__vendor sherah-table__main-v3" style=" border: 1px solid #e2e7f1; margin-top: 8px">
                                 <!-- sherah Table Head -->
                                 <!--style="position:sticky;top:0;z-index:1;"-->
-                                <thead class="sherah-table__head" style="display:block;">
+                                <thead class="sherah-table__head" style="display:block; padding-top: 5px; padding-bottom: 5px;">
                                     <tr>
-                                        <th class="sherah-table__column-1 sherah-table__h1" style="width: 30%;">Product Name</th>
-                                        <th class="sherah-table__column-2 sherah-table__h2" style="width: 15%;padding-left:10px;">Supplier Name</th>
-                                        <th class="sherah-table__column-3 sherah-table__h3" style="width: 10%;padding-left:10px;">Price</th>
-                                        <th class="sherah-table__column-4 sherah-table__h4" style="width: 10%;padding-left:0;">Category</th>
-                                        <th class="sherah-table__column-5 sherah-table__h5" style="width: 10%;padding-left:5px;">Brand</th>
-                                        <th class="sherah-table__column-6 sherah-table__h6" style="width: 10%;padding-left:5px;">Unit</th>
-                                        <th class="sherah-table__column-7 sherah-table__h7" style="width: 15%;padding-left:5px;">Action</th>
+                                        <th class="sherah-table__column-1 sherah-table__h1" style="min-width:290px; font-size: 16px;">Product Name</th>
+                                        <th class="sherah-table__column-2 sherah-table__h2" style="width: 15%;padding-left:10px; font-size: 16px;">Supplier Name</th>
+                                        <th class="sherah-table__column-3 sherah-table__h3" style="width: 10%;padding-left:10px; font-size: 16px;">Price</th>
+                                        <th class="sherah-table__column-4 sherah-table__h4" style="width: 10%;padding-left:0; font-size: 16px; text-align:center">Category</th>
+                                        <th class="sherah-table__column-5 sherah-table__h5" style="width: 10%;padding-left:5px; font-size: 16px; text-align:center">Brand</th>
+                                        <th class="sherah-table__column-6 sherah-table__h6" style="width: 10%;padding-left:5px; font-size: 16px; text-align:center">Unit</th>
+                                        <th class="sherah-table__column-7 sherah-table__h7" style="width: 15%;padding-left:5px; font-size: 16px; text-align:center">Action</th>
                                     </tr>
                                 </thead>
                                 <!--style="height: 100%;"-->
-                                <tbody class="sherah-table__body" style="display:block;overflow-y:scroll;max-height:250px;">
+                                <tbody class="sherah-table__body" style="display:block;overflow-y:scroll;max-height:350px;">
                                     @foreach (var product in Model.Products)
                                     {
                                         <tr style="height: 20px;">
@@ -137,23 +137,23 @@
                                             <td class="sherah-table__column-3 sherah-table__data-3" style="width: 10%;min-width:80px;padding:12px 12px 12px 0;text-align:left;">
                                                 <p class="sherah-table__product-desc">$@product.Price</p>
                                             </td>
-                                            <td class="sherah-table__column-4 sherah-table__data-4" style="width: 10%;min-width:80px;padding:12px 12px 12px 0;text-align:left;">
+                                            <td class="sherah-table__column-4 sherah-table__data-4" style="width: 10%;min-width:80px;padding:12px 12px 12px 0;text-align:center;">
                                                 <div class="sherah-table__product-content">
                                                     <p class="sherah-table__product-desc">@product.Category.Name</p>
                                                 </div>
                                             </td>
-                                            <td class="sherah-table__column-5 sherah-table__data-5" style="width: 10%;min-width:80px;padding:12px 12px 12px 0;text-align:left;">
+                                            <td class="sherah-table__column-5 sherah-table__data-5" style="width: 11%;min-width:80px;padding:12px 12px 12px 0; text-align:center;">
                                                 <div class="sherah-table__product-content">
                                                     <p class="sherah-table__product-desc">@product.Brand.Name</p>
                                                 </div>
                                             </td>
-                                            <td class="sherah-table__column-6 sherah-table__data-6" style="width: 10%;min-width:80px;padding:12px 12px 12px 0;text-align:left;">
+                                            <td class="sherah-table__column-6 sherah-table__data-6" style="width: 9%;min-width:80px;padding:12px 12px 12px 0;text-align:center;">
                                                 <div class="sherah-table__product-content">
                                                     <p class="sherah-table__product-desc">@product.Unit</p>
                                                 </div>
                                             </td>
                                             <td class="sherah-table__column-7 sherah-table__data-7" style="width: 15%;min-width:120px;padding:12px 12px 12px 0;margin-left:10px;">
-                                                <div class="sherah-table__status__group" style="justify-content:unset">
+                                                <div class="sherah-table__status__group" style="justify-content:center">
                                                     <a href="/Product/ProductDetail?productId=@product.ProductId" class="sherah-table__action sherah-color1 sherah-color1__bg--opactity">
                                                         <i class="fa-regular fa-eye"></i>
                                                     </a>
@@ -183,30 +183,30 @@
                                         <div class="dataTables_info" id="sherah-table__vendor_info" role="status" aria-live="polite">Showing 2 of @Model.Pageable.TotalItems entries</div>
                                     </div>
                                 }
-                                <div class="col-sm-12 col-md-7"></div>
+                                <div class="col-sm-12 col-md-7">
+                                    @if (Model.Pageable != null)
+                                    {
+                                        <div class="sherah-pagination" style="margin-bottom: 0">
+                                            <ul class="sherah-pagination__list">
+                                                @if (Model.Pageable.CurrentPage > 1)
+                                                {
+                                                    <li class="sherah-pagination__button"><a href="/Product/Product?page=@(Model.Pageable.CurrentPage > 1 ? Model.Pageable.CurrentPage - 1 : 1)"><i class="fas fa-angle-left"></i></a></li>
+                                                }
+                                                @for (var i = Model.Pageable.StartPage; i <= Model.Pageable.EndPage; i++)
+                                                {
+                                                    <li class="@(Model.Pageable.CurrentPage == i ? "active" : "")"><a href="/Product/Product?page=@i">@i</a></li>
+                                                }
+                                                @if (Model.Pageable.CurrentPage < Model.Pageable.TotalPages)
+                                                {
+                                                    <li class="sherah-pagination__button"><a href="/Product/Product?page=@(Model.Pageable.CurrentPage < Model.Pageable.TotalPages ? Model.Pageable.CurrentPage + 1 : Model.Pageable.TotalPages)"><i class="fas fa-angle-right"></i></a></li>
+                                                }
+                                            </ul>
+                                        </div>
+                                    }
+                                </div>
                             </div>
                         </div>
-                        <div class="row mg-top-40" style="position: relative; bottom: 26px; right: 37px;">
-                            @if (Model.Pageable != null)
-                            {
-                                <div class="sherah-pagination">
-                                    <ul class="sherah-pagination__list">
-                                        @if (Model.Pageable.CurrentPage > 1)
-                                        {
-                                            <li class="sherah-pagination__button"><a href="/Product/Product?page=@(Model.Pageable.CurrentPage > 1 ? Model.Pageable.CurrentPage - 1 : 1)"><i class="fas fa-angle-left"></i></a></li>
-                                        }
-                                        @for (var i = Model.Pageable.StartPage; i <= Model.Pageable.EndPage; i++)
-                                        {
-                                            <li class="@(Model.Pageable.CurrentPage == i ? "active" : "")"><a href="/Product/Product?page=@i">@i</a></li>
-                                        }
-                                        @if (Model.Pageable.CurrentPage < Model.Pageable.TotalPages)
-                                        {
-                                            <li class="sherah-pagination__button"><a href="/Product/Product?page=@(Model.Pageable.CurrentPage < Model.Pageable.TotalPages ? Model.Pageable.CurrentPage + 1 : Model.Pageable.TotalPages)"><i class="fas fa-angle-right"></i></a></li>
-                                        }
-                                    </ul>
-                                </div>
-                            }
-                        </div>
+
                     </div>
                     <!-- End Dashboard Inner -->
                 </div>

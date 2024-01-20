@@ -123,12 +123,13 @@ public class AuthenticationController : Controller
 			var loginSuccess = _userService.CheckLogin(userDTO);
 			if (loginSuccess)
 			{
-				var user = _userService.GetUserByEmail(userDTO.Email.ToString());
-				HttpContext.Session.SetString("User", userDTO.Email.ToString());
+				var user = _userService.GetUserByEmail(userDTO.Email);
+				HttpContext.Session.SetString("User", userDTO.Email);
                 if (user != null)
                 {
-                    HttpContext.Session.SetString("Name", user.Name.ToString());
-                    HttpContext.Session.SetString("Address", user.Address.ToString());
+                    HttpContext.Session.SetString("Name", user.Name);
+                    HttpContext.Session.SetString("Address", user.Address);
+                    HttpContext.Session.SetString("Avatar", user.Avatar);
                 } else
                 {
                     throw new Exception("User null exception!");
@@ -143,8 +144,8 @@ public class AuthenticationController : Controller
 					};
 
 
-					Response.Cookies.Append("rememberMeEmail", userDTO.Email.ToString(), rememberMeCookie);
-					Response.Cookies.Append("rememberMePassword", userDTO.Password.ToString(), rememberMeCookie);
+					Response.Cookies.Append("rememberMeEmail", userDTO.Email, rememberMeCookie);
+					Response.Cookies.Append("rememberMePassword", userDTO.Password, rememberMeCookie);
 					Response.Cookies.Append("rememberMeChecked", rememberMe.ToString(), rememberMeCookie);
 				}
 				else

@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using WarehouseWebMVC.Data;
 using WarehouseWebMVC.MappingProfiles;
+using WarehouseWebMVC.Models;
 using WarehouseWebMVC.Service;
 using WarehouseWebMVC.Services;
 using WarehouseWebMVC.Services.Impl;

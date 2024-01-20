@@ -71,7 +71,7 @@ public class ProductService : IProductService
     {
 
         var totalProducts = _dataContext.Products.Count();
-        const int pageSize = 2;
+        const int pageSize = 5;
         if (page < 1)
         {
             page = 1;

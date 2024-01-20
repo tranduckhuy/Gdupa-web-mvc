@@ -1,6 +1,7 @@
 ﻿@{
 	var name = ViewContext.HttpContext.Session.GetString("Name");
 	var address = ViewContext.HttpContext.Session.GetString("Address");
+	var avatar = ViewContext.HttpContext.Session.GetString("Avatar");
 }
 <!DOCTYPE html>
 <html class="no-js" lang="en">
@@ -233,7 +234,8 @@
 										<span class="menu-bar__name">Invoice</span></span></a>
 								
 							</li>
-							<li><a asp-area="" asp-controller="Payment" asp-action="Payment" class="collapsed">
+							<li>
+								<a asp-area="" asp-controller="Expense" asp-action="Expense" class="collapsed">
 								<span class="menu-bar__text">
 									<span class="sherah-menu-icon sherah-svg-icon__v1">
 										<svg class="sherah-svg-icon" xmlns="http://www.w3.org/2000/svg"
@@ -251,7 +253,9 @@
 											</g>
 											</svg>
 										</span>
-								<span class="menu-bar__name">Payments</span></span></a>
+										<span class="menu-bar__name">Expenses</span>
+									</span>
+								</a>
 							</li>
 							<li>
 								<a class="collapsed" asp-area="" asp-controller="User" asp-action="UserInformation">
@@ -753,7 +757,7 @@
 												<!-- Header Author -->
 												<div class="sherah-header__author sherah-flex__center--top">
 													<div class="sherah-header__author-img">
-														<img src="~/assets/images/profile-pic.png" alt="#">
+														<img src="@avatar" alt="#">
 													</div>
 													<div
 														class="sherah-header__author--info sherah-dflex sherah-dflex__base">
@@ -888,30 +892,30 @@
 	</div>
 
 	<!-- Sherah Scripts -->
-	<script src="/js/lib/tinymce/js/tinymce/tinymce.min.js" async></script>
-	<script src="/js/lib/progressbar.min.js" async></script>
-	<script src="/js/lib/jquery.min.js" async></script>
-	<script src="/js/lib/jquery-migrate.js" async></script>
-	<script src="/js/lib/jquery-ui.min.js" async></script>
-	<script src="/js/lib/popper.min.js" async></script>
+	<script src="/js/lib/tinymce/js/tinymce/tinymce.min.js" ></script>
+	<script src="/js/lib/progressbar.min.js" ></script>
+	<script src="/js/lib/jquery.min.js" ></script>
+	<script src="/js/lib/jquery-migrate.js" ></script>
+	<script src="/js/lib/jquery-ui.min.js" ></script>
+	<script src="/js/lib/popper.min.js" ></script>
 	<script src="/js/lib/bootstrap.min.js" async></script>
 	<script src="/js/lib/charts.js"></script>
-	<script src="/js/lib/datatables.min.js" async></script>
-	<script src="/js/lib/circle-progress.min.js" async></script>
-	<script src="/js/lib/jquery-jvectormap.js" async></script>
-	<script src="/js/lib/jvector-map.js" async></script>
-	<script src="/js/lib/slickslider.min.js" async></script>
-	<script src="/js/main.js" async></script>
+	<script src="/js/lib/datatables.min.js"></script>
+	<script src="/js/lib/circle-progress.min.js" ></script>
+	<script src="/js/lib/jquery-jvectormap.js" ></script>
+	<script src="/js/lib/jvector-map.js" ></script>
+	<script src="/js/lib/slickslider.min.js" ></script>
+	<script src="/js/main.js" ></script>
 	<script src="/js/chart-config.js"></script>
-	<script src="/js/circle-config.js" async></script>
-	<script src="/js/map-config.js" async></script>
-	<script src="/js/datatable-config.js" async></script>
-	<script src="/js/tinymce-config.js" async></script>
+	<script src="/js/circle-config.js" ></script>
+	<script src="/js/map-config.js" ></script>
+	<script src="/js/datatable-config.js"></script>
+	<script src="/js/tinymce-config.js" ></script>
 	<script src="/js/loader-config.js"></script>
-	<script src="/js/toast-config.js" async></script>
-	<script src="/js/handle-script.js" async></script>
+	<script src="/js/toast-config.js" ></script>
+	<script src="/js/handle-script.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
-	<script src="/js/firebase/firebaseUpload.js" async></script>
+	<script src="/js/firebase/firebaseUpload.js" ></script>
 </body>
 
 </html>
