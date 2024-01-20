@@ -85,8 +85,7 @@
                                     <form method="post" asp-action="SearchProduct" asp-controller="Product">
                                         <div id="sherah-table__vendor_filter" class="dataTables_filter">
                                             <label for="search-input" style="position: relative;">
-                                                <button class="sherah-data-table-label" style="font-size:1rem;position: relative; top:2.7rem; left:18.5rem; right: auto; z-index: 4; border:none;
-                                                background-color: #F3F4F7;">
+                                                <button class="sherah-data-table-label" style="font-size:1rem;position: relative; top:2.7rem; left:18.5rem; right: auto; z-index: 4; border:none;background-color:#F3F4F7">
                                                     Search
                                                 </button>
                                             </label>
@@ -103,22 +102,19 @@
                                     </form>
                                 </div>
                             </div>
-                            <!--style="max-height:350px;overflow-y:auto;overflow-x:hidden;margin-top:10px;position:relative;"-->
                             <table id="sherah-table__main-product" class="sherah-table__vendor sherah-table__main-v3" style=" border: 1px solid #e2e7f1; margin-top: 8px">
                                 <!-- sherah Table Head -->
-                                <!--style="position:sticky;top:0;z-index:1;"-->
                                 <thead class="sherah-table__head" style="display:block;">
                                     <tr>
-                                        <th class="sherah-table__column-1 sherah-table__h1" style="width: 30%;">Product Name</th>
-                                        <th class="sherah-table__column-2 sherah-table__h2" style="width: 15%;padding-left:10px;">Supplier Name</th>
-                                        <th class="sherah-table__column-3 sherah-table__h3" style="width: 10%;padding-left:10px;">Price</th>
-                                        <th class="sherah-table__column-4 sherah-table__h4" style="width: 10%;padding-left:0;">Category</th>
-                                        <th class="sherah-table__column-5 sherah-table__h5" style="width: 10%;padding-left:5px;">Brand</th>
-                                        <th class="sherah-table__column-6 sherah-table__h6" style="width: 10%;padding-left:5px;">Unit</th>
-                                        <th class="sherah-table__column-7 sherah-table__h7" style="width: 15%;padding-left:5px;">Action</th>
+                                        <th class="sherah-table__column-1 sherah-table__h1" style="width: 30%;font-size:16px;">Product Name</th>
+                                        <th class="sherah-table__column-2 sherah-table__h2" style="width: 15%;font-size:16px;">Supplier Name</th>
+                                        <th class="sherah-table__column-3 sherah-table__h3" style="width: 10%;font-size:16px;">Price</th>
+                                        <th class="sherah-table__column-4 sherah-table__h4" style="width: 10%;font-size:16px;">Category</th>
+                                        <th class="sherah-table__column-5 sherah-table__h5" style="width: 10%;font-size:16px;">Brand</th>
+                                        <th class="sherah-table__column-6 sherah-table__h6" style="width: 10%;font-size:16px;">Unit</th>
+                                        <th class="sherah-table__column-7 sherah-table__h7" style="width: 15%;font-size:16px;">Action</th>
                                     </tr>
                                 </thead>
-                                <!--style="height: 100%;"-->
                                 <tbody class="sherah-table__body" style="display:block;overflow-y:scroll;max-height:250px;">
                                     @foreach (var product in Model.Products)
                                     {
@@ -126,30 +122,30 @@
                                             <td class="sherah-table__column-1 sherah-table__data-1" style="width:30%;min-width:300px;padding:12px;text-align:left;">
                                                 <div class="sherah-language-form__input">
                                                     <input class="sherah-language-form__check" id="checkbox" name="checkbox" type="checkbox">
-                                                    <p class="crany-table__product--number"><a asp-area="" asp-controller="Product" asp-action="ProductDetail" class="sherah-color1" style="font-size: 1rem;">@product.Name</a></p>
+                                                    <p class="crany-table__product--number"><a asp-area="" asp-controller="Product" asp-action="ProductDetail" class="sherah-color1" style="font-size:14px;">@product.Name</a></p>
                                                 </div>
                                             </td>
                                             <td class="sherah-table__column-2 sherah-table__data-2" style="width:15%;min-width:150px;padding:12px;text-align:left;">
                                                 <div class="sherah-table__product-content">
-                                                    <p class="sherah-table__product-desc"><a asp-area="" asp-controller="Supplier" asp-action="SupplierList" class="sherah-color1" style="font-size: 1rem; font-weight: 400">@product.Supplier.Name</a></p>
+                                                    <p class="sherah-table__product-desc"><a asp-area="" asp-controller="Supplier" asp-action="SupplierList" class="sherah-color1" style="font-size:14px;font-weight: 400">@product.Supplier.Name</a></p>
                                                 </div>
                                             </td>
                                             <td class="sherah-table__column-3 sherah-table__data-3" style="width: 10%;min-width:80px;padding:12px 12px 12px 0;text-align:left;">
-                                                <p class="sherah-table__product-desc">$@product.Price</p>
+                                                <p class="sherah-table__product-desc" style="font-size:14px;">$@product.Price</p>
                                             </td>
                                             <td class="sherah-table__column-4 sherah-table__data-4" style="width: 10%;min-width:80px;padding:12px 12px 12px 0;text-align:left;">
                                                 <div class="sherah-table__product-content">
-                                                    <p class="sherah-table__product-desc">@product.Category.Name</p>
+                                                    <p class="sherah-table__product-desc" style="font-size:14px;">@product.Category.Name</p>
                                                 </div>
                                             </td>
                                             <td class="sherah-table__column-5 sherah-table__data-5" style="width: 10%;min-width:80px;padding:12px 12px 12px 0;text-align:left;">
                                                 <div class="sherah-table__product-content">
-                                                    <p class="sherah-table__product-desc">@product.Brand.Name</p>
+                                                    <p class="sherah-table__product-desc" style="font-size:14px;">@product.Brand.Name</p>
                                                 </div>
                                             </td>
                                             <td class="sherah-table__column-6 sherah-table__data-6" style="width: 10%;min-width:80px;padding:12px 12px 12px 0;text-align:left;">
                                                 <div class="sherah-table__product-content">
-                                                    <p class="sherah-table__product-desc">@product.Unit</p>
+                                                    <p class="sherah-table__product-desc" style="font-size:14px;">@product.Unit</p>
                                                 </div>
                                             </td>
                                             <td class="sherah-table__column-7 sherah-table__data-7" style="width: 15%;min-width:120px;padding:12px 12px 12px 0;margin-left:10px;">
