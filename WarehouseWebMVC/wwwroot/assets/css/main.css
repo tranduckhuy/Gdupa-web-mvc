@@ -1249,7 +1249,7 @@ Version:	1.0.0
 @media only screen and (min-width: 0px) and (max-width: 992px) {
 
     .sherah-smenu .logo img {
-        max-width: 130px;
+        max-width: 100px;
     }
 
     .sherah-smenu .logo {
@@ -2944,7 +2944,7 @@ Version:	1.0.0
 
         .sherah-contact-card .sherah-vcard__body .sherah-vcard__img img {
             box-shadow: none;
-            padding: ;
+            padding:;
             margin: 0;
         }
 
@@ -7565,7 +7565,7 @@ blockquote {
         height: 50px;
         padding: 5px 50px 5px 20px;
         background: #FAFAFA;
-        color: rgba(57, 62, 70, 0.2);
+        color: #9AA2B1;
         border: 1px solid #E4F2FF;
         border-radius: 4px;
         padding-left: 30px;
@@ -7575,8 +7575,12 @@ blockquote {
     }
 
     .sherah-wc__form-main select {
-        color: #1A1A1A;
+        color: #9AA2B1;
     }
+
+        .sherah-wc__form-main select:focus {
+            border: 1px solid #E4F2FF;
+        }
 
 .form-group__input--select .flag-label {
     position: absolute;

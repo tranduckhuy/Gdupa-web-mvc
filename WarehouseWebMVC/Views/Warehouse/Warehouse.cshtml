@@ -45,7 +45,7 @@
                                         <div class="sherah-progress-card__content">
                                             <div class="sherah-progress-card__heading">
                                                 <span class="sherah-pcolor">Low Alert</span>
-                                                <h4 class="sherah-progress-card__title"><b class="count-animate">1 Product</b></h4>
+                                                <h4 class="sherah-progress-card__title"><b class="count-animate" style="font-size: 20px;">1 Product</b></h4>
                                             </div>
                                             <div class="sherah-progress-card__button">
                                                 <p class="sherah-progress-card__text sherah-color4">
@@ -87,7 +87,7 @@
                                         <div class="sherah-progress-card__content">
                                             <div class="sherah-progress-card__heading">
                                                 <span class="sherah-pcolor">Out of Stock</span>
-                                                <h4 class="sherah-progress-card__title"><b class="count-animate">0 Product</b></h4>
+                                                <h4 class="sherah-progress-card__title"><b class="count-animate" style="font-size: 20px;">0 Product</b></h4>
                                             </div>
                                             <div class="sherah-progress-card__button">
                                                 <p class="sherah-progress-card__text sherah-color2">
@@ -116,31 +116,30 @@
                         </div>
                         <div class="sherah-table sherah-page-inner sherah-border sherah-default-bg mg-top-10" style="padding-top: 0;">
                             <div class="row">
-                                <div class="col-sm-12 col-md-8">
-                                </div>
+                                <div class="col-sm-12 col-md-8"></div>
                                 <div class="col-sm-12 col-md-4">
-                                    <form>
+                                    <form method="post" asp-action="SearchProduct" asp-controller="Product">
                                         <div id="sherah-table__vendor_filter" class="dataTables_filter">
                                             <label for="search-input" style="position: relative;">
-                                                <span class="sherah-data-table-label" style="font-size:1rem;position: relative; top:2.6rem; left:18.5rem; z-index: 4;">Search</span>
+                                                <button class="sherah-data-table-label" style="font-size:1rem;position: relative; top:2.7rem; left:18.5rem; right: auto; z-index: 4; border:none;background-color:#F3F4F7">
+                                                    Search
+                                                </button>
                                             </label>
                                             <div class="input-group display-flex" style="position: relative;">
-                                                <select id="searchType" class="col-2" name="searchType" style="height:40px; width: 70px; font-size:0.75rem;color:#666;">
-                                                    <option value="0">Type</option>
-                                                    <option value="name">Name</option>
-                                                    <option value="supplier">Supplier</option>
+                                                <select class="col-2" name="searchType" style="height:40px; width: 90px; font-size:0.75rem;color:#666;">
+                                                    <option value="" selected disabled>Search Type</option>
+                                                    <option value="Name">Name</option>
+                                                    <option value="Supplier">Supplier</option>
                                                 </select>
                                                 &nbsp;
-                                                <input style="flex-shrink:0;width:auto;z-index:2;" type="search" id="search-input" class="col-2 form-control form-control-sm" placeholder="Search" aria-controls="sherah-table__vendor">
+                                                <input style="flex-shrink:0;width:auto;z-index:2;" type="search" name="searchValue" class="col-2 form-control form-control-sm" placeholder="Search" aria-controls="sherah-table__vendor">
                                             </div>
                                         </div>
                                     </form>
                                 </div>
                             </div>
-                            <!--style="max-height:350px;overflow-y:auto;overflow-x:hidden;margin-top:10px;position:relative;"-->
                             <table id="sherah-table__main-product" class="sherah-table__vendor sherah-table__main-v3" style=" border: 1px solid #e2e7f1;">
                                 <!-- sherah Table Head -->
-                                <!--style="position:sticky;top:0;z-index:1;"-->
                                 <thead class="sherah-table__head" style="display:block;">
                                     <tr>
                                         <th class="sherah-table__column-1" style=" min-width:270px; font-size: 16px;">Product Name</th>
@@ -153,7 +152,6 @@
                                         <th class="sherah-table__column-8" style=" min-width:120px; padding-left:0; font-size: 16px; text-align: center">Total Stock Price</th>
                                     </tr>
                                 </thead>
-                                <!--style="height: 100%;"-->
                                 <tbody class="sherah-table__body" style="display:block;overflow-y:scroll;max-height:250px;">
                                     @foreach (var warehouse in Model.Warehouses)
                                     {

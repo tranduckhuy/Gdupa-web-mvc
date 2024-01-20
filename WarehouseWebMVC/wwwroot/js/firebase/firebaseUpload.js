@@ -26,22 +26,10 @@ function createProgressBar(containerId) {
         trailColor: '#eee',
         trailWidth: 1,
         svgStyle: { width: '100%', height: '100%' },
-        text: {
-            style: {
-                color: '#999',
-                position: 'absolute',
-                left: '40%',
-                top: '8px',
-                padding: 0,
-                margin: 0,
-                transform: 'translateX(0, -50%)'
-            },
-            autoStyleContainer: false
-        },
         from: { color: '#FFEA82' },
         to: { color: '#ED6A5A' },
         step: (state, bar) => {
-            bar.setText(Math.round(bar.value() * 100) + ' %');
+            bar.path.setAttribute('stroke', state.color);
         }
     });
 }
