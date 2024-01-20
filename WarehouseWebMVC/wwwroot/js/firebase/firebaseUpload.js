@@ -22,12 +22,12 @@ function createProgressBar(containerId) {
         strokeWidth: 4,
         easing: 'easeInOut',
         duration: 1400,
-        color: '#FFEA82',
+        color: '#EBF0FF',
         trailColor: '#eee',
         trailWidth: 1,
         svgStyle: { width: '100%', height: '100%' },
-        from: { color: '#FFEA82' },
-        to: { color: '#ED6A5A' },
+        from: { color: '#EBF0FF' },
+        to: { color: '#6178FE' },
         step: (state, bar) => {
             bar.path.setAttribute('stroke', state.color);
         }
