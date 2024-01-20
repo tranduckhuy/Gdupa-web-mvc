@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using WarehouseWebMVC.Data;
 using WarehouseWebMVC.Models;
@@ -180,4 +182,29 @@ public class ProductService : IProductService
 		}
 	}
 
+    public ProductViewModel SearchProduct(string searchType, string searchValue)
+    {
+        IQueryable<Product> searchProduct = _dataContext.Products
+            .Include(p => p.Category)
+            .Include(p => p.Brand)
+            .Include(p => p.Supplier)
+            .Include(p => p.ProductImgs);
+
+        if ("Name".Equals(searchType))
+        {
+            searchProduct = searchProduct.Where(p => p.Name.ToUpper().Contains(searchValue.ToUpper()));
+        }
+        else if ("Supplier".Equals(searchType))
+        {
+            searchProduct = searchProduct.Where(p => p.Supplier.Name.ToUpper().Contains(searchValue.ToUpper()));
+        }
+
+        if (searchProduct.Any())
+        {
+            var searchProductsDto = _mapper.Map<List<ProductDTO>>(searchProduct.ToList());
+            var productViewModel = new ProductViewModel { Products = searchProductsDto };
+            return productViewModel;
+        }
+        return null!;
+    }
 }

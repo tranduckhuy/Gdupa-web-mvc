@@ -1,12 +1,11 @@
-@{
-    ViewData["Title"] = "Products";
-}
+@model WarehouseWebMVC.ViewModels.ProductViewModel;
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
+    ViewData["Title"] = "Products";
     var message = TempData["Message"] as string;
 }
 
-@model WarehouseWebMVC.ViewModels.ProductViewModel;
 <div id="toast"></div>
 @if (!string.IsNullOrEmpty(message))
 {
@@ -34,6 +33,21 @@
                         title: "Failed",
                         message: "Oops! Action failed. Please try again.",
                         type: "danger",
+                        duration: 3000,
+                    });
+                }, 600);
+            });
+        </script>
+    }
+    else if ("NotFound".Equals(message))
+    {
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                setTimeout(function () {
+                    toast({
+                        title: "Not found!",
+                        message: "No results found for the given search criteria.",
+                        type: "warning",
                         duration: 3000,
                     });
                 }, 600);
@@ -68,26 +82,29 @@
                             <div class="row">
                                 <div class="col-sm-12 col-md-8"></div>
                                 <div class="col-sm-12 col-md-4">
-                                    <form>
+                                    <form method="post" asp-action="SearchProduct" asp-controller="Product">
                                         <div id="sherah-table__vendor_filter" class="dataTables_filter">
                                             <label for="search-input" style="position: relative;">
-                                                <span class="sherah-data-table-label" style="font-size:1rem;position: relative; top:2.6rem; left:18.5rem; z-index: 4;">Search</span>
+                                                <button class="sherah-data-table-label" style="font-size:1rem;position: relative; top:2.7rem; left:18.5rem; right: auto; z-index: 4; border:none;
+                                                background-color: #F3F4F7;">
+                                                    Search
+                                                </button>
                                             </label>
                                             <div class="input-group display-flex" style="position: relative;">
-                                                <select id="searchType" class="col-2" name="searchType" style="height:40px; font-size:0.75rem;color:#666;">
-                                                    <option value="0">Type</option>
-                                                    <option value="name">Name</option>
-                                                    <option value="supplier">Supplier</option>
+                                                <select class="col-2" name="searchType" style="height:40px; width: 90px; font-size:0.75rem;color:#666;">
+                                                    <option value="" selected disabled>Search Type</option>
+                                                    <option value="Name">Name</option>
+                                                    <option value="Supplier">Supplier</option>
                                                 </select>
                                                 &nbsp;
-                                                <input style="flex-shrink:0;width:auto;z-index:2;" type="search" id="search-input" class="col-2 form-control form-control-sm" placeholder="Search" aria-controls="sherah-table__vendor">
+                                                <input style="flex-shrink:0;width:auto;z-index:2;" type="search" name="searchValue" class="col-2 form-control form-control-sm" placeholder="Search" aria-controls="sherah-table__vendor">
                                             </div>
                                         </div>
                                     </form>
                                 </div>
                             </div>
                             <!--style="max-height:350px;overflow-y:auto;overflow-x:hidden;margin-top:10px;position:relative;"-->
-                            <table id="sherah-table__main-product" class="sherah-table__vendor sherah-table__main-v3" style=" border: 1px solid #e2e7f1;">
+                            <table id="sherah-table__main-product" class="sherah-table__vendor sherah-table__main-v3" style=" border: 1px solid #e2e7f1; margin-top: 8px">
                                 <!-- sherah Table Head -->
                                 <!--style="position:sticky;top:0;z-index:1;"-->
                                 <thead class="sherah-table__head" style="display:block;">
@@ -160,29 +177,35 @@
                                 </tbody>
                             </table>
                             <div class="row" style="margin-top:16px;">
-                                <div class="col-sm-12 col-md-5">
-                                    <div class="dataTables_info" id="sherah-table__vendor_info" role="status" aria-live="polite">Showing 2 of @Model.Pageable.TotalItems entries</div>
-                                </div>
+                                @if (Model.Pageable != null)
+                                {
+                                    <div class="col-sm-12 col-md-5">
+                                        <div class="dataTables_info" id="sherah-table__vendor_info" role="status" aria-live="polite">Showing 2 of @Model.Pageable.TotalItems entries</div>
+                                    </div>
+                                }
                                 <div class="col-sm-12 col-md-7"></div>
                             </div>
                         </div>
                         <div class="row mg-top-40" style="position: relative; bottom: 26px; right: 37px;">
-                            <div class="sherah-pagination">
-                                <ul class="sherah-pagination__list">
-                                    @if (Model.Pageable.CurrentPage > 1)
-                                    {
-                                        <li class="sherah-pagination__button"><a href="/Product/Product?page=@(Model.Pageable.CurrentPage > 1 ? Model.Pageable.CurrentPage - 1 : 1)"><i class="fas fa-angle-left"></i></a></li>
-                                    }
-                                    @for (var i = Model.Pageable.StartPage; i <= Model.Pageable.EndPage; i++)
-                                    {
-                                        <li class="@(Model.Pageable.CurrentPage == i ? "active" : "")"><a href="/Product/Product?page=@i">@i</a></li>
-                                    }
-                                    @if (Model.Pageable.CurrentPage < Model.Pageable.TotalPages)
-                                    {
-                                        <li class="sherah-pagination__button"><a href="/Product/Product?page=@(Model.Pageable.CurrentPage < Model.Pageable.TotalPages ? Model.Pageable.CurrentPage + 1 : Model.Pageable.TotalPages)"><i class="fas fa-angle-right"></i></a></li>
-                                    }
-                                </ul>
-                            </div>
+                            @if (Model.Pageable != null)
+                            {
+                                <div class="sherah-pagination">
+                                    <ul class="sherah-pagination__list">
+                                        @if (Model.Pageable.CurrentPage > 1)
+                                        {
+                                            <li class="sherah-pagination__button"><a href="/Product/Product?page=@(Model.Pageable.CurrentPage > 1 ? Model.Pageable.CurrentPage - 1 : 1)"><i class="fas fa-angle-left"></i></a></li>
+                                        }
+                                        @for (var i = Model.Pageable.StartPage; i <= Model.Pageable.EndPage; i++)
+                                        {
+                                            <li class="@(Model.Pageable.CurrentPage == i ? "active" : "")"><a href="/Product/Product?page=@i">@i</a></li>
+                                        }
+                                        @if (Model.Pageable.CurrentPage < Model.Pageable.TotalPages)
+                                        {
+                                            <li class="sherah-pagination__button"><a href="/Product/Product?page=@(Model.Pageable.CurrentPage < Model.Pageable.TotalPages ? Model.Pageable.CurrentPage + 1 : Model.Pageable.TotalPages)"><i class="fas fa-angle-right"></i></a></li>
+                                        }
+                                    </ul>
+                                </div>
+                            }
                         </div>
                     </div>
                     <!-- End Dashboard Inner -->
@@ -194,4 +217,3 @@
     </div>
 </section>
 <!-- End sherah Dashboard -->
-

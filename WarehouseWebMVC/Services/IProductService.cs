@@ -8,6 +8,7 @@ namespace WarehouseWebMVC.Services
 		ProductViewModel GetAll(int page);
         CRUProductVM GetByIdForCRU(long productId);
         ProductDTO GetById(long productId);
+        ProductViewModel SearchProduct(string searchType, string searchValue);
         AddProductDTO Add(AddProductDTO addProductDTO);
 		bool Update(AddProductDTO addProductDTO);
 		bool Delete(long id);
