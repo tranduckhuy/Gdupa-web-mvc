@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using WarehouseWebMVC.Data;
 using WarehouseWebMVC.Models;
 using WarehouseWebMVC.Models.Domain;
@@ -42,6 +43,24 @@ public class UserService : IUserService
 		var userInformationVM = new UserInformationVM { User = userDto};
         return userInformationVM;
 	}
+
+    public void UpdateUser(UserInformationDTO updatedUser)
+    {
+        var existingUser = _dataContext.Users.FirstOrDefault(u => u.UserId == updatedUser.UserId);
+
+        if (existingUser != null)
+        {
+            if (updatedUser.Email != null && updatedUser.Phone != null && updatedUser.Address != null)
+            {
+                existingUser.Email = updatedUser.Email;
+                existingUser.Phone = updatedUser.Phone;
+                existingUser.Address = updatedUser.Address;
+
+                _dataContext.Entry(existingUser).State = EntityState.Modified;
+                _dataContext.SaveChanges();
+            }
+        }
+    }
 
     public bool SendResetPasswordEmail(string userEmail, ISession session, HttpContext httpContext)
     {

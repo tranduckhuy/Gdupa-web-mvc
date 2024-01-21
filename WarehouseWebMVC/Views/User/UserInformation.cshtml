@@ -51,6 +51,19 @@
             opacity: 1;
             display: block;
         }
+
+    #address_input {
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        display: none;
+    }
+
+        #address_input.active {
+            max-height: 100px;
+            opacity: 1;
+            display: block;
+        }
 </style>
 <!-- sherah Dashboard -->
 <section class="sherah-adashboard sherah-show">
@@ -116,7 +129,7 @@
                                             <div class="tab-content" id="nav-tabContent">
                                                 <!--  Features Single Tab -->
                                                 <div class="tab-pane fade show active" id="id1" role="tabpanel">
-                                                    <form action="#">
+                                                    <form method="post">
                                                         <div class="row">
                                                             <div class="col-12">
                                                                 <div class="sherah-ptabs__separate">
@@ -185,7 +198,15 @@
                                                                                     </li>
                                                                                     <li class="sherah-dflex">
                                                                                         <h4 class="sherah-profile-info__title">Address :</h4>
-                                                                                        <p class="sherah-profile-info__text">@user.Address</p>
+                                                                                        <p class="sherah-profile-info__text">
+                                                                                            @user.Address
+                                                                                            &nbsp;
+                                                                                            <span>
+                                                                                                <a href="#" onclick="toggleEditAddress(event)" style="color: #6176FE">Edit</a>
+                                                                                                <i class="fas fa-edit" style="color: #6176FE"></i>
+                                                                                            </span>
+                                                                                            <input style="margin-top:8px;" class="form-control" value="@user.Address" id="address_input" name="address">
+                                                                                        </p>
                                                                                     </li>
                                                                                     <li class="sherah-dflex">
                                                                                         <h4 class="sherah-profile-info__title">Country :</h4>
@@ -397,6 +418,16 @@
             phoneInput.classList.remove('active');
         } else {
             phoneInput.classList.add('active');
+        }
+    }
+    function toggleEditAddress(event) {
+        event.preventDefault();
+        var addressInput = document.getElementById('address_input');
+
+        if (addressInput.classList.contains('active')) {
+            addressInput.classList.remove('active');
+        } else {
+            addressInput.classList.add('active');
         }
     }
     function editAvatar() {

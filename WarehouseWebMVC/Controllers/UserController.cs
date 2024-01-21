@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using WarehouseWebMVC.Data;
 using WarehouseWebMVC.Models;
+using WarehouseWebMVC.Models.DTOs.UserDTO;
 using WarehouseWebMVC.Service;
 using WarehouseWebMVC.Services;
 
@@ -57,6 +58,17 @@ public class UserController : Controller
             return View();
         }
         return RedirectToAction("Login", "Authentication");
+    }
+
+    [HttpPost]
+    public IActionResult UserInformation(UserInformationDTO user)
+    {
+        if(!ModelState.IsValid)
+        {
+            _userService.UpdateUser(user);
+            return View(_userService.GetUserById(user.UserId));
+        }
+        return View();
     }
 
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
