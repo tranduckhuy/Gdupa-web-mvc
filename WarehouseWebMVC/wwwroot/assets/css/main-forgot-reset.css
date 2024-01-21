@@ -84,7 +84,7 @@ button:hover {
     background: #4292dc !important;
 }
 
-button:focus{
+button:focus {
     box-shadow: 0 0 0 0px #4292dc;
 }
 

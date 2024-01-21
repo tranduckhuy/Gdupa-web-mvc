@@ -8,6 +8,7 @@
 }
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,6 +28,7 @@
         }
     </style>
 </head>
+
 <body style="overflow: hidden;">
     <div id="toast"></div>
     @if (!string.IsNullOrEmpty(message))
@@ -61,6 +63,21 @@
                 });
             </script>
         }
+        else if ("NotLoginYet".Equals(message))
+        {
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    setTimeout(function () {
+                        toast({
+                            title: "Failed",
+                            message: "You are not login yet!",
+                            type: "danger",
+                            duration: 3000,
+                        });
+                    }, 600);
+                });
+            </script>
+        }
     }
     <div class="main" style="padding: 50px 0 0 0;">
 
@@ -73,23 +90,32 @@
                     </div>
 
                     <div class="signin-form">
-                        <a asp-area="" asp-controller="Home" asp-action="Index" style="text-decoration: none; color: #000; font-size: 20px;">
+                        <a asp-area="" asp-controller="Home" asp-action="Index"
+                            style="text-decoration: none; color: #000; font-size: 20px;">
                             <i class="zmdi zmdi-arrow-left"></i>
                         </a>
                         <h2 class="form-title">Sign In</h2>
-                        <form method="POST" asp-controller="Authentication" asp-action="Login" class="register-form" id="login-form">
+                        <form method="POST" asp-controller="Authentication" asp-action="Login" class="register-form"
+                            id="login-form">
                             <div class="form-group">
-                                <label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                <input asp-for="Email" type="text" name="email" id="email" placeholder="Your Email" value="@ViewBag.RememberMeEmail" />
+                                <label for="email"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                <input asp-for="Email" type="text" name="email" value="@ViewBag.RememberMeEmail"
+                                    id="email" placeholder="Your Email" rules="required|email" />
+                                <span class="form-message"></span>
                             </div>
                             <div class="form-group">
                                 <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
-                                <input asp-for="Password" type="password" name="password" id="password" placeholder="Your Password" value="@ViewBag.rememberMePassword" />
+                                <input asp-for="Password" value="@ViewBag.rememberMePassword" type="password"
+                                    name="password" id="password" placeholder="Your Password" rules="required" />
+                                <span class="form-message"></span>
                             </div>
                             <div class="form-group">
-                                <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" checked="@ViewBag.rememberMeChecked" />
+                                <input type="checkbox" name="remember-me" id="remember-me" class="agree-term"
+                                    checked="@ViewBag.rememberMeChecked" />
                                 <label for="remember-me" class="label-agree-term"><span></span>Remember me</label>
-                                <span style="margin-left: 4px;"><a class="forgot-link" asp-area="" asp-controller="Authentication" asp-action="ForgotPassword" style="color: #111;">Forget Password?</a></span>
+                                <span style="margin-left: 4px;"><a class="forgot-link" asp-area=""
+                                        asp-controller="Authentication" asp-action="ForgotPassword"
+                                        style="color: #111;">Forget Password?</a></span>
                             </div>
                             <div class="form-group form-button">
                                 <input type="submit" name="signin" id="signin" class="form-submit" value="Log in" />
@@ -110,6 +136,7 @@
 
     </div>
     <div id="preloader"></div>
+    <script src="/js/Validator.js"></script>
     <script src="/js/toast-config.js"></script>
     <script src="/js/lib/jquery.min.js"></script>
     <script src="/js/lib/jquery-ui.min.js"></script>
@@ -122,6 +149,9 @@
                 }, 500);
             });
         }
+    </script>
+    <script>
+        Validator('#login-form')
     </script>
 </body>
 </html>
