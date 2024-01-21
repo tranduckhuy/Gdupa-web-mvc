@@ -17,4 +17,7 @@ public interface IUserService
     public bool ResetPassword(string newPassword, ISession session);
 
     public void UpdateUser(UserInformationDTO userDTO);
+
+    public UserViewModel GetAll(int page);
+
 }
