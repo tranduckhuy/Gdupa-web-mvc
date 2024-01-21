@@ -94,12 +94,16 @@
                         <h2 class="form-title">Sign In</h2>
                         <form method="POST" asp-controller="Authentication" asp-action="Login" class="register-form" id="login-form">
                             <div class="form-group">
-                                <label for="your_name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                <input asp-for="Email" type="text" name="email" id="email" placeholder="Your Email" value="@ViewBag.RememberMeEmail" />
+                                <label for="email"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                <input asp-for="Email" type="text" name="email" value="@ViewBag.RememberMeEmail"
+                                       id="email" placeholder="Your Email" rules="required|email" />
+                                <span class="form-message"></span>
                             </div>
                             <div class="form-group">
                                 <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
-                                <input asp-for="Password" type="password" name="password" id="password" placeholder="Your Password" value="@ViewBag.rememberMePassword" />
+                                <input asp-for="Password" value="@ViewBag.rememberMePassword" type="password" name="password"
+                                       id="password" placeholder="Your Password" rules="required" />
+                                <span class="form-message"></span>
                             </div>
                             <div class="form-group">
                                 <input type="checkbox" name="remember-me" id="remember-me" class="agree-term" checked="@ViewBag.rememberMeChecked" />
@@ -125,6 +129,7 @@
 
     </div>
     <div id="preloader"></div>
+    <script src="/js/Validator.js"></script>
     <script src="/js/toast-config.js"></script>
     <script src="/js/lib/jquery.min.js"></script>
     <script src="/js/lib/jquery-ui.min.js"></script>
@@ -137,6 +142,9 @@
                 }, 500);
             });
         }
+    </script>
+    <script>
+        Validator('#login-form')
     </script>
 </body>
 </html>

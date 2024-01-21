@@ -402,7 +402,7 @@ input[type=checkbox]:not(old):checked + label > span:before {
 label {
   position: absolute;
   left: 0;
-  top: 50%;
+  top: 20px;
   transform: translateY(-50%);
   -moz-transform: translateY(-50%);
   -webkit-transform: translateY(-50%);
@@ -411,7 +411,7 @@ label {
   color: #222; }
 
 .label-has-error {
-  top: 22%; }
+  top: 30%; }
 
 label.error {
   position: relative;
@@ -626,4 +626,19 @@ label.valid {
     100% {
         transform: rotate(360deg);
     }
+}
+
+.form-message {
+    text-align: left;
+    font-size: .8rem;
+    line-height: 1.6rem;
+    padding: 4px 0 0;
+}
+
+.form-group.invalid input {
+    border-color: #f33a58;
+}
+
+.form-group.invalid .form-message {
+    color: #f33a58;
 }
