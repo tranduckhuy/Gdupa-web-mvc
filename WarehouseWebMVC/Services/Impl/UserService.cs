@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using WarehouseWebMVC.Data;
 using WarehouseWebMVC.Models;
 using WarehouseWebMVC.Models.Domain;
@@ -193,5 +194,34 @@ public class UserService : IUserService
         }
 
         return false;
+    }
+
+    public UserViewModel GetAll(int page)
+    {
+
+        var totalUsers = _dataContext.Users.Count();
+        const int pageSize = 5;
+        if (page < 1)
+        {
+            page = 1;
+        }
+        var pageable = new Pageable(totalUsers, page, pageSize);
+
+        int skipAmount = (pageable.CurrentPage - 1) * pageSize;
+
+        var users = _dataContext.Users
+            .Skip(skipAmount)
+            .Take(pageSize)
+            .Include(p => p.Invoices)
+            .Include(p => p.ReceivedExpenseReports)
+            .Include(p => p.SentExpenseReports)
+            .OrderBy(p => p.UserId)
+            .ToList();
+
+        var usersDto = _mapper.Map<List<UserDTO>>(users);
+
+        var userViewModel = new UserViewModel { Users = usersDto, Pageable = pageable };
+
+        return userViewModel;
     }
 }

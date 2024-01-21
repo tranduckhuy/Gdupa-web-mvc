@@ -3,7 +3,7 @@ using System.Diagnostics;
 using WarehouseWebMVC.Data;
 using WarehouseWebMVC.Models;
 using WarehouseWebMVC.Service;
-using WarehouseWebMVC.Services;
+using WarehouseWebMVC.ViewModels;
 
 namespace WarehouseWebMVC.Controllers;
 
@@ -19,15 +19,18 @@ public class UserController : Controller
     }
 
     [Filter]
-    public IActionResult Users()
+    [HttpGet]
+    public IActionResult Users(int page = 1)
     {
         if (HttpContext.Session.GetString("User") != null)
         {
             Response.Headers.Add("Cache-Control", "no-store, no-cache, must-revalidate, post-check=0, pre-check=0");
             Response.Headers.Add("Pragma", "no-cache");
             Response.Headers.Add("Expires", "0");
-            return View();
+            UserViewModel userViewModel = _userService.GetAll(page);
+            return View(userViewModel);
         }
+        TempData["Message"] = AppConstant.MESSAGE_NOT_LOGIN;
         return RedirectToAction("Login", "Authentication");
     }
 

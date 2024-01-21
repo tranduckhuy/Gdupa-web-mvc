@@ -15,4 +15,6 @@ public interface IUserService
     public bool SendResetPasswordEmail(string userEmail, ISession session, HttpContext httpContext);
 
     public bool ResetPassword(string newPassword, ISession session);
+
+    public UserViewModel GetAll(int page);
 }
