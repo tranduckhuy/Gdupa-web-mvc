@@ -61,6 +61,21 @@
                 });
             </script>
         }
+        else if ("NotLoginYet".Equals(message))
+        {
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    setTimeout(function () {
+                        toast({
+                            title: "Failed",
+                            message: "You are not login yet!",
+                            type: "danger",
+                            duration: 3000,
+                        });
+                    }, 600);
+                });
+            </script>
+        }
     }
     <div class="main" style="padding: 50px 0 0 0;">
 

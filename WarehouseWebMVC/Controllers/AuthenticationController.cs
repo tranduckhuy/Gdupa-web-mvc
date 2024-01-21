@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using WarehouseWebMVC.Data;
 using WarehouseWebMVC.Models;
@@ -127,7 +128,9 @@ public class AuthenticationController : Controller
 				HttpContext.Session.SetString("User", userDTO.Email);
                 if (user != null)
                 {
-                    HttpContext.Session.SetString("Name", user.Name);
+					byte[] userIdBytes = BitConverter.GetBytes(user.UserId);
+					HttpContext.Session.Set("Id", userIdBytes);
+					HttpContext.Session.SetString("Name", user.Name);
                     HttpContext.Session.SetString("Address", user.Address);
                     HttpContext.Session.SetString("Avatar", user.Avatar);
                 } else

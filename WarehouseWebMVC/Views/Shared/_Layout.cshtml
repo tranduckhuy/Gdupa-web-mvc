@@ -2,6 +2,8 @@
 	var name = ViewContext.HttpContext.Session.GetString("Name");
 	var address = ViewContext.HttpContext.Session.GetString("Address");
 	var avatar = ViewContext.HttpContext.Session.GetString("Avatar");
+	byte[] userIdBytes = ViewContext.HttpContext.Session.Get("Id");
+	long userId = userIdBytes != null ? BitConverter.ToInt64(userIdBytes, 0) : 0;
 }
 <!DOCTYPE html>
 <html class="no-js" lang="en">
@@ -258,7 +260,7 @@
 								</a>
 							</li>
 							<li>
-								<a class="collapsed" asp-area="" asp-controller="User" asp-action="UserInformation">
+								<a href="/User/UserInformation?userId=@userId" class="collapsed">
 									<span class="menu-bar__text">
 										<span class="sherah-menu-icon sherah-svg-icon__v1">
 											<svg class="sherah-svg-icon" xmlns="http://www.w3.org/2000/svg"
@@ -815,9 +817,7 @@
 																		</svg>
 
 																	</div>
-																	<h4 class="sherah-dropdown-card-name"><a asp-area=""
-																			asp-controller="User"
-																			asp-action="UserInformation">My Profile</a>
+																	<h4 class="sherah-dropdown-card-name"><a href="/User/UserInformation?userId=@userId">My Profile</a>
 																	</h4>
 																</div>
 															</li>
@@ -849,9 +849,7 @@
 																			</g>
 																		</svg>
 																	</div>
-																	<h4 class="sherah-dropdown-card-name"><a asp-area=""
-																			asp-controller="User"
-																			asp-action="UserInformation">Settings</a>
+																	<h4 class="sherah-dropdown-card-name"><a href="/User/UserInformation?userId=@userId">Settings</a>
 																	</h4>
 																</div>
 															</li>

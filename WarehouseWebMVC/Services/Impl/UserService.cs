@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
 using WarehouseWebMVC.Data;
+using WarehouseWebMVC.Models;
 using WarehouseWebMVC.Models.Domain;
+using WarehouseWebMVC.Models.DTOs.ProductDTO;
 using WarehouseWebMVC.Models.DTOs.UserDTO;
 using WarehouseWebMVC.Service;
 using WarehouseWebMVC.Services.Mail;
+using WarehouseWebMVC.ViewModels;
 
 namespace WarehouseWebMVC.Services.Impl;
 
@@ -31,6 +34,14 @@ public class UserService : IUserService
     {
         return _dataContext.Users.FirstOrDefault(u => u.Email == email)!;
     }
+
+    public UserInformationVM GetUserById(long userId)
+    {
+        var user = _dataContext.Users.FirstOrDefault(u => u.UserId == userId)!;
+		var userDto = _mapper.Map<UserInformationDTO>(user);
+		var userInformationVM = new UserInformationVM { User = userDto};
+        return userInformationVM;
+	}
 
     public bool SendResetPasswordEmail(string userEmail, ISession session, HttpContext httpContext)
     {
