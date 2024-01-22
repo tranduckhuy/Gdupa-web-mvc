@@ -150,7 +150,7 @@
                                             <div class="tab-content" id="nav-tabContent">
                                                 <!--  Features Single Tab -->
                                                 <div class="tab-pane fade show active" id="id1" role="tabpanel">
-                                                    <form method="post">
+                                                    <form method="post" asp-action="UserInformation" asp-controller="User">
                                                         <div class="row">
                                                             <div class="col-12">
                                                                 <div class="sherah-ptabs__separate">
@@ -251,23 +251,23 @@
                                                         <div class="row">
                                                             <div class="col-xxl-8  col-lg-6 col-md-6 col-12">
                                                                 <!-- Sign in Form -->
-                                                                <form class="sherah-wc__form-main sherah-form-main--v2 p-0" action="#" method="post">
+                                                                <form class="sherah-wc__form-main sherah-form-main--v2 p-0" asp-controller="User" asp-action="ChangePassword" method="post">
                                                                     <div class="form-group">
                                                                         <label class="sherah-wc__form-label">Old Password *</label>
                                                                         <div class="form-group__input">
-                                                                            <input class="sherah-wc__form-input" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" id="oldPassword" type="password" name="password" maxlength="8" required="required">
+                                                                            <input asp-for="OldPassword" class="sherah-wc__form-input" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" id="oldPassword" type="password" name="password" maxlength="8" required="required">
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label class="sherah-wc__form-label">New Password *</label>
                                                                         <div class="form-group__input">
-                                                                            <input class="sherah-wc__form-input" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" id="newPassword" type="password" name="password" maxlength="8" required="required">
+                                                                            <input asp-for="NewPassword" class="sherah-wc__form-input" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" id="newPassword" type="password" name="password" maxlength="8" required="required">
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label class="sherah-wc__form-label">Re-enter Password *</label>
                                                                         <div class="form-group__input">
-                                                                            <input class="sherah-wc__form-input" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" id="confirmPassword" type="password" name="password" maxlength="8" required="required">
+                                                                            <input asp-for="ConfirmPassword" class="sherah-wc__form-input" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" id="confirmPassword" type="password" name="password" maxlength="8" required="required">
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group mg-top-30">

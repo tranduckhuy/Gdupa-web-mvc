@@ -18,6 +18,8 @@ public interface IUserService
 
     bool UpdateUser(UserInformationDTO userDTO);
 
+    bool ChangePassword(UserInformationDTO updatedUser);
+
     UserViewModel GetAll(int page);
 
 }

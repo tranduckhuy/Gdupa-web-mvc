@@ -53,7 +53,7 @@ public class UserService : IUserService
                 return false;
             }
 
-            if(updatedUser.Avatar == null)
+            if (updatedUser.Avatar == null)
             {
                 updatedUser.Avatar = existingUser.Avatar;
             }
@@ -64,7 +64,7 @@ public class UserService : IUserService
                 existingUser.Phone = updatedUser.Phone;
                 existingUser.Avatar = updatedUser.Avatar;
             }
-            
+
             _dataContext.Entry(existingUser).State = EntityState.Modified;
             _dataContext.SaveChanges();
             return true;
@@ -74,6 +74,44 @@ public class UserService : IUserService
             return false;
         }
     }
+
+    public bool ChangePassword(UserInformationDTO updatedUser)
+    {
+        try
+        {
+            var existingUser = _dataContext.Users.FirstOrDefault(u => u.UserId == updatedUser.UserId);
+
+            if (existingUser == null)
+            {
+                return false; 
+            }
+
+            if (updatedUser.OldPassword == null || updatedUser.NewPassword == null || updatedUser.ConfirmPassword == null)
+            {
+                return false; 
+            }
+
+            if (existingUser.Password != updatedUser.OldPassword)
+            {
+                return false; 
+            }
+
+            if (updatedUser.NewPassword != updatedUser.ConfirmPassword)
+            {
+                return false;
+            }
+
+            existingUser.Password = updatedUser.NewPassword;
+            _dataContext.Entry(existingUser).State = EntityState.Modified;
+            _dataContext.SaveChanges();
+            return true; 
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+    }
+
 
     public bool SendResetPasswordEmail(string userEmail, ISession session, HttpContext httpContext)
     {

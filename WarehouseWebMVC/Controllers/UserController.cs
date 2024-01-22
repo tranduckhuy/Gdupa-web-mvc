@@ -78,6 +78,22 @@ public class UserController : Controller
         return View(_userService.GetUserById(userInformationDTO.UserId));
     }
 
+    [HttpPost]
+    public IActionResult ChangePassword(UserInformationDTO userInformationDTO)
+    {
+        if (ModelState.IsValid)
+        {
+            if (_userService.ChangePassword(userInformationDTO))
+            {
+                TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
+                return View(_userService.GetUserById(userInformationDTO.UserId));
+            }
+        }
+        TempData["Message"] = AppConstant.MESSAGE_FAILED;
+        return View(_userService.GetUserById(userInformationDTO.UserId));
+    }
+
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
