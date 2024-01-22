@@ -11,7 +11,7 @@
                 <h1>Better Solutions For Your Business</h1>
                 <h2>We are a team of leading experts in the field of e-commerce Warehouse Management and optimization.</h2>
                 <div class="d-flex justify-content-center justify-content-lg-start">
-                   
+
                     @if (isLoggedIn)
                     {
                         <a asp-area="" asp-controller="Dashboard" asp-action="Dashboard" class="btn-get-started">Dashboard</a>
@@ -415,7 +415,7 @@
                 </div>
 
                 <div class="col-lg-7 mt-5 mt-lg-0 d-flex align-items-stretch">
-                    <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+                    <form asp-area="" asp-controller="Contact" asp-action="Contact" method="POST" role="form" class="php-email-form">
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <label for="name">Your Name</label>
