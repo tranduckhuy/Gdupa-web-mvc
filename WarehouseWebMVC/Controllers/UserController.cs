@@ -66,31 +66,33 @@ public class UserController : Controller
     [HttpPost]
     public IActionResult UserInformation(UserInformationDTO userInformationDTO)
     {
+        var user = _userService.GetUserById(userInformationDTO.UserId);
         if (ModelState.IsValid)
         {
             if (_userService.UpdateUser(userInformationDTO))
             {
                 TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
-                return View(_userService.GetUserById(userInformationDTO.UserId));
+                return View(user);
             }
         }
         TempData["Message"] = AppConstant.MESSAGE_FAILED;
-        return View(_userService.GetUserById(userInformationDTO.UserId));
+        return View(user);
     }
 
     [HttpPost]
     public IActionResult ChangePassword(UserInformationDTO userInformationDTO)
     {
+        var user = _userService.GetUserById(userInformationDTO.UserId);
         if (ModelState.IsValid)
         {
             if (_userService.ChangePassword(userInformationDTO))
             {
                 TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
-                return View(_userService.GetUserById(userInformationDTO.UserId));
+                return View("UserInformation", user);
             }
         }
         TempData["Message"] = AppConstant.MESSAGE_FAILED;
-        return View(_userService.GetUserById(userInformationDTO.UserId));
+        return View("UserInformation", user);
     }
 
 

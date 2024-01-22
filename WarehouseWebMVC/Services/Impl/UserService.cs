@@ -81,24 +81,15 @@ public class UserService : IUserService
         {
             var existingUser = _dataContext.Users.FirstOrDefault(u => u.UserId == updatedUser.UserId);
 
-            if (existingUser == null)
+            if (existingUser == null 
+                || updatedUser.OldPassword == null 
+                || updatedUser.NewPassword == null 
+                || updatedUser.ConfirmPassword == null
+                || existingUser.Password != updatedUser.OldPassword
+                || updatedUser.OldPassword  == updatedUser.NewPassword
+                || updatedUser.NewPassword != updatedUser.ConfirmPassword)
             {
                 return false; 
-            }
-
-            if (updatedUser.OldPassword == null || updatedUser.NewPassword == null || updatedUser.ConfirmPassword == null)
-            {
-                return false; 
-            }
-
-            if (existingUser.Password != updatedUser.OldPassword)
-            {
-                return false; 
-            }
-
-            if (updatedUser.NewPassword != updatedUser.ConfirmPassword)
-            {
-                return false;
             }
 
             existingUser.Password = updatedUser.NewPassword;

@@ -199,15 +199,13 @@
                                                                                                 <a href="#" onclick="toggleEditName(event)" style="color: #6176FE">Edit</a>
                                                                                                 <i class="fas fa-edit" style="color: #6176FE"></i>
                                                                                             </span>
-                                                                                            <input style="margin-top:8px;" asp-for="Name" class="form-control" value="@Model.Name" id="name_input" name="name">
+                                                                                            <input style="margin-top:8px;" asp-for="Name" class="form-control" value="@Model.Name" id="name_input">
+                                                                                            <input asp-for="UserId" value="@Model.UserId" style="display:none;">
                                                                                         </p>
                                                                                     </li>
                                                                                     <li class="sherah-dflex">
                                                                                         <h4 class="sherah-profile-info__title">Email :</h4>
-                                                                                        <p class="sherah-profile-info__text">
-                                                                                            @MaskString(Model.Email, start, end)
-                                                                                            &nbsp;
-                                                                                        </p>
+                                                                                        <p class="sherah-profile-info__text">@MaskString(Model.Email, start, end)</p>
                                                                                     </li>
                                                                                     <li class="sherah-dflex">
                                                                                         <h4 class="sherah-profile-info__title">Phone :</h4>
@@ -218,7 +216,7 @@
                                                                                                 <a href="#" onclick="toggleEditPhone(event)" style="color: #6176FE">Edit</a>
                                                                                                 <i class="fas fa-edit" style="color: #6176FE"></i>
                                                                                             </span>
-                                                                                            <input style="margin-top:8px;" asp-for="Phone" class="form-control" value="@Model.Phone" id="phone_input" name="phone">
+                                                                                            <input style="margin-top:8px;" asp-for="Phone" class="form-control" value="@Model.Phone" id="phone_input">
                                                                                         </p>
                                                                                     </li>
                                                                                     <li class="sherah-dflex">
@@ -255,22 +253,23 @@
                                                                     <div class="form-group">
                                                                         <label class="sherah-wc__form-label">Old Password *</label>
                                                                         <div class="form-group__input">
-                                                                            <input asp-for="OldPassword" class="sherah-wc__form-input" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" id="oldPassword" type="password" name="password" maxlength="8" required="required">
+                                                                            <input asp-for="OldPassword" class="sherah-wc__form-input" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" id="oldPassword" type="password" maxlength="8" required="required">
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label class="sherah-wc__form-label">New Password *</label>
                                                                         <div class="form-group__input">
-                                                                            <input asp-for="NewPassword" class="sherah-wc__form-input" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" id="newPassword" type="password" name="password" maxlength="8" required="required">
+                                                                            <input asp-for="NewPassword" class="sherah-wc__form-input" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" id="newPassword" type="password" maxlength="8" required="required">
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label class="sherah-wc__form-label">Re-enter Password *</label>
                                                                         <div class="form-group__input">
-                                                                            <input asp-for="ConfirmPassword" class="sherah-wc__form-input" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" id="confirmPassword" type="password" name="password" maxlength="8" required="required">
+                                                                            <input asp-for="ConfirmPassword" class="sherah-wc__form-input" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" id="confirmPassword" type="password" maxlength="8" required="required">
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group mg-top-30">
+                                                                        <input asp-for="UserId" value="@Model.UserId" style="display:none;">
                                                                         <button type="submit" class="sherah-btn sherah-btn__primary">Changed Password</button>
                                                                     </div>
                                                                 </form>
