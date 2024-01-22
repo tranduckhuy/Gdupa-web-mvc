@@ -66,17 +66,16 @@ public class UserController : Controller
     [HttpPost]
     public IActionResult UserInformation(UserInformationDTO userInformationDTO)
     {
-        var user = _userService.GetUserById(userInformationDTO.UserId);
         if (ModelState.IsValid)
         {
             if (_userService.UpdateUser(userInformationDTO))
             {
                 TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
-                return View(user);
+                return View(_userService.GetUserById(userInformationDTO.UserId));
             }
         }
         TempData["Message"] = AppConstant.MESSAGE_FAILED;
-        return View(user);
+        return View(_userService.GetUserById(userInformationDTO.UserId));
     }
 
     [HttpPost]
