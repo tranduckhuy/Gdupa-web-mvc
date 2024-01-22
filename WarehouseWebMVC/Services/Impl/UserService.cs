@@ -36,29 +36,43 @@ public class UserService : IUserService
         return _dataContext.Users.FirstOrDefault(u => u.Email == email)!;
     }
 
-    public UserInformationVM GetUserById(long userId)
+    public UserInformationDTO GetUserById(long userId)
     {
         var user = _dataContext.Users.FirstOrDefault(u => u.UserId == userId)!;
-		var userDto = _mapper.Map<UserInformationDTO>(user);
-		var userInformationVM = new UserInformationVM { User = userDto};
-        return userInformationVM;
-	}
+        var userDto = _mapper.Map<UserInformationDTO>(user);
+        return userDto;
+    }
 
-    public void UpdateUser(UserInformationDTO updatedUser)
+    public bool UpdateUser(UserInformationDTO updatedUser)
     {
-        var existingUser = _dataContext.Users.FirstOrDefault(u => u.UserId == updatedUser.UserId);
-
-        if (existingUser != null)
+        try
         {
-            if (updatedUser.Email != null && updatedUser.Phone != null && updatedUser.Address != null)
+            var existingUser = _dataContext.Users.FirstOrDefault(u => u.UserId == updatedUser.UserId);
+
+            if (existingUser == null)
+            {
+                return false;
+            }
+
+            if(updatedUser.Avatar == null)
+            {
+                updatedUser.Avatar = existingUser.Avatar;
+            }
+
+            if (updatedUser.Email != null && updatedUser.Phone != null && updatedUser.Avatar != null)
             {
                 existingUser.Email = updatedUser.Email;
                 existingUser.Phone = updatedUser.Phone;
-                existingUser.Address = updatedUser.Address;
-
-                _dataContext.Entry(existingUser).State = EntityState.Modified;
-                _dataContext.SaveChanges();
+                existingUser.Avatar = updatedUser.Avatar;
             }
+            
+            _dataContext.Entry(existingUser).State = EntityState.Modified;
+            _dataContext.SaveChanges();
+            return true;
+        }
+        catch (Exception)
+        {
+            return false;
         }
     }
 

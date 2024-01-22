@@ -6,18 +6,18 @@ namespace WarehouseWebMVC.Service;
 
 public interface IUserService
 {
-    public bool CheckLogin(UserDTO userDTO);
+    bool CheckLogin(UserDTO userDTO);
 
-    public User GetUserByEmail(string email);
+    User GetUserByEmail(string email);
 
-    public UserInformationVM GetUserById(long userId);
+    UserInformationDTO GetUserById(long userId);
 
-    public bool SendResetPasswordEmail(string userEmail, ISession session, HttpContext httpContext);
+    bool SendResetPasswordEmail(string userEmail, ISession session, HttpContext httpContext);
 
-    public bool ResetPassword(string newPassword, ISession session);
+    bool ResetPassword(string newPassword, ISession session);
 
-    public void UpdateUser(UserInformationDTO userDTO);
+    bool UpdateUser(UserInformationDTO userDTO);
 
-    public UserViewModel GetAll(int page);
+    UserViewModel GetAll(int page);
 
 }

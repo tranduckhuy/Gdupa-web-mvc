@@ -51,8 +51,8 @@ public class UserController : Controller
     }
 
     [Filter]
-		public IActionResult AddUser()
-		{
+    public IActionResult AddUser()
+    {
         if (HttpContext.Session.GetString("User") != null)
         {
             Response.Headers.Add("Cache-Control", "no-store, no-cache, must-revalidate, post-check=0, pre-check=0");
@@ -64,17 +64,21 @@ public class UserController : Controller
     }
 
     [HttpPost]
-    public IActionResult UserInformation(UserInformationDTO user)
+    public IActionResult UserInformation(UserInformationDTO userInformationDTO)
     {
-        if(!ModelState.IsValid)
+        if (ModelState.IsValid)
         {
-            _userService.UpdateUser(user);
-            return View(_userService.GetUserById(user.UserId));
+            if (_userService.UpdateUser(userInformationDTO))
+            {
+                TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
+                return View(_userService.GetUserById(userInformationDTO.UserId));
+            }
         }
-        return View();
+        TempData["Message"] = AppConstant.MESSAGE_FAILED;
+        return View(_userService.GetUserById(userInformationDTO.UserId));
     }
 
-		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
