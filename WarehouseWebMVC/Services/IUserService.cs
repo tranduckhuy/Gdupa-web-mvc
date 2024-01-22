@@ -24,6 +24,8 @@ public interface IUserService
 
     UserViewModel GetAll(int page);
 
+    public bool AddUser(AddUserDTO newUser);
+
 
 
 }

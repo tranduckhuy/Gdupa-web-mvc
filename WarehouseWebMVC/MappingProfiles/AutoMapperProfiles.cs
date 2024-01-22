@@ -12,6 +12,7 @@ public class AutoMapperProfiles : Profile
 		CreateMap<Product, ProductDTO>().ReverseMap();
 		CreateMap<Product, AddProductDTO>().ReverseMap();
 		CreateMap<User, UserDTO>().ReverseMap();
-		CreateMap<User, UserInformationDTO>().ReverseMap();
+        CreateMap<User, AddUserDTO>().ReverseMap();
+        CreateMap<User, UserInformationDTO>().ReverseMap();
 	}
 }

@@ -291,7 +291,7 @@ public class UserService : IUserService
         try
         {
             var user = _dataContext.Users.Find(userId);
-            if (user == null)
+            if (user == null || user.UserId == userId)
             {
                 return false;
             }
@@ -305,5 +305,35 @@ public class UserService : IUserService
             return false;
         }
     }
+    public bool AddUser(AddUserDTO newUser)
+    {
+        try
+        {
+            if (_dataContext.Users.Any(u => u.Email == newUser.Email))
+            {
+                return false; 
+            }
+
+            if (newUser.Password != newUser.RepeatPassword)
+            {
+                return false; 
+            }
+
+            var userEntity = _mapper.Map<User>(newUser);
+
+            userEntity.CreatedAt = DateTime.Now;
+
+            _dataContext.Users.Add(userEntity);
+            _dataContext.SaveChanges();
+
+            return true; 
+        }
+        catch (Exception)
+        {
+            return false; 
+        }
+    }
+
+
 
 }
