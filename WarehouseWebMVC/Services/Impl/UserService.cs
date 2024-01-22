@@ -3,7 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using WarehouseWebMVC.Data;
 using WarehouseWebMVC.Models;
 using WarehouseWebMVC.Models.Domain;
-using WarehouseWebMVC.Models.DTOs.ProductDTO;
 using WarehouseWebMVC.Models.DTOs.UserDTO;
 using WarehouseWebMVC.Service;
 using WarehouseWebMVC.Services.Mail;
@@ -59,9 +58,9 @@ public class UserService : IUserService
                 updatedUser.Avatar = existingUser.Avatar;
             }
 
-            if (updatedUser.Email != null && updatedUser.Phone != null && updatedUser.Avatar != null)
+            if (updatedUser.Name != null && updatedUser.Phone != null && updatedUser.Avatar != null)
             {
-                existingUser.Email = updatedUser.Email;
+                existingUser.Name = updatedUser.Name;
                 existingUser.Phone = updatedUser.Phone;
                 existingUser.Avatar = updatedUser.Avatar;
             }

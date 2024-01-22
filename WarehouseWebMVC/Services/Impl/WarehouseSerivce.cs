@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WarehouseWebMVC.Data;
 using WarehouseWebMVC.Models;
-using WarehouseWebMVC.Models.Domain;
 using WarehouseWebMVC.ViewModels;
 
 namespace WarehouseWebMVC.Services.Impl

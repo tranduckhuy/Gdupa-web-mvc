@@ -26,14 +26,14 @@
     }
 }
 <style>
-    #email_input {
+    #name_input {
         max-height: 0;
         overflow: hidden;
         opacity: 0;
         display: none;
     }
 
-        #email_input.active {
+        #name_input.active {
             max-height: 100px;
             opacity: 1;
             display: block;
@@ -191,19 +191,22 @@
                                                                                 <h3 class="sherah-profile-info__heading mg-btm-30">Personal Information</h3>
                                                                                 <ul class="sherah-profile-info__list sherah-dflex-column">
                                                                                     <li class="sherah-dflex">
-                                                                                        <h4 class="sherah-profile-info__title">Full Name :</h4>
-                                                                                        <p class="sherah-profile-info__text">@Model.Name</p>
+                                                                                        <h4 class="sherah-profile-info__title">Full Name:</h4>
+                                                                                        <p class="sherah-profile-info__text">
+                                                                                            @Model.Name
+                                                                                            &nbsp;
+                                                                                            <span>
+                                                                                                <a href="#" onclick="toggleEditName(event)" style="color: #6176FE">Edit</a>
+                                                                                                <i class="fas fa-edit" style="color: #6176FE"></i>
+                                                                                            </span>
+                                                                                            <input style="margin-top:8px;" asp-for="Name" class="form-control" value="@Model.Name" id="name_input" name="name">
+                                                                                        </p>
                                                                                     </li>
                                                                                     <li class="sherah-dflex">
                                                                                         <h4 class="sherah-profile-info__title">Email :</h4>
                                                                                         <p class="sherah-profile-info__text">
                                                                                             @MaskString(Model.Email, start, end)
                                                                                             &nbsp;
-                                                                                            <span>
-                                                                                                <a href="#" onclick="toggleEditEmail(event)" style="color: #6176FE">Edit</a>
-                                                                                                <i class="fas fa-edit" style="color: #6176FE"></i>
-                                                                                            </span>
-                                                                                            <input style="margin-top:8px;" asp-for="Email" class="form-control" value="@Model.Email" id="email_input" name="email">
                                                                                         </p>
                                                                                     </li>
                                                                                     <li class="sherah-dflex">
@@ -416,14 +419,14 @@
 <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
 <script src="/js/firebase/firebaseUploadAvatar.js"></script>
 <script async>
-    function toggleEditEmail(event) {
+    function toggleEditName(event) {
         event.preventDefault();
-        var emailInput = document.getElementById('email_input');
+        var nameInput = document.getElementById('name_input');
 
-        if (emailInput.classList.contains('active')) {
-            emailInput.classList.remove('active');
+        if (nameInput.classList.contains('active')) {
+            nameInput.classList.remove('active');
         } else {
-            emailInput.classList.add('active');
+            nameInput.classList.add('active');
         }
     }
     function toggleEditPhone(event) {
