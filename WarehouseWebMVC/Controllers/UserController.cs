@@ -95,6 +95,19 @@ public class UserController : Controller
     }
 
 
+    [HttpGet]
+    public IActionResult DeleteUser(long userId)
+    {
+        if (_userService.Delete(userId))
+        {
+            TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
+            return RedirectToAction("Users");
+        }
+        TempData["Message"] = AppConstant.MESSAGE_FAILED;
+        return RedirectToAction("Users");
+    }
+
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {

@@ -81,21 +81,21 @@ public class UserService : IUserService
         {
             var existingUser = _dataContext.Users.FirstOrDefault(u => u.UserId == updatedUser.UserId);
 
-            if (existingUser == null 
-                || updatedUser.OldPassword == null 
-                || updatedUser.NewPassword == null 
+            if (existingUser == null
+                || updatedUser.OldPassword == null
+                || updatedUser.NewPassword == null
                 || updatedUser.ConfirmPassword == null
                 || existingUser.Password != updatedUser.OldPassword
-                || updatedUser.OldPassword  == updatedUser.NewPassword
+                || updatedUser.OldPassword == updatedUser.NewPassword
                 || updatedUser.NewPassword != updatedUser.ConfirmPassword)
             {
-                return false; 
+                return false;
             }
 
             existingUser.Password = updatedUser.NewPassword;
             _dataContext.Entry(existingUser).State = EntityState.Modified;
             _dataContext.SaveChanges();
-            return true; 
+            return true;
         }
         catch (Exception)
         {
@@ -284,4 +284,26 @@ public class UserService : IUserService
 
         return userViewModel;
     }
+
+
+    public bool Delete(long userId)
+    {
+        try
+        {
+            var user = _dataContext.Users.Find(userId);
+            if (user == null)
+            {
+                return false;
+            }
+            _dataContext.Users.RemoveRange(user);
+            _dataContext.SaveChanges();
+
+            return true;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+    }
+
 }
