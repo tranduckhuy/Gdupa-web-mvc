@@ -66,10 +66,14 @@
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-12">
                                                     <div class="form-group">
-                                                        <label class="sherah-wc__form-label">Price</label>
-                                                        <div class="form-group__input">
-                                                            <input asp-for="Price" class="sherah-wc__form-input" placeholder="Type here" type="text">
-                                                        </div>
+                                                        <label class="sherah-wc__form-label">Category*</label>
+                                                        <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-group__input" aria-label="Default select example"></select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-12">
+                                                    <div class="form-group">
+                                                        <label class="sherah-wc__form-label">Brand*</label>
+                                                        <select asp-for="BrandId" asp-items="ViewBag.Brands" class="form-group__input" aria-label="Default select example"></select>
                                                     </div>
                                                 </div>
                                                 <div class="col-12">
@@ -108,21 +112,17 @@
                                         <div class="product-form-box sherah-border mg-top-30">
                                             <h4 class="form-title m-0">Specification</h4>
                                             <div class="row">
-                                                <div class="col-lg-4 col-md-6 col-12">
+                                                <div class="col-lg-6 col-md-6 col-12">
                                                     <div class="form-group">
-                                                        <label class="sherah-wc__form-label">Category*</label>
-                                                        <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-group__input" aria-label="Default select example"></select>
+                                                        <label class="sherah-wc__form-label">Price</label>
+                                                        <div class="form-group__input">
+                                                            <input asp-for="Price" class="sherah-wc__form-input" placeholder="Type here" type="text">
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-4 col-md-6 col-12">
+                                                <div class="col-lg-6 col-md-6 col-12">
                                                     <div class="form-group">
-                                                        <label class="sherah-wc__form-label">Brand*</label>
-                                                        <select asp-for="BrandId" asp-items="ViewBag.Brands" class="form-group__input" aria-label="Default select example"></select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-4 col-md-6 col-12">
-                                                    <div class="form-group">
-                                                        <label class="sherah-wc__form-label">Unit</label>
+                                                        <label class="sherah-wc__form-label">Unit*</label>
                                                         <select asp-for="Unit" asp-items="ViewBag.Units" class="form-group__input" aria-label="Default select example"></select>
                                                     </div>
                                                 </div>

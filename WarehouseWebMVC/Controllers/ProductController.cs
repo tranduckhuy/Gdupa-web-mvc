@@ -129,16 +129,13 @@ public class ProductController : Controller
     [HttpPost]
     public IActionResult UpdateProduct([FromForm] AddProductDTO updateProductDTO)
     {
-        if (ModelState.IsValid)
+        if (_productService.Update(updateProductDTO))
         {
-            if (_productService.Update(updateProductDTO))
-            {
-                TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
-                return RedirectToAction("ProductList");
-            }
+            TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
+            return RedirectToAction("ProductList");
         }
         TempData["Message"] = AppConstant.MESSAGE_FAILED;
-        return RedirectToAction("UpdateProduct", "ProductList", new { productId = updateProductDTO.ProductId });
+        return RedirectToAction("UpdateProduct", "Product", new { productId = updateProductDTO.ProductId });
     }
 
     [HttpGet]
