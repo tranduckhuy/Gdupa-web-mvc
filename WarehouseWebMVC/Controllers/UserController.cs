@@ -96,19 +96,20 @@ public class UserController : Controller
         {
             if (_userService.UpdateUser(userInformationDTO))
             {
-                var user = _userService.GetUserByEmail(userInformationDTO.Email);
-                HttpContext.Session.SetString("User", userInformationDTO.Email);
+                var user = _userService.GetUserById(userInformationDTO.UserId);
                 if (user != null)
                 {
                     byte[] userIdBytes = BitConverter.GetBytes(user.UserId);
                     HttpContext.Session.Set("Id", userIdBytes);
                     HttpContext.Session.SetString("Name", user.Name);
+                    HttpContext.Session.SetString("User", user.Email);
                     HttpContext.Session.SetString("Address", user.Address);
                     HttpContext.Session.SetString("Avatar", user.Avatar);
                 }
                 else
                 {
-                    throw new Exception("User null exception!");
+                    TempData["Message"] = AppConstant.MESSAGE_FAILED;
+                    return View(_userService.GetUserById(userInformationDTO.UserId));
                 }
                 TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
                 return View(_userService.GetUserById(userInformationDTO.UserId));
@@ -147,6 +148,18 @@ public class UserController : Controller
         return RedirectToAction("Users");
     }
 
+    [HttpPost]
+    public IActionResult SearchUser(string searchType, string searchValue)
+    {
+
+        var searchUsers = _userService.SearchUser(searchType, searchValue);
+        if (searchUsers == null)
+        {
+            TempData["Message"] = AppConstant.NOT_FOUND;
+            return RedirectToAction("Users");
+        }
+        return View("Users", searchUsers);
+    }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

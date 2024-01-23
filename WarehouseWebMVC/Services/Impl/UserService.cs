@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
+using System.Text;
 using WarehouseWebMVC.Data;
 using WarehouseWebMVC.Models;
 using WarehouseWebMVC.Models.Domain;
@@ -285,6 +287,33 @@ public class UserService : IUserService
         return userViewModel;
     }
 
+    public UserViewModel SearchUser(string searchType, string searchValue)
+    {
+        IQueryable<User> searchUser = _dataContext.Users;
+
+        switch (searchType)
+        {
+            case "Name":
+                searchUser = searchUser.Where(u => u.Name.ToUpper().Contains(searchValue.ToUpper()));
+                break;
+
+            case "Email":
+                searchUser = searchUser.Where(u => u.Email.ToUpper().Contains(searchValue.ToUpper()));
+                break;
+
+            default:
+                searchUser = searchUser.Where(u => u.Name.ToUpper().Contains(searchValue.ToUpper()));
+                break;
+        }
+
+        if (searchUser.Any())
+        {
+            var searchUserDto = _mapper.Map<List<UserDTO>>(searchUser.ToList());
+            var userViewModel = new UserViewModel { Users = searchUserDto };
+            return userViewModel;
+        }
+        return null!;
+    }
 
     public bool Delete(long userId, long inforId)
     {

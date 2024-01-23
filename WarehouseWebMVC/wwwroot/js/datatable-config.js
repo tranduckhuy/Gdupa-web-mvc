@@ -7,7 +7,7 @@
 });
 
 $('#sherah-table__vendor').DataTable({
-    searching: true,
+    searching: false,
     info: false,
     lengthChange: false,
     scrollCollapse: true,
