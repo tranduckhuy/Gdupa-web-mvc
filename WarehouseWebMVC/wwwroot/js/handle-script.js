@@ -10,7 +10,7 @@
     }).then((result) => {
         if (result.isConfirmed) {
             var currentPath = window.location.pathname;
-            var newPath = currentPath.replace("/Product/Product", "/Product/DeleteProduct") + '?productId=' + id;
+            var newPath = currentPath.replace("/Product/ProductList", "/Product/DeleteProduct") + '?productId=' + id;
             window.location.href = newPath;
         }
         if (!result.isConfirmed) {
