@@ -1,6 +1,7 @@
 ﻿@model WarehouseWebMVC.Models.DTOs.UserDTO.AddUserDTO
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "Add User";
+    var message = TempData["Message"] as string;
     Layout = null;
 }
 
@@ -19,59 +20,73 @@
     <link rel="stylesheet" href="/assets/css/main-login.css">
 </head>
 <body style="overflow: hidden;">
-    <div class="main" style="padding: 20px 0 0 0;">
-
+    <div id="toast"></div>
+    @if (!string.IsNullOrEmpty(message))
+    {
+        if ("Failed".Equals(message))
+        {
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    setTimeout(function () {
+                        toast({
+                            title: "Failed",
+                            message: "Email existing. Please try with another email.",
+                            type: "danger",
+                            duration: 3000,
+                        });
+                    }, 600);
+                });
+            </script>
+        }
+    }
+    <div class="main">
         <!-- Sign up form -->
-        <section class="signup">
+        <section class="signup" style="margin-top:60px;margin-bottom:100px;">
             <div class="container">
-                <div class="signup-content">
+                <div class="signup-content" style="padding:28px 0 12px 0;">
                     <div class="signup-form">
                         <a asp-area="" asp-controller="User" asp-action="Users" style="text-decoration: none; color: #000; font-size: 20px;">
                             <i class="zmdi zmdi-arrow-left"></i>
                         </a>
-                        <h2 class="form-title">Sign Up</h2>
+                        <h2 class="form-title" style="margin-bottom:16px;">Add User</h2>
                         <form method="POST" asp-action="AddUser" asp-controller="User" class="register-form" id="register-form">
-                            <div class="form-group">
+                            <div class="form-group" style="margin-bottom:16px">
                                 <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
                                 <input asp-for="Name" type="text" id="name" placeholder="Your Name" rules="required" />
                                 <span class="form-message"></span>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" style="margin-bottom:16px">
                                 <label for="email"><i class="zmdi zmdi-email"></i></label>
                                 <input asp-for="Email" type="email" id="email" placeholder="Your Email" rules="required|email" />
                                 <span class="form-message"></span>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" style="margin-bottom:16px">
                                 <label for="phone"><i class="zmdi zmdi-phone"></i></label>
-                                <input asp-for="Phone" type="text" id="phone" placeholder="Your Phone" rules="required" />
+                                <input asp-for="Phone" type="text" id="phone" placeholder="Your Phone" rules="required|max:10|phone" />
                                 <span class="form-message"></span>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" style="margin-bottom:16px">
                                 <label for="address"><i class="zmdi zmdi-pin"></i></label>
                                 <input asp-for="Address" type="text" id="address" placeholder="Your Address" rules="required" />
                                 <span class="form-message"></span>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" style="margin-bottom:16px">
                                 <label for="pass"><i class="zmdi zmdi-lock"></i></label>
-                                <input asp-for="Password" type="password" id="pass" placeholder="Password" rules="required"  />
+                                <input asp-for="Password" type="password" id="pass" placeholder="Password" rules="required|max:16|number|lower|upper|special" />
                                 <span class="form-message"></span>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" style="margin-bottom:24px">
                                 <label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
-                                <input asp-for="RepeatPassword" type="password" id="re_pass" placeholder="Repeat your password" rules="required" />
+                                <input asp-for="RepeatPassword" type="password" id="re_pass" placeholder="Repeat your password" rules="required|match:pass" />
                                 <span class="form-message"></span>
-                            </div>
-                            <div class="form-group">
-                                <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
-                                <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" class="term-service">Terms of service</a></label>
                             </div>
                             <div class="form-group form-button">
-                                <input type="submit" name="signup" id="signup" class="form-submit" value="Register" />
+                                <input type="submit" name="signup" id="signup" class="form-submit" value="Save" style="margin-top:12px;" />
                             </div>
                         </form>
                     </div>
                     <div class="signup-image">
-                        <figure><img src="/assets/images/signup-image.jpg" alt="sing up image"></figure>
+                        <figure><img src="/assets/images/signup-image.jpg" alt="sing up image" style="margin-top:50px;"></figure>
                     </div>
                 </div>
             </div>
@@ -81,6 +96,10 @@
     <div id="preloader"></div>
     <script src="/js/lib/jquery.min.js"></script>
     <script src="/js/lib/jquery-ui.min.js"></script>
+    <script src="/js/Validator.js"></script>
+    <script>
+        Validator('#register-form')
+    </script>
     <script>
         let preloader = document.getElementById('preloader');
         if (preloader) {
@@ -91,9 +110,6 @@
             });
         }
     </script>
-    <script src="/js/Validator.js"></script>
-    <script>
-        Validator('#register-form')
-    </script>
+
 </body>
 </html>

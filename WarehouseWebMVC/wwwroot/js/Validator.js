@@ -28,12 +28,12 @@ function Validator(formSelector) {
         },
         min: function (min) {
             return function (value) {
-                return value.length >= min ? undefined : "Please enter at least " + min + " charactors";
+                return value.length >= min ? undefined : "Please enter at least " + min + " charactors.";
             };
         },
         max: function (max) {
             return function (value) {
-                return value.length <= max ? undefined : "Please enter at most " + max + " charactors";
+                return value.length <= max ? undefined : "Please enter at most " + max + " charactors.";
             };
         },
         upper: function (value) {
@@ -60,7 +60,11 @@ function Validator(formSelector) {
                 var otherFieldValue = document.getElementById(inputId).value;
                 return value === otherFieldValue ? undefined : "Password incorrect!";
             };
-        }
+        },
+        phone: function (value) {
+            var regex = /([\+84|84|0]+(3|5|7|8|9|1[2|6|8|9]))+([0-9]{8})\b/;
+            return regex.test(value) ? undefined : "Please enter a phone number here!";
+        },
 
     };
 

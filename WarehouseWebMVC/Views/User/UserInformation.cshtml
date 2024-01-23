@@ -5,8 +5,10 @@
     var message = TempData["Message"] as string;
 }
 @{
-    int start = Math.Min(3, Model.Email.Length);
-    int end = Math.Max(11, Model.Email.Length - 11);
+    int startEmail = Math.Min(3, Model.Email.Length);
+    int endEmail = Math.Max(11, Model.Email.Length - 11);
+    int startPhone = Math.Min(0, Model.Phone.Length);
+    int endPhone = Math.Max(2, Model.Phone.Length - 2);
 }
 @functions {
     private string MaskString(string str, int start, int end)
@@ -150,7 +152,7 @@
                                             <div class="tab-content" id="nav-tabContent">
                                                 <!--  Features Single Tab -->
                                                 <div class="tab-pane fade show active" id="id1" role="tabpanel">
-                                                    <form method="post" asp-action="UserInformation" asp-controller="User">
+                                                    <form method="post" asp-action="UserInformation" asp-controller="User" id="edit-form">
                                                         <div class="row">
                                                             <div class="col-12">
                                                                 <div class="sherah-ptabs__separate">
@@ -199,7 +201,8 @@
                                                                                                 <a href="#" onclick="toggleEditName(event)" style="color: #6176FE">Edit</a>
                                                                                                 <i class="fas fa-edit" style="color: #6176FE"></i>
                                                                                             </span>
-                                                                                            <input style="margin-top:8px;" asp-for="Name" class="form-control" value="@Model.Name" id="name_input">
+                                                                                            <input asp-for="Name" value="@Model.Name" class="sherah-wc__form-input"
+                                                                                                   placeholder="Type here" id="name_input" style="margin-top:8px;padding:0 12px;">
                                                                                             <input asp-for="UserId" value="@Model.UserId" style="display:none;">
                                                                                             <input asp-for="Email" value="@Model.Email" style="display:none;">
                                                                                             <input asp-for="Address" value="@Model.Address" style="display:none;">
@@ -207,18 +210,19 @@
                                                                                     </li>
                                                                                     <li class="sherah-dflex">
                                                                                         <h4 class="sherah-profile-info__title">Email :</h4>
-                                                                                        <p class="sherah-profile-info__text">@MaskString(Model.Email, start, end)</p>
+                                                                                        <p class="sherah-profile-info__text">@MaskString(Model.Email, startEmail, endEmail)</p>
                                                                                     </li>
                                                                                     <li class="sherah-dflex">
                                                                                         <h4 class="sherah-profile-info__title">Phone :</h4>
                                                                                         <p class="sherah-profile-info__text">
-                                                                                            (+84) @Model.Phone
+                                                                                            @MaskString(Model.Phone, startPhone, endPhone)
                                                                                             &nbsp;
                                                                                             <span>
                                                                                                 <a href="#" onclick="toggleEditPhone(event)" style="color: #6176FE">Edit</a>
                                                                                                 <i class="fas fa-edit" style="color: #6176FE"></i>
                                                                                             </span>
-                                                                                            <input style="margin-top:8px;" asp-for="Phone" class="form-control" value="@Model.Phone" id="phone_input">
+                                                                                            <input asp-for="Phone" value="@Model.Phone" class="sherah-wc__form-input"
+                                                                                                   placeholder="Type here" id="phone_input" style="margin-top:8px;padding:0 12px;">
                                                                                         </p>
                                                                                     </li>
                                                                                     <li class="sherah-dflex">
@@ -251,24 +255,30 @@
                                                         <div class="row">
                                                             <div class="col-xxl-8  col-lg-6 col-md-6 col-12">
                                                                 <!-- Sign in Form -->
-                                                                <form class="sherah-wc__form-main sherah-form-main--v2 p-0" asp-controller="User" asp-action="ChangePassword" method="post">
+                                                                <form class="sherah-wc__form-main sherah-form-main--v2 p-0" id="change-form" asp-controller="User" asp-action="ChangePassword" method="post">
                                                                     <div class="form-group">
                                                                         <label class="sherah-wc__form-label">Old Password *</label>
                                                                         <div class="form-group__input">
-                                                                            <input asp-for="OldPassword" class="sherah-wc__form-input" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" id="oldPassword" type="password" maxlength="8" required="required">
+                                                                            <input asp-for="OldPassword" class="sherah-wc__form-input" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
+                                                                                   id="oldPassword" type="password">
                                                                         </div>
+                                                                        <span class="form-message"></span>
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label class="sherah-wc__form-label">New Password *</label>
                                                                         <div class="form-group__input">
-                                                                            <input asp-for="NewPassword" class="sherah-wc__form-input" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" id="newPassword" type="password" maxlength="8" required="required">
+                                                                            <input asp-for="NewPassword" class="sherah-wc__form-input" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
+                                                                                   id="newPassword" type="password">
                                                                         </div>
+                                                                        <span class="form-message"></span>
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label class="sherah-wc__form-label">Re-enter Password *</label>
                                                                         <div class="form-group__input">
-                                                                            <input asp-for="ConfirmPassword" class="sherah-wc__form-input" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" id="confirmPassword" type="password" maxlength="8" required="required">
+                                                                            <input asp-for="ConfirmPassword" class="sherah-wc__form-input" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
+                                                                                   id="confirmPassword" type="password">
                                                                         </div>
+                                                                        <span class="form-message"></span>
                                                                     </div>
                                                                     <div class="form-group mg-top-30">
                                                                         <input asp-for="UserId" value="@Model.UserId" style="display:none;">
@@ -417,8 +427,8 @@
     </div>
 </section>
 <!-- End sherah Dashboard -->
-<script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
-<script src="/js/firebase/firebaseUploadAvatar.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js" async></script>
+<script src="/js/firebase/firebaseUploadAvatar.js" async></script>
 <script async>
     function toggleEditName(event) {
         event.preventDefault();
@@ -440,15 +450,182 @@
             phoneInput.classList.add('active');
         }
     }
-    function toggleEditAddress(event) {
-        event.preventDefault();
-        var addressInput = document.getElementById('address_input');
+</script>
+<script async>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Waiting for DOM
+        var editForm = document.getElementById('edit-form');
+        var changeForm = document.getElementById('change-form');
 
-        if (addressInput.classList.contains('active')) {
-            addressInput.classList.remove('active');
-        } else {
-            addressInput.classList.add('active');
+        editForm.addEventListener("submit", function (event) {
+            // Cancel default event of button type submit
+            event.preventDefault();
+
+            // Call Validate function
+            if (validateEditForm()) {
+                // If all valid, submit form
+                editForm.submit();
+            }
+        });
+
+        changeForm.addEventListener("submit", function (event) {
+            // Cancel default event of button type submit
+            event.preventDefault();
+
+            // Call Validate function
+            if (validateChangeForm()) {
+                // If all valid, submit form
+                changeForm.submit();
+            }
+        });
+
+        function validateEditForm() {
+            var name = document.getElementById("name_input").value;
+            var phone = document.getElementById("phone_input").value;
+
+            // Execute Validation
+            // All field have to be filled
+            if (name.trim() === "") {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Name field have to be filled!",
+                    footer: '<a href="#">Gdupa so sorry about this confuse?</a>'
+                });
+                return false;
+            }
+            if (phone.trim() === "") {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Phone field have to be filled!",
+                    footer: '<a href="#">Gdupa so sorry about this confuse?</a>'
+                });
+                return false;
+            }
+            var phoneRegex = /([\+84|84|0]+(3|5|7|8|9|1[2|6|8|9]))+([0-9]{8})\b/;
+            if (!phoneRegex.test(phone)) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Please enter a valid phone number.",
+                    footer: '<a href="#">Gdupa so sorry about this confuse?</a>'
+                });
+                return false;
+            }
+            // All valid, return true
+            return true;
         }
-    }
+
+        function validateChangeForm() {
+            var oldPassword = document.getElementById("oldPassword").value;
+            var newPassword = document.getElementById("newPassword").value;
+            var confirmPassword = document.getElementById("confirmPassword").value;
+
+            // Thực hiện các kiểm tra validation ở đây
+            // kiểm tra nếu một trường không được bỏ trống
+            if (oldPassword.trim() === "" || newPassword.trim() === "" || confirmPassword.trim() === "") {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "All fields have to be filled!",
+                    footer: '<a href="#">Gdupa so sorry about this confuse?</a>'
+                });
+                return false;
+            }
+
+            // Kiểm tra mật khẩu có khớp không
+            if (newPassword !== confirmPassword) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Password do not match!",
+                    footer: '<a href="#">Gdupa so sorry about this confuse?</a>'
+                });
+                return false;
+            }
+
+            // Kiểm tra new Password không trùng với old Password
+            if (newPassword === oldPassword) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Do not enter Old Password for New Password !",
+                    footer: '<a href="#">Gdupa so sorry about this confuse?</a>'
+                });
+                return false;
+            }
+
+            // Kiểm tra độ dài mật khẩu
+            if (newPassword.length < 8) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Passwords need at least 8 charactors !",
+                    footer: '<a href="#">Gdupa so sorry about this confuse?</a>'
+                });
+                return false;
+            }
+
+            if (newPassword.length > 16) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Passwords need at most 16 charactors !",
+                    footer: '<a href="#">Gdupa so sorry about this confuse?</a>'
+                });
+                return false;
+            }
+
+            // Kiểm tra các trường hợp đặc biệt của mật khẩu
+            var upperRegex = /[A-Z]/;
+            var lowerRegex = /[a-z]/;
+            var numberRegex = /[0-9]/;
+            var specialRegex = /[^A-Za-z0-9]/;
+
+            if (!upperRegex.test(newPassword)) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Password need at least 1 uppercase character !",
+                    footer: '<a href="#">Gdupa so sorry about this confuse?</a>'
+                });
+                return false;
+            }
+
+            if (!lowerRegex.test(newPassword)) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Password need at least 1 lower character !",
+                    footer: '<a href="#">Gdupa so sorry about this confuse?</a>'
+                });
+                return false;
+            }
+
+            if (!numberRegex.test(newPassword)) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Password need at least 1 numberic character !",
+                    footer: '<a href="#">Gdupa so sorry about this confuse?</a>'
+                });
+                return false;
+            }
+
+            if (!specialRegex.test(newPassword)) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Password need at least 1 special character !",
+                    footer: '<a href="#">Gdupa so sorry about this confuse?</a>'
+                });
+                return false;
+            }
+
+            // Nếu tất cả kiểm tra đều hợp lệ, trả về true
+            return true;
+        }
+    });
 </script>
 
