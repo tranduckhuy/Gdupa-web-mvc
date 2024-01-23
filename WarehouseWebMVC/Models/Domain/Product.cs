@@ -28,8 +28,6 @@ public class Product
     [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
     public DateTime? ModifiedAt { get; set; }
 
-    public long SupplierId { get; set; }
-    public Supplier Supplier { get; set; } = null!;
     public long CategoryId { get; set; }
     public Category Category { get; set; } = null!;
     public long BrandId { get; set; }

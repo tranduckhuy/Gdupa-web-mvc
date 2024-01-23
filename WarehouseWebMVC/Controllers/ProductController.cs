@@ -22,7 +22,7 @@ public class ProductController : Controller
 
     [Filter]
     [HttpGet]
-    public IActionResult Product(int page = 1)
+    public IActionResult ProductList(int page = 1)
     {
         if (HttpContext.Session.GetString("User") != null)
         {
@@ -53,7 +53,6 @@ public class ProductController : Controller
             Response.Headers.Add("Pragma", "no-cache");
             Response.Headers.Add("Expires", "0");
             var addProductVM = _productService.GetInfoAddProduct();
-            ViewBag.Suppliers = new SelectList(addProductVM.Suppliers, "SupplierId", "Name");
             ViewBag.Categories = new SelectList(addProductVM.Categories, "CategoryId", "Name");
             ViewBag.Brands = new SelectList(addProductVM.Brands, "BrandId", "Name");
             ViewBag.Units = addProductVM.Units;
@@ -76,9 +75,8 @@ public class ProductController : Controller
             if (updateProduct.Product == null)
             {
                 TempData["Message"] = AppConstant.MESSAGE_FAILED;
-                return RedirectToAction("Product");
+                return RedirectToAction("ProductList");
             }
-            ViewBag.Suppliers = new SelectList(updateProduct.Suppliers, "SupplierId", "Name");
             ViewBag.Categories = new SelectList(updateProduct.Categories, "CategoryId", "Name");
             ViewBag.Brands = new SelectList(updateProduct.Brands, "BrandId", "Name");
             ViewBag.Units = updateProduct.Units;
@@ -101,7 +99,7 @@ public class ProductController : Controller
             if (product == null)
             {
                 TempData["Message"] = AppConstant.MESSAGE_FAILED;
-                return RedirectToAction("Product");
+                return RedirectToAction("ProductList");
             }
             return View(product);
         }
@@ -117,12 +115,11 @@ public class ProductController : Controller
             if (_productService.Add(addProductDTO) != null)
             {
                 TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
-                return RedirectToAction("Product");
+                return RedirectToAction("ProductList");
             }
         }
         TempData["Message"] = AppConstant.MESSAGE_FAILED;
         var addProductVM = _productService.GetInfoAddProduct();
-        ViewBag.Suppliers = new SelectList(addProductVM.Suppliers, "SupplierId", "Name");
         ViewBag.Categories = new SelectList(addProductVM.Categories, "CategoryId", "Name");
         ViewBag.Brands = new SelectList(addProductVM.Brands, "BrandId", "Name");
         ViewBag.Units = addProductVM.Units;
@@ -137,11 +134,11 @@ public class ProductController : Controller
             if (_productService.Update(updateProductDTO))
             {
                 TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
-                return RedirectToAction("Product");
+                return RedirectToAction("ProductList");
             }
         }
         TempData["Message"] = AppConstant.MESSAGE_FAILED;
-        return RedirectToAction("UpdateProduct", "Product", new { productId = updateProductDTO.ProductId });
+        return RedirectToAction("UpdateProduct", "ProductList", new { productId = updateProductDTO.ProductId });
     }
 
     [HttpGet]
@@ -150,10 +147,10 @@ public class ProductController : Controller
         if (_productService.Delete(productId))
         {
             TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
-            return RedirectToAction("Product");
+            return RedirectToAction("ProductList");
         }
         TempData["Message"] = AppConstant.MESSAGE_FAILED;
-        return RedirectToAction("Product");
+        return RedirectToAction("ProductList");
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -166,11 +163,11 @@ public class ProductController : Controller
             var searchProducts = _productService.SearchProduct(searchType, searchValue);
             if (searchProducts != null)
             {
-                return View("Product", searchProducts);
+                return View("ProductList", searchProducts);
             }
         }
         TempData["Message"] = AppConstant.NOT_FOUND;
-        return RedirectToAction("Product");
+        return RedirectToAction("ProductList");
     }
 
     public IActionResult Error()

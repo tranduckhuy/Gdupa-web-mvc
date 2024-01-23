@@ -6,7 +6,6 @@ namespace WarehouseWebMVC.ViewModels
 {
     public class CRUProductVM
     {
-        public ICollection<Supplier> Suppliers { get; set; } = new List<Supplier>();
         public ICollection<Category> Categories { get; set; } = new List<Category>();
         public ICollection<Brand> Brands { get; set; } = new List<Brand>();
         public ICollection<SelectListItem> Units { get; set; } = new List<SelectListItem>();

@@ -83,7 +83,6 @@ public class ProductService : IProductService
         var products = _dataContext.Products
             .Skip(skipAmount)
             .Take(pageSize)
-            .Include(p => p.Supplier)
             .Include(p => p.Category)
             .Include(p => p.Brand)
             .Include(p => p.ProductImgs)
@@ -102,7 +101,6 @@ public class ProductService : IProductService
         var product = _dataContext.Products
             .Include(p => p.Category)
             .Include(p => p.Brand)
-            .Include(p => p.Supplier)
             .Include(p => p.ProductImgs)
             .FirstOrDefault(p => p.ProductId == productId);
 
@@ -121,7 +119,6 @@ public class ProductService : IProductService
         var product = _dataContext.Products
             .Include(p => p.Category)
             .Include(p => p.Brand)
-            .Include(p => p.Supplier)
             .Include(p => p.ProductImgs)
             .FirstOrDefault(p => p.ProductId == productId);
 
@@ -140,7 +137,6 @@ public class ProductService : IProductService
         return new CRUProductVM
         {
             Categories = categories,
-            Suppliers = suplliers,
             Brands = brands,
             Units = units
         };
@@ -187,18 +183,21 @@ public class ProductService : IProductService
         IQueryable<Product> searchProduct = _dataContext.Products
             .Include(p => p.Category)
             .Include(p => p.Brand)
-            .Include(p => p.Supplier)
             .Include(p => p.ProductImgs);
 
-        if ("Name".Equals(searchType))
+        switch (searchType)
         {
-            searchProduct = searchProduct.Where(p => p.Name.ToUpper().Contains(searchValue.ToUpper()));
+            case "Category":
+                searchProduct = searchProduct.Where(p => p.Category.Name.ToUpper().Contains(searchValue.ToUpper()));
+                break;
+            case "Brand":
+                searchProduct = searchProduct.Where(p => p.Brand.Name.ToUpper().Contains(searchValue.ToUpper()));
+                break;
+            default:
+                searchProduct = searchProduct.Where(p => p.Name.ToUpper().Contains(searchValue.ToUpper()));
+                break;
         }
-        else if ("Supplier".Equals(searchType))
-        {
-            searchProduct = searchProduct.Where(p => p.Supplier.Name.ToUpper().Contains(searchValue.ToUpper()));
-        }
-
+        
         if (searchProduct.Any())
         {
             var searchProductsDto = _mapper.Map<List<ProductDTO>>(searchProduct.ToList());

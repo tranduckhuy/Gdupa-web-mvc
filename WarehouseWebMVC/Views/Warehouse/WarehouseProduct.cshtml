@@ -115,35 +115,11 @@
                             </div>
                         </div>
                         <div class="sherah-table sherah-page-inner sherah-border sherah-default-bg mg-top-20" style="padding-top: 0;">
-                            <div class="row">
-                                <div class="col-sm-12 col-md-8"></div>
-                                <div class="col-sm-12 col-md-4">
-                                    <form method="post" asp-action="SearchProduct" asp-controller="Product">
-                                        <div id="sherah-table__vendor_filter" class="dataTables_filter">
-                                            <label for="search-input" style="position: relative;">
-                                                <button class="sherah-data-table-label" style="font-size:1rem;position: relative; top:2.7rem; left:18.5rem; right: auto; z-index: 4; border:none;background-color:#F3F4F7">
-                                                    Search
-                                                </button>
-                                            </label>
-                                            <div class="input-group display-flex" style="position: relative;">
-                                                <select class="col-2" name="searchType" style="height:40px; width: 90px; font-size:0.75rem;color:#666;">
-                                                    <option value="" selected disabled>Search Type</option>
-                                                    <option value="Name">Name</option>
-                                                    <option value="Supplier">Supplier</option>
-                                                </select>
-                                                &nbsp;
-                                                <input style="flex-shrink:0;width:auto;z-index:2;" type="search" name="searchValue" class="col-2 form-control form-control-sm" placeholder="Search" aria-controls="sherah-table__vendor">
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
                             <table id="sherah-table__main-product" class="sherah-table__vendor sherah-table__main-v3" style=" border: 1px solid #e2e7f1;">
                                 <!-- sherah Table Head -->
                                 <thead class="sherah-table__head" style="display:block;">
                                     <tr>
                                         <th class="sherah-table__column-1" style=" min-width:270px; font-size: 16px;">Product Name</th>
-                                        <th class="sherah-table__column-2" style=" min-width:120px; padding-left:10px; font-size: 16px;">Supplier Name</th>
                                         <th class="sherah-table__column-3" style=" min-width:40px; padding-left:5px; font-size: 16px;">Starting quantity</th>
                                         <th class="sherah-table__column-4" style=" min-width:80px; padding-left:5px; font-size: 16px; text-align: center">Import Quantity</th>
                                         <th class="sherah-table__column-5" style=" min-width:100px; padding-left:10px; font-size: 16px;">Import Price</th>
@@ -159,11 +135,6 @@
                                             <td class="sherah-table__column-1 sherah-table__data-1" style="min-width:280px;padding:12px;text-align:center;">
                                                 <div class="sherah-language-form__input">
                                                     <p class="crany-table__product--number"><a href="/Product/ProductDetail?productId=@warehouse.Product.ProductId" class="sherah-color1" style="font-size: 14px;">@warehouse.Product.Name</a></p>
-                                                </div>
-                                            </td>
-                                            <td class="sherah-table__column-2 sherah-table__data-2" style="min-width:150px;padding:12px 12px 12px 0;">
-                                                <div class="sherah-table__product-content">
-                                                    <p class="sherah-table__product-desc"><a asp-controller="Supplier" asp-action="SupplierList" class="sherah-color1" style="font-size: 14px; font-weight: 400">@warehouse.Product.Supplier.Name</a></p>
                                                 </div>
                                             </td>
                                             <td class="sherah-table__column-3 sherah-table__data-3" style="min-width:40px; padding:12px 12px 12px 0;text-align:center;">

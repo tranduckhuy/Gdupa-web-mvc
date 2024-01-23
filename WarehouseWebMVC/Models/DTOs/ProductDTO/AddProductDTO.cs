@@ -12,7 +12,6 @@ namespace WarehouseWebMVC.Models.DTOs.ProductDTO
         public string Unit { get; set; } = string.Empty;
         public long CategoryId { get; set; }
         public long BrandId { get; set; }
-        public long SupplierId { get; set; }
         public string ImageURL1 { get; set; } = string.Empty;
         public string ImageURL2 { get; set;} = string.Empty;
         public ICollection<ProductImg> ProductImgs { get; set; } = new List<ProductImg>();

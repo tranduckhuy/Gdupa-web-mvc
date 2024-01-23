@@ -88,7 +88,6 @@ namespace WarehouseWebMVC.Migrations
                     Unit = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
                     ModifiedAt = table.Column<DateTime>(type: "TEXT", nullable: true, defaultValueSql: "CURRENT_TIMESTAMP"),
-                    SupplierId = table.Column<long>(type: "INTEGER", nullable: false),
                     CategoryId = table.Column<long>(type: "INTEGER", nullable: false),
                     BrandId = table.Column<long>(type: "INTEGER", nullable: false)
                 },
@@ -106,12 +105,6 @@ namespace WarehouseWebMVC.Migrations
                         column: x => x.CategoryId,
                         principalTable: "Category",
                         principalColumn: "CategoryId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Products_Suppliers_SupplierId",
-                        column: x => x.SupplierId,
-                        principalTable: "Suppliers",
-                        principalColumn: "SupplierId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -308,14 +301,14 @@ namespace WarehouseWebMVC.Migrations
 
             migrationBuilder.InsertData(
                 table: "Products",
-                columns: new[] { "ProductId", "BrandId", "CategoryId", "Description", "Name", "Price", "SupplierId", "Unit" },
+                columns: new[] { "ProductId", "BrandId", "CategoryId", "Description", "Name", "Price", "Unit" },
                 values: new object[,]
                 {
-                    { 1L, 1L, 1L, "18GB Unified Memory, 512GB SSD Storage. Works with iPhone/iPad; Space Black", "Apple 2023 MacBook Pro Laptop M3 Pro", 1399.99, 1L, "Piece" },
-                    { 2L, 1L, 2L, "iPhone 15 Pro Max has a strong and light aerospace-grade titanium design with a textured matte-glass back.&nbsp;", "Apple iPhone 15 Pro Max (512 GB)", 1199.99, 1L, "Piece" },
-                    { 3L, 3L, 3L, "Designed by Bruce Kilgore and introduced in 1982, the Air Force 1 was the first-ever basketball shoe to feature Nike Air technology", "Air Force 1", 115.0, 2L, "Pair" },
-                    { 4L, 4L, 3L, "With these adidas NMD_R1 shoes, all it takes is seconds. Seconds, and you're comfortable, ready to go, out the door.", "NMD_R1 SHOES", 150.0, 3L, "Pair" },
-                    { 5L, 4L, 3L, "More than just a shoe, it's a statement. The adidas Forum hit the scene in '84 and gained major love on both the hardwood and in the music biz.", "FORUM LOW SHOES", 99.989999999999995, 3L, "Pair" }
+                    { 1L, 1L, 1L, "18GB Unified Memory, 512GB SSD Storage. Works with iPhone/iPad; Space Black", "Apple 2023 MacBook Pro Laptop M3 Pro", 1399.99, "Piece" },
+                    { 2L, 1L, 2L, "iPhone 15 Pro Max has a strong and light aerospace-grade titanium design with a textured matte-glass back.&nbsp;", "Apple iPhone 15 Pro Max (512 GB)", 1199.99, "Piece" },
+                    { 3L, 3L, 3L, "Designed by Bruce Kilgore and introduced in 1982, the Air Force 1 was the first-ever basketball shoe to feature Nike Air technology", "Air Force 1", 115.0, "Pair" },
+                    { 4L, 4L, 3L, "With these adidas NMD_R1 shoes, all it takes is seconds. Seconds, and you're comfortable, ready to go, out the door.", "NMD_R1 SHOES", 150.0, "Pair" },
+                    { 5L, 4L, 3L, "More than just a shoe, it's a statement. The adidas Forum hit the scene in '84 and gained major love on both the hardwood and in the music biz.", "FORUM LOW SHOES", 99.989999999999995, "Pair" }
                 });
 
             migrationBuilder.InsertData(
@@ -405,11 +398,6 @@ namespace WarehouseWebMVC.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_SupplierId",
-                table: "Products",
-                column: "SupplierId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Warehouse_ProductId",
                 table: "Warehouse",
                 column: "ProductId");
@@ -437,6 +425,9 @@ namespace WarehouseWebMVC.Migrations
                 name: "Products");
 
             migrationBuilder.DropTable(
+                name: "Suppliers");
+
+            migrationBuilder.DropTable(
                 name: "Users");
 
             migrationBuilder.DropTable(
@@ -444,9 +435,6 @@ namespace WarehouseWebMVC.Migrations
 
             migrationBuilder.DropTable(
                 name: "Category");
-
-            migrationBuilder.DropTable(
-                name: "Suppliers");
         }
     }
 }

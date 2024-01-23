@@ -58,7 +58,6 @@ namespace WarehouseWebMVC.Services.Impl
                 .Skip(skipAmount)
                 .Take(pageSize)
                 .Include(p => p.Product)
-                .ThenInclude(p => p.Supplier)
                 .OrderBy(w => w.WarehouseId)
                 .ToList();
 
