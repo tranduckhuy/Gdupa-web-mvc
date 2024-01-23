@@ -11,7 +11,7 @@ using WarehouseWebMVC.Data;
 namespace WarehouseWebMVC.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240123035805_Initial")]
+    [Migration("20240123143647_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -148,130 +148,6 @@ namespace WarehouseWebMVC.Migrations
                             ReceiverId = 4L,
                             SenderId = 2L,
                             Total = 3399.9000000000001
-                        });
-                });
-
-            modelBuilder.Entity("WarehouseWebMVC.Models.Domain.Invoice", b =>
-                {
-                    b.Property<long>("InvoiceId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("TEXT")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-                    b.Property<long>("SupplierId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<double>("Total")
-                        .HasColumnType("REAL");
-
-                    b.Property<long>("UserId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("InvoiceId");
-
-                    b.HasIndex("SupplierId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Invoices");
-
-                    b.HasData(
-                        new
-                        {
-                            InvoiceId = 1L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            SupplierId = 1L,
-                            Total = 17599.869999999999,
-                            UserId = 1L
-                        },
-                        new
-                        {
-                            InvoiceId = 2L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            SupplierId = 2L,
-                            Total = 2300.0,
-                            UserId = 1L
-                        },
-                        new
-                        {
-                            InvoiceId = 3L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            SupplierId = 3L,
-                            Total = 3399.3000000000002,
-                            UserId = 2L
-                        });
-                });
-
-            modelBuilder.Entity("WarehouseWebMVC.Models.Domain.InvoiceDetail", b =>
-                {
-                    b.Property<long>("InvoiceDetailId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<double>("ImportPrice")
-                        .HasColumnType("REAL");
-
-                    b.Property<long>("InvoiceId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long>("ProductId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("InvoiceDetailId");
-
-                    b.HasIndex("InvoiceId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("InvoicesDetails");
-
-                    b.HasData(
-                        new
-                        {
-                            InvoiceDetailId = 1L,
-                            ImportPrice = 1399.99,
-                            InvoiceId = 1L,
-                            ProductId = 1L,
-                            Quantity = 10
-                        },
-                        new
-                        {
-                            InvoiceDetailId = 2L,
-                            ImportPrice = 1199.99,
-                            InvoiceId = 1L,
-                            ProductId = 2L,
-                            Quantity = 3
-                        },
-                        new
-                        {
-                            InvoiceDetailId = 3L,
-                            ImportPrice = 115.0,
-                            InvoiceId = 2L,
-                            ProductId = 3L,
-                            Quantity = 20
-                        },
-                        new
-                        {
-                            InvoiceDetailId = 4L,
-                            ImportPrice = 150.0,
-                            InvoiceId = 3L,
-                            ProductId = 4L,
-                            Quantity = 16
-                        },
-                        new
-                        {
-                            InvoiceDetailId = 5L,
-                            ImportPrice = 99.989999999999995,
-                            InvoiceId = 3L,
-                            ProductId = 5L,
-                            Quantity = 10
                         });
                 });
 
@@ -459,6 +335,151 @@ namespace WarehouseWebMVC.Migrations
                             ImageId = 10L,
                             ImageURL = "https://firebasestorage.googleapis.com/v0/b/xhobbe-98105.appspot.com/o/logo%2FForum_Low_Shoes_White_FY7755_02_standard_hover.avif?alt=media&token=06650fd5-295c-45b3-b698-8b320d76a7f0",
                             ProductId = 5L
+                        });
+                });
+
+            modelBuilder.Entity("WarehouseWebMVC.Models.Domain.Receipt", b =>
+                {
+                    b.Property<long>("ReceiptId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<string>("Deliverer")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ReasonDetail")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<long>("SupplierId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<double>("Total")
+                        .HasColumnType("REAL");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("ReceiptId");
+
+                    b.HasIndex("SupplierId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Invoices");
+
+                    b.HasData(
+                        new
+                        {
+                            ReceiptId = 1L,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deliverer = "",
+                            Reason = "",
+                            ReasonDetail = "",
+                            SupplierId = 1L,
+                            Total = 17599.869999999999,
+                            UserId = 1L
+                        },
+                        new
+                        {
+                            ReceiptId = 2L,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deliverer = "",
+                            Reason = "",
+                            ReasonDetail = "",
+                            SupplierId = 2L,
+                            Total = 2300.0,
+                            UserId = 1L
+                        },
+                        new
+                        {
+                            ReceiptId = 3L,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deliverer = "",
+                            Reason = "",
+                            ReasonDetail = "",
+                            SupplierId = 3L,
+                            Total = 3399.3000000000002,
+                            UserId = 2L
+                        });
+                });
+
+            modelBuilder.Entity("WarehouseWebMVC.Models.Domain.ReceiptDetail", b =>
+                {
+                    b.Property<long>("ReceiptDetailId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<double>("ImportPrice")
+                        .HasColumnType("REAL");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("ReceiptId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("ReceiptDetailId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("ReceiptId");
+
+                    b.ToTable("InvoicesDetails");
+
+                    b.HasData(
+                        new
+                        {
+                            ReceiptDetailId = 1L,
+                            ImportPrice = 1399.99,
+                            ProductId = 1L,
+                            Quantity = 10,
+                            ReceiptId = 1L
+                        },
+                        new
+                        {
+                            ReceiptDetailId = 2L,
+                            ImportPrice = 1199.99,
+                            ProductId = 2L,
+                            Quantity = 3,
+                            ReceiptId = 1L
+                        },
+                        new
+                        {
+                            ReceiptDetailId = 3L,
+                            ImportPrice = 115.0,
+                            ProductId = 3L,
+                            Quantity = 20,
+                            ReceiptId = 2L
+                        },
+                        new
+                        {
+                            ReceiptDetailId = 4L,
+                            ImportPrice = 150.0,
+                            ProductId = 4L,
+                            Quantity = 16,
+                            ReceiptId = 3L
+                        },
+                        new
+                        {
+                            ReceiptDetailId = 5L,
+                            ImportPrice = 99.989999999999995,
+                            ProductId = 5L,
+                            Quantity = 10,
+                            ReceiptId = 3L
                         });
                 });
 
@@ -752,44 +773,6 @@ namespace WarehouseWebMVC.Migrations
                     b.Navigation("Sender");
                 });
 
-            modelBuilder.Entity("WarehouseWebMVC.Models.Domain.Invoice", b =>
-                {
-                    b.HasOne("WarehouseWebMVC.Models.Domain.Supplier", "Supplier")
-                        .WithMany("Invoices")
-                        .HasForeignKey("SupplierId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WarehouseWebMVC.Models.Domain.User", "User")
-                        .WithMany("Invoices")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Supplier");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("WarehouseWebMVC.Models.Domain.InvoiceDetail", b =>
-                {
-                    b.HasOne("WarehouseWebMVC.Models.Domain.Invoice", "Invoice")
-                        .WithMany("InvoiceDetails")
-                        .HasForeignKey("InvoiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WarehouseWebMVC.Models.Domain.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Invoice");
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("WarehouseWebMVC.Models.Domain.Product", b =>
                 {
                     b.HasOne("WarehouseWebMVC.Models.Domain.Brand", "Brand")
@@ -820,6 +803,44 @@ namespace WarehouseWebMVC.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("WarehouseWebMVC.Models.Domain.Receipt", b =>
+                {
+                    b.HasOne("WarehouseWebMVC.Models.Domain.Supplier", "Supplier")
+                        .WithMany("Receipts")
+                        .HasForeignKey("SupplierId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WarehouseWebMVC.Models.Domain.User", "User")
+                        .WithMany("Receipts")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Supplier");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("WarehouseWebMVC.Models.Domain.ReceiptDetail", b =>
+                {
+                    b.HasOne("WarehouseWebMVC.Models.Domain.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WarehouseWebMVC.Models.Domain.Receipt", "Receipt")
+                        .WithMany("ReceiptDetails")
+                        .HasForeignKey("ReceiptId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Receipt");
+                });
+
             modelBuilder.Entity("WarehouseWebMVC.Models.Domain.Warehouse", b =>
                 {
                     b.HasOne("WarehouseWebMVC.Models.Domain.Product", "Product")
@@ -841,24 +862,24 @@ namespace WarehouseWebMVC.Migrations
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("WarehouseWebMVC.Models.Domain.Invoice", b =>
-                {
-                    b.Navigation("InvoiceDetails");
-                });
-
             modelBuilder.Entity("WarehouseWebMVC.Models.Domain.Product", b =>
                 {
                     b.Navigation("ProductImgs");
                 });
 
+            modelBuilder.Entity("WarehouseWebMVC.Models.Domain.Receipt", b =>
+                {
+                    b.Navigation("ReceiptDetails");
+                });
+
             modelBuilder.Entity("WarehouseWebMVC.Models.Domain.Supplier", b =>
                 {
-                    b.Navigation("Invoices");
+                    b.Navigation("Receipts");
                 });
 
             modelBuilder.Entity("WarehouseWebMVC.Models.Domain.User", b =>
                 {
-                    b.Navigation("Invoices");
+                    b.Navigation("Receipts");
 
                     b.Navigation("ReceivedExpenseReports");
 
