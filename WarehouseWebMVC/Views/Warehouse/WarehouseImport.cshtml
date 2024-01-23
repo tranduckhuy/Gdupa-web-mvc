@@ -1,0 +1,285 @@
+﻿@{
+    ViewData["Title"] = "Products";
+}
+
+@{
+    var message = TempData["Message"] as string;
+}
+
+<div id="toast"></div>
+@if (!string.IsNullOrEmpty(message))
+{
+    if ("Failed".Equals(message))
+    {
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                setTimeout(function () {
+                    toast({
+                        title: "Failed",
+                        message: "Oops! Action failed. Please try again.",
+                        type: "danger",
+                        duration: 3000,
+                    });
+                }, 600);
+            });
+        </script>
+    }
+}
+
+<!-- sherah Dashboard -->
+<section class="sherah-adashboard sherah-show">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="sherah-body">
+                    <!-- Dashboard Inner -->
+                    <div class="sherah-dsinner">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="sherah-breadcrumb mg-top-30">
+                                    <h2 class="sherah-breadcrumb__title">Warehouse Import</h2>
+                                    <ul class="sherah-breadcrumb__list">
+                                        <li><a href="#">Home</a></li>
+                                        <li class="active"><a href="profile-info.html">Warehouse Import</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sherah-page-inner sherah-border sherah-basic-page sherah-default-bg mg-top-25 p-0">
+                            <form class="sherah-wc__form-main" method="post" asp-action="WarehouseImport" asp-controller="Warehouse">
+                                <div class="row">
+                                    <div class="col-lg-6 col-12">
+                                        <!-- Product Info -->
+                                        <div class="product-form-box sherah-border mg-top-30">
+                                            <h4 class="form-title m-0">Basic Information</h4>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <label class="sherah-wc__form-label">Deliver</label>
+                                                        <div class="form-group__input">
+                                                            <input class="sherah-wc__form-input" placeholder="Type here" type="text">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-12">
+                                                    <div class="form-group">
+                                                        <label class="sherah-wc__form-label">Supplier*</label>
+                                                        <select class="form-group__input" aria-label="Default select example">
+                                                            <option value="0">Supplier A</option>
+                                                            <option value="1">Supplier B</option>
+                                                            <option value="2">Supplier C</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-12">
+                                                    <div class="form-group">
+                                                        <label class="sherah-wc__form-label">Reason*</label>
+                                                        <select class="form-group__input" aria-label="Default select example">
+                                                            <option value="0">Import Product(s)</option>
+                                                            <option value="1">Import Product(s)</option>
+                                                            <option value="2">Import Product(s)</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <label class="sherah-wc__form-label">About Reason</label>
+                                                        <div class="form-group__input">
+                                                            <textarea class="tinymce" id="description" type="text"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End Product Info -->
+                                    </div>
+                                    <div class="col-lg-6 col-12">
+                                        <!-- Product List -->
+                                        <div class="product-form-box sherah-border mg-top-30">
+                                            <div class="sherah-table-order">
+                                                <table id="sherah-table__orderv1" class="sherah-table__main sherah-table__main--orderv1">
+                                                    <thead class="sherah-table__head" style="display:block;">
+                                                        <tr>
+                                                            <th class="sherah-table__column-1 sherah-table__h1" style="width:25%;">Product ID</th>
+                                                            <th class="sherah-table__column-2 sherah-table__h2" style="width:38%;max-width:70px;padding-left:0;">Product name</th>
+                                                            <th class="sherah-table__column-3 sherah-table__h3" style="width:28%;text-align:center;">Unit</th>
+                                                            <th class="sherah-table__column-4 sherah-table__h4" style="width:15%;text-align:center;">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody class="sherah-table__body" style="display:block;max-height:478px;overflow-y:auto;">
+                                                        <tr>
+                                                            <td class="sherah-table__column-1 sherah-table__data-1" style="width:25%;text-align:center;">
+                                                                <p class="sherah-table__product-name--text">1</p>
+                                                            </td>
+                                                            <td class="sherah-table__column-2 sherah-table__data-2" style="width:37%;max-width:70px;">
+                                                                <div class="sherah-table__product-name">
+                                                                    <p class="sherah-table__product-name--text"
+                                                                       style="display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow: hidden;">
+                                                                        Apple 2023 MacBook Pro Laptop M3 Pro
+                                                                    </p>
+                                                                </div>
+                                                            </td>
+                                                            <td class="sherah-table__column-3 sherah-table__data-3" style="width:28%;text-align:center;padding-left:16px;">
+                                                                <div class="sherah-table__product-content">
+                                                                    <p class="sherah-table__product-desc">Piece</p>
+                                                                </div>
+                                                            </td>
+                                                            <td class="sherah-table__column-4 sherah-table__data-4" style="width:15%;">
+                                                                <div class="sherah-table__status__group" style="justify-content:center;">
+                                                                    <a href="#" class="sherah-table__action sherah-color3 sherah-color3__bg--opactity">
+                                                                        <i class="fa-solid fa-plus"></i>
+                                                                    </a>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="sherah-table__column-1 sherah-table__data-1" style="width:25%;text-align:center;">
+                                                                <p class="sherah-table__product-name--text">1</p>
+                                                            </td>
+                                                            <td class="sherah-table__column-2 sherah-table__data-2" style="width:37%;max-width:70px;">
+                                                                <div class="sherah-table__product-name">
+                                                                    <p class="sherah-table__product-name--text"
+                                                                       style="display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow: hidden;">
+                                                                        Apple 2023 MacBook Pro Laptop M3 Pro
+                                                                    </p>
+                                                                </div>
+                                                            </td>
+                                                            <td class="sherah-table__column-3 sherah-table__data-3" style="width:28%;text-align:center;padding-left:16px;">
+                                                                <div class="sherah-table__product-content">
+                                                                    <p class="sherah-table__product-desc">Piece</p>
+                                                                </div>
+                                                            </td>
+                                                            <td class="sherah-table__column-4 sherah-table__data-4" style="width:15%;">
+                                                                <div class="sherah-table__status__group" style="justify-content:center;">
+                                                                    <a href="#" class="sherah-table__action sherah-color3 sherah-color3__bg--opactity">
+                                                                        <i class="fa-solid fa-plus"></i>
+                                                                    </a>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="sherah-table__column-1 sherah-table__data-1" style="width:25%;text-align:center;">
+                                                                <p class="sherah-table__product-name--text">1</p>
+                                                            </td>
+                                                            <td class="sherah-table__column-2 sherah-table__data-2" style="width:37%;max-width:70px;">
+                                                                <div class="sherah-table__product-name">
+                                                                    <p class="sherah-table__product-name--text"
+                                                                       style="display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow: hidden;">
+                                                                        Apple 2023 MacBook Pro Laptop M3 Pro
+                                                                    </p>
+                                                                </div>
+                                                            </td>
+                                                            <td class="sherah-table__column-3 sherah-table__data-3" style="width:28%;text-align:center;padding-left:16px;">
+                                                                <div class="sherah-table__product-content">
+                                                                    <p class="sherah-table__product-desc">Piece</p>
+                                                                </div>
+                                                            </td>
+                                                            <td class="sherah-table__column-4 sherah-table__data-4" style="width:15%;">
+                                                                <div class="sherah-table__status__group" style="justify-content:center;">
+                                                                    <a href="#" class="sherah-table__action sherah-color3 sherah-color3__bg--opactity">
+                                                                        <i class="fa-solid fa-plus"></i>
+                                                                    </a>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="sherah-table__column-1 sherah-table__data-1" style="width:25%;text-align:center;">
+                                                                <p class="sherah-table__product-name--text">1</p>
+                                                            </td>
+                                                            <td class="sherah-table__column-2 sherah-table__data-2" style="width:37%;max-width:70px;">
+                                                                <div class="sherah-table__product-name">
+                                                                    <p class="sherah-table__product-name--text"
+                                                                       style="display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow: hidden;">
+                                                                        Apple 2023 MacBook Pro Laptop M3 Pro
+                                                                    </p>
+                                                                </div>
+                                                            </td>
+                                                            <td class="sherah-table__column-3 sherah-table__data-3" style="width:28%;text-align:center;padding-left:16px;">
+                                                                <div class="sherah-table__product-content">
+                                                                    <p class="sherah-table__product-desc">Piece</p>
+                                                                </div>
+                                                            </td>
+                                                            <td class="sherah-table__column-4 sherah-table__data-4" style="width:15%;">
+                                                                <div class="sherah-table__status__group" style="justify-content:center;">
+                                                                    <a href="#" class="sherah-table__action sherah-color3 sherah-color3__bg--opactity">
+                                                                        <i class="fa-solid fa-plus"></i>
+                                                                    </a>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="sherah-table__column-1 sherah-table__data-1" style="width:25%;text-align:center;">
+                                                                <p class="sherah-table__product-name--text">1</p>
+                                                            </td>
+                                                            <td class="sherah-table__column-2 sherah-table__data-2" style="width:37%;max-width:70px;">
+                                                                <div class="sherah-table__product-name">
+                                                                    <p class="sherah-table__product-name--text"
+                                                                       style="display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow: hidden;">
+                                                                        Apple 2023 MacBook Pro Laptop M3 Pro
+                                                                    </p>
+                                                                </div>
+                                                            </td>
+                                                            <td class="sherah-table__column-3 sherah-table__data-3" style="width:28%;text-align:center;padding-left:16px;">
+                                                                <div class="sherah-table__product-content">
+                                                                    <p class="sherah-table__product-desc">Piece</p>
+                                                                </div>
+                                                            </td>
+                                                            <td class="sherah-table__column-4 sherah-table__data-4" style="width:15%;">
+                                                                <div class="sherah-table__status__group" style="justify-content:center;">
+                                                                    <a href="#" class="sherah-table__action sherah-color3 sherah-color3__bg--opactity">
+                                                                        <i class="fa-solid fa-plus"></i>
+                                                                    </a>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="sherah-table__column-1 sherah-table__data-1" style="width:25%;text-align:center;">
+                                                                <p class="sherah-table__product-name--text">1</p>
+                                                            </td>
+                                                            <td class="sherah-table__column-2 sherah-table__data-2" style="width:37%;max-width:70px;">
+                                                                <div class="sherah-table__product-name">
+                                                                    <p class="sherah-table__product-name--text"
+                                                                       style="display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow: hidden;">
+                                                                        Apple 2023 MacBook Pro Laptop M3 Pro
+                                                                    </p>
+                                                                </div>
+                                                            </td>
+                                                            <td class="sherah-table__column-3 sherah-table__data-3" style="width:28%;text-align:center;padding-left:16px;">
+                                                                <div class="sherah-table__product-content">
+                                                                    <p class="sherah-table__product-desc">Piece</p>
+                                                                </div>
+                                                            </td>
+                                                            <td class="sherah-table__column-4 sherah-table__data-4" style="width:15%;">
+                                                                <div class="sherah-table__status__group" style="justify-content:center;">
+                                                                    <a href="#" class="sherah-table__action sherah-color3 sherah-color3__bg--opactity">
+                                                                        <i class="fa-solid fa-plus"></i>
+                                                                    </a>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <!-- End Product List -->
+                                    </div>
+                                </div>
+                                <div class="product-form-box sherah-border mg-top-30">
+                                </div>
+                                <div class=" mg-top-40 sherah-dflex sherah-dflex-gap-30 justify-content-end">
+                                    <button type="submit" class="sherah-btn sherah-btn__primary">Warehouse Import</button>
+                                    <a href="/Warehouse/WarehouseProduct" class="sherah-btn sherah-btn__third">Cancel</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- End Dashboard Inner -->
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</section>
+
+
