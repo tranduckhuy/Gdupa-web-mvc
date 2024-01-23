@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -7,50 +7,23 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Views\AddPayment\**" />
-    <Compile Remove="Views\ForgetPassword\**" />
-    <Compile Remove="Views\Language\**" />
-    <Compile Remove="Views\Login\**" />
-    <Compile Remove="Views\Register\**" />
-    <Compile Remove="Views\Setting\**" />
-    <Content Remove="Views\AddPayment\**" />
-    <Content Remove="Views\ForgetPassword\**" />
-    <Content Remove="Views\Language\**" />
-    <Content Remove="Views\Login\**" />
-    <Content Remove="Views\Register\**" />
-    <Content Remove="Views\Setting\**" />
-    <EmbeddedResource Remove="Views\AddPayment\**" />
-    <EmbeddedResource Remove="Views\ForgetPassword\**" />
-    <EmbeddedResource Remove="Views\Language\**" />
-    <EmbeddedResource Remove="Views\Login\**" />
-    <EmbeddedResource Remove="Views\Register\**" />
-    <EmbeddedResource Remove="Views\Setting\**" />
-    <None Remove="Views\AddPayment\**" />
-    <None Remove="Views\ForgetPassword\**" />
-    <None Remove="Views\Language\**" />
-    <None Remove="Views\Login\**" />
-    <None Remove="Views\Register\**" />
-    <None Remove="Views\Setting\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="FirebaseAdmin" Version="2.4.0" />
+    <PackageReference Include="MailKit" Version="4.3.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.14" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.14">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.11" />
+    <PackageReference Include="MimeKit" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Views\Dashboard\" />
     <Folder Include="Views\Invoice\" />
-    <Folder Include="Views\InvoiceDetail\" />
     <Folder Include="Views\FAQ\" />
-    <Folder Include="Views\Error\" />
     <Folder Include="Views\Terms\" />
-    <Folder Include="Views\Payment\" />
   </ItemGroup>
 
 </Project>

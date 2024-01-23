@@ -1,16 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace WarehouseWebMVC.Models.Domain
-{
-    public class ProductImg
-    {
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long ImageId { get; set; }
-        [Required]
-        public string ImageURL { get; set; } = string.Empty;
+namespace WarehouseWebMVC.Models.Domain;
 
-        public long ProductId { get; set; }
-        public Product Product { get; set; } = null!;
-    }
+public class ProductImg
+{
+    [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public long ImageId { get; set; }
+    [Required]
+    public string ImageURL { get; set; } = string.Empty;
+
+    public long ProductId { get; set; }
+    public Product Product { get; set; } = null!;
 }

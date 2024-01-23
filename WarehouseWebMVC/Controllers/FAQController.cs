@@ -2,26 +2,33 @@
 using System.Diagnostics;
 using WarehouseWebMVC.Models;
 
-namespace WarehouseWebMVC.Controllers
+namespace WarehouseWebMVC.Controllers;
+
+public class FAQController : Controller
 {
-	public class FAQController : Controller
+	private readonly ILogger<FAQController> _logger;
+
+	public FAQController(ILogger<FAQController> logger)
 	{
-		private readonly ILogger<FAQController> _logger;
+		_logger = logger;
+	}
 
-		public FAQController(ILogger<FAQController> logger)
-		{
-			_logger = logger;
-		}
+	[Filter]
+	public IActionResult FAQ()
+	{
+            if (HttpContext.Session.GetString("User") != null)
+            {
+                Response.Headers.Add("Cache-Control", "no-store, no-cache, must-revalidate, post-check=0, pre-check=0");
+                Response.Headers.Add("Pragma", "no-cache");
+                Response.Headers.Add("Expires", "0");
+                return View();
+            }
+            return RedirectToAction("Login", "Authentication");
+        }
 
-		public IActionResult FAQ()
-		{
-			return View();
-		}
-
-		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-		public IActionResult Error()
-		{
-			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-		}
+	[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+	public IActionResult Error()
+	{
+		return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
 	}
 }

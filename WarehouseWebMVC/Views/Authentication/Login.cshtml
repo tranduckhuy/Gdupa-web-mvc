@@ -1,0 +1,157 @@
+@model WarehouseWebMVC.Models.DTOs.UserDTO.UserDTO
+@{
+    ViewData["Title"] = "Login";
+    Layout = null;
+}
+@{
+    var message = TempData["Message"] as string;
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>@ViewData["Title"] - Warehouse Management</title>
+
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="/assets/fonts/material-icon/css/material-design-iconic-font.min.css">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="/assets/css/main-login.css">
+    <link rel="stylesheet" href="/assets/css/main-toast.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <style>
+        .forgot-link:hover {
+            color: #4292dc !important;
+        }
+    </style>
+</head>
+
+<body style="overflow: hidden;">
+    <div id="toast"></div>
+    @if (!string.IsNullOrEmpty(message))
+    {
+        if ("Failed".Equals(message))
+        {
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    setTimeout(function () {
+                        toast({
+                            title: "Failed",
+                            message: "Wrong Email or Password. Please enter again!",
+                            type: "danger",
+                            duration: 3000,
+                        });
+                    }, 600);
+                });
+            </script>
+        }
+        else if ("Success".Equals(message))
+        {
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    setTimeout(function () {
+                        toast({
+                            title: "Success",
+                            message: "Reset Password successfully.",
+                            type: "success",
+                            duration: 3000,
+                        });
+                    }, 600);
+                });
+            </script>
+        }
+        else if ("NotLoginYet".Equals(message))
+        {
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    setTimeout(function () {
+                        toast({
+                            title: "Failed",
+                            message: "You are not login yet!",
+                            type: "danger",
+                            duration: 3000,
+                        });
+                    }, 600);
+                });
+            </script>
+        }
+    }
+    <div class="main" style="padding: 50px 0 0 0;">
+
+        <!-- Signin Form -->
+        <section class="sign-in">
+            <div class="container">
+                <div class="signin-content">
+                    <div class="signin-image">
+                        <fiingure><img src="/assets/images/signin-image.jpg" alt="sign image"></fiingure>
+                    </div>
+
+                    <div class="signin-form">
+                        <a asp-area="" asp-controller="Home" asp-action="Index"
+                            style="text-decoration: none; color: #000; font-size: 20px;">
+                            <i class="zmdi zmdi-arrow-left"></i>
+                        </a>
+                        <h2 class="form-title">Sign In</h2>
+                        <form method="POST" asp-controller="Authentication" asp-action="Login" class="register-form"
+                            id="login-form">
+                            <div class="form-group">
+                                <label for="email"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                <input asp-for="Email" type="text" name="email" value="@ViewBag.RememberMeEmail"
+                                    id="email" placeholder="Your Email" rules="required|email" />
+                                <span class="form-message"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="your_pass"><i class="zmdi zmdi-lock"></i></label>
+                                <input asp-for="Password" value="@ViewBag.rememberMePassword" type="password"
+                                    name="password" id="password" placeholder="Your Password" rules="required" />
+                                <span class="form-message"></span>
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" name="remember-me" id="remember-me" class="agree-term"
+                                    checked="@ViewBag.rememberMeChecked" />
+                                <label for="remember-me" class="label-agree-term"><span></span>Remember me</label>
+                                <span style="margin-left: 4px;"><a class="forgot-link" asp-area=""
+                                        asp-controller="Authentication" asp-action="ForgotPassword"
+                                        style="color: #111;">Forget Password?</a></span>
+                            </div>
+                            <div class="form-group form-button">
+                                <input type="submit" name="signin" id="signin" class="form-submit" value="Log in" />
+                            </div>
+                        </form>
+                        <div class="social-login">
+                            <span class="social-label">Or login with</span>
+                            <ul class="socials">
+                                <li><a href="#"><i class="display-flex-center zmdi zmdi-facebook"></i></a></li>
+                                <li><a href="#"><i class="display-flex-center zmdi zmdi-twitter"></i></a></li>
+                                <li><a href="#"><i class="display-flex-center zmdi zmdi-google"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+    <div id="preloader"></div>
+    <script src="/js/Validator.js"></script>
+    <script src="/js/toast-config.js"></script>
+    <script src="/js/lib/jquery.min.js"></script>
+    <script src="/js/lib/jquery-ui.min.js"></script>
+    <script>
+        let preloader = document.getElementById('preloader');
+        if (preloader) {
+            window.addEventListener('load', () => {
+                setTimeout(() => {
+                    preloader.remove();
+                }, 500);
+            });
+        }
+    </script>
+    <script>
+        Validator('#login-form')
+    </script>
+</body>
+</html>

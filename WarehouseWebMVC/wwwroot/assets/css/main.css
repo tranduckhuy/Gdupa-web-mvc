@@ -890,14 +890,14 @@ Version:	1.0.0
 }
 
 .sherah-dropdown-card.sherah-dropdown-card__profile {
-    right: 70px;
+    right: 0;
     max-width: 240px;
     top: 68px;
     left: initial;
 }
 
     .sherah-dropdown-card.sherah-dropdown-card__profile .sherah-dropdown-arrow {
-        right: 20px;
+        right: 90px;
     }
 
 .sherah-wallet__list-single {
@@ -1249,7 +1249,7 @@ Version:	1.0.0
 @media only screen and (min-width: 0px) and (max-width: 992px) {
 
     .sherah-smenu .logo img {
-        max-width: 130px;
+        max-width: 100px;
     }
 
     .sherah-smenu .logo {
@@ -2734,6 +2734,7 @@ Version:	1.0.0
 
     .sherah-table__right .sherah-header__form-inner {
         width: 290px;
+        sherah-table__column-3
     }
 
 #sherah-table__main_filter {
@@ -2815,7 +2816,7 @@ Version:	1.0.0
     right: 12px;
     top: 8px;
     color: #6176FE;
-    font-size: 19px;
+    font-size: 18px;
 }
 
 .dataTables_filter input {
@@ -2943,7 +2944,7 @@ Version:	1.0.0
 
         .sherah-contact-card .sherah-vcard__body .sherah-vcard__img img {
             box-shadow: none;
-            padding: ;
+            padding:;
             margin: 0;
         }
 
@@ -3016,7 +3017,7 @@ Version:	1.0.0
 }
 
 .sherah-table__main--front tbody {
-    height: 330px;
+    height: 250px;
     overflow-y: scroll;
 }
 
@@ -3851,7 +3852,7 @@ Version:	1.0.0
 .image-upload-label {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 8px;
     font-size: 18px;
     font-weight: 400;
     justify-content: center;
@@ -7564,7 +7565,7 @@ blockquote {
         height: 50px;
         padding: 5px 50px 5px 20px;
         background: #FAFAFA;
-        color: rgba(57, 62, 70, 0.2);
+        color: #9AA2B1;
         border: 1px solid #E4F2FF;
         border-radius: 4px;
         padding-left: 30px;
@@ -7574,8 +7575,12 @@ blockquote {
     }
 
     .sherah-wc__form-main select {
-        color: #1A1A1A;
+        color: #9AA2B1;
     }
+
+        .sherah-wc__form-main select:focus {
+            border: 1px solid #E4F2FF;
+        }
 
 .form-group__input--select .flag-label {
     position: absolute;
@@ -9450,3 +9455,41 @@ blockquote {
 /*======================================
 	End Utilities CSS
 ========================================*/
+
+/*--------------------------------------------------------------
+# Preloader
+--------------------------------------------------------------*/
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    overflow: hidden;
+    background: #37517e;
+}
+
+    #preloader:before {
+        content: "";
+        position: fixed;
+        top: calc(50% - 30px);
+        left: calc(50% - 30px);
+        border: 6px solid #37517e;
+        border-top-color: #fff;
+        border-bottom-color: #fff;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        animation: animate-preloader 1s linear infinite;
+    }
+
+@keyframes animate-preloader {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
