@@ -21,5 +21,5 @@ public class Supplier
     [Required]
     public string Fax { get; set; } = string.Empty;
 
-    public ICollection<Invoice> Invoices { get; } = new List<Invoice>();
+    public ICollection<Receipt> Receipts { get; } = new List<Receipt>();
 }

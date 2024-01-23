@@ -4,17 +4,17 @@ using WarehouseWebMVC.Models;
 
 namespace WarehouseWebMVC.Controllers;
 
-public class InvoiceController : Controller
+public class ReceiptController : Controller
 {
-    private readonly ILogger<InvoiceController> _logger;
+    private readonly ILogger<ReceiptController> _logger;
 
-    public InvoiceController(ILogger<InvoiceController> logger)
+    public ReceiptController(ILogger<ReceiptController> logger)
     {
         _logger = logger;
     }
 
     [Filter]
-    public IActionResult Invoice()
+    public IActionResult ReceiptList()
     {
         if (HttpContext.Session.GetString("User") != null)
         {
@@ -27,7 +27,7 @@ public class InvoiceController : Controller
     }
 
     [Filter]
-    public IActionResult InvoiceDetail()
+    public IActionResult ReceiptDetail()
     {
         if (HttpContext.Session.GetString("User") != null)
         {

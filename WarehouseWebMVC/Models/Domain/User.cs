@@ -28,7 +28,7 @@ public class User
 	[DatabaseGenerated(DatabaseGeneratedOption.Computed)]
     public DateTime CreatedAt { get; set; }
 
-    public ICollection<Invoice> Invoices { get; } = new List<Invoice>();
+    public ICollection<Receipt> Receipts { get; } = new List<Receipt>();
     public ICollection<ExpenseReport> SentExpenseReports { get; set; } = new List<ExpenseReport>();
     public ICollection<ExpenseReport> ReceivedExpenseReports { get; set; } = new List<ExpenseReport>();
 }
