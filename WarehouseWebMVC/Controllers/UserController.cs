@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using WarehouseWebMVC.Data;
 using WarehouseWebMVC.Models;
+using WarehouseWebMVC.Models.Domain;
 using WarehouseWebMVC.Models.DTOs.UserDTO;
 using WarehouseWebMVC.Service;
 using WarehouseWebMVC.ViewModels;
@@ -95,6 +96,20 @@ public class UserController : Controller
         {
             if (_userService.UpdateUser(userInformationDTO))
             {
+                var user = _userService.GetUserByEmail(userInformationDTO.Email);
+                HttpContext.Session.SetString("User", userInformationDTO.Email);
+                if (user != null)
+                {
+                    byte[] userIdBytes = BitConverter.GetBytes(user.UserId);
+                    HttpContext.Session.Set("Id", userIdBytes);
+                    HttpContext.Session.SetString("Name", user.Name);
+                    HttpContext.Session.SetString("Address", user.Address);
+                    HttpContext.Session.SetString("Avatar", user.Avatar);
+                }
+                else
+                {
+                    throw new Exception("User null exception!");
+                }
                 TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
                 return View(_userService.GetUserById(userInformationDTO.UserId));
             }
