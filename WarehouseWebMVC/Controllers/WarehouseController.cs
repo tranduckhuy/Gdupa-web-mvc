@@ -17,7 +17,7 @@ public class WarehouseController : Controller
         }
 
 	[Filter]
-	public IActionResult Warehouse(int page = 1)
+	public IActionResult WarehouseProduct(int page = 1)
 	{
             if (HttpContext.Session.GetString("User") != null)
             {

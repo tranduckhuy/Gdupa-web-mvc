@@ -152,27 +152,29 @@ public static class SeedData
         modelBuilder.Entity<Invoice>().HasData(
             new Invoice { InvoiceId = 1, Total = 17599.87, UserId = 1, SupplierId = 1 },
             new Invoice { InvoiceId = 2, Total = 2300, UserId = 1, SupplierId = 2 },
-            new Invoice { InvoiceId = 3, Total = 1999.84, UserId = 2, SupplierId = 3 }
+            new Invoice { InvoiceId = 3, Total = 3399.3, UserId = 2, SupplierId = 3 }
         );
 
         modelBuilder.Entity<InvoiceDetail>().HasData(
             new InvoiceDetail { InvoiceDetailId = 1, InvoiceId = 1, ProductId = 1, ImportPrice = 1399.99, Quantity = 10 },
             new InvoiceDetail { InvoiceDetailId = 2, InvoiceId = 1, ProductId = 2, ImportPrice = 1199.99, Quantity = 3 },
             new InvoiceDetail { InvoiceDetailId = 3, InvoiceId = 2, ProductId = 3, ImportPrice = 115, Quantity = 20 },
-            new InvoiceDetail { InvoiceDetailId = 4, InvoiceId = 3, ProductId = 5, ImportPrice = 99.99, Quantity = 16 }
+            new InvoiceDetail { InvoiceDetailId = 4, InvoiceId = 3, ProductId = 4, ImportPrice = 150, Quantity = 16 },
+            new InvoiceDetail { InvoiceDetailId = 5, InvoiceId = 3, ProductId = 5, ImportPrice = 99.99, Quantity = 10 }
         );
 
         modelBuilder.Entity<ExpenseReport>().HasData(
             new ExpenseReport { ExpenseReportId = 1, Reason = "Enter new Laptops and Phones into warehouse", Total = 17599.87, SenderId = 1, ReceiverId = 2 },
             new ExpenseReport { ExpenseReportId = 2, Reason = "Enter new Shoes into warehouse", Total = 2300, SenderId = 1, ReceiverId = 3, },
-            new ExpenseReport { ExpenseReportId = 3, Reason = "Enter new Shoes into warehouse", Total = 1999.84, SenderId = 2, ReceiverId = 4 }
+            new ExpenseReport { ExpenseReportId = 3, Reason = "Enter new Shoes into warehouse", Total = 3399.9, SenderId = 2, ReceiverId = 4 }
         );
 
         modelBuilder.Entity<Warehouse>().HasData(
             new Warehouse { WarehouseId = 1, ProductId = 1, Quantity = 10, QuantityAtBeginPeriod = 0, QuantityImport = 10, PriceImport = 1399.99 },
             new Warehouse { WarehouseId = 2, ProductId = 2, Quantity = 3, QuantityAtBeginPeriod = 0, QuantityImport = 3, PriceImport = 1199.99 },
             new Warehouse { WarehouseId = 3, ProductId = 3, Quantity = 20, QuantityAtBeginPeriod = 0, QuantityImport = 20, PriceImport = 115 },
-            new Warehouse { WarehouseId = 4, ProductId = 4, Quantity = 16, QuantityAtBeginPeriod = 0, QuantityImport = 16, PriceImport = 99.99 }
+            new Warehouse { WarehouseId = 4, ProductId = 4, Quantity = 16, QuantityAtBeginPeriod = 0, QuantityImport = 16, PriceImport = 150 },
+            new Warehouse { WarehouseId = 5, ProductId = 5, Quantity = 0, QuantityAtBeginPeriod = 0, QuantityImport = 10, PriceImport = 99.99 }
         );
     }
 }

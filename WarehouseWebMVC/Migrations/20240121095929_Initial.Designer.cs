@@ -11,8 +11,8 @@ using WarehouseWebMVC.Data;
 namespace WarehouseWebMVC.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240120030230_Add-User-Avatar")]
-    partial class AddUserAvatar
+    [Migration("20240121095929_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -147,7 +147,7 @@ namespace WarehouseWebMVC.Migrations
                             Reason = "Enter new Shoes into warehouse",
                             ReceiverId = 4L,
                             SenderId = 2L,
-                            Total = 1999.8399999999999
+                            Total = 3399.9000000000001
                         });
                 });
 
@@ -201,7 +201,7 @@ namespace WarehouseWebMVC.Migrations
                             InvoiceId = 3L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             SupplierId = 3L,
-                            Total = 1999.8399999999999,
+                            Total = 3399.3000000000002,
                             UserId = 2L
                         });
                 });
@@ -260,10 +260,18 @@ namespace WarehouseWebMVC.Migrations
                         new
                         {
                             InvoiceDetailId = 4L,
+                            ImportPrice = 150.0,
+                            InvoiceId = 3L,
+                            ProductId = 4L,
+                            Quantity = 16
+                        },
+                        new
+                        {
+                            InvoiceDetailId = 5L,
                             ImportPrice = 99.989999999999995,
                             InvoiceId = 3L,
                             ProductId = 5L,
-                            Quantity = 16
+                            Quantity = 10
                         });
                 });
 
@@ -717,11 +725,21 @@ namespace WarehouseWebMVC.Migrations
                         {
                             WarehouseId = 4L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            PriceImport = 99.989999999999995,
+                            PriceImport = 150.0,
                             ProductId = 4L,
                             Quantity = 16,
                             QuantityAtBeginPeriod = 0,
                             QuantityImport = 16
+                        },
+                        new
+                        {
+                            WarehouseId = 5L,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            PriceImport = 99.989999999999995,
+                            ProductId = 5L,
+                            Quantity = 0,
+                            QuantityAtBeginPeriod = 0,
+                            QuantityImport = 10
                         });
                 });
 

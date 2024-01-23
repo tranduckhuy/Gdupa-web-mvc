@@ -45,7 +45,7 @@
                                         <div class="sherah-progress-card__content">
                                             <div class="sherah-progress-card__heading">
                                                 <span class="sherah-pcolor">Low Alert</span>
-                                                <h4 class="sherah-progress-card__title"><b class="count-animate" style="font-size: 20px;">1 Product</b></h4>
+                                                <h4 class="sherah-progress-card__title"><b class="count-animate" style="font-size: 20px;">@Model.LowAlert Product</b></h4>
                                             </div>
                                             <div class="sherah-progress-card__button">
                                                 <p class="sherah-progress-card__text sherah-color4">
@@ -87,7 +87,7 @@
                                         <div class="sherah-progress-card__content">
                                             <div class="sherah-progress-card__heading">
                                                 <span class="sherah-pcolor">Out of Stock</span>
-                                                <h4 class="sherah-progress-card__title"><b class="count-animate" style="font-size: 20px;">0 Product</b></h4>
+                                                <h4 class="sherah-progress-card__title"><b class="count-animate" style="font-size: 20px;">@Model.OutOfStock Product</b></h4>
                                             </div>
                                             <div class="sherah-progress-card__button">
                                                 <p class="sherah-progress-card__text sherah-color2">
@@ -144,7 +144,7 @@
                                     <tr>
                                         <th class="sherah-table__column-1" style=" min-width:270px; font-size: 16px;">Product Name</th>
                                         <th class="sherah-table__column-2" style=" min-width:120px; padding-left:10px; font-size: 16px;">Supplier Name</th>
-                                        <th class="sherah-table__column-3" style=" min-width:40px; padding-left:5px; font-size: 16px;">FQuantity</th>
+                                        <th class="sherah-table__column-3" style=" min-width:40px; padding-left:5px; font-size: 16px;">Starting quantity</th>
                                         <th class="sherah-table__column-4" style=" min-width:80px; padding-left:5px; font-size: 16px; text-align: center">Import Quantity</th>
                                         <th class="sherah-table__column-5" style=" min-width:100px; padding-left:10px; font-size: 16px;">Import Price</th>
                                         <th class="sherah-table__column-6" style=" min-width:40px; padding-left:5px; font-size: 16px;">Current Quantity</th>
@@ -158,7 +158,7 @@
                                         <tr style="height: 20px;">
                                             <td class="sherah-table__column-1 sherah-table__data-1" style="min-width:280px;padding:12px;text-align:center;">
                                                 <div class="sherah-language-form__input">
-                                                    <p class="crany-table__product--number"><a href="/Warehouse/WarehouseDetail?productId=@warehouse.Product.ProductId" class="sherah-color1" style="font-size: 14px;">@warehouse.Product.Name</a></p>
+                                                    <p class="crany-table__product--number"><a href="/Product/ProductDetail?productId=@warehouse.Product.ProductId" class="sherah-color1" style="font-size: 14px;">@warehouse.Product.Name</a></p>
                                                 </div>
                                             </td>
                                             <td class="sherah-table__column-2 sherah-table__data-2" style="min-width:150px;padding:12px 12px 12px 0;">
@@ -176,7 +176,7 @@
                                             </td>
                                             <td class="sherah-table__column-5 sherah-table__data-5" style="min-width:100px; padding:12px 12px 12px 0;text-align:center;">
                                                 <div class="sherah-table__product-content">
-                                                    <p class="sherah-table__product-desc" style="font-size: 14px;">$@warehouse.PriceImport</p>
+                                                    <p class="sherah-table__product-desc" style="font-size: 14px;">$@Math.Round((warehouse.QuantityImport * warehouse.PriceImport), 2)</p>
                                                 </div>
                                             </td>
                                             <td class="sherah-table__column-6 sherah-table__data-6" style="min-width:40px; padding:12px 12px 12px 0;text-align:center;">
@@ -212,15 +212,15 @@
                                             <ul class="sherah-pagination__list">
                                                 @if (Model.Pageable.CurrentPage > 1)
                                                 {
-                                                    <li class="sherah-pagination__button"><a href="/Product/Product?page=@(Model.Pageable.CurrentPage > 1 ? Model.Pageable.CurrentPage - 1 : 1)"><i class="fas fa-angle-left"></i></a></li>
+                                                    <li class="sherah-pagination__button"><a href="/Warehouse/WarehouseProduct?page=@(Model.Pageable.CurrentPage > 1 ? Model.Pageable.CurrentPage - 1 : 1)"><i class="fas fa-angle-left"></i></a></li>
                                                 }
                                                 @for (var i = Model.Pageable.StartPage; i <= Model.Pageable.EndPage; i++)
                                                 {
-                                                    <li class="@(Model.Pageable.CurrentPage == i ? "active" : "")"><a href="/Product/Product?page=@i">@i</a></li>
+                                                    <li class="@(Model.Pageable.CurrentPage == i ? "active" : "")"><a href="/Warehouse/WarehouseProduct?page=@i">@i</a></li>
                                                 }
                                                 @if (Model.Pageable.CurrentPage < Model.Pageable.TotalPages)
                                                 {
-                                                    <li class="sherah-pagination__button"><a href="/Product/Product?page=@(Model.Pageable.CurrentPage < Model.Pageable.TotalPages ? Model.Pageable.CurrentPage + 1 : Model.Pageable.TotalPages)"><i class="fas fa-angle-right"></i></a></li>
+                                                    <li class="sherah-pagination__button"><a href="/Warehouse/WarehouseProduct?page=@(Model.Pageable.CurrentPage < Model.Pageable.TotalPages ? Model.Pageable.CurrentPage + 1 : Model.Pageable.TotalPages)"><i class="fas fa-angle-right"></i></a></li>
                                                 }
                                             </ul>
                                         </div>
