@@ -7565,7 +7565,7 @@ blockquote {
         height: 50px;
         padding: 5px 50px 5px 20px;
         background: #FAFAFA;
-        color: #9AA2B1;
+        color: #5A5A5A;
         border: 1px solid #E4F2FF;
         border-radius: 4px;
         padding-left: 30px;
@@ -7575,7 +7575,7 @@ blockquote {
     }
 
     .sherah-wc__form-main select {
-        color: #9AA2B1;
+        color: #5A5A5A;
     }
 
         .sherah-wc__form-main select:focus {
