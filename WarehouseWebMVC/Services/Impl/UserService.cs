@@ -286,12 +286,12 @@ public class UserService : IUserService
     }
 
 
-    public bool Delete(long userId)
+    public bool Delete(long userId, long inforId)
     {
         try
         {
-            var user = _dataContext.Users.Find(userId);
-            if (user == null || user.UserId == userId)
+            var user = _dataContext.Users.FirstOrDefault(u => u.UserId == userId);
+            if (user == null || user.UserId == inforId)
             {
                 return false;
             }
@@ -311,12 +311,12 @@ public class UserService : IUserService
         {
             if (_dataContext.Users.Any(u => u.Email == newUser.Email))
             {
-                return false; 
+                return false;
             }
 
             if (newUser.Password != newUser.RepeatPassword)
             {
-                return false; 
+                return false;
             }
 
             var userEntity = _mapper.Map<User>(newUser);
@@ -326,11 +326,11 @@ public class UserService : IUserService
             _dataContext.Users.Add(userEntity);
             _dataContext.SaveChanges();
 
-            return true; 
+            return true;
         }
         catch (Exception)
         {
-            return false; 
+            return false;
         }
     }
 

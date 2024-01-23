@@ -121,9 +121,9 @@ public class UserController : Controller
 
 
     [HttpGet]
-    public IActionResult DeleteUser(long userId)
+    public IActionResult DeleteUser(long userId, long inforId)
     {
-        if (_userService.Delete(userId))
+        if (_userService.Delete(userId, inforId))
         {
             TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
             return RedirectToAction("Users");

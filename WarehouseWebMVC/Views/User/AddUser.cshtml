@@ -33,27 +33,33 @@
                         <form method="POST" asp-action="AddUser" asp-controller="User" class="register-form" id="register-form">
                             <div class="form-group">
                                 <label for="name"><i class="zmdi zmdi-account material-icons-name"></i></label>
-                                <input asp-for="Name" type="text" id="name" placeholder="Your Name" />
+                                <input asp-for="Name" type="text" id="name" placeholder="Your Name" rules="required" />
+                                <span class="form-message"></span>
                             </div>
                             <div class="form-group">
                                 <label for="email"><i class="zmdi zmdi-email"></i></label>
-                                <input asp-for="Email" type="email"  id="email" placeholder="Your Email" />
+                                <input asp-for="Email" type="email" id="email" placeholder="Your Email" rules="required|email" />
+                                <span class="form-message"></span>
                             </div>
                             <div class="form-group">
                                 <label for="phone"><i class="zmdi zmdi-phone"></i></label>
-                                <input asp-for="Phone" type="text"  id="phone" placeholder="Your Phone" />
+                                <input asp-for="Phone" type="text" id="phone" placeholder="Your Phone" rules="required" />
+                                <span class="form-message"></span>
                             </div>
                             <div class="form-group">
                                 <label for="address"><i class="zmdi zmdi-pin"></i></label>
-                                <input asp-for="Address" type="text"  id="address" placeholder="Your Address" />
+                                <input asp-for="Address" type="text" id="address" placeholder="Your Address" rules="required" />
+                                <span class="form-message"></span>
                             </div>
                             <div class="form-group">
                                 <label for="pass"><i class="zmdi zmdi-lock"></i></label>
-                                <input asp-for="Password" type="password" id="pass" placeholder="Password" />
+                                <input asp-for="Password" type="password" id="pass" placeholder="Password" rules="required"  />
+                                <span class="form-message"></span>
                             </div>
                             <div class="form-group">
                                 <label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
-                                <input asp-for="RepeatPassword" type="password"  id="re_pass" placeholder="Repeat your password" />
+                                <input asp-for="RepeatPassword" type="password" id="re_pass" placeholder="Repeat your password" rules="required" />
+                                <span class="form-message"></span>
                             </div>
                             <div class="form-group">
                                 <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
@@ -84,6 +90,10 @@
                 }, 500);
             });
         }
+    </script>
+    <script src="/js/Validator.js"></script>
+    <script>
+        Validator('#register-form')
     </script>
 </body>
 </html>

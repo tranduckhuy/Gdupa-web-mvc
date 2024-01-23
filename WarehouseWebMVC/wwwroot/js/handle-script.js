@@ -25,7 +25,7 @@
     });
 }
 
-function handleDeleteUser(id) {
+function handleDeleteUser(id, uid) {
     Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this action!",
@@ -37,7 +37,7 @@ function handleDeleteUser(id) {
     }).then((result) => {
         if (result.isConfirmed) {
             var currentPath = window.location.pathname;
-            var newPath = currentPath.replace("/User/Users", "/User/DeleteUser") + '?userId=' + id;
+            var newPath = currentPath.replace("/User/Users", "/User/DeleteUser") + '?userId=' + id + '&inforId=' + uid;
             window.location.href = newPath;
         }
         if (!result.isConfirmed) {
