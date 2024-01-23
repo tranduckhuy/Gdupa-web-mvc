@@ -149,18 +149,18 @@ public static class SeedData
                 ImageURL = "https://firebasestorage.googleapis.com/v0/b/xhobbe-98105.appspot.com/o/logo%2FForum_Low_Shoes_White_FY7755_02_standard_hover.avif?alt=media&token=06650fd5-295c-45b3-b698-8b320d76a7f0" }
         );
 
-        modelBuilder.Entity<Invoice>().HasData(
-            new Invoice { InvoiceId = 1, Total = 17599.87, UserId = 1, SupplierId = 1 },
-            new Invoice { InvoiceId = 2, Total = 2300, UserId = 1, SupplierId = 2 },
-            new Invoice { InvoiceId = 3, Total = 3399.3, UserId = 2, SupplierId = 3 }
+        modelBuilder.Entity<Receipt>().HasData(
+            new Receipt { ReceiptId = 1, Total = 17599.87, UserId = 1, SupplierId = 1 },
+            new Receipt { ReceiptId = 2, Total = 2300, UserId = 1, SupplierId = 2 },
+            new Receipt { ReceiptId = 3, Total = 3399.3, UserId = 2, SupplierId = 3 }
         );
 
-        modelBuilder.Entity<InvoiceDetail>().HasData(
-            new InvoiceDetail { InvoiceDetailId = 1, InvoiceId = 1, ProductId = 1, ImportPrice = 1399.99, Quantity = 10 },
-            new InvoiceDetail { InvoiceDetailId = 2, InvoiceId = 1, ProductId = 2, ImportPrice = 1199.99, Quantity = 3 },
-            new InvoiceDetail { InvoiceDetailId = 3, InvoiceId = 2, ProductId = 3, ImportPrice = 115, Quantity = 20 },
-            new InvoiceDetail { InvoiceDetailId = 4, InvoiceId = 3, ProductId = 4, ImportPrice = 150, Quantity = 16 },
-            new InvoiceDetail { InvoiceDetailId = 5, InvoiceId = 3, ProductId = 5, ImportPrice = 99.99, Quantity = 10 }
+        modelBuilder.Entity<ReceiptDetail>().HasData(
+            new ReceiptDetail { ReceiptDetailId = 1, ReceiptId = 1, ProductId = 1, ImportPrice = 1399.99, Quantity = 10 },
+            new ReceiptDetail { ReceiptDetailId = 2, ReceiptId = 1, ProductId = 2, ImportPrice = 1199.99, Quantity = 3 },
+            new ReceiptDetail { ReceiptDetailId = 3, ReceiptId = 2, ProductId = 3, ImportPrice = 115, Quantity = 20 },
+            new ReceiptDetail { ReceiptDetailId = 4, ReceiptId = 3, ProductId = 4, ImportPrice = 150, Quantity = 16 },
+            new ReceiptDetail { ReceiptDetailId = 5, ReceiptId = 3, ProductId = 5, ImportPrice = 99.99, Quantity = 10 }
         );
 
         modelBuilder.Entity<ExpenseReport>().HasData(

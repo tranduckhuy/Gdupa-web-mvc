@@ -139,16 +139,19 @@ namespace WarehouseWebMVC.Migrations
                 name: "Invoices",
                 columns: table => new
                 {
-                    InvoiceId = table.Column<long>(type: "INTEGER", nullable: false)
+                    ReceiptId = table.Column<long>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Total = table.Column<double>(type: "REAL", nullable: false),
+                    Deliverer = table.Column<string>(type: "TEXT", nullable: false),
+                    Reason = table.Column<string>(type: "TEXT", nullable: false),
+                    ReasonDetail = table.Column<string>(type: "TEXT", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
                     UserId = table.Column<long>(type: "INTEGER", nullable: false),
                     SupplierId = table.Column<long>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Invoices", x => x.InvoiceId);
+                    table.PrimaryKey("PK_Invoices", x => x.ReceiptId);
                     table.ForeignKey(
                         name: "FK_Invoices_Suppliers_SupplierId",
                         column: x => x.SupplierId,
@@ -211,21 +214,21 @@ namespace WarehouseWebMVC.Migrations
                 name: "InvoicesDetails",
                 columns: table => new
                 {
-                    InvoiceDetailId = table.Column<long>(type: "INTEGER", nullable: false)
+                    ReceiptDetailId = table.Column<long>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     ImportPrice = table.Column<double>(type: "REAL", nullable: false),
                     Quantity = table.Column<int>(type: "INTEGER", nullable: false),
-                    InvoiceId = table.Column<long>(type: "INTEGER", nullable: false),
+                    ReceiptId = table.Column<long>(type: "INTEGER", nullable: false),
                     ProductId = table.Column<long>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_InvoicesDetails", x => x.InvoiceDetailId);
+                    table.PrimaryKey("PK_InvoicesDetails", x => x.ReceiptDetailId);
                     table.ForeignKey(
-                        name: "FK_InvoicesDetails_Invoices_InvoiceId",
-                        column: x => x.InvoiceId,
+                        name: "FK_InvoicesDetails_Invoices_ReceiptId",
+                        column: x => x.ReceiptId,
                         principalTable: "Invoices",
-                        principalColumn: "InvoiceId",
+                        principalColumn: "ReceiptId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_InvoicesDetails_Products_ProductId",
@@ -291,12 +294,12 @@ namespace WarehouseWebMVC.Migrations
 
             migrationBuilder.InsertData(
                 table: "Invoices",
-                columns: new[] { "InvoiceId", "SupplierId", "Total", "UserId" },
+                columns: new[] { "ReceiptId", "Deliverer", "Reason", "ReasonDetail", "SupplierId", "Total", "UserId" },
                 values: new object[,]
                 {
-                    { 1L, 1L, 17599.869999999999, 1L },
-                    { 2L, 2L, 2300.0, 1L },
-                    { 3L, 3L, 3399.3000000000002, 2L }
+                    { 1L, "", "", "", 1L, 17599.869999999999, 1L },
+                    { 2L, "", "", "", 2L, 2300.0, 1L },
+                    { 3L, "", "", "", 3L, 3399.3000000000002, 2L }
                 });
 
             migrationBuilder.InsertData(
@@ -313,14 +316,14 @@ namespace WarehouseWebMVC.Migrations
 
             migrationBuilder.InsertData(
                 table: "InvoicesDetails",
-                columns: new[] { "InvoiceDetailId", "ImportPrice", "InvoiceId", "ProductId", "Quantity" },
+                columns: new[] { "ReceiptDetailId", "ImportPrice", "ProductId", "Quantity", "ReceiptId" },
                 values: new object[,]
                 {
-                    { 1L, 1399.99, 1L, 1L, 10 },
-                    { 2L, 1199.99, 1L, 2L, 3 },
-                    { 3L, 115.0, 2L, 3L, 20 },
-                    { 4L, 150.0, 3L, 4L, 16 },
-                    { 5L, 99.989999999999995, 3L, 5L, 10 }
+                    { 1L, 1399.99, 1L, 10, 1L },
+                    { 2L, 1199.99, 2L, 3, 1L },
+                    { 3L, 115.0, 3L, 20, 2L },
+                    { 4L, 150.0, 4L, 16, 3L },
+                    { 5L, 99.989999999999995, 5L, 10, 3L }
                 });
 
             migrationBuilder.InsertData(
@@ -373,14 +376,14 @@ namespace WarehouseWebMVC.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_InvoicesDetails_InvoiceId",
-                table: "InvoicesDetails",
-                column: "InvoiceId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_InvoicesDetails_ProductId",
                 table: "InvoicesDetails",
                 column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InvoicesDetails_ReceiptId",
+                table: "InvoicesDetails",
+                column: "ReceiptId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductImgs_ProductId",

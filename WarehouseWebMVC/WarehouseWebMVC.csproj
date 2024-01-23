@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <Folder Include="Views\Dashboard\" />
-    <Folder Include="Views\Invoice\" />
     <Folder Include="Views\FAQ\" />
     <Folder Include="Views\Terms\" />
   </ItemGroup>

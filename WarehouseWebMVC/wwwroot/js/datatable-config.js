@@ -22,4 +22,3 @@ $('#sherah-table__vendor').DataTable({
         search: '<span class="sherah-data-table-label">Search</span>'
     }
 });
-
