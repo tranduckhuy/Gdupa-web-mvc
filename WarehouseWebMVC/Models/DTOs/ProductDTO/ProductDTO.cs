@@ -13,7 +13,5 @@ public class ProductDTO
     public Category Category { get; set; } = null!;
     public long BrandId { get; set; }
     public Brand Brand { get; set; } = null!;
-    public long SupplierId { get; set; }
-    public Supplier Supplier { get; set; } = null!;
     public ICollection<ProductImg> ProductImgs { get; set; } = new List<ProductImg>();
 }

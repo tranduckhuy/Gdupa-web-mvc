@@ -93,7 +93,8 @@
                                                 <select class="col-2" name="searchType" style="height:40px; width: 90px; font-size:0.75rem;color:#666;">
                                                     <option value="" selected disabled>Search Type</option>
                                                     <option value="Name">Name</option>
-                                                    <option value="Supplier">Supplier</option>
+                                                    <option value="Category">Category</option>
+                                                    <option value="Brand">Brand</option>
                                                 </select>
                                                 &nbsp;
                                                 <input style="flex-shrink:0;width:auto;z-index:2;" type="search" name="searchValue" class="col-2 form-control form-control-sm" placeholder="Search" aria-controls="sherah-table__vendor">
@@ -109,7 +110,6 @@
                                 <thead class="sherah-table__head" style="display:block; padding-top: 5px; padding-bottom: 5px;">
                                     <tr>
                                         <th class="sherah-table__column-1 sherah-table__h1" style="min-width:290px;font-size: 16px;">Product Name</th>
-                                        <th class="sherah-table__column-2 sherah-table__h2" style="width: 15%;font-size:16px;">Supplier Name</th>
                                         <th class="sherah-table__column-3 sherah-table__h3" style="width: 10%;font-size:16px;">Price</th>
                                         <th class="sherah-table__column-4 sherah-table__h4" style="width: 10%;font-size:16px;text-align:center">Category</th>
                                         <th class="sherah-table__column-5 sherah-table__h5" style="width: 10%;font-size:16px;text-align:center">Brand</th>
@@ -125,12 +125,7 @@
                                             <td class="sherah-table__column-1 sherah-table__data-1" style="width:30%;min-width:300px;padding:12px;text-align:left;">
                                                 <div class="sherah-language-form__input">
                                                     <input class="sherah-language-form__check" id="checkbox" name="checkbox" type="checkbox">
-                                                    <p class="crany-table__product--number"><a asp-area="" asp-controller="Product" asp-action="ProductDetail" class="sherah-color1" style="font-size: 1rem;">@product.Name</a></p>
-                                                </div>
-                                            </td>
-                                            <td class="sherah-table__column-2 sherah-table__data-2" style="width:15%;min-width:150px;padding:12px;text-align:left;">
-                                                <div class="sherah-table__product-content">
-                                                    <p class="sherah-table__product-desc"><a asp-area="" asp-controller="Supplier" asp-action="SupplierList" class="sherah-color1" style="font-size: 1rem; font-weight: 400">@product.Supplier.Name</a></p>
+                                                    <p class="crany-table__product--number"><a href="/Product/ProductDetail?productId=@product.ProductId" class="sherah-color1" style="font-size: 1rem;">@product.Name</a></p>
                                                 </div>
                                             </td>
                                             <td class="sherah-table__column-3 sherah-table__data-3" style="width: 10%;min-width:80px;padding:12px 12px 12px 0;text-align:left;">
@@ -189,15 +184,15 @@
                                             <ul class="sherah-pagination__list">
                                                 @if (Model.Pageable.CurrentPage > 1)
                                                 {
-                                                    <li class="sherah-pagination__button"><a href="/Product/Product?page=@(Model.Pageable.CurrentPage > 1 ? Model.Pageable.CurrentPage - 1 : 1)"><i class="fas fa-angle-left"></i></a></li>
+                                                    <li class="sherah-pagination__button"><a href="/Product/ProductList?page=@(Model.Pageable.CurrentPage > 1 ? Model.Pageable.CurrentPage - 1 : 1)"><i class="fas fa-angle-left"></i></a></li>
                                                 }
                                                 @for (var i = Model.Pageable.StartPage; i <= Model.Pageable.EndPage; i++)
                                                 {
-                                                    <li class="@(Model.Pageable.CurrentPage == i ? "active" : "")"><a href="/Product/Product?page=@i">@i</a></li>
+                                                    <li class="@(Model.Pageable.CurrentPage == i ? "active" : "")"><a href="/Product/ProductList?page=@i">@i</a></li>
                                                 }
                                                 @if (Model.Pageable.CurrentPage < Model.Pageable.TotalPages)
                                                 {
-                                                    <li class="sherah-pagination__button"><a href="/Product/Product?page=@(Model.Pageable.CurrentPage < Model.Pageable.TotalPages ? Model.Pageable.CurrentPage + 1 : Model.Pageable.TotalPages)"><i class="fas fa-angle-right"></i></a></li>
+                                                    <li class="sherah-pagination__button"><a href="/Product/ProductList?page=@(Model.Pageable.CurrentPage < Model.Pageable.TotalPages ? Model.Pageable.CurrentPage + 1 : Model.Pageable.TotalPages)"><i class="fas fa-angle-right"></i></a></li>
                                                 }
                                             </ul>
                                         </div>
