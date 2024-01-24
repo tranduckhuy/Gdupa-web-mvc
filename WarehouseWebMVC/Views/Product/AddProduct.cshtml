@@ -69,7 +69,9 @@
                                                 <div class="col-12">
                                                     <div class="form-group">
                                                         <label class="sherah-wc__form-label">Product Name</label>
-                                                        <input asp-for="Name" name="Name" rules="required" class="sherah-wc__form-input" placeholder="Type here" type="text">
+                                                        <div class="form-group__input">
+                                                            <input asp-for="Name" name="Name" rules="required" class="sherah-wc__form-input" placeholder="Type here" type="text">
+                                                        </div>
                                                         <span class="form-message"></span>
                                                     </div>
                                                 </div>
@@ -124,7 +126,9 @@
                                                 <div class="col-lg-6 col-md-6 col-12">
                                                     <div class="form-group">
                                                         <label class="sherah-wc__form-label">Price</label>
-                                                        <input asp-for="Price" name="Price" rules="required|price" class="sherah-wc__form-input" placeholder="Type here" type="number">
+                                                        <div class="form-group__input">
+                                                            <input asp-for="Price" name="Price" rules="required|price" class="sherah-wc__form-input" placeholder="Type here" type="number">
+                                                        </div>
                                                         <span class="form-message"></span>
                                                     </div>
                                                 </div>
