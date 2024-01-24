@@ -263,7 +263,7 @@ public class UserService : IUserService
     {
 
         var totalUsers = _dataContext.Users.Count();
-        const int pageSize = 5;
+        const int pageSize = 6;
         if (page < 1)
         {
             page = 1;
@@ -275,7 +275,6 @@ public class UserService : IUserService
         var users = _dataContext.Users
             .Skip(skipAmount)
             .Take(pageSize)
-            .Include(p => p.Invoices)
             .Include(p => p.ReceivedExpenseReports)
             .Include(p => p.SentExpenseReports)
             .OrderBy(p => p.UserId)

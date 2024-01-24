@@ -73,9 +73,11 @@ public class UserController : Controller
         {
             if (ModelState.IsValid)
             {
-                addUserDTO.Avatar = "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fdefault_avatar.png?alt=media&token=560b08e7-3ab2-453e-aea5-def178730766";
+                if (addUserDTO.Avatar == null)
+                {
+                    addUserDTO.Avatar = "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fdefault_avatar.png?alt=media&token=560b08e7-3ab2-453e-aea5-def178730766";
+                }
                 addUserDTO.Role = "FE";
-                addUserDTO.CreatedAt = DateTime.Now;
                 if (_userService.AddUser(addUserDTO))
                 {
                     TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;

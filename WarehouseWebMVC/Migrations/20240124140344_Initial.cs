@@ -69,6 +69,7 @@ namespace WarehouseWebMVC.Migrations
                     Password = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
                     Role = table.Column<string>(type: "TEXT", maxLength: 10, nullable: false),
                     Avatar = table.Column<string>(type: "TEXT", nullable: false),
+                    IsLocked = table.Column<bool>(type: "INTEGER", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP")
                 },
                 constraints: table =>
@@ -136,27 +137,30 @@ namespace WarehouseWebMVC.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Invoices",
+                name: "Receipts",
                 columns: table => new
                 {
-                    InvoiceId = table.Column<long>(type: "INTEGER", nullable: false)
+                    ReceiptId = table.Column<long>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Total = table.Column<double>(type: "REAL", nullable: false),
+                    Deliverer = table.Column<string>(type: "TEXT", nullable: false),
+                    Reason = table.Column<string>(type: "TEXT", nullable: false),
+                    ReasonDetail = table.Column<string>(type: "TEXT", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
                     UserId = table.Column<long>(type: "INTEGER", nullable: false),
                     SupplierId = table.Column<long>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Invoices", x => x.InvoiceId);
+                    table.PrimaryKey("PK_Receipts", x => x.ReceiptId);
                     table.ForeignKey(
-                        name: "FK_Invoices_Suppliers_SupplierId",
+                        name: "FK_Receipts_Suppliers_SupplierId",
                         column: x => x.SupplierId,
                         principalTable: "Suppliers",
                         principalColumn: "SupplierId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Invoices_Users_UserId",
+                        name: "FK_Receipts_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "UserId",
@@ -208,30 +212,30 @@ namespace WarehouseWebMVC.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "InvoicesDetails",
+                name: "ReceiptDetails",
                 columns: table => new
                 {
-                    InvoiceDetailId = table.Column<long>(type: "INTEGER", nullable: false)
+                    ReceiptDetailId = table.Column<long>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     ImportPrice = table.Column<double>(type: "REAL", nullable: false),
                     Quantity = table.Column<int>(type: "INTEGER", nullable: false),
-                    InvoiceId = table.Column<long>(type: "INTEGER", nullable: false),
+                    ReceiptId = table.Column<long>(type: "INTEGER", nullable: false),
                     ProductId = table.Column<long>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_InvoicesDetails", x => x.InvoiceDetailId);
+                    table.PrimaryKey("PK_ReceiptDetails", x => x.ReceiptDetailId);
                     table.ForeignKey(
-                        name: "FK_InvoicesDetails_Invoices_InvoiceId",
-                        column: x => x.InvoiceId,
-                        principalTable: "Invoices",
-                        principalColumn: "InvoiceId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_InvoicesDetails_Products_ProductId",
+                        name: "FK_ReceiptDetails_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "ProductId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ReceiptDetails_Receipts_ReceiptId",
+                        column: x => x.ReceiptId,
+                        principalTable: "Receipts",
+                        principalColumn: "ReceiptId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -268,15 +272,15 @@ namespace WarehouseWebMVC.Migrations
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "UserId", "Address", "Avatar", "Email", "Name", "Password", "Phone", "Role" },
+                columns: new[] { "UserId", "Address", "Avatar", "Email", "IsLocked", "Name", "Password", "Phone", "Role" },
                 values: new object[,]
                 {
-                    { 1L, "Quy Nhon", "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky5.jpg?alt=media&token=89ff6391-2c89-4e62-a40e-1f96c5414071", "huytdqe170235@fpt.edu.vn", "Trần Đức Huy", "123456", "0123456789", "BE" },
-                    { 2L, "Quy Nhon", "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky1.jpg?alt=media&token=20f7f936-db7d-4498-9245-50875cc9f546", "quynxqe170239@fpt.edu.vn", "Nguyễn Xuân Quý", "123456", "0123456788", "FE" },
-                    { 3L, "Quy Nhon", "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky2.jpg?alt=media&token=67c90174-f0e6-4251-acdb-e17d9d88e8ec", "sangtnqe170193@fpt.edu.vn", "Trần Ngọc Sang", "123456", "0123456787", "FE" },
-                    { 4L, "Quy Nhon", "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky3.jpg?alt=media&token=2b2622f9-9b99-4ab4-bbc9-aa3c66dd7b24", "hoangngqe170225@fpt.edu.vn", "Ngô Gia Hoàng", "123456", "0123456786", "BE" },
-                    { 5L, "Quy Nhon", "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky4.jpg?alt=media&token=cbd4f161-7102-4ce1-b9f2-1ccf0c9edf57", "haonnqe170204@fpt.edu.vn", "Nguyễn Nhật Hào", "123456", "0123456785", "FE" },
-                    { 6L, "Quy Nhon", "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky6.webp?alt=media&token=85db917a-6c50-4860-948d-266409314974", "thuanndmqe170240@fpt.edu.vn", "Nguyễn Đào Minh Thuận", "123456", "0123456784", "BE" }
+                    { 1L, "Quy Nhon", "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky5.jpg?alt=media&token=89ff6391-2c89-4e62-a40e-1f96c5414071", "huytdqe170235@fpt.edu.vn", false, "Trần Đức Huy", "123456", "0123456789", "BE" },
+                    { 2L, "Quy Nhon", "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky1.jpg?alt=media&token=20f7f936-db7d-4498-9245-50875cc9f546", "quynxqe170239@fpt.edu.vn", false, "Nguyễn Xuân Quý", "123456", "0123456788", "FE" },
+                    { 3L, "Quy Nhon", "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky2.jpg?alt=media&token=67c90174-f0e6-4251-acdb-e17d9d88e8ec", "sangtnqe170193@fpt.edu.vn", false, "Trần Ngọc Sang", "123456", "0123456787", "FE" },
+                    { 4L, "Quy Nhon", "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky3.jpg?alt=media&token=2b2622f9-9b99-4ab4-bbc9-aa3c66dd7b24", "hoangngqe170225@fpt.edu.vn", false, "Ngô Gia Hoàng", "123456", "0123456786", "BE" },
+                    { 5L, "Quy Nhon", "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky4.jpg?alt=media&token=cbd4f161-7102-4ce1-b9f2-1ccf0c9edf57", "haonnqe170204@fpt.edu.vn", false, "Nguyễn Nhật Hào", "123456", "0123456785", "FE" },
+                    { 6L, "Quy Nhon", "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky6.webp?alt=media&token=85db917a-6c50-4860-948d-266409314974", "thuanndmqe170240@fpt.edu.vn", false, "Nguyễn Đào Minh Thuận", "123456", "0123456784", "BE" }
                 });
 
             migrationBuilder.InsertData(
@@ -287,16 +291,6 @@ namespace WarehouseWebMVC.Migrations
                     { 1L, "Enter new Laptops and Phones into warehouse", 2L, 1L, 17599.869999999999 },
                     { 2L, "Enter new Shoes into warehouse", 3L, 1L, 2300.0 },
                     { 3L, "Enter new Shoes into warehouse", 4L, 2L, 3399.9000000000001 }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Invoices",
-                columns: new[] { "InvoiceId", "SupplierId", "Total", "UserId" },
-                values: new object[,]
-                {
-                    { 1L, 1L, 17599.869999999999, 1L },
-                    { 2L, 2L, 2300.0, 1L },
-                    { 3L, 3L, 3399.3000000000002, 2L }
                 });
 
             migrationBuilder.InsertData(
@@ -312,15 +306,13 @@ namespace WarehouseWebMVC.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "InvoicesDetails",
-                columns: new[] { "InvoiceDetailId", "ImportPrice", "InvoiceId", "ProductId", "Quantity" },
+                table: "Receipts",
+                columns: new[] { "ReceiptId", "Deliverer", "Reason", "ReasonDetail", "SupplierId", "Total", "UserId" },
                 values: new object[,]
                 {
-                    { 1L, 1399.99, 1L, 1L, 10 },
-                    { 2L, 1199.99, 1L, 2L, 3 },
-                    { 3L, 115.0, 2L, 3L, 20 },
-                    { 4L, 150.0, 3L, 4L, 16 },
-                    { 5L, 99.989999999999995, 3L, 5L, 10 }
+                    { 1L, "", "", "", 1L, 17599.869999999999, 1L },
+                    { 2L, "", "", "", 2L, 2300.0, 1L },
+                    { 3L, "", "", "", 3L, 3399.3000000000002, 2L }
                 });
 
             migrationBuilder.InsertData(
@@ -338,6 +330,18 @@ namespace WarehouseWebMVC.Migrations
                     { 8L, "https://firebasestorage.googleapis.com/v0/b/xhobbe-98105.appspot.com/o/logo%2FNMD_R1_Shoes_White_HQ4451_01_standard.avif?alt=media&token=16bdfe85-910a-4ae5-b120-27f28e06dc71", 4L },
                     { 9L, "https://firebasestorage.googleapis.com/v0/b/xhobbe-98105.appspot.com/o/logo%2FForum_Low_Shoes_White_FY7755_01_standard.avif?alt=media&token=e9cf282a-e6bc-445f-89e7-f270b768f500", 5L },
                     { 10L, "https://firebasestorage.googleapis.com/v0/b/xhobbe-98105.appspot.com/o/logo%2FForum_Low_Shoes_White_FY7755_02_standard_hover.avif?alt=media&token=06650fd5-295c-45b3-b698-8b320d76a7f0", 5L }
+                });
+
+            migrationBuilder.InsertData(
+                table: "ReceiptDetails",
+                columns: new[] { "ReceiptDetailId", "ImportPrice", "ProductId", "Quantity", "ReceiptId" },
+                values: new object[,]
+                {
+                    { 1L, 1399.99, 1L, 10, 1L },
+                    { 2L, 1199.99, 2L, 3, 1L },
+                    { 3L, 115.0, 3L, 20, 2L },
+                    { 4L, 150.0, 4L, 16, 3L },
+                    { 5L, 99.989999999999995, 5L, 10, 3L }
                 });
 
             migrationBuilder.InsertData(
@@ -363,26 +367,6 @@ namespace WarehouseWebMVC.Migrations
                 column: "SenderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Invoices_SupplierId",
-                table: "Invoices",
-                column: "SupplierId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Invoices_UserId",
-                table: "Invoices",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_InvoicesDetails_InvoiceId",
-                table: "InvoicesDetails",
-                column: "InvoiceId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_InvoicesDetails_ProductId",
-                table: "InvoicesDetails",
-                column: "ProductId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_ProductImgs_ProductId",
                 table: "ProductImgs",
                 column: "ProductId");
@@ -398,6 +382,26 @@ namespace WarehouseWebMVC.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ReceiptDetails_ProductId",
+                table: "ReceiptDetails",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ReceiptDetails_ReceiptId",
+                table: "ReceiptDetails",
+                column: "ReceiptId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Receipts_SupplierId",
+                table: "Receipts",
+                column: "SupplierId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Receipts_UserId",
+                table: "Receipts",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Warehouse_ProductId",
                 table: "Warehouse",
                 column: "ProductId");
@@ -410,16 +414,16 @@ namespace WarehouseWebMVC.Migrations
                 name: "Expenses");
 
             migrationBuilder.DropTable(
-                name: "InvoicesDetails");
+                name: "ProductImgs");
 
             migrationBuilder.DropTable(
-                name: "ProductImgs");
+                name: "ReceiptDetails");
 
             migrationBuilder.DropTable(
                 name: "Warehouse");
 
             migrationBuilder.DropTable(
-                name: "Invoices");
+                name: "Receipts");
 
             migrationBuilder.DropTable(
                 name: "Products");

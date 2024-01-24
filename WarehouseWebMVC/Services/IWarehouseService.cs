@@ -8,5 +8,6 @@ namespace WarehouseWebMVC.Services
     {
         WarehouseViewModel GetAll(int page);
         bool Add(ImportProductsDTO importProducts);
+        WarehouseImportViewModel GetDataViewImport();
     }
 }
