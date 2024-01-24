@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 using System.Text;
@@ -298,8 +299,9 @@ public class UserService : IUserService
                 break;
 
             default:
-                searchUser = searchUser.Where(u => u.Name.ToUpper().Contains(searchValue.ToUpper()));
-                break;
+				var query = $"SELECT * FROM Users WHERE {searchType} COLLATE NOCASE LIKE '%' || @searchValue || '%'";
+				searchUser = _dataContext.Users.FromSqlRaw(query, new SqliteParameter("@searchValue", searchValue));
+				break;
         }
 
         if (searchUser.Any())
