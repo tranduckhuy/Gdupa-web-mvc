@@ -110,7 +110,7 @@
                                 </div>
                             </div>
                             <div class="col-2" style="display: flex; align-items: end; justify-content: end; text-align:center">
-                                <a asp-area="" asp-controller="Warehouse" asp-action="ImportProduct" class="" 
+                                <a asp-area="" asp-controller="Warehouse" asp-action="WarehouseImport" class="" 
                                 style="padding: 8px 15px; width: 180px; background-color: #6176FE; color:#fff; border-radius: 4px;">Warehouse Import</a>
                             </div>
                         </div>
@@ -120,10 +120,10 @@
                                 <thead class="sherah-table__head" style="display:block;">
                                     <tr>
                                         <th class="sherah-table__column-1" style=" min-width:270px; font-size: 16px;">Product Name</th>
-                                        <th class="sherah-table__column-3" style=" min-width:40px; padding-left:5px; font-size: 16px;">Starting quantity</th>
+                                        <th class="sherah-table__column-3" style=" min-width:40px; padding-left:16px; font-size: 16px;">Starting quantity</th>
                                         <th class="sherah-table__column-4" style=" min-width:80px; padding-left:5px; font-size: 16px; text-align: center">Import Quantity</th>
                                         <th class="sherah-table__column-5" style=" min-width:100px; padding-left:10px; font-size: 16px;">Import Price</th>
-                                        <th class="sherah-table__column-6" style=" min-width:40px; padding-left:5px; font-size: 16px;">Current Quantity</th>
+                                        <th class="sherah-table__column-6" style=" min-width:40px; padding-left:16px;font-size: 16px;">Current Quantity</th>
                                         <th class="sherah-table__column-7" style=" min-width:40px; padding-left:5px; font-size: 16px; text-align: center">Unit</th>
                                         <th class="sherah-table__column-8" style=" min-width:120px; padding-left:0; font-size: 16px; text-align: center">Total Stock Price</th>
                                     </tr>
@@ -140,7 +140,7 @@
                                             <td class="sherah-table__column-3 sherah-table__data-3" style="min-width:40px; padding:12px 12px 12px 0;text-align:center;">
                                                 <p class="sherah-table__product-desc">@warehouse.QuantityAtBeginPeriod</p>
                                             </td>
-                                            <td class="sherah-table__column-4 sherah-table__data-4" style="min-width:40px; padding:12px 12px 12px 0;text-align:center;">
+                                            <td class="sherah-table__column-4 sherah-table__data-4" style="min-width:40px; padding:12px;text-align:center;">
                                                 <div class="sherah-table__product-content">
                                                     <p class="sherah-table__product-desc" style="font-size: 14px;">@warehouse.QuantityImport</p>
                                                 </div>
@@ -155,12 +155,12 @@
                                                     <p class="sherah-table__product-desc" style="font-size: 14px;">@warehouse.Quantity</p>
                                                 </div>
                                             </td>
-                                            <td class="sherah-table__column-7 sherah-table__data-7" style="min-width:40px; padding:12px 12px 12px 0;text-align:left;">
+                                            <td class="sherah-table__column-7 sherah-table__data-7" style="min-width:40px; padding:12px;text-align:center;">
                                                 <div class="sherah-table__product-content">
                                                     <p class="sherah-table__product-desc" style="font-size: 14px;">@warehouse.Product.Unit</p>
                                                 </div>
                                             </td>
-                                            <td class="sherah-table__column-8 sherah-table__data-8" style="min-width:80px;padding:12px 12px 12px 0;text-align:left;">
+                                            <td class="sherah-table__column-8 sherah-table__data-8" style="min-width:80px;padding:12px 12px 12px 0;text-align:center;">
                                                 <div class="sherah-table__product-content">
                                                     <p class="sherah-table__product-desc" style="font-size: 14px;">$@Math.Round((warehouse.Quantity * warehouse.PriceImport), 2)</p>
                                                 </div>
@@ -173,7 +173,7 @@
                                 @if (Model.Pageable != null)
                                 {
                                     <div class="col-sm-12 col-md-5">
-                                        <div class="dataTables_info" id="sherah-table__vendor_info" role="status" aria-live="polite">Showing 2 of @Model.Pageable.TotalItems entries</div>
+                                        <div class="dataTables_info" id="sherah-table__vendor_info" role="status" aria-live="polite" style="font-weight:500">Total @Model.Pageable.TotalItems products in the table</div>
                                     </div>
                                 }
                                 <div class="col-sm-12 col-md-7">

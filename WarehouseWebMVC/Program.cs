@@ -20,6 +20,8 @@ builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IWarehouseService, WarehouseSerivce>();
+builder.Services.AddScoped<IReceiptService, ReceiptSerivce>();
+builder.Services.AddScoped<ISupplierService, SupplierService>();
 
 builder.Services.AddSession(options =>
 {

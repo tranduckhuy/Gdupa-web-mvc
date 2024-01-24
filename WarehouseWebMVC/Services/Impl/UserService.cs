@@ -30,7 +30,7 @@ public class UserService : IUserService
     {
         var user = _dataContext.Users.SingleOrDefault(u => u.Email == userDTO.Email);
 
-        return user != null && user.Password == userDTO.Password;
+        return user != null && user.Password == userDTO.Password && user.IsLocked == false;
     }
 
     public User GetUserByEmail(string email)
@@ -263,7 +263,7 @@ public class UserService : IUserService
     {
 
         var totalUsers = _dataContext.Users.Count();
-        const int pageSize = 5;
+        const int pageSize = 6;
         if (page < 1)
         {
             page = 1;
@@ -275,7 +275,6 @@ public class UserService : IUserService
         var users = _dataContext.Users
             .Skip(skipAmount)
             .Take(pageSize)
-            .Include(p => p.Invoices)
             .Include(p => p.ReceivedExpenseReports)
             .Include(p => p.SentExpenseReports)
             .OrderBy(p => p.UserId)
@@ -313,7 +312,7 @@ public class UserService : IUserService
         return null!;
     }
 
-    public bool Delete(long userId, long inforId)
+    public bool Deactive(long userId, long inforId)
     {
         try
         {
@@ -322,7 +321,8 @@ public class UserService : IUserService
             {
                 return false;
             }
-            _dataContext.Users.RemoveRange(user);
+            user.IsLocked = true;
+            _dataContext.Entry(user).State = EntityState.Modified;
             _dataContext.SaveChanges();
 
             return true;

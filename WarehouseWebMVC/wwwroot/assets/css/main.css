@@ -9496,12 +9496,12 @@ blockquote {
 
 .form-message {
     text-align: left;
-    font-size: 1rem;
+    font-size: .8rem;
     line-height: 1.6rem;
     padding: 4px 0 0;
 }
 
-.form-group.invalid .form-group__input input {
+.form-group.invalid input {
     border-color: #f33a58;
 }
 
