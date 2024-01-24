@@ -11,7 +11,7 @@ using WarehouseWebMVC.Data;
 namespace WarehouseWebMVC.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240123144746_Initial")]
+    [Migration("20240124140344_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -570,6 +570,9 @@ namespace WarehouseWebMVC.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("IsLocked")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -602,6 +605,7 @@ namespace WarehouseWebMVC.Migrations
                             Avatar = "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky5.jpg?alt=media&token=89ff6391-2c89-4e62-a40e-1f96c5414071",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "huytdqe170235@fpt.edu.vn",
+                            IsLocked = false,
                             Name = "Trần Đức Huy",
                             Password = "123456",
                             Phone = "0123456789",
@@ -614,6 +618,7 @@ namespace WarehouseWebMVC.Migrations
                             Avatar = "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky1.jpg?alt=media&token=20f7f936-db7d-4498-9245-50875cc9f546",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "quynxqe170239@fpt.edu.vn",
+                            IsLocked = false,
                             Name = "Nguyễn Xuân Quý",
                             Password = "123456",
                             Phone = "0123456788",
@@ -626,6 +631,7 @@ namespace WarehouseWebMVC.Migrations
                             Avatar = "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky2.jpg?alt=media&token=67c90174-f0e6-4251-acdb-e17d9d88e8ec",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "sangtnqe170193@fpt.edu.vn",
+                            IsLocked = false,
                             Name = "Trần Ngọc Sang",
                             Password = "123456",
                             Phone = "0123456787",
@@ -638,6 +644,7 @@ namespace WarehouseWebMVC.Migrations
                             Avatar = "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky3.jpg?alt=media&token=2b2622f9-9b99-4ab4-bbc9-aa3c66dd7b24",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "hoangngqe170225@fpt.edu.vn",
+                            IsLocked = false,
                             Name = "Ngô Gia Hoàng",
                             Password = "123456",
                             Phone = "0123456786",
@@ -650,6 +657,7 @@ namespace WarehouseWebMVC.Migrations
                             Avatar = "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky4.jpg?alt=media&token=cbd4f161-7102-4ce1-b9f2-1ccf0c9edf57",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "haonnqe170204@fpt.edu.vn",
+                            IsLocked = false,
                             Name = "Nguyễn Nhật Hào",
                             Password = "123456",
                             Phone = "0123456785",
@@ -662,6 +670,7 @@ namespace WarehouseWebMVC.Migrations
                             Avatar = "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky6.webp?alt=media&token=85db917a-6c50-4860-948d-266409314974",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "thuanndmqe170240@fpt.edu.vn",
+                            IsLocked = false,
                             Name = "Nguyễn Đào Minh Thuận",
                             Password = "123456",
                             Phone = "0123456784",

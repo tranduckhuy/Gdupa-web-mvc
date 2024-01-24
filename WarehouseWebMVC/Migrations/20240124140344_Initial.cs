@@ -69,6 +69,7 @@ namespace WarehouseWebMVC.Migrations
                     Password = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
                     Role = table.Column<string>(type: "TEXT", maxLength: 10, nullable: false),
                     Avatar = table.Column<string>(type: "TEXT", nullable: false),
+                    IsLocked = table.Column<bool>(type: "INTEGER", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP")
                 },
                 constraints: table =>
@@ -271,15 +272,15 @@ namespace WarehouseWebMVC.Migrations
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "UserId", "Address", "Avatar", "Email", "Name", "Password", "Phone", "Role" },
+                columns: new[] { "UserId", "Address", "Avatar", "Email", "IsLocked", "Name", "Password", "Phone", "Role" },
                 values: new object[,]
                 {
-                    { 1L, "Quy Nhon", "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky5.jpg?alt=media&token=89ff6391-2c89-4e62-a40e-1f96c5414071", "huytdqe170235@fpt.edu.vn", "Trần Đức Huy", "123456", "0123456789", "BE" },
-                    { 2L, "Quy Nhon", "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky1.jpg?alt=media&token=20f7f936-db7d-4498-9245-50875cc9f546", "quynxqe170239@fpt.edu.vn", "Nguyễn Xuân Quý", "123456", "0123456788", "FE" },
-                    { 3L, "Quy Nhon", "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky2.jpg?alt=media&token=67c90174-f0e6-4251-acdb-e17d9d88e8ec", "sangtnqe170193@fpt.edu.vn", "Trần Ngọc Sang", "123456", "0123456787", "FE" },
-                    { 4L, "Quy Nhon", "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky3.jpg?alt=media&token=2b2622f9-9b99-4ab4-bbc9-aa3c66dd7b24", "hoangngqe170225@fpt.edu.vn", "Ngô Gia Hoàng", "123456", "0123456786", "BE" },
-                    { 5L, "Quy Nhon", "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky4.jpg?alt=media&token=cbd4f161-7102-4ce1-b9f2-1ccf0c9edf57", "haonnqe170204@fpt.edu.vn", "Nguyễn Nhật Hào", "123456", "0123456785", "FE" },
-                    { 6L, "Quy Nhon", "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky6.webp?alt=media&token=85db917a-6c50-4860-948d-266409314974", "thuanndmqe170240@fpt.edu.vn", "Nguyễn Đào Minh Thuận", "123456", "0123456784", "BE" }
+                    { 1L, "Quy Nhon", "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky5.jpg?alt=media&token=89ff6391-2c89-4e62-a40e-1f96c5414071", "huytdqe170235@fpt.edu.vn", false, "Trần Đức Huy", "123456", "0123456789", "BE" },
+                    { 2L, "Quy Nhon", "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky1.jpg?alt=media&token=20f7f936-db7d-4498-9245-50875cc9f546", "quynxqe170239@fpt.edu.vn", false, "Nguyễn Xuân Quý", "123456", "0123456788", "FE" },
+                    { 3L, "Quy Nhon", "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky2.jpg?alt=media&token=67c90174-f0e6-4251-acdb-e17d9d88e8ec", "sangtnqe170193@fpt.edu.vn", false, "Trần Ngọc Sang", "123456", "0123456787", "FE" },
+                    { 4L, "Quy Nhon", "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky3.jpg?alt=media&token=2b2622f9-9b99-4ab4-bbc9-aa3c66dd7b24", "hoangngqe170225@fpt.edu.vn", false, "Ngô Gia Hoàng", "123456", "0123456786", "BE" },
+                    { 5L, "Quy Nhon", "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky4.jpg?alt=media&token=cbd4f161-7102-4ce1-b9f2-1ccf0c9edf57", "haonnqe170204@fpt.edu.vn", false, "Nguyễn Nhật Hào", "123456", "0123456785", "FE" },
+                    { 6L, "Quy Nhon", "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky6.webp?alt=media&token=85db917a-6c50-4860-948d-266409314974", "thuanndmqe170240@fpt.edu.vn", false, "Nguyễn Đào Minh Thuận", "123456", "0123456784", "BE" }
                 });
 
             migrationBuilder.InsertData(
