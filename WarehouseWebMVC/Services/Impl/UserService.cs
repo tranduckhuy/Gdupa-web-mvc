@@ -1,9 +1,15 @@
 ﻿using AutoMapper;
+using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
+using System.Globalization;
+using System.Text;
 using WarehouseWebMVC.Data;
+using WarehouseWebMVC.Models;
 using WarehouseWebMVC.Models.Domain;
 using WarehouseWebMVC.Models.DTOs.UserDTO;
 using WarehouseWebMVC.Service;
 using WarehouseWebMVC.Services.Mail;
+using WarehouseWebMVC.ViewModels;
 
 namespace WarehouseWebMVC.Services.Impl;
 
@@ -31,6 +37,75 @@ public class UserService : IUserService
     {
         return _dataContext.Users.FirstOrDefault(u => u.Email == email)!;
     }
+
+    public UserInformationDTO GetUserById(long userId)
+    {
+        var user = _dataContext.Users.FirstOrDefault(u => u.UserId == userId)!;
+        var userDto = _mapper.Map<UserInformationDTO>(user);
+        return userDto;
+    }
+
+    public bool UpdateUser(UserInformationDTO updatedUser)
+    {
+        try
+        {
+            var existingUser = _dataContext.Users.FirstOrDefault(u => u.UserId == updatedUser.UserId);
+
+            if (existingUser == null)
+            {
+                return false;
+            }
+
+            if (updatedUser.Avatar == null)
+            {
+                updatedUser.Avatar = existingUser.Avatar;
+            }
+
+            if (updatedUser.Name != null && updatedUser.Phone != null && updatedUser.Avatar != null)
+            {
+                existingUser.Name = updatedUser.Name;
+                existingUser.Phone = updatedUser.Phone;
+                existingUser.Avatar = updatedUser.Avatar;
+            }
+
+            _dataContext.Entry(existingUser).State = EntityState.Modified;
+            _dataContext.SaveChanges();
+            return true;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+    }
+
+    public bool ChangePassword(UserInformationDTO updatedUser)
+    {
+        try
+        {
+            var existingUser = _dataContext.Users.FirstOrDefault(u => u.UserId == updatedUser.UserId);
+
+            if (existingUser == null
+                || updatedUser.OldPassword == null
+                || updatedUser.NewPassword == null
+                || updatedUser.ConfirmPassword == null
+                || existingUser.Password != updatedUser.OldPassword
+                || updatedUser.OldPassword == updatedUser.NewPassword
+                || updatedUser.NewPassword != updatedUser.ConfirmPassword)
+            {
+                return false;
+            }
+
+            existingUser.Password = updatedUser.NewPassword;
+            _dataContext.Entry(existingUser).State = EntityState.Modified;
+            _dataContext.SaveChanges();
+            return true;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+    }
+
 
     public bool SendResetPasswordEmail(string userEmail, ISession session, HttpContext httpContext)
     {
@@ -183,4 +258,109 @@ public class UserService : IUserService
 
         return false;
     }
+
+    public UserViewModel GetAll(int page)
+    {
+
+        var totalUsers = _dataContext.Users.Count();
+        const int pageSize = 5;
+        if (page < 1)
+        {
+            page = 1;
+        }
+        var pageable = new Pageable(totalUsers, page, pageSize);
+
+        int skipAmount = (pageable.CurrentPage - 1) * pageSize;
+
+        var users = _dataContext.Users
+            .Skip(skipAmount)
+            .Take(pageSize)
+            .Include(p => p.Invoices)
+            .Include(p => p.ReceivedExpenseReports)
+            .Include(p => p.SentExpenseReports)
+            .OrderBy(p => p.UserId)
+            .ToList();
+
+        var usersDto = _mapper.Map<List<UserDTO>>(users);
+
+        var userViewModel = new UserViewModel { Users = usersDto, Pageable = pageable };
+
+        return userViewModel;
+    }
+
+    public UserViewModel SearchUser(string searchType, string searchValue)
+    {
+        IQueryable<User> searchUser = _dataContext.Users;
+
+        switch (searchType)
+        {
+            case "Email":
+                searchUser = searchUser.Where(u => u.Email.ToUpper().Contains(searchValue.ToUpper()));
+                break;
+
+            default:
+				var query = $"SELECT * FROM Users WHERE {searchType} COLLATE NOCASE LIKE '%' || @searchValue || '%'";
+				searchUser = _dataContext.Users.FromSqlRaw(query, new SqliteParameter("@searchValue", searchValue));
+				break;
+        }
+
+        if (searchUser.Any())
+        {
+            var searchUserDto = _mapper.Map<List<UserDTO>>(searchUser.ToList());
+            var userViewModel = new UserViewModel { Users = searchUserDto };
+            return userViewModel;
+        }
+        return null!;
+    }
+
+    public bool Delete(long userId, long inforId)
+    {
+        try
+        {
+            var user = _dataContext.Users.FirstOrDefault(u => u.UserId == userId);
+            if (user == null || user.UserId == inforId)
+            {
+                return false;
+            }
+            _dataContext.Users.RemoveRange(user);
+            _dataContext.SaveChanges();
+
+            return true;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+    }
+    public bool AddUser(AddUserDTO newUser)
+    {
+        try
+        {
+            if (_dataContext.Users.Any(u => u.Email == newUser.Email))
+            {
+                return false;
+            }
+
+            if (newUser.Password != newUser.RepeatPassword)
+            {
+                return false;
+            }
+
+            var userEntity = _mapper.Map<User>(newUser);
+
+            userEntity.CreatedAt = DateTime.Now;
+
+            _dataContext.Users.Add(userEntity);
+            _dataContext.SaveChanges();
+
+            return true;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+    }
+
+
+
 }

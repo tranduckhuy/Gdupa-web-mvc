@@ -2,9 +2,8 @@
 
 namespace WarehouseWebMVC.Models.DTOs.UserDTO;
 
-public class UserDTO
+public class AddUserDTO
 {
-    public long UserId { get; set; }
     public string Email { get; set; } = string.Empty;
 
     public string Name { get; set; } = string.Empty;
@@ -17,6 +16,8 @@ public class UserDTO
 
     public string Role { get; set; } = string.Empty;
 
+    public string RepeatPassword { get; set; } = string.Empty;
+
     public string Avatar { get; set; } = "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fdefault_avatar.png?alt=media&token=560b08e7-3ab2-453e-aea5-def178730766";
 
     public DateTime CreatedAt { get; set; }
@@ -24,12 +25,4 @@ public class UserDTO
     public ICollection<Invoice> Invoices { get; } = new List<Invoice>();
     public ICollection<ExpenseReport> SentExpenseReports { get; set; } = new List<ExpenseReport>();
     public ICollection<ExpenseReport> ReceivedExpenseReports { get; set; } = new List<ExpenseReport>();
-
-    public string ResetToken { get; set; } = string.Empty;
-
-    public DateTime? ResetTokenExpiryTime { get; set; }
-
-    public string NewPassword { get; set; } = string.Empty;
-
-    public string ConfirmPassword { get; set; } = string.Empty;
 }

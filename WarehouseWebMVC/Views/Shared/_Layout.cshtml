@@ -2,6 +2,8 @@
 	var name = ViewContext.HttpContext.Session.GetString("Name");
 	var address = ViewContext.HttpContext.Session.GetString("Address");
 	var avatar = ViewContext.HttpContext.Session.GetString("Avatar");
+	byte[] userIdBytes = ViewContext.HttpContext.Session.Get("Id");
+	long userId = userIdBytes != null ? BitConverter.ToInt64(userIdBytes, 0) : 0;
 }
 <!DOCTYPE html>
 <html class="no-js" lang="en">
@@ -260,7 +262,7 @@
 								</a>
 							</li>
 							<li>
-								<a class="collapsed" asp-area="" asp-controller="User" asp-action="UserInformation">
+								<a href="/User/UserInformation?userId=@userId" class="collapsed">
 									<span class="menu-bar__text">
 										<span class="sherah-menu-icon sherah-svg-icon__v1">
 											<svg class="sherah-svg-icon" xmlns="http://www.w3.org/2000/svg"
@@ -817,9 +819,7 @@
 																		</svg>
 
 																	</div>
-																	<h4 class="sherah-dropdown-card-name"><a asp-area=""
-																			asp-controller="User"
-																			asp-action="UserInformation">My Profile</a>
+																	<h4 class="sherah-dropdown-card-name"><a href="/User/UserInformation?userId=@userId">My Profile</a>
 																	</h4>
 																</div>
 															</li>
@@ -851,9 +851,7 @@
 																			</g>
 																		</svg>
 																	</div>
-																	<h4 class="sherah-dropdown-card-name"><a asp-area=""
-																			asp-controller="User"
-																			asp-action="UserInformation">Settings</a>
+																	<h4 class="sherah-dropdown-card-name"><a href="/User/UserInformation?userId=@userId">Settings</a>
 																	</h4>
 																</div>
 															</li>
@@ -894,13 +892,11 @@
 	</div>
 
 	<!-- Sherah Scripts -->
-	<script src="/js/lib/tinymce/js/tinymce/tinymce.min.js" ></script>
-	<script src="/js/lib/progressbar.min.js" ></script>
 	<script src="/js/lib/jquery.min.js" ></script>
 	<script src="/js/lib/jquery-migrate.js" ></script>
 	<script src="/js/lib/jquery-ui.min.js" ></script>
 	<script src="/js/lib/popper.min.js" ></script>
-	<script src="/js/lib/bootstrap.min.js" async></script>
+	<script src="/js/lib/bootstrap.min.js"></script>
 	<script src="/js/lib/charts.js"></script>
 	<script src="/js/lib/datatables.min.js"></script>
 	<script src="/js/lib/circle-progress.min.js" ></script>
@@ -908,16 +904,10 @@
 	<script src="/js/lib/jvector-map.js" ></script>
 	<script src="/js/lib/slickslider.min.js" ></script>
 	<script src="/js/main.js" ></script>
-	<script src="/js/chart-config.js"></script>
-	<script src="/js/circle-config.js" ></script>
-	<script src="/js/map-config.js" ></script>
 	<script src="/js/datatable-config.js"></script>
-	<script src="/js/tinymce-config.js" ></script>
 	<script src="/js/loader-config.js"></script>
 	<script src="/js/toast-config.js" ></script>
 	<script src="/js/handle-script.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
-	<script src="/js/firebase/firebaseUpload.js" ></script>
 </body>
 
 </html>

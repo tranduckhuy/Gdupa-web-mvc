@@ -1,15 +1,33 @@
 ﻿using WarehouseWebMVC.Models.Domain;
 using WarehouseWebMVC.Models.DTOs.UserDTO;
+using WarehouseWebMVC.ViewModels;
 
 namespace WarehouseWebMVC.Service;
 
 public interface IUserService
 {
-    public bool CheckLogin(UserDTO userDTO);
+    bool CheckLogin(UserDTO userDTO);
 
-    public User GetUserByEmail(string email);
+    User GetUserByEmail(string email);
 
-    public bool SendResetPasswordEmail(string userEmail, ISession session, HttpContext httpContext);
+    UserInformationDTO GetUserById(long userId);
 
-    public bool ResetPassword(string newPassword, ISession session);
+    bool SendResetPasswordEmail(string userEmail, ISession session, HttpContext httpContext);
+
+    bool ResetPassword(string newPassword, ISession session);
+
+    bool UpdateUser(UserInformationDTO userDTO);
+
+    bool ChangePassword(UserInformationDTO updatedUser);
+
+    bool Delete(long id, long inforId);
+
+    UserViewModel GetAll(int page);
+
+    UserViewModel SearchUser(string searchType, string searchValue);
+
+    public bool AddUser(AddUserDTO newUser);
+
+
+
 }
