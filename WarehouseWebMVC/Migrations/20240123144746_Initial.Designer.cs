@@ -11,7 +11,7 @@ using WarehouseWebMVC.Data;
 namespace WarehouseWebMVC.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240123143647_Initial")]
+    [Migration("20240123144746_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -376,7 +376,7 @@ namespace WarehouseWebMVC.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Invoices");
+                    b.ToTable("Receipts");
 
                     b.HasData(
                         new
@@ -438,7 +438,7 @@ namespace WarehouseWebMVC.Migrations
 
                     b.HasIndex("ReceiptId");
 
-                    b.ToTable("InvoicesDetails");
+                    b.ToTable("ReceiptDetails");
 
                     b.HasData(
                         new

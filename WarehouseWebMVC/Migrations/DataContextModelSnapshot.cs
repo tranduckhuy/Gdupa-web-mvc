@@ -373,7 +373,7 @@ namespace WarehouseWebMVC.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Invoices");
+                    b.ToTable("Receipts");
 
                     b.HasData(
                         new
@@ -435,7 +435,7 @@ namespace WarehouseWebMVC.Migrations
 
                     b.HasIndex("ReceiptId");
 
-                    b.ToTable("InvoicesDetails");
+                    b.ToTable("ReceiptDetails");
 
                     b.HasData(
                         new

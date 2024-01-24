@@ -6,8 +6,8 @@ namespace WarehouseWebMVC.Data;
 public class DataContext : DbContext
 {
     public DbSet<User> Users { get; set; }
-    public DbSet<Receipt> Invoices { get; set; }
-    public DbSet<ReceiptDetail> InvoicesDetails { get; set; }
+    public DbSet<Receipt> Receipts { get; set; }
+    public DbSet<ReceiptDetail> ReceiptDetails { get; set; }
     public DbSet<ExpenseReport> Expenses { get; set; }
     public DbSet<Supplier> Suppliers { get; set; }
     public DbSet<Category> Category { get; set; }
