@@ -25,7 +25,7 @@
                <div class="input-group mb-3" style="max-height:30px;display:flex;justify-content:center;align-items:center;">
                    <input type="number" name="quantity" class="quantity input-number form-control" value="${pPrice.toFixed(2)}"
                          id="product-import-price-${pId}" oninput="changePrice(${pId})"
-                         style="text-align:center;max-height:45px;max-width:80px;margin:0 12px;padding:0;" />
+                         style="text-align:center;max-height:45px;max-width:80px;margin:0 12px;padding:0;color:#5A5A5A;" />
                </div>
             </td>
             <td class="quantity" style="max-width: 150px;">
@@ -36,8 +36,8 @@
                                 <i class="fa-solid fa-minus" style="font-size:16px;color:#666;"></i>
                             </button>
                         </span>
-                        <input type="text" name="quantity" id="quantity-${pId}" class="quantity input-number form-control" value="${pQuantity}"
-                            style="text-align:center;max-height:45px;max-width:80px;margin:0 12px;padding:0;" />
+                        <input type="number" name="quantity" id="quantity-${pId}" class="quantity input-number form-control" value="${pQuantity}"
+                            style="text-align:center;max-height:45px;max-width:80px;margin:0 12px;padding:0;color:#5A5A5A;" />
                         <span class="input-group-btn ml-2">
                             <button type="button" onclick="productIncDec(${pId},'plus')" class="quantity-right-plus btn" data-type="plus" data-field=""
                                     style="width:20px;height:20px;display:flex;justify-content:center;align-items:center;">
