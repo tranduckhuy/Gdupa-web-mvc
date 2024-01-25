@@ -45,7 +45,7 @@
                             </div>
                         </div>
                         <div class="sherah-page-inner sherah-border sherah-basic-page sherah-default-bg mg-top-25 p-0">
-                            <form class="sherah-wc__form-main" method="post" asp-action="UpdateProduct" asp-controller="Product">
+                            <form class="sherah-wc__form-main" id="update-form" method="post" asp-action="UpdateProduct" asp-controller="Product">
                                 <div class="row">
                                     <div class="col-lg-6 col-12">
                                         <!-- Product Info -->
@@ -57,8 +57,9 @@
                                                         <label class="sherah-wc__form-label">Product Name</label>
                                                         <div class="form-group__input">
                                                             <input asp-for="ProductId" value="@Model.ProductId" style="display:none" readonly>
-                                                            <input asp-for="Name" value="@Model.Name" class="sherah-wc__form-input" placeholder="Type here" type="text">
+                                                            <input asp-for="Name" value="@Model.Name" name="Name" rules="required" class="sherah-wc__form-input" placeholder="Type here" type="text">
                                                         </div>
+                                                        <span class="form-message"></span>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-12">
@@ -113,8 +114,9 @@
                                                     <div class="form-group">
                                                         <label class="sherah-wc__form-label">Price</label>
                                                         <div class="form-group__input">
-                                                            <input asp-for="Price" value="@Model.Price" class="sherah-wc__form-input" placeholder="Type here" type="text">
+                                                            <input asp-for="Price" value="@Model.Price" name="Price" rules="required|price" class="sherah-wc__form-input" placeholder="Type here" type="text">
                                                         </div>
+                                                        <span class="form-message"></span>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-12">
@@ -195,3 +197,7 @@
 <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
 <script src="/js/firebase/firebaseUpload.js"></script>
 <script src="/js/tinymce-config.js"></script>
+<script src="/js/Validator.js"></script>
+<script>
+    Validator('#update-form');
+</script>

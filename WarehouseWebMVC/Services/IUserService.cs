@@ -20,7 +20,9 @@ public interface IUserService
 
     bool ChangePassword(UserInformationDTO updatedUser);
 
-    bool Delete(long id, long inforId);
+    bool Deactive(long id, long inforId);
+
+    bool Active(long id, long inforId);
 
     UserViewModel GetAll(int page);
 

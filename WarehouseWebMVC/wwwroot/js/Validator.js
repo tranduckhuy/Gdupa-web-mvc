@@ -6,8 +6,8 @@ function Validator(formSelector) {
             if (element.parentElement.matches(selector)) {
                 return element.parentElement;
             }
+            element = element.parentElement;
         }
-        element = element.parentElement;
     }
 
     // Variable that have all rules we wanna validate
@@ -64,6 +64,10 @@ function Validator(formSelector) {
         phone: function (value) {
             var regex = /([\+84|84|0]+(3|5|7|8|9|1[2|6|8|9]))+([0-9]{8})\b/;
             return regex.test(value) ? undefined : "Please enter a phone number here!";
+        },
+        price: function (value) {
+            var regex = /^[1-9]\d{0,2}(?:([.,])\d{3})*(\1\d{3})*(?:\.\d{1,2})?$/;
+            return regex.test(value) ? undefined : "Please enter a valid price here!";
         },
     };
 

@@ -23,8 +23,8 @@ public class DashboardController : Controller
             Response.Headers.Add("Expires", "0");
             ViewBag.User = HttpContext.Session.GetString("User");
             ViewBag.Name = HttpContext.Session.GetString("Name");
-				ViewBag.Address = HttpContext.Session.GetString("Address");
-				return View();
+            ViewBag.Address = HttpContext.Session.GetString("Address");
+            return View();
         }
         return RedirectToAction("Login", "Authentication");
     }

@@ -73,11 +73,9 @@ public class UserController : Controller
         {
             if (ModelState.IsValid)
             {
-                if (addUserDTO.Avatar == null)
-                {
-                    addUserDTO.Avatar = "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fdefault_avatar.png?alt=media&token=560b08e7-3ab2-453e-aea5-def178730766";
-                }
+                addUserDTO.Avatar ??= "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fdefault_avatar.png?alt=media&token=560b08e7-3ab2-453e-aea5-def178730766";
                 addUserDTO.Role = "FE";
+                addUserDTO.IsLocked = false;
                 if (_userService.AddUser(addUserDTO))
                 {
                     TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
@@ -139,9 +137,21 @@ public class UserController : Controller
 
 
     [HttpGet]
-    public IActionResult DeleteUser(long userId, long inforId)
+    public IActionResult DeactiveUser(long userId, long inforId)
     {
-        if (_userService.Delete(userId, inforId))
+        if (_userService.Deactive(userId, inforId))
+        {
+            TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
+            return RedirectToAction("Users");
+        }
+        TempData["Message"] = AppConstant.MESSAGE_FAILED;
+        return RedirectToAction("Users");
+    }
+
+    [HttpGet]
+    public IActionResult ActiveUser(long userId, long inforId)
+    {
+        if (_userService.Active(userId, inforId))
         {
             TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
             return RedirectToAction("Users");

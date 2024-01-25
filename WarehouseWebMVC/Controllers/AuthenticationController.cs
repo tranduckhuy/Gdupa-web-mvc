@@ -135,7 +135,8 @@ public class AuthenticationController : Controller
                     HttpContext.Session.SetString("Avatar", user.Avatar);
                 } else
                 {
-                    throw new Exception("User null exception!");
+                    TempData["Message"] = AppConstant.MESSAGE_FAILED;
+                    return RedirectToAction("Login");
                 }
                 var rememberMe = Request.Form["remember-me"].Count > 0;
 				if (rememberMe)
