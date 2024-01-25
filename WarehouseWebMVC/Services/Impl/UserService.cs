@@ -30,8 +30,16 @@ public class UserService : IUserService
     {
         var user = _dataContext.Users.SingleOrDefault(u => u.Email == userDTO.Email);
 
-        return user != null && user.Password == userDTO.Password && user.IsLocked == false;
+        if (user != null && !user.IsLocked)
+        {
+            bool isValidPassword = BCrypt.Net.BCrypt.Verify(userDTO.Password, user.Password);
+
+            return isValidPassword;
+        }
+
+        return false;
     }
+
 
     public User GetUserByEmail(string email)
     {
@@ -88,13 +96,13 @@ public class UserService : IUserService
                 || updatedUser.OldPassword == null
                 || updatedUser.NewPassword == null
                 || updatedUser.ConfirmPassword == null
-                || existingUser.Password != updatedUser.OldPassword
+                || !BCrypt.Net.BCrypt.Verify(updatedUser.OldPassword, existingUser.Password)
                 || updatedUser.OldPassword == updatedUser.NewPassword
                 || updatedUser.NewPassword != updatedUser.ConfirmPassword)
             {
                 return false;
             }
-
+            updatedUser.NewPassword = BCrypt.Net.BCrypt.HashPassword(updatedUser.NewPassword);
             existingUser.Password = updatedUser.NewPassword;
             _dataContext.Entry(existingUser).State = EntityState.Modified;
             _dataContext.SaveChanges();
@@ -237,6 +245,7 @@ public class UserService : IUserService
 
             if (user != null)
             {
+                newPassword = BCrypt.Net.BCrypt.HashPassword(newPassword);
                 user.Password = newPassword;
 
                 session.Remove("ResetToken");
@@ -362,11 +371,13 @@ public class UserService : IUserService
             {
                 return false;
             }
-
+            
             if (newUser.Password != newUser.RepeatPassword)
             {
                 return false;
             }
+
+            newUser.Password = BCrypt.Net.BCrypt.HashPassword(newUser.Password);
 
             var userEntity = _mapper.Map<User>(newUser);
 
