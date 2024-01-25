@@ -20,7 +20,7 @@ public class WarehouseController : Controller
     }
 
     [Filter]
-    public IActionResult WarehouseProduct(int page = 1)
+    public IActionResult WarehouseProduct(int page = 1, int quarter = 0, int year = 0)
     {
         if (HttpContext.Session.GetString("User") != null)
         {
@@ -54,19 +54,23 @@ public class WarehouseController : Controller
     [HttpPost]
     public IActionResult WarehouseImport([FromBody] ImportProductsDTO importProductsDTO)
     {
-        //if (HttpContext.Session.GetString("User") != null)
-        //{
+        if (ModelState.IsValid)
+        {
+            Console.WriteLine("Error");
+        }
         if (_warehouseService.Add(importProductsDTO))
         {
             TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
             return RedirectToAction("WarehouseProduct", "Warehouse");
         }
-        TempData["Message"] = AppConstant.MESSAGE_FAILED;
-        return RedirectToAction("WarehouseImport", "Warehouse");
-        //}
-        //TempData["Message"] = AppConstant.MESSAGE_NOT_LOGIN;
-        //return RedirectToAction("Login", "Authentication");
+        else
+        {
+            TempData["Message"] = AppConstant.MESSAGE_FAILED;
+            return RedirectToAction("WarehouseImport", "Warehouse");
+        }
     }
+
+
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

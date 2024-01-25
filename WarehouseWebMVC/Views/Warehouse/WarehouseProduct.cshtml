@@ -1,7 +1,28 @@
 ﻿@{
-    ViewData["Title"] = "Invoice";
+    ViewData["Title"] = "Warehouse";
+    var message = TempData["Message"] as string;
 }
 @model WarehouseWebMVC.ViewModels.WarehouseViewModel
+
+<div id="toast"></div>
+@if (!string.IsNullOrEmpty(message))
+{
+    if ("Failed".Equals(message))
+    {
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                setTimeout(function () {
+                    toast({
+                        title: "Failed",
+                        message: "Oops! Action failed. Please try again.",
+                        type: "danger",
+                        duration: 3000,
+                    });
+                }, 600);
+            });
+        </script>
+    }
+}
 
 <section class="sherah-adashboard sherah-show">
     <div class="container">
@@ -110,11 +131,63 @@
                                 </div>
                             </div>
                             <div class="col-2" style="display: flex; align-items: end; justify-content: end; text-align:center">
-                                <a asp-area="" asp-controller="Warehouse" asp-action="WarehouseImport" class="" 
-                                style="padding: 8px 15px; width: 180px; background-color: #6176FE; color:#fff; border-radius: 4px;">Warehouse Import</a>
+                                <a asp-area="" asp-controller="Warehouse" asp-action="WarehouseImport"
+                                   style="padding: 8px 15px; width: 180px; background-color: #6176FE; color:#fff; border-radius: 4px;">Warehouse Import</a>
                             </div>
                         </div>
-                        <div class="sherah-table sherah-page-inner sherah-border sherah-default-bg mg-top-20" style="padding-top:16px;">
+                        <div class="sherah-table sherah-page-inner sherah-border sherah-default-bg mg-top-20" style="padding-top:0;">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-8">
+                                    <div class="dataTables_length" id="sherah-table__vendor_length">
+                                        <label style="margin-top: 18px;">
+                                            <select name="sherah-table__vendor_length"
+                                                    id="quarter-select"
+                                                    aria-controls="sherah-table__vendor"
+                                                    class="form-select form-select-sm"
+                                                    style="height:40px; width: 120px; font-size:0.75rem;color:#666;">
+                                                <option value="1" selected disabled>Quarter</option>
+                                                <option value="1">First Quarter</option>
+                                                <option value="2">Second Quarter</option>
+                                                <option value="3">Third Quarter</option>
+                                                <option value="4">Fourth Quarter</option>
+                                            </select>
+                                        </label>
+                                        <label>
+                                            <select name="sherah-table__vendor_length"
+                                                    id="year-select"
+                                                    aria-controls="sherah-table__vendor"
+                                                    class="form-select form-select-sm"
+                                                    style="height:40px; width: 90px; font-size:0.75rem;color:#666;">
+                                                <option value="2022" selected disabled>Year</option>
+                                                <option value="2022">2022</option>
+                                                <option value="2023">2023</option>
+                                                <option value="2024">2024</option>
+                                            </select>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-4">
+                                    <form method="post" asp-action="SearchProduct" asp-controller="Product">
+                                        <div id="sherah-table__vendor_filter" class="dataTables_filter">
+                                            <label for="search-input" style="position: relative;bottom:16px;">
+                                                <button class="sherah-data-table-label" style="font-size:1rem;position: relative; top:2.7rem; left:18.5rem; right: auto; z-index: 4; border:none;background-color: #F3F4F7;">
+                                                    Search
+                                                </button>
+                                            </label>
+                                            <div class="input-group display-flex" style="position: relative;bottom:16px;">
+                                                <select class="col-2" name="searchType" style="height:40px; width: 90px; font-size:0.75rem;color:#666;">
+                                                    <option value="" selected disabled>Search Type</option>
+                                                    <option value="Name">Name</option>
+                                                    <option value="Category">Category</option>
+                                                    <option value="Brand">Brand</option>
+                                                </select>
+                                                &nbsp;
+                                                <input style="flex-shrink:0;width:auto;z-index:2;" type="search" name="searchValue" class="col-2 form-control form-control-sm" placeholder="Search" aria-controls="sherah-table__vendor">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                             <table id="sherah-table__main-product" class="sherah-table__vendor sherah-table__main-v3" style=" border: 1px solid #e2e7f1;">
                                 <!-- sherah Table Head -->
                                 <thead class="sherah-table__head" style="display:block;">
@@ -209,3 +282,33 @@
     </div>
 </section>
 <!-- End sherah Dashboard -->
+<script>
+    var quarter = document.getElementById('quarter-select');
+    var year = document.getElementById('year-select');
+    quarter.onchange = function (event) {
+        var valueQuarter = this.options[this.selectedIndex].value;
+        var valueYear = year.options[year.selectedIndex].value;
+        console.log(valueQuarter);
+        $.ajax({
+            url: '/Warehouse/WarehouseProduct',
+            type: 'GET',
+            data: {page : 1, quarter : valueQuarter, year : valueYear },
+            success: function (response) {
+                window.location.href = '/Warehouse/WarehouseProduct';
+            },
+            error: function (error) {
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Oops! Action failed. Please try again.',
+                    icon: 'error',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'OK'
+                });
+            }
+        });
+    }
+    year.onchange = function (event) {
+        var valueQuarter = quarter.options[quarter.selectedIndex].value;
+        var valueYear = this.options[this.selectedIndex].value;
+    }
+</script>

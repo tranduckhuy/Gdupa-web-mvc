@@ -16,19 +16,19 @@
         tableRow.innerHTML = `
             <td class="product-remove" style="padding:20px 0 0 5px;">
                <i class="fa-solid fa-square-xmark" onclick="removeProduct(${pId})" style="font-size:20px;color:#FF6767;cursor:pointer;"></i>
-               <p style="display:none;">${pId}</p>
+               <input class="product-id" type="text" value="${pId}" style="display:none;"/>
             </td>
             <td class="product-name" style="min-width:350px;">
                <h6 style="padding-top:8px;margin:auto;font-weight:500;max-width:350px;">${pName}</h6>
             </td>
-            <td class="price" style="max-width:150px;">
+            <td style="max-width:150px;">
                <div class="input-group mb-3" style="max-height:30px;display:flex;justify-content:center;align-items:center;">
-                   <input type="number" name="quantity" class="quantity input-number form-control" value="${pPrice.toFixed(2)}"
+                   <input type="number" name="quantity" class="price input-number form-control" value="${pPrice.toFixed(2)}"
                          id="product-import-price-${pId}" oninput="changePrice(${pId})"
                          style="text-align:center;max-height:45px;max-width:80px;margin:0 12px;padding:0;color:#5A5A5A;" />
                </div>
             </td>
-            <td class="quantity" style="max-width: 150px;">
+            <td style="max-width: 150px;">
                <div class="input-group mb-3" style="max-height:30px;display:flex;justify-content:center;align-items:center;">
                         <span class="input-group-btn mr-2">
                             <button type="button" onclick="productIncDec(${pId},'minus')" class="quantity-left-minus btn" data-type="minus" data-field=""
@@ -126,5 +126,69 @@ function updateOverallTotal() {
     });
 
     var totalFinal = document.getElementById('total-price-final');
+    var totalInput = document.getElementById('total-input');
     totalFinal.innerHTML = '$' + overallTotal.toFixed(2);
+    totalInput.value = overallTotal.toFixed(2);
+}
+
+function submitData() {
+    var products = [];
+    var table = document.getElementById('table-product-imported');
+    var rows = table.getElementsByTagName('tr');
+
+    for (var i = 1; i < rows.length; i++) {
+        var id = rows[i].querySelector('.product-id').value;
+        var quantity = rows[i].querySelector('.quantity').value;
+        var price = rows[i].querySelector('.price').value;
+
+        products.push({
+            ProductId: parseInt(id),
+            Quantity: parseInt(quantity),
+            PriceImport: parseFloat(price)
+        });
+    }
+
+    var editor = tinymce.get('reasonDetail');
+
+    var total = document.getElementById('total-input').value;
+    var userId = document.getElementById('userId').value;
+    var supplierId = document.getElementById('supplierId').value;
+    var reason = document.getElementById('reason').value;
+    var reasonDetail = editor.getContent();
+    var deliverer = document.getElementById('deliverer').value;
+
+    var jsonData = {
+        ImportProducts: products,
+        Total: parseFloat(total),
+        UserId: parseInt(userId),
+        SupplierId: parseInt(supplierId),
+        Reason: reason,
+        ReasonDetail: reasonDetail,
+        Deliverer: deliverer
+    };
+    console.log(jsonData);
+
+    // Convert jsonData to JSON string and send it to the controller
+    var jsonString = JSON.stringify(jsonData);
+    console.log(jsonString);
+
+    // Send jsonString to the controller using your preferred method (AJAX)
+    $.ajax({
+        url: '/Warehouse/WarehouseImport',
+        type: 'POST',
+        contentType: 'application/json',
+        data: jsonString,
+        success: function (response) {
+            window.location.href = '/Warehouse/WarehouseProduct';
+        },
+        error: function (error) {
+            Swal.fire({
+                title: 'Error',
+                text: 'Oops! Action failed. Please try again.',
+                icon: 'error',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'OK'
+            });
+        }
+    });
 }
