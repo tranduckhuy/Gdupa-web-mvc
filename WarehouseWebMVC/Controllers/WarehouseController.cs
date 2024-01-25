@@ -45,28 +45,28 @@ public class WarehouseController : Controller
             Response.Headers.Add("Expires", "0");
             var warehouseImportVM = _warehouseService.GetDataViewImport();
 
-			return View(warehouseImportVM);
+            return View(warehouseImportVM);
         }
         TempData["Message"] = AppConstant.MESSAGE_NOT_LOGIN;
         return RedirectToAction("Login", "Authentication");
     }
 
     [HttpPost]
-    public IActionResult WarehouseImport(ImportProductsDTO importProductsDTO)
+    public IActionResult WarehouseImport([FromBody] ImportProductsDTO importProductsDTO)
     {
-		if (HttpContext.Session.GetString("User") != null)
-		{
-            if (_warehouseService.Add(importProductsDTO))
-            {
-				TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
-				return RedirectToAction("WarehouseProduct", "Warehouse");
-			}
-			TempData["Message"] = AppConstant.MESSAGE_FAILED;
-			return RedirectToAction("WarehouseImport", "Warehouse");
-		}
-		TempData["Message"] = AppConstant.MESSAGE_NOT_LOGIN;
-		return RedirectToAction("Login", "Authentication");
-	}
+        //if (HttpContext.Session.GetString("User") != null)
+        //{
+        if (_warehouseService.Add(importProductsDTO))
+        {
+            TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
+            return RedirectToAction("WarehouseProduct", "Warehouse");
+        }
+        TempData["Message"] = AppConstant.MESSAGE_FAILED;
+        return RedirectToAction("WarehouseImport", "Warehouse");
+        //}
+        //TempData["Message"] = AppConstant.MESSAGE_NOT_LOGIN;
+        //return RedirectToAction("Login", "Authentication");
+    }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

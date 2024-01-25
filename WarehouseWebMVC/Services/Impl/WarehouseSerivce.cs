@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using System;
 using WarehouseWebMVC.Data;
 using WarehouseWebMVC.Models;
 using WarehouseWebMVC.Models.Domain;
@@ -13,13 +14,18 @@ namespace WarehouseWebMVC.Services.Impl
 	{
 		private readonly DataContext _dataContext;
 		private readonly IReceiptService _receiptService;
-		private readonly Mapper _mapper;
+		private readonly IMapper _mapper;
 
-		public WarehouseSerivce(DataContext dataContext, IReceiptService receiptService, Mapper mapper)
+		public WarehouseSerivce(DataContext dataContext, IReceiptService receiptService, IMapper mapper)
 		{
 			_dataContext = dataContext;
 			_receiptService = receiptService;
 			_mapper = mapper;
+		}
+
+		private bool IsExisted(long productId)
+		{
+			return _dataContext.Products.FirstOrDefault(p => p.ProductId == productId) != null ? true : false;
 		}
 
 		private bool ImportProducts(ICollection<Warehouse> importProducts)
@@ -31,68 +37,86 @@ namespace WarehouseWebMVC.Services.Impl
 
 			try
 			{
-				foreach (var importProduct in importProducts)
-				{
-					var product = _dataContext.Warehouse
-						.Where(p => p.ProductId == importProduct.ProductId);
+                using var transaction = _dataContext.Database.BeginTransaction();
+                try
+                {
+                    foreach (var importProduct in importProducts)
+                    {
+                        if (!IsExisted(importProduct.ProductId))
+                        {
+							 transaction.Rollback();
+                            return false;
+                        }
 
-					if (product == null)
-					{
-						_dataContext.Warehouse.Add(
-							new Warehouse
-							{
-								ProductId = importProduct.ProductId,
-								Quantity = importProduct.Quantity,
-								QuantityAtBeginPeriod = 0,
-								QuantityImport = importProduct.Quantity,
-								PriceImport = importProduct.PriceImport
-							}
-						);
-						break;
-					}
-					else
-					{
-						var currentQuarter = GetQuarter(DateTime.Now);
-						var existingProduct = product.FirstOrDefault(p => GetQuarter(p.CreatedAt) == currentQuarter
-													&& p.CreatedAt.Year == DateTime.Now.Year);
-						if (existingProduct == null)
-						{
-							if (currentQuarter > 1)
-							{
-								existingProduct = product.FirstOrDefault(p => GetQuarter(p.CreatedAt) == (currentQuarter - 1)
-														&& p.CreatedAt.Year == DateTime.Now.Year);
-							}
-							else
-							{
-								existingProduct = product.FirstOrDefault(p => GetQuarter(p.CreatedAt) == 4
-														&& p.CreatedAt.Year == DateTime.Now.Year - 1);
-							}
+                        var product = _dataContext.Warehouse
+                            .Where(p => p.ProductId == importProduct.ProductId)
+                            .ToList();
 
-							// If there is still an implicit error, return false
-							if (existingProduct == null)
-							{
-								return false;
-							}
+                        if (product.Count == 0)
+                        {
+                            _dataContext.Warehouse.Add(
+                                new Warehouse
+                                {
+                                    ProductId = importProduct.ProductId,
+                                    Quantity = importProduct.Quantity,
+                                    QuantityAtBeginPeriod = 0,
+                                    QuantityImport = importProduct.Quantity,
+                                    PriceImport = importProduct.PriceImport
+                                }
+                            );
+                            break;
+                        }
+                        else
+                        {
+                            var currentQuarter = GetQuarter(DateTime.Now);
+                            var existingProduct = product.FirstOrDefault(p => ((p.CreatedAt.Month - 1) / 3 + 1) == currentQuarter
+                                                        && p.CreatedAt.Year == DateTime.Now.Year);
+                            if (existingProduct == null)
+                            {
+                                if (currentQuarter > 1)
+                                {
+                                    existingProduct = product.FirstOrDefault(p => ((p.CreatedAt.Month - 1) / 3 + 1) == (currentQuarter - 1)
+                                                            && p.CreatedAt.Year == DateTime.Now.Year);
+                                }
+                                else
+                                {
+                                    existingProduct = product.FirstOrDefault(p => ((p.CreatedAt.Month - 1) / 3 + 1) == 4
+                                                            && p.CreatedAt.Year == DateTime.Now.Year - 1);
+                                }
 
-							importProduct.QuantityAtBeginPeriod = existingProduct.QuantityAtBeginPeriod;
-							importProduct.Quantity += existingProduct.Quantity;
-							importProduct.QuantityImport = importProduct.Quantity;
-							_dataContext.Warehouse.Add(importProduct);
-						} else
-						{
-							existingProduct.Quantity += importProduct.Quantity;
-							existingProduct.QuantityImport += importProduct.QuantityImport;
-							existingProduct.PriceImport = importProduct.PriceImport;
-						}
-					}
-					_dataContext.SaveChanges();
-				}
-				return true;
-			}
+                                // If there is still an implicit error, return false
+                                if (existingProduct == null)
+                                {
+                                    return false;
+                                }
+
+                                importProduct.QuantityAtBeginPeriod = existingProduct.Quantity;
+                                importProduct.QuantityImport = importProduct.Quantity;
+                                importProduct.Quantity += existingProduct.Quantity;
+                                _dataContext.Warehouse.Add(importProduct);
+                            }
+                            else
+                            {
+                                existingProduct.Quantity += importProduct.Quantity;
+                                existingProduct.QuantityImport += importProduct.Quantity;
+                                existingProduct.PriceImport = importProduct.PriceImport;
+                            }
+                        }
+                        _dataContext.SaveChanges();
+                    }
+                    transaction.Commit();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    return false;
+                }
+            }
 			catch (Exception ex)
 			{
-                Console.WriteLine(ex.Message);
-                return false;
+				Console.WriteLine(ex.Message);
+				return false;
 			}
 		}
 
@@ -144,7 +168,8 @@ namespace WarehouseWebMVC.Services.Impl
 
 		public WarehouseImportViewModel GetDataViewImport()
 		{
-			var products = _dataContext.Products.ToList();
+			var products = _dataContext.Products
+				.ToList();
 			var productsDTO = _mapper.Map<List<ProductDTO>>(products);
 			var suppliers = _dataContext.Suppliers.ToList();
 

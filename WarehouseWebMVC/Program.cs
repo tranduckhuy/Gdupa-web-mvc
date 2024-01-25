@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Serialization;
 using WarehouseWebMVC.Data;
 using WarehouseWebMVC.MappingProfiles;
 using WarehouseWebMVC.Models;
@@ -19,9 +20,23 @@ builder.Services.AddTransient<SendMailService>();
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IWarehouseService, WarehouseSerivce>();
 builder.Services.AddScoped<IReceiptService, ReceiptSerivce>();
 builder.Services.AddScoped<ISupplierService, SupplierService>();
+builder.Services.AddScoped<IWarehouseService, WarehouseSerivce>();
+
+// Enable CORS
+builder.Services.AddCors(c =>
+{
+    c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+});
+
+// JSON Serializer
+builder.Services.AddControllersWithViews()
+    .AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft
+    .Json.ReferenceLoopHandling.Ignore)
+    .AddNewtonsoftJson(options =>
+    options.SerializerSettings.ContractResolver = new DefaultContractResolver());
 
 builder.Services.AddSession(options =>
 {
@@ -31,6 +46,7 @@ builder.Services.AddSession(options =>
 });
 
 var app = builder.Build();
+app.UseCors(options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
