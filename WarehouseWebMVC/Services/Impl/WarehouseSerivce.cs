@@ -1,8 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using WarehouseWebMVC.Data;
 using WarehouseWebMVC.Models;
 using WarehouseWebMVC.Models.Domain;
 using WarehouseWebMVC.Models.DTOs;
+using WarehouseWebMVC.Models.DTOs.ProductDTO;
 using WarehouseWebMVC.ViewModels;
 
 namespace WarehouseWebMVC.Services.Impl
@@ -11,11 +13,13 @@ namespace WarehouseWebMVC.Services.Impl
 	{
 		private readonly DataContext _dataContext;
 		private readonly IReceiptService _receiptService;
+		private readonly Mapper _mapper;
 
-		public WarehouseSerivce(DataContext dataContext, IReceiptService receiptService)
+		public WarehouseSerivce(DataContext dataContext, IReceiptService receiptService, Mapper mapper)
 		{
 			_dataContext = dataContext;
 			_receiptService = receiptService;
+			_mapper = mapper;
 		}
 
 		private bool ImportProducts(ICollection<Warehouse> importProducts)
@@ -29,20 +33,78 @@ namespace WarehouseWebMVC.Services.Impl
 			{
 				foreach (var importProduct in importProducts)
 				{
-					_dataContext.Warehouse.Add(importProduct);
+					var product = _dataContext.Warehouse
+						.Where(p => p.ProductId == importProduct.ProductId);
+
+					if (product == null)
+					{
+						_dataContext.Warehouse.Add(
+							new Warehouse
+							{
+								ProductId = importProduct.ProductId,
+								Quantity = importProduct.Quantity,
+								QuantityAtBeginPeriod = 0,
+								QuantityImport = importProduct.Quantity,
+								PriceImport = importProduct.PriceImport
+							}
+						);
+						break;
+					}
+					else
+					{
+						var currentQuarter = GetQuarter(DateTime.Now);
+						var existingProduct = product.FirstOrDefault(p => GetQuarter(p.CreatedAt) == currentQuarter
+													&& p.CreatedAt.Year == DateTime.Now.Year);
+						if (existingProduct == null)
+						{
+							if (currentQuarter > 1)
+							{
+								existingProduct = product.FirstOrDefault(p => GetQuarter(p.CreatedAt) == (currentQuarter - 1)
+														&& p.CreatedAt.Year == DateTime.Now.Year);
+							}
+							else
+							{
+								existingProduct = product.FirstOrDefault(p => GetQuarter(p.CreatedAt) == 4
+														&& p.CreatedAt.Year == DateTime.Now.Year - 1);
+							}
+
+							// If there is still an implicit error, return false
+							if (existingProduct == null)
+							{
+								return false;
+							}
+
+							importProduct.QuantityAtBeginPeriod = existingProduct.QuantityAtBeginPeriod;
+							importProduct.Quantity += existingProduct.Quantity;
+							importProduct.QuantityImport = importProduct.Quantity;
+							_dataContext.Warehouse.Add(importProduct);
+						} else
+						{
+							existingProduct.Quantity += importProduct.Quantity;
+							existingProduct.QuantityImport += importProduct.QuantityImport;
+							existingProduct.PriceImport = importProduct.PriceImport;
+						}
+					}
+					_dataContext.SaveChanges();
 				}
-				_dataContext.SaveChanges();
 				return true;
 			}
-			catch (Exception)
+			catch (Exception ex)
 			{
-				return false;
+                Console.WriteLine(ex.Message);
+                return false;
 			}
+		}
+
+		private static int GetQuarter(DateTime dateTime)
+		{
+			return (dateTime.Month - 1) / 3 + 1;
 		}
 
 		public bool Add(ImportProductsDTO importProducts)
 		{
-			if (!ImportProducts(importProducts.ImportProducts)) {
+			if (!ImportProducts(importProducts.ImportProducts))
+			{
 				return false;
 			}
 			_receiptService.Add(importProducts);
@@ -82,7 +144,11 @@ namespace WarehouseWebMVC.Services.Impl
 
 		public WarehouseImportViewModel GetDataViewImport()
 		{
-			throw new NotImplementedException();
+			var products = _dataContext.Products.ToList();
+			var productsDTO = _mapper.Map<List<ProductDTO>>(products);
+			var suppliers = _dataContext.Suppliers.ToList();
+
+			return new WarehouseImportViewModel { Products = productsDTO, Suppliers = suppliers };
 		}
 	}
 }

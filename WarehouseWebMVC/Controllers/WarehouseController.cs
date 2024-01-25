@@ -2,7 +2,9 @@
 using System.Diagnostics;
 using WarehouseWebMVC.Data;
 using WarehouseWebMVC.Models;
+using WarehouseWebMVC.Models.DTOs;
 using WarehouseWebMVC.Services;
+using WarehouseWebMVC.ViewModels;
 
 namespace WarehouseWebMVC.Controllers;
 
@@ -41,11 +43,30 @@ public class WarehouseController : Controller
             Response.Headers.Add("Cache-Control", "no-store, no-cache, must-revalidate, post-check=0, pre-check=0");
             Response.Headers.Add("Pragma", "no-cache");
             Response.Headers.Add("Expires", "0");
-            return View();
+            var warehouseImportVM = _warehouseService.GetDataViewImport();
+
+			return View(warehouseImportVM);
         }
         TempData["Message"] = AppConstant.MESSAGE_NOT_LOGIN;
         return RedirectToAction("Login", "Authentication");
     }
+
+    [HttpPost]
+    public IActionResult WarehouseImport(ImportProductsDTO importProductsDTO)
+    {
+		if (HttpContext.Session.GetString("User") != null)
+		{
+            if (_warehouseService.Add(importProductsDTO))
+            {
+				TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
+				return RedirectToAction("WarehouseProduct", "Warehouse");
+			}
+			TempData["Message"] = AppConstant.MESSAGE_FAILED;
+			return RedirectToAction("WarehouseImport", "Warehouse");
+		}
+		TempData["Message"] = AppConstant.MESSAGE_NOT_LOGIN;
+		return RedirectToAction("Login", "Authentication");
+	}
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
