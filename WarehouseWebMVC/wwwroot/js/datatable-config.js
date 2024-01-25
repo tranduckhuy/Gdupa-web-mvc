@@ -16,5 +16,16 @@ $('#sherah-table__vendor').DataTable({
         searchPlaceholder: 'Search...',
         search: '<span class="sherah-data-table-label">Search</span>'
     }
-});
+}); 
 
+$('#sherah-table__orderv1').DataTable({
+    searching: true,
+    paging: false,
+    lengthChange: false,
+    info: false,
+    scrollCollapse: true,
+    language: {
+        searchPlaceholder: 'Search...',
+        search: '<span class="sherah-data-table-label">Search</span>'
+    }
+});
