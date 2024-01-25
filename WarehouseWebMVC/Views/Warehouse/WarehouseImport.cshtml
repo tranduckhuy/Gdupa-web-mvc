@@ -26,6 +26,39 @@
     }
 }
 
+<style>
+    .sherah-table-order {
+        border: 1px solid #fff;
+    }
+
+    #sherah-table__orderv1_filter .form-control {
+        padding-left: 8px;
+    }
+
+    #sherah-table__orderv1_filter .sherah-data-table-label {
+        right: 12px;
+        top: 7px;
+        font-size: 16px;
+    }
+
+    .sherah-table__main.sherah-table__main--orderv1 .sherah-table__body tr {
+        background: #F9FAFB;
+        border-bottom: #F9FAFB;
+    }
+
+    .product-card {
+        width: auto;
+        height: 50px;
+        border-radius: 4px;
+        box-shadow: 0 4px 8px rgba(0,0,0,.1);
+        background-color: #fff;
+    }
+
+        .product-card + .product-card {
+            margin-top: 16px;
+        }
+</style>
+
 <!-- sherah Dashboard -->
 <section class="sherah-adashboard sherah-show">
     <div class="container">
@@ -97,16 +130,16 @@
                                         <!-- Product List -->
                                         <div class="product-form-box sherah-border mg-top-30">
                                             <div class="sherah-table-order">
-                                                <table id="sherah-table__orderv1" class="sherah-table__main sherah-table__main--orderv1">
-                                                    <thead class="sherah-table__head" style="display:block;">
+                                                <table id="sherah-table__orderv1" class="sherah-table__main sherah-table__main--orderv1" style="border: 1px solid #E2E7F1;">
+                                                    <thead class="sherah-table__head" style="display:block;border-bottom:#E2E7F1;">
                                                         <tr>
-                                                            <th class="sherah-table__column-1 sherah-table__h1" style="width:25%;">Product ID</th>
-                                                            <th class="sherah-table__column-2 sherah-table__h2" style="width:38%;max-width:70px;padding-left:0;">Product name</th>
-                                                            <th class="sherah-table__column-3 sherah-table__h3" style="width:28%;text-align:center;">Unit</th>
-                                                            <th class="sherah-table__column-4 sherah-table__h4" style="width:15%;text-align:center;">Action</th>
+                                                            <th class="sherah-table__column-1 sherah-table__h1" style="width:25%;font-size:16px;font-weight:bold;padding-right:4px;">Product ID</th>
+                                                            <th class="sherah-table__column-2 sherah-table__h2" style="width:38%;min-width:140px;padding-left:8px;font-size:16px;font-weight:bold;">Product name</th>
+                                                            <th class="sherah-table__column-3 sherah-table__h3" style="width:24%;text-align:center;font-size:16px;font-weight:bold;">Unit</th>
+                                                            <th class="sherah-table__column-4 sherah-table__h4" style="width: 15%;text-align:center;padding-right:24px;font-size:16px;font-weight:bold;">Action</th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody class="sherah-table__body" style="display:block;max-height:478px;overflow-y:auto;">
+                                                    <tbody class="sherah-table__body" style="display:block;max-height:414.5px;overflow-y:auto;">
                                                         <tr>
                                                             <td class="sherah-table__column-1 sherah-table__data-1" style="width:25%;text-align:center;">
                                                                 <p class="sherah-table__product-name--text">1</p>
@@ -265,6 +298,55 @@
                                     </div>
                                 </div>
                                 <div class="product-form-box sherah-border mg-top-30">
+                                    <div class="cart-list">
+                                        <table class="table" style="border-color:#5A5A5A">
+                                            <thead class="thead-primary">
+                                                <tr class="text-center">
+                                                    <th>&nbsp;</th>
+                                                    <th>Product</th>
+                                                    <th>Price</th>
+                                                    <th>Quantity</th>
+                                                    <th>Total</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="text-center" style="border-color:#5A5A5A">
+                                                    <td class="product-remove" style="padding:20px 0 0 5px;">
+                                                        <a href="#"><i class="fa-solid fa-square-xmark" style="font-size:20px;"></i></a>
+                                                    </td>
+                                                    <td class="product-name" style="max-width: 400px;">
+                                                        <h6 style="padding-top:11px;margin:0;font-weight:500">Nike Free RN 2019 iD</h6>
+                                                    </td>
+                                                    <td class="price" style="max-width:150px;">
+                                                        <div class="input-group mb-3" style="max-height:30px;display:flex;justify-content:center;align-items:center;">
+                                                            <input type="text" name="quantity" class="quantity input-number form-control" value="$4.90"
+                                                                   style="text-align:center;max-height:45px;max-width:80px;margin:0 12px;padding:0;" />
+                                                        </div>
+                                                    </td>
+                                                    <td class="quantity" style="max-width: 150px;">
+                                                        <div class="input-group mb-3" style="max-height:30px;display:flex;justify-content:center;align-items:center;">
+                                                            <span class="input-group-btn mr-2">
+                                                                <button type="button" class="quantity-left-minus btn" data-type="minus" data-field=""
+                                                                        style="width:20px;height:20px;display:flex;justify-content:center;align-items:center;">
+                                                                    <i class="fa-solid fa-minus" style="font-size:16px;color:#666;"></i>
+                                                                </button>
+                                                            </span>
+                                                            <input type="text" name="quantity" class="quantity input-number form-control" value="1"
+                                                                   style="text-align:center;max-height:45px;max-width:80px;margin:0 12px;padding:0;" />
+                                                            <span class="input-group-btn ml-2">
+                                                                <button type="button" class="quantity-right-plus btn" data-type="plus" data-field=""
+                                                                        style="width:20px;height:20px;display:flex;justify-content:center;align-items:center;">
+                                                                    <i class="fa-solid fa-plus" style="font-size:16px;color:#666;"></i>
+                                                                </button>
+                                                            </span>
+                                                        </div>
+                                                    </td>
+                                                    <td class="total" style="padding-top:20px;max-height:30px;">$4.90</td>
+                                                </tr>
+                                                <!-- END TR-->
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                                 <div class=" mg-top-40 sherah-dflex sherah-dflex-gap-30 justify-content-end">
                                     <button type="submit" class="sherah-btn sherah-btn__primary">Warehouse Import</button>

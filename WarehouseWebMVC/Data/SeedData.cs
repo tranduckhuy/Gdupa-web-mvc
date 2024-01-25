@@ -15,7 +15,7 @@ public static class SeedData
                 Email = "huytdqe170235@fpt.edu.vn",
                 Address = "Quy Nhon",
                 Phone = "0123456789",
-                Password = "123456",
+                Password = "$2y$10$40DFL/Py8ND8Bdfir4EdTODhzj.JEy3WESjKc6GKYqYkkFx86UtEG",
                 Avatar = "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky5.jpg?alt=media&token=89ff6391-2c89-4e62-a40e-1f96c5414071",
 				Role = "BE"
             },
@@ -26,7 +26,7 @@ public static class SeedData
                 Email = "quynxqe170239@fpt.edu.vn",
                 Address = "Quy Nhon",
                 Phone = "0123456788",
-                Password = "123456",
+                Password = "$2y$10$hTD60Pf9h9e6bqhRIOMGnuLKDO0Wd7ZpjnEEkbMpwibIYnRClJz.K",
                 Avatar = "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky1.jpg?alt=media&token=20f7f936-db7d-4498-9245-50875cc9f546",
                 Role = "FE"
             },
@@ -37,7 +37,7 @@ public static class SeedData
                 Email = "sangtnqe170193@fpt.edu.vn",
                 Address = "Quy Nhon",
                 Phone = "0123456787",
-                Password = "123456",
+                Password = "$2y$10$TMJf55QpiswSvGhC63SFmuUsmogxdQx8k2dwL2QTvXCyurlJpgxZO",
                 Avatar = "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky2.jpg?alt=media&token=67c90174-f0e6-4251-acdb-e17d9d88e8ec",
                 Role = "FE"
             },
@@ -48,7 +48,7 @@ public static class SeedData
                 Email = "hoangngqe170225@fpt.edu.vn",
                 Address = "Quy Nhon",
                 Phone = "0123456786",
-                Password = "123456",
+                Password = "$2y$10$XKo8.bgvr/ZzPcET1sZb4.NvTb97LPfC5uNG04hZBLzXT.5qkJI.G",
                 Avatar = "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky3.jpg?alt=media&token=2b2622f9-9b99-4ab4-bbc9-aa3c66dd7b24",
 				Role = "BE"
             },
@@ -59,7 +59,7 @@ public static class SeedData
                 Email = "haonnqe170204@fpt.edu.vn",
                 Address = "Quy Nhon",
                 Phone = "0123456785",
-                Password = "123456",
+                Password = "$2y$10$O0/b51uLUnO7W7ewUB1UoOnevFdVLLxQjU3R7PD7fD3LRZcvEAXlC",
                 Avatar = "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky4.jpg?alt=media&token=cbd4f161-7102-4ce1-b9f2-1ccf0c9edf57",
 				Role = "FE"
             },
@@ -70,7 +70,7 @@ public static class SeedData
                 Email = "thuanndmqe170240@fpt.edu.vn",
                 Address = "Quy Nhon",
                 Phone = "0123456784",
-                Password = "123456",
+                Password = "$2y$10$yUCV0ag395.rVlDjMTOzzuh9psKpf94DajeJVYgWjuEnIc/4ftpx.",
                 Avatar = "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky6.webp?alt=media&token=85db917a-6c50-4860-948d-266409314974",
 				Role = "BE"
             }

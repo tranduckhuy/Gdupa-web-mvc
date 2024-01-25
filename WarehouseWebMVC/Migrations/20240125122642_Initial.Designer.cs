@@ -11,7 +11,7 @@ using WarehouseWebMVC.Data;
 namespace WarehouseWebMVC.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240124140344_Initial")]
+    [Migration("20240125122642_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -607,7 +607,7 @@ namespace WarehouseWebMVC.Migrations
                             Email = "huytdqe170235@fpt.edu.vn",
                             IsLocked = false,
                             Name = "Trần Đức Huy",
-                            Password = "123456",
+                            Password = "$2y$10$40DFL/Py8ND8Bdfir4EdTODhzj.JEy3WESjKc6GKYqYkkFx86UtEG",
                             Phone = "0123456789",
                             Role = "BE"
                         },
@@ -620,7 +620,7 @@ namespace WarehouseWebMVC.Migrations
                             Email = "quynxqe170239@fpt.edu.vn",
                             IsLocked = false,
                             Name = "Nguyễn Xuân Quý",
-                            Password = "123456",
+                            Password = "$2y$10$hTD60Pf9h9e6bqhRIOMGnuLKDO0Wd7ZpjnEEkbMpwibIYnRClJz.K",
                             Phone = "0123456788",
                             Role = "FE"
                         },
@@ -633,7 +633,7 @@ namespace WarehouseWebMVC.Migrations
                             Email = "sangtnqe170193@fpt.edu.vn",
                             IsLocked = false,
                             Name = "Trần Ngọc Sang",
-                            Password = "123456",
+                            Password = "$2y$10$TMJf55QpiswSvGhC63SFmuUsmogxdQx8k2dwL2QTvXCyurlJpgxZO",
                             Phone = "0123456787",
                             Role = "FE"
                         },
@@ -646,7 +646,7 @@ namespace WarehouseWebMVC.Migrations
                             Email = "hoangngqe170225@fpt.edu.vn",
                             IsLocked = false,
                             Name = "Ngô Gia Hoàng",
-                            Password = "123456",
+                            Password = "$2y$10$XKo8.bgvr/ZzPcET1sZb4.NvTb97LPfC5uNG04hZBLzXT.5qkJI.G",
                             Phone = "0123456786",
                             Role = "BE"
                         },
@@ -659,7 +659,7 @@ namespace WarehouseWebMVC.Migrations
                             Email = "haonnqe170204@fpt.edu.vn",
                             IsLocked = false,
                             Name = "Nguyễn Nhật Hào",
-                            Password = "123456",
+                            Password = "$2y$10$O0/b51uLUnO7W7ewUB1UoOnevFdVLLxQjU3R7PD7fD3LRZcvEAXlC",
                             Phone = "0123456785",
                             Role = "FE"
                         },
@@ -672,7 +672,7 @@ namespace WarehouseWebMVC.Migrations
                             Email = "thuanndmqe170240@fpt.edu.vn",
                             IsLocked = false,
                             Name = "Nguyễn Đào Minh Thuận",
-                            Password = "123456",
+                            Password = "$2y$10$yUCV0ag395.rVlDjMTOzzuh9psKpf94DajeJVYgWjuEnIc/4ftpx.",
                             Phone = "0123456784",
                             Role = "BE"
                         });
