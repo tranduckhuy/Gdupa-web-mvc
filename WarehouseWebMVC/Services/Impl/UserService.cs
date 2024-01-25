@@ -332,6 +332,28 @@ public class UserService : IUserService
             return false;
         }
     }
+
+    public bool Active(long userId, long inforId)
+    {
+        try
+        {
+            var user = _dataContext.Users.FirstOrDefault(u => u.UserId == userId);
+            if (user == null || user.UserId == inforId)
+            {
+                return false;
+            }
+            user.IsLocked = false;
+            _dataContext.Entry(user).State = EntityState.Modified;
+            _dataContext.SaveChanges();
+
+            return true;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+    }
+
     public bool AddUser(AddUserDTO newUser)
     {
         try

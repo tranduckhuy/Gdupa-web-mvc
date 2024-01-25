@@ -22,6 +22,8 @@ public interface IUserService
 
     bool Deactive(long id, long inforId);
 
+    bool Active(long id, long inforId);
+
     UserViewModel GetAll(int page);
 
     UserViewModel SearchUser(string searchType, string searchValue);

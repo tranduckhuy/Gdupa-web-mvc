@@ -148,6 +148,18 @@ public class UserController : Controller
         return RedirectToAction("Users");
     }
 
+    [HttpGet]
+    public IActionResult ActiveUser(long userId, long inforId)
+    {
+        if (_userService.Active(userId, inforId))
+        {
+            TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
+            return RedirectToAction("Users");
+        }
+        TempData["Message"] = AppConstant.MESSAGE_FAILED;
+        return RedirectToAction("Users");
+    }
+
     [HttpPost]
     public IActionResult SearchUser(string searchType, string searchValue)
     {
