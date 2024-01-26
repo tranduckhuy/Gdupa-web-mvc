@@ -12,5 +12,6 @@ namespace WarehouseWebMVC.ViewModels
         public int Quarter { get; set; }
         public int Year { get; set; }
         public ICollection<int> ImportYears { get; set; } = new List<int>();
+        public string Title { get; set; } = null!;
     }
 }
