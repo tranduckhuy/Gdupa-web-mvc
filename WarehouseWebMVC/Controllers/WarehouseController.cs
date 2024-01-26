@@ -20,6 +20,7 @@ public class WarehouseController : Controller
     }
 
     [Filter]
+    [HttpGet]
     public IActionResult WarehouseProduct(int page = 1, int quarter = 0, int year = 0)
     {
         if (HttpContext.Session.GetString("User") != null)
@@ -28,6 +29,34 @@ public class WarehouseController : Controller
             Response.Headers.Add("Pragma", "no-cache");
             Response.Headers.Add("Expires", "0");
             var warehouse = _warehouseService.GetLimit(page, quarter, year);
+            if (warehouse == null)
+            {
+                TempData["Message"] = AppConstant.BAD_REQUEST;
+                return RedirectToAction("WarehouseProduct", "Warehouse");
+            }
+            return View(warehouse);
+        }
+        TempData["Message"] = AppConstant.MESSAGE_NOT_LOGIN;
+        return RedirectToAction("Login", "Authentication");
+    }
+
+    [Filter]
+    [HttpGet]
+    [Route("Warehouse/WarehouseProduct/WarehouseProductStatus")]
+    public IActionResult WarehouseProductStatus(string status)
+    {
+        if (!ModelState.IsValid)
+        {
+            return RedirectToAction("WarehouseProduct", "Warehouse");
+        }
+
+        if (HttpContext.Session.GetString("User") != null)
+        {
+            Response.Headers.Add("Cache-Control", "no-store, no-cache, must-revalidate, post-check=0, pre-check=0");
+            Response.Headers.Add("Pragma", "no-cache");
+            Response.Headers.Add("Expires", "0");
+
+            var warehouse = _warehouseService.GetByStatus(status);
             if (warehouse == null)
             {
                 TempData["Message"] = AppConstant.BAD_REQUEST;
@@ -59,23 +88,47 @@ public class WarehouseController : Controller
     [HttpPost]
     public IActionResult WarehouseImport([FromBody] ImportProductsDTO importProductsDTO)
     {
-        if (ModelState.IsValid)
+        if (HttpContext.Session.GetString("User") != null)
         {
-            Console.WriteLine("Error");
+            Response.Headers.Add("Cache-Control", "no-store, no-cache, must-revalidate, post-check=0, pre-check=0");
+            Response.Headers.Add("Pragma", "no-cache");
+            Response.Headers.Add("Expires", "0");
+            if (ModelState.IsValid)
+            {
+                Console.WriteLine("Error");
+            }
+            if (_warehouseService.Add(importProductsDTO))
+            {
+                TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
+                return RedirectToAction("WarehouseProduct", "Warehouse");
+            }
+            else
+            {
+                TempData["Message"] = AppConstant.MESSAGE_FAILED;
+                return RedirectToAction("WarehouseImport", "Warehouse");
+            }
         }
-        if (_warehouseService.Add(importProductsDTO))
-        {
-            TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
-            return RedirectToAction("WarehouseProduct", "Warehouse");
-        }
-        else
-        {
-            TempData["Message"] = AppConstant.MESSAGE_FAILED;
-            return RedirectToAction("WarehouseImport", "Warehouse");
-        }
+        TempData["Message"] = AppConstant.MESSAGE_NOT_LOGIN;
+        return RedirectToAction("Login", "Authentication");
     }
 
-
+    [HttpPost]
+    public IActionResult SearchProduct(string searchType, string searchValue)
+    {
+        if (!ModelState.IsValid)
+        {
+            TempData["Message"] = AppConstant.BAD_REQUEST;
+            return RedirectToAction("WarehouseProduct", "Warehouse");
+        }
+        var warehouseProduct = _warehouseService.SearchProduct(searchType, searchValue);
+        if (warehouseProduct != null)
+        {
+            TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
+            return View("WarehouseProduct", warehouseProduct);
+        }
+        TempData["Message"] = AppConstant.NOT_FOUND;
+        return RedirectToAction("WarehouseProduct", "Warehouse");
+    }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

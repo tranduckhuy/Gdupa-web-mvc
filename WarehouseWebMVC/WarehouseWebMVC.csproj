@@ -27,4 +27,11 @@
     <Folder Include="Views\Terms\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Views\Warehouse\WarehouseProductStatus.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

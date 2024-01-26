@@ -7,30 +7,15 @@
 <div id="toast"></div>
 @if (!string.IsNullOrEmpty(message))
 {
-    if ("Success".Equals(message))
+    if ("BadRequest".Equals(message))
     {
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 setTimeout(function () {
                     toast({
-                        title: "Success",
-                        message: "Success ! Action complete.",
-                        type: "success",
-                        duration: 3000,
-                    });
-                }, 600);
-            });
-        </script>
-    }
-    else if ("NotFound".Equals(message))
-    {
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                setTimeout(function () {
-                    toast({
-                        title: "Not found!",
-                        message: "No results found for the given search criteria.",
-                        type: "warning",
+                        title: "Bad Request",
+                        message: "Oops! Action failed. Please try again.",
+                        type: "danger",
                         duration: 3000,
                     });
                 }, 600);
@@ -52,21 +37,6 @@
             });
         </script>
     }
-    else if ("BadRequest".Equals(message))
-    {
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                setTimeout(function () {
-                    toast({
-                        title: "Bad Request",
-                        message: "Oops! Action failed. Please try again.",
-                        type: "danger",
-                        duration: 3000,
-                    });
-                }, 600);
-            });
-        </script>
-    }
 }
 
 <section class="sherah-adashboard sherah-show">
@@ -76,14 +46,15 @@
                 <div class="sherah-body">
                     <!-- Dashboard Inner -->
                     <div class="sherah-dsinner">
-                        <div class="row mg-top-20">
+                        <div class="row mg-top-20" style="margin-bottom: 12px">
                             <div class="col-12">
                                 <!-- Sherah Breadcrumb -->
                                 <div class="sherah-breadcrumb">
-                                    <h2 class="sherah-breadcrumb__title">Warehouse</h2>
+                                    <h2 class="sherah-breadcrumb__title">@Model.Title</h2>
                                     <ul class="sherah-breadcrumb__list">
                                         <li><a asp-area="" asp-controller="Dashboard" asp-action="Dashboard">Home</a></li>
-                                        <li class="active"><a asp-area="" asp-controller="Warehouse" asp-action="WarehouseProduct">Warehouse</a></li>
+                                        <li><a asp-area="" asp-controller="Warehouse" asp-action="WarehouseProduct">Warehouse</a></li>
+                                        <li class="active">@Model.Title</li>
                                     </ul>
                                 </div>
                                 <!-- End Sherah Breadcrumb -->
@@ -91,7 +62,7 @@
                         </div>
                         <div class="row" style="margin-right: -2.2rem;">
                             <div class="row col-10">
-                                @if (!(Model.Title != null && "Search".Equals(Model.Title)))
+                                @if ("Low-Stock Products".Equals(Model.Title))
                                 {
                                     <div class="col-lg-4 col-md-6 col-10">
                                         <!-- Progress Card -->
@@ -127,13 +98,16 @@
                                                         </svg>
                                                         +80.00 %
                                                     </p>
-                                                    <a href="/Warehouse/WarehouseProduct/WarehouseProductStatus?status=LowAlert" class="sherah-see-all">View Details</a>
                                                 </div>
 
                                             </div>
                                         </div>
                                         <!-- End Progress Card -->
                                     </div>
+                                }
+                                @if ("Out-of-Stock Products".Equals(Model.Title))
+                                {
+
                                     <div class="col-lg-4 col-md-6 col-10">
                                         <!-- Progress Card -->
                                         <div class="sherah-progress-card sherah-border sherah-default-bg mg-top-20">
@@ -141,14 +115,14 @@
                                                 <svg class="sherah-color2__fill" xmlns="http://www.w3.org/2000/svg" width="26.672" height="30.636" viewBox="0 0 26.672 30.636">
                                                     <g id="Group_70" data-name="Group 70" transform="translate(-272.518 -5.918)">
                                                         <path id="Path_251" data-name="Path 251" d="M285.855,36.554q-5.443,0-10.885,0a2.152,2.152,0,0
-                                                     ,1-2.447-2.412q-.01-9.39.014-18.78a3.035,3.035,0,0,1,.383-1.406c1.292-2.312,2.644-4.59,3.947-6.9a2.07,2.07,0,0,1,1.993-1.141q7,.028,13.995,0a2.075
-                                                     ,2.075,0,0,1,1.991,1.147c1.327,2.338,2.7,4.652,4.022,6.991a2.4,2.4,0,0,1,.306,1.124q.028,9.48.011,18.959a2.152,2.152,0,0,1-2.445,2.414Q291.3,36.556,285.855
-                                                     ,36.554ZM297.39,15.348H274.351c-.012.211-.03.387-.031.562q0,9.057-.011,18.113c0,.577.186.746.758.744q10.73-.025,21.461-.011c.858,0,.86,0,.86-.861q0-8.937
-                                                     ,0-17.874ZM284.969,7.724c-2.077,0-4.089-.01-6.1.017a.778.778,0,0,0-.516.374c-.971,1.646-1.92,3.305-2.871,4.963a2.945,2.945,0,0,0-.152.376h9.64Zm11.423
-                                                     ,5.748a1.4,1.4,0,0,0-.08-.258c-1-1.741-2-3.485-3.029-5.212a.773.773,0,0,0-.576-.267c-1.832-.02-3.664-.013-5.5-.009a2.737,2.737,0,0,0-.373.048v5.7Z" />
+                                                    ,1-2.447-2.412q-.01-9.39.014-18.78a3.035,3.035,0,0,1,.383-1.406c1.292-2.312,2.644-4.59,3.947-6.9a2.07,2.07,0,0,1,1.993-1.141q7,.028,13.995,0a2.075
+                                                    ,2.075,0,0,1,1.991,1.147c1.327,2.338,2.7,4.652,4.022,6.991a2.4,2.4,0,0,1,.306,1.124q.028,9.48.011,18.959a2.152,2.152,0,0,1-2.445,2.414Q291.3,36.556,285.855
+                                                    ,36.554ZM297.39,15.348H274.351c-.012.211-.03.387-.031.562q0,9.057-.011,18.113c0,.577.186.746.758.744q10.73-.025,21.461-.011c.858,0,.86,0,.86-.861q0-8.937
+                                                    ,0-17.874ZM284.969,7.724c-2.077,0-4.089-.01-6.1.017a.778.778,0,0,0-.516.374c-.971,1.646-1.92,3.305-2.871,4.963a2.945,2.945,0,0,0-.152.376h9.64Zm11.423
+                                                    ,5.748a1.4,1.4,0,0,0-.08-.258c-1-1.741-2-3.485-3.029-5.212a.773.773,0,0,0-.576-.267c-1.832-.02-3.664-.013-5.5-.009a2.737,2.737,0,0,0-.373.048v5.7Z" />
                                                         <path id="Path_252" data-name="Path 252" d="M351.281,143.152l3.6-3.605c.141-.141.275-.288.426-.418a.889.889
-                                                     ,0,1,1,1.262,1.253c-.4.439-.837.851-1.259,1.273q-1.582,1.583-3.166,3.164c-.63.627-1.05.632-1.669.02-.636-.629-1.274-1.258-1.9-1.9a.886.886,0,0,1-.063-1.365.906.906
-                                                     ,0,0,1,1.328.1C350.317,142.133,350.762,142.615,351.281,143.152Z" transform="translate(-66.652 -117.042)" />
+                                                    ,0,1,1,1.262,1.253c-.4.439-.837.851-1.259,1.273q-1.582,1.583-3.166,3.164c-.63.627-1.05.632-1.669.02-.636-.629-1.274-1.258-1.9-1.9a.886.886,0,0,1-.063-1.365.906.906
+                                                    ,0,0,1,1.328.1C350.317,142.133,350.762,142.615,351.281,143.152Z" transform="translate(-66.652 -117.042)" />
                                                     </g>
                                                 </svg>
                                             </div>
@@ -162,14 +136,13 @@
                                                         <svg class="sherah-color2__fill" xmlns="http://www.w3.org/2000/svg" width="8.407" height="15.353" viewBox="0 0 8.407 15.353">
                                                             <g id="Arrow_Icon" data-name="Arrow Icon" transform="translate(593.377 321.353) rotate(180)">
                                                                 <path id="Path_247" data-name="Path 247" d="M267.12,84.017c-.794.794-1.506,1.529-2.249,2.231a.7.7,0,0,1-1.2-.195.615.615,0
-                                                             ,0,1,.177-.742q.744-.738,1.483-1.481.949-.949,1.9-1.9a.718.718,0,0,1,1.185-.016q1.659,1.653,3.311,3.312a.7.7,0,0,1,.077,1.067.718.718,0,0
-                                                             ,1-1.069-.08c-.712-.708-1.422-1.418-2.206-2.2,0,.193,0,.312,0,.431q0,5.747.005,11.495c0,.076,0,.153,0,.229a.719.719,0,0,1-.689.8.71.71,0,0
-                                                             ,1-.718-.8q-.008-3.406-.006-6.812,0-2.44,0-4.88C267.119,84.356,267.12,84.237,267.12,84.017Z" transform="translate(321.362 224.389)" />
+                                                            ,0,1,.177-.742q.744-.738,1.483-1.481.949-.949,1.9-1.9a.718.718,0,0,1,1.185-.016q1.659,1.653,3.311,3.312a.7.7,0,0,1,.077,1.067.718.718,0,0
+                                                            ,1-1.069-.08c-.712-.708-1.422-1.418-2.206-2.2,0,.193,0,.312,0,.431q0,5.747.005,11.495c0,.076,0,.153,0,.229a.719.719,0,0,1-.689.8.71.71,0,0
+                                                            ,1-.718-.8q-.008-3.406-.006-6.812,0-2.44,0-4.88C267.119,84.356,267.12,84.237,267.12,84.017Z" transform="translate(321.362 224.389)" />
                                                             </g>
                                                         </svg>
                                                         +80.00 %
                                                     </p>
-                                                    <a href="/Warehouse/WarehouseProduct/WarehouseProductStatus?status=OutOfStock" class="sherah-see-all">View Details</a>
                                                 </div>
 
                                             </div>
@@ -184,55 +157,6 @@
                             </div>
                         </div>
                         <div class="sherah-table sherah-page-inner sherah-border sherah-default-bg mg-top-20" style="padding-top:0;">
-                            <div class="row">
-                                <div class="col-sm-12 col-md-8">
-                                    <div class="dataTables_length" id="sherah-table__vendor_length">
-                                        <label style="margin-top: 18px;">
-                                            <select name="sherah-table__vendor_length"
-                                                    id="quarter-select"
-                                                    aria-controls="sherah-table__vendor"
-                                                    class="form-select form-select-sm"
-                                                    style="height:40px; width: 120px; font-size:0.75rem;color:#666;">
-                                                <option value="1" selected="@(1 == Model.Quarter ? "selected" : null)">First Quarter</option>
-                                                <option value="2" selected="@(2 == Model.Quarter ? "selected" : null)">Second Quarter</option>
-                                                <option value="3" selected="@(3  == Model.Quarter ? "selected" : null)">Third Quarter</option>
-                                                <option value="4" selected="@(4 == Model.Quarter ? "selected" : null)">Fourth Quarter</option>
-                                            </select>
-                                        </label>
-                                        <label>
-                                            <select name="sherah-table__vendor_length"
-                                                    id="year-select"
-                                                    aria-controls="sherah-table__vendor"
-                                                    class="form-select form-select-sm"
-                                                    style="height:40px; width: 90px; font-size:0.75rem;color:#666;">
-                                                @foreach (var year in Model.ImportYears)
-                                                {
-                                                    <option value="@year" selected="@(year == Model.Year ? "selected" : null)">@year</option>
-                                                }
-                                            </select>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 col-md-4">
-                                    <form method="post" asp-action="SearchProduct" asp-controller="Warehouse">
-                                        <div id="sherah-table__vendor_filter" class="dataTables_filter">
-                                            <label for="search-input" style="position: relative;bottom:16px;">
-                                                <button class="sherah-data-table-label" style="font-size:1rem;position: relative; top:2.7rem; left:18.5rem; right: auto; z-index: 4; border:none;background-color: #F3F4F7;">
-                                                    Search
-                                                </button>
-                                            </label>
-                                            <div class="input-group display-flex" style="position: relative;bottom:16px;">
-                                                <select class="col-2" name="searchType" style="height:40px; width: 90px; font-size:0.75rem;color:#666;">
-                                                    <option value="" selected disabled>Search Type</option>
-                                                    <option value="Name">Name</option>
-                                                </select>
-                                                &nbsp;
-                                                <input style="flex-shrink:0;width:auto;z-index:2;" type="search" name="searchValue" class="col-2 form-control form-control-sm" placeholder="Search" aria-controls="sherah-table__vendor">
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
                             <table id="sherah-table__main-product" class="sherah-table__vendor sherah-table__main-v3" style=" border: 1px solid #e2e7f1;">
                                 <!-- sherah Table Head -->
                                 <thead class="sherah-table__head" style="display:block;">
@@ -287,45 +211,6 @@
                                     }
                                 </tbody>
                             </table>
-                            <div class="row" style="margin-top:16px;">
-                                @if (Model.Pageable != null)
-                                {
-                                    <div class="col-sm-12 col-md-5">
-                                        <div class="dataTables_info" id="sherah-table__vendor_info" role="status" aria-live="polite" style="font-weight:500">Total @Model.Pageable.TotalItems products</div>
-                                    </div>
-                                }
-                                <div class="col-sm-12 col-md-7">
-                                    @if (Model.Pageable != null)
-                                    {
-                                        <div class="sherah-pagination" style="margin-bottom: 0">
-                                            <ul class="sherah-pagination__list">
-                                                @if (Model.Pageable.CurrentPage > 1)
-                                                {
-                                                    <li class="sherah-pagination__button">
-                                                        <a href="/Warehouse/WarehouseProduct?page=@(Model.Pageable.CurrentPage > 1 ? Model.Pageable.CurrentPage - 1 : 1)&quarter=@Model.Quarter&year=@Model.Year">
-                                                            <i class="fas fa-angle-left"></i>
-                                                        </a>
-                                                    </li>
-                                                }
-                                                @for (var i = Model.Pageable.StartPage; i <= Model.Pageable.EndPage; i++)
-                                                {
-                                                    <li class="@(Model.Pageable.CurrentPage == i ? "active" : "")">
-                                                        <a href="/Warehouse/WarehouseProduct?page=@i&quarter=@Model.Quarter&year=@Model.Year">@i</a>
-                                                    </li>
-                                                }
-                                                @if (Model.Pageable.CurrentPage < Model.Pageable.TotalPages)
-                                                {
-                                                    <li class="sherah-pagination__button">
-                                                        <a href="/Warehouse/WarehouseProduct?page=@(Model.Pageable.CurrentPage < Model.Pageable.TotalPages ? Model.Pageable.CurrentPage + 1 : Model.Pageable.TotalPages)&quarter=@Model.Quarter&year=@Model.Year">
-                                                            <i class="fas fa-angle-right"></i>
-                                                        </a>
-                                                    </li>
-                                                }
-                                            </ul>
-                                        </div>
-                                    }
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <!-- End Dashboard Inner -->
@@ -337,19 +222,3 @@
     </div>
 </section>
 <!-- End sherah Dashboard -->
-<script>
-    var quarter = document.getElementById('quarter-select');
-    var year = document.getElementById('year-select');
-    quarter.onchange = function (event) {
-        var valueQuarter = this.options[this.selectedIndex].value;
-        var valueYear = year.options[year.selectedIndex].value;
-        window.location.href = '/Warehouse/WarehouseProduct?page=1&quarter=' + valueQuarter + '&year=' + valueYear;
-    }
-    year.onchange = function (event) {
-        var valueQuarter = quarter.options[quarter.selectedIndex].value;
-        var valueYear = this.options[this.selectedIndex].value;
-        // send(valueQuarter, valueYear);
-        window.location.href = '/Warehouse/WarehouseProduct?page=1&quarter=' + valueQuarter + '&year=' + valueYear;
-    }
-
-</script>
