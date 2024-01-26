@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using WarehouseWebMVC.Data;
 using WarehouseWebMVC.Models;
 using WarehouseWebMVC.Services.Mail;
 using WarehouseWebMVC.ViewModels;
@@ -33,11 +34,11 @@ public class ContactController : Controller
 
             if (result.StartsWith("Error"))     
             {
-                TempData["ErrorMessage"] = result;
+                TempData["Message"] = result;
                 return RedirectToAction("Index", "Home");
             }
 
-            TempData["SuccessMessage"] = "Your message has been sent successfully!";
+            TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
             return RedirectToAction("Index", "Home");
         }
 
@@ -64,10 +65,10 @@ public class ContactController : Controller
                 return RedirectToAction("Index", "Home");
             }
 
-            TempData["SuccessMessage"] = "Your message has been sent successfully!";
+            TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
             return RedirectToAction("Index", "Home");
         }
-
+        TempData["Message"] = AppConstant.MESSAGE_FAILED;
         return RedirectToAction("Index", "Home");
     }
 }

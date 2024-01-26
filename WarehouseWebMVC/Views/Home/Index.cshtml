@@ -1,7 +1,43 @@
 @{
     Layout = "/Views/Shared/_LayoutHome.cshtml";
     var isLoggedIn = !string.IsNullOrEmpty(ViewBag.User);
+    var message = TempData["Message"] as string;
 }
+
+<div id="toast"></div>
+@if (!string.IsNullOrEmpty(message))
+{
+    if ("Success".Equals(message))
+    {
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                setTimeout(function () {
+                    toast({
+                        title: "Success",
+                        message: "Your mail sent successfully!",
+                        type: "success",
+                        duration: 3000,
+                    });
+                }, 600);
+            });
+        </script>
+    } else
+    {
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                setTimeout(function () {
+                    toast({
+                        title: "Error",
+                        message: "Oops! Action failed.",
+                        type: "danger",
+                        duration: 3000,
+                    });
+                }, 600);
+            });
+        </script>
+    }
+}
+
 <!-- ======= Hero Section ======= -->
 <section id="hero" class="d-flex align-items-center">
 
@@ -449,3 +485,4 @@
     </section><!-- End Contact Section -->
 
 </main><!-- End #main -->
+<script src="/js/toast-config.js"></script>
