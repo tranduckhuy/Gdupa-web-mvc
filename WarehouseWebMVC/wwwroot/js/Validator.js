@@ -66,7 +66,7 @@ function Validator(formSelector) {
             return regex.test(value) ? undefined : "Please enter a phone number here!";
         },
         price: function (value) {
-            var regex = /^[1-9]\d{0,2}(?:([.,])\d{3})*(\1\d{3})*(?:\.\d{1,2})?$/;
+            var regex = /^[1-9]\d{0,2}(?:([.,])\d{2})*(\1\d{3})*(?:[.,]\d{1,2})?$/;
             return regex.test(value) ? undefined : "Please enter a valid price here!";
         },
     };
