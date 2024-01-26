@@ -6,6 +6,15 @@
 @{
     var message = TempData["Message"] as string;
 }
+
+<style>
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+</style>
+
 <div id="toast"></div>
 @if (!string.IsNullOrEmpty(message))
 {
@@ -121,7 +130,7 @@
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-12">
                                                     <div class="form-group">
-                                                        <label class="sherah-wc__form-label">Unit</label>
+                                                        <label class="sherah-wc__form-label">Unit*</label>
                                                         <select asp-for="Unit" asp-items="ViewBag.Units" class="form-group__input" aria-label="Default select example"></select>
                                                     </div>
                                                 </div>

@@ -168,6 +168,7 @@ public class UserController : Controller
             var searchUsers = _userService.SearchUser(searchType, searchValue);
             if (searchUsers != null)
             {
+                TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
                 return View("Users", searchUsers);
             }
         }

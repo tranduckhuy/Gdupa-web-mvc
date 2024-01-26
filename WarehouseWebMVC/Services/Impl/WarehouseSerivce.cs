@@ -147,7 +147,6 @@ namespace WarehouseWebMVC.Services.Impl
 
             if (quarter < 1 || quarter > 4 || year < 1990 || year > DateTime.UtcNow.Year + 10) { return null!; }
 
-
             const int pageSize = 5;
             if (page < 1)
             {

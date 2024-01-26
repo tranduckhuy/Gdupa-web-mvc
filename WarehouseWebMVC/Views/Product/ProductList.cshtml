@@ -6,6 +6,12 @@
     var message = TempData["Message"] as string;
 }
 
+<style>
+    .sherah-table__vendor .sherah-table__body tr:nth-child(2n+1) {
+        background-color: var(--sherah-offset-bg-color);
+    }
+</style>
+
 <div id="toast"></div>
 @if (!string.IsNullOrEmpty(message))
 {
@@ -175,7 +181,7 @@
                                 @if (Model.Pageable != null)
                                 {
                                     <div class="col-sm-12 col-md-5">
-                                        <div class="dataTables_info" id="sherah-table__vendor_info" role="status" aria-live="polite" style="font-weight:500">Total @Model.Pageable.TotalItems products in the table</div>
+                                        <div class="dataTables_info" id="sherah-table__vendor_info" role="status" aria-live="polite" style="font-weight:500">Total @Model.Pageable.TotalItems products</div>
                                     </div>
                                 }
                                 <div class="col-sm-12 col-md-7">

@@ -76,7 +76,7 @@
                                    class="sherah-btn sherah-gbcolor" style="padding:8px 15px;min-width:120px;justify-content:center;">Add User</a>
                             </div>
                         </div>
-                        <div class="sherah-table sherah-page-inner sherah-border sherah-default-bg mg-top-10">
+                        <div class="sherah-table sherah-page-inner sherah-border sherah-default-bg mg-top-10" style="padding-top:0;">
                             <div class="row">
                                 <div class="col-sm-12 col-md-8"></div>
                                 <div class="col-sm-12 col-md-4">
@@ -124,7 +124,7 @@
                                                     <div class="sherah-table__vendor-img">
                                                         <img src="@user.Avatar" alt="User's avatar" style="width:40px;height:40px;">
                                                     </div>
-                                                    <h4 class="sherah-table__vendor--title">@user.Name</h4>
+                                                    <h5 class="sherah-table__vendor--title">@user.Name</h5>
                                                 </div>
                                             </td>
                                             <td class="sherah-table__column-2 sherah-table__data-2" style="width:25%;min-width:150px;padding:12px;text-align:left;">
@@ -179,7 +179,7 @@
                                 @if (Model.Pageable != null)
                                 {
                                     <div class="col-sm-12 col-md-5">
-                                        <div class="dataTables_info" id="sherah-table__vendor_info" role="status" aria-live="polite" style="font-weight:500">Total @Model.Pageable.TotalItems users in the table</div>
+                                        <div class="dataTables_info" id="sherah-table__vendor_info" role="status" aria-live="polite" style="font-weight:500">Total @Model.Pageable.TotalItems users</div>
                                     </div>
                                 }
                                 <div class="col-sm-12 col-md-7">

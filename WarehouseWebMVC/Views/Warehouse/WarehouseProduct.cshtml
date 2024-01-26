@@ -4,6 +4,12 @@
 }
 @model WarehouseWebMVC.ViewModels.WarehouseViewModel
 
+<style>
+    .sherah-table__vendor .sherah-table__body tr:nth-child(2n+1) {
+        background-color: var(--sherah-offset-bg-color);
+    }
+</style>
+
 <div id="toast"></div>
 @if (!string.IsNullOrEmpty(message))
 {
@@ -125,11 +131,10 @@
                                                             ,1-.718-.8q-.008-3.406-.006-6.812,0-2.44,0-4.88C267.119,84.356,267.12,84.237,267.12,84.017Z" transform="translate(321.362 224.389)" />
                                                             </g>
                                                         </svg>
-                                                        +80.00 %
+                                                        Warning
                                                     </p>
                                                     <a href="/Warehouse/WarehouseProduct/WarehouseProductStatus?status=LowAlert" class="sherah-see-all">View Details</a>
                                                 </div>
-
                                             </div>
                                         </div>
                                         <!-- End Progress Card -->
@@ -167,7 +172,7 @@
                                                              ,1-.718-.8q-.008-3.406-.006-6.812,0-2.44,0-4.88C267.119,84.356,267.12,84.237,267.12,84.017Z" transform="translate(321.362 224.389)" />
                                                             </g>
                                                         </svg>
-                                                        +80.00 %
+                                                        Danger
                                                     </p>
                                                     <a href="/Warehouse/WarehouseProduct/WarehouseProductStatus?status=OutOfStock" class="sherah-see-all">View Details</a>
                                                 </div>
@@ -246,16 +251,16 @@
                                         <th class="sherah-table__column-8" style=" min-width:120px; padding-left:0; font-size: 16px; text-align: center">Total Stock Price</th>
                                     </tr>
                                 </thead>
-                                <tbody class="sherah-table__body" style="display:block;overflow-y:scroll;max-height:300px;">
+                                <tbody class="sherah-table__body" style="display:block;max-height:300px;">
                                     @foreach (var warehouse in Model.Warehouses)
                                     {
-                                        <tr style="height: 20px;">
+                                        <tr style="height: 20px;margin-right:16px;">
                                             <td class="sherah-table__column-1 sherah-table__data-1" style="min-width:280px;padding:12px;text-align:center;">
                                                 <div class="sherah-language-form__input">
                                                     <p class="crany-table__product--number"><a href="/Product/ProductDetail?productId=@warehouse.Product.ProductId" class="sherah-color1" style="font-size: 14px;">@warehouse.Product.Name</a></p>
                                                 </div>
                                             </td>
-                                            <td class="sherah-table__column-3 sherah-table__data-3" style="min-width:40px; padding:12px 12px 12px 0;text-align:center;">
+                                            <td class="sherah-table__column-3 sherah-table__data-3" style="min-width:40px; padding:12px 20px 12px 0;text-align:center;">
                                                 <p class="sherah-table__product-desc">@warehouse.QuantityAtBeginPeriod</p>
                                             </td>
                                             <td class="sherah-table__column-4 sherah-table__data-4" style="min-width:40px; padding:12px;text-align:center;">
@@ -268,17 +273,17 @@
                                                     <p class="sherah-table__product-desc" style="font-size: 14px;">$@Math.Round((warehouse.QuantityImport * warehouse.PriceImport), 2)</p>
                                                 </div>
                                             </td>
-                                            <td class="sherah-table__column-6 sherah-table__data-6" style="min-width:40px; padding:12px 12px 12px 0;text-align:center;">
+                                            <td class="sherah-table__column-6 sherah-table__data-6" style="min-width:40px; padding:12px 20px 12px 0;text-align:center;">
                                                 <div class="sherah-table__product-content">
                                                     <p class="sherah-table__product-desc" style="font-size: 14px;">@warehouse.Quantity</p>
                                                 </div>
                                             </td>
-                                            <td class="sherah-table__column-7 sherah-table__data-7" style="min-width:40px; padding:12px;text-align:center;">
+                                            <td class="sherah-table__column-7 sherah-table__data-7" style="min-width:40px; padding:12px 30px 12px 12px;text-align:center;">
                                                 <div class="sherah-table__product-content">
                                                     <p class="sherah-table__product-desc" style="font-size: 14px;">@warehouse.Product.Unit</p>
                                                 </div>
                                             </td>
-                                            <td class="sherah-table__column-8 sherah-table__data-8" style="min-width:80px;padding:12px 12px 12px 0;text-align:center;">
+                                            <td class="sherah-table__column-8 sherah-table__data-8" style="min-width:80px;padding:12px 24px 12px 0;text-align:center;">
                                                 <div class="sherah-table__product-content">
                                                     <p class="sherah-table__product-desc" style="font-size: 14px;">$@Math.Round((warehouse.Quantity * warehouse.PriceImport), 2)</p>
                                                 </div>
@@ -348,7 +353,6 @@
     year.onchange = function (event) {
         var valueQuarter = quarter.options[quarter.selectedIndex].value;
         var valueYear = this.options[this.selectedIndex].value;
-        // send(valueQuarter, valueYear);
         window.location.href = '/Warehouse/WarehouseProduct?page=1&quarter=' + valueQuarter + '&year=' + valueYear;
     }
 
