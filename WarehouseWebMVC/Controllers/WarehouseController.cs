@@ -27,7 +27,12 @@ public class WarehouseController : Controller
             Response.Headers.Add("Cache-Control", "no-store, no-cache, must-revalidate, post-check=0, pre-check=0");
             Response.Headers.Add("Pragma", "no-cache");
             Response.Headers.Add("Expires", "0");
-            var warehouse = _warehouseService.GetAll(page);
+            var warehouse = _warehouseService.GetLimit(page, quarter, year);
+            if (warehouse == null)
+            {
+                TempData["Message"] = AppConstant.BAD_REQUEST;
+                return RedirectToAction("WarehouseProduct", "Warehouse");
+            }
             return View(warehouse);
         }
         TempData["Message"] = AppConstant.MESSAGE_NOT_LOGIN;

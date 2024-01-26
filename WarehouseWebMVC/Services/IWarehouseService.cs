@@ -6,7 +6,7 @@ namespace WarehouseWebMVC.Services
 {
     public interface IWarehouseService
     {
-        WarehouseViewModel GetAll(int page);
+        WarehouseViewModel GetLimit(int page, int quarter, int year);
         bool Add(ImportProductsDTO importProducts);
         WarehouseImportViewModel GetDataViewImport();
     }
