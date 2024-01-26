@@ -22,6 +22,21 @@
             });
         </script>
     }
+    if ("BadRequest".Equals(message))
+    {
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                setTimeout(function () {
+                    toast({
+                        title: "Bad Request",
+                        message: "Oops! Action failed. Please try again.",
+                        type: "danger",
+                        duration: 3000,
+                    });
+                }, 600);
+            });
+        </script>
+    }
 }
 
 <section class="sherah-adashboard sherah-show">
@@ -145,11 +160,10 @@
                                                     aria-controls="sherah-table__vendor"
                                                     class="form-select form-select-sm"
                                                     style="height:40px; width: 120px; font-size:0.75rem;color:#666;">
-                                                <option value="1" selected disabled>Quarter</option>
-                                                <option value="1">First Quarter</option>
-                                                <option value="2">Second Quarter</option>
-                                                <option value="3">Third Quarter</option>
-                                                <option value="4">Fourth Quarter</option>
+                                                <option value="1" selected="@(1 == Model.Quarter ? "selected" : null)" >First Quarter</option>
+                                                <option value="2" selected="@(2 == Model.Quarter ? "selected" : null)" >Second Quarter</option>
+                                                <option value="3" selected="@(3  == Model.Quarter ? "selected" : null)" >Third Quarter</option>
+                                                <option value="4" selected="@(4 == Model.Quarter ? "selected" : null)" >Fourth Quarter</option>
                                             </select>
                                         </label>
                                         <label>
@@ -158,10 +172,10 @@
                                                     aria-controls="sherah-table__vendor"
                                                     class="form-select form-select-sm"
                                                     style="height:40px; width: 90px; font-size:0.75rem;color:#666;">
-                                                <option value="2022" selected disabled>Year</option>
-                                                <option value="2022">2022</option>
-                                                <option value="2023">2023</option>
-                                                <option value="2024">2024</option>
+                                                @foreach (var year in Model.ImportYears)
+                                                {
+                                                    <option value="@year" selected="@(year == Model.Year ? "selected" : null)" >@year</option>
+                                                }
                                             </select>
                                         </label>
                                     </div>
@@ -256,15 +270,25 @@
                                             <ul class="sherah-pagination__list">
                                                 @if (Model.Pageable.CurrentPage > 1)
                                                 {
-                                                    <li class="sherah-pagination__button"><a href="/Warehouse/WarehouseProduct?page=@(Model.Pageable.CurrentPage > 1 ? Model.Pageable.CurrentPage - 1 : 1)"><i class="fas fa-angle-left"></i></a></li>
+                                                    <li class="sherah-pagination__button">
+                                                        <a href="/Warehouse/WarehouseProduct?page=@(Model.Pageable.CurrentPage > 1 ? Model.Pageable.CurrentPage - 1 : 1)&quarter=@Model.Quarter&year=@Model.Year">
+                                                            <i class="fas fa-angle-left"></i>
+                                                        </a>
+                                                    </li>
                                                 }
                                                 @for (var i = Model.Pageable.StartPage; i <= Model.Pageable.EndPage; i++)
                                                 {
-                                                    <li class="@(Model.Pageable.CurrentPage == i ? "active" : "")"><a href="/Warehouse/WarehouseProduct?page=@i">@i</a></li>
+                                                    <li class="@(Model.Pageable.CurrentPage == i ? "active" : "")">
+                                                        <a href="/Warehouse/WarehouseProduct?page=@i&quarter=@Model.Quarter&year=@Model.Year">@i</a>
+                                                    </li>
                                                 }
                                                 @if (Model.Pageable.CurrentPage < Model.Pageable.TotalPages)
                                                 {
-                                                    <li class="sherah-pagination__button"><a href="/Warehouse/WarehouseProduct?page=@(Model.Pageable.CurrentPage < Model.Pageable.TotalPages ? Model.Pageable.CurrentPage + 1 : Model.Pageable.TotalPages)"><i class="fas fa-angle-right"></i></a></li>
+                                                    <li class="sherah-pagination__button">
+                                                        <a href="/Warehouse/WarehouseProduct?page=@(Model.Pageable.CurrentPage < Model.Pageable.TotalPages ? Model.Pageable.CurrentPage + 1 : Model.Pageable.TotalPages)&quarter=@Model.Quarter&year=@Model.Year">
+                                                            <i class="fas fa-angle-right"></i>
+                                                        </a>
+                                                    </li>
                                                 }
                                             </ul>
                                         </div>
@@ -288,27 +312,13 @@
     quarter.onchange = function (event) {
         var valueQuarter = this.options[this.selectedIndex].value;
         var valueYear = year.options[year.selectedIndex].value;
-        console.log(valueQuarter);
-        $.ajax({
-            url: '/Warehouse/WarehouseProduct',
-            type: 'GET',
-            data: {page : 1, quarter : valueQuarter, year : valueYear },
-            success: function (response) {
-                window.location.href = '/Warehouse/WarehouseProduct';
-            },
-            error: function (error) {
-                Swal.fire({
-                    title: 'Error',
-                    text: 'Oops! Action failed. Please try again.',
-                    icon: 'error',
-                    confirmButtonColor: '#3085d6',
-                    confirmButtonText: 'OK'
-                });
-            }
-        });
+        window.location.href = '/Warehouse/WarehouseProduct?page=1&quarter=' + valueQuarter + '&year=' + valueYear;
     }
     year.onchange = function (event) {
         var valueQuarter = quarter.options[quarter.selectedIndex].value;
         var valueYear = this.options[this.selectedIndex].value;
+        // send(valueQuarter, valueYear);
+        window.location.href = '/Warehouse/WarehouseProduct?page=1&quarter=' + valueQuarter + '&year=' + valueYear;
     }
+
 </script>

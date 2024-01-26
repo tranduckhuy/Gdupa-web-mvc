@@ -10,33 +10,33 @@ using WarehouseWebMVC.ViewModels;
 
 namespace WarehouseWebMVC.Services.Impl
 {
-	public class WarehouseSerivce : IWarehouseService
-	{
-		private readonly DataContext _dataContext;
-		private readonly IReceiptService _receiptService;
-		private readonly IMapper _mapper;
+    public class WarehouseSerivce : IWarehouseService
+    {
+        private readonly DataContext _dataContext;
+        private readonly IReceiptService _receiptService;
+        private readonly IMapper _mapper;
 
-		public WarehouseSerivce(DataContext dataContext, IReceiptService receiptService, IMapper mapper)
-		{
-			_dataContext = dataContext;
-			_receiptService = receiptService;
-			_mapper = mapper;
-		}
+        public WarehouseSerivce(DataContext dataContext, IReceiptService receiptService, IMapper mapper)
+        {
+            _dataContext = dataContext;
+            _receiptService = receiptService;
+            _mapper = mapper;
+        }
 
-		private bool IsExisted(long productId)
-		{
-			return _dataContext.Products.FirstOrDefault(p => p.ProductId == productId) != null ? true : false;
-		}
+        private bool IsExisted(long productId)
+        {
+            return _dataContext.Products.FirstOrDefault(p => p.ProductId == productId) != null ? true : false;
+        }
 
-		private bool ImportProducts(ICollection<Warehouse> importProducts)
-		{
-			if (importProducts == null || importProducts.Count == 0)
-			{
-				return false;
-			}
+        private bool ImportProducts(ICollection<Warehouse> importProducts)
+        {
+            if (importProducts == null || importProducts.Count == 0)
+            {
+                return false;
+            }
 
-			try
-			{
+            try
+            {
                 using var transaction = _dataContext.Database.BeginTransaction();
                 try
                 {
@@ -44,7 +44,7 @@ namespace WarehouseWebMVC.Services.Impl
                     {
                         if (!IsExisted(importProduct.ProductId))
                         {
-							 transaction.Rollback();
+                            transaction.Rollback();
                             return false;
                         }
 
@@ -113,67 +113,94 @@ namespace WarehouseWebMVC.Services.Impl
                     return false;
                 }
             }
-			catch (Exception ex)
-			{
-				Console.WriteLine(ex.Message);
-				return false;
-			}
-		}
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+        }
 
-		private static int GetQuarter(DateTime dateTime)
-		{
-			return (dateTime.Month - 1) / 3 + 1;
-		}
+        private static int GetQuarter(DateTime dateTime)
+        {
+            return (dateTime.Month - 1) / 3 + 1;
+        }
 
-		public bool Add(ImportProductsDTO importProducts)
-		{
-			if (!ImportProducts(importProducts.ImportProducts))
-			{
-				return false;
-			}
-			_receiptService.Add(importProducts);
-			return true;
-		}
+        public bool Add(ImportProductsDTO importProducts)
+        {
+            if (!ImportProducts(importProducts.ImportProducts))
+            {
+                return false;
+            }
+            _receiptService.Add(importProducts);
+            return true;
+        }
 
-		public WarehouseViewModel GetAll(int page)
-		{
-			var totalProducts = _dataContext.Products.Count();
-			const int pageSize = 2;
-			if (page < 1)
-			{
-				page = 1;
-			}
-			var pageable = new Pageable(totalProducts, page, pageSize);
+        public WarehouseViewModel GetLimit(int page, int quarter, int year)
+        {
 
-			int skipAmount = (pageable.CurrentPage - 1) * pageSize;
-			var warehouse = _dataContext.Warehouse
-				.AsNoTracking()
-				.Skip(skipAmount)
-				.Take(pageSize)
-				.Include(p => p.Product)
-				.OrderBy(w => w.WarehouseId)
-				.ToList();
+            if (quarter == 0 && year == 0)
+            {
+                quarter = (DateTime.UtcNow.Month - 1) / 3 + 1;
+                year = DateTime.UtcNow.Year;
+            }
 
-			int lowAlert = _dataContext.Warehouse.Count(w => w.Quantity < 10 && w.Quantity > 0);
-			int outOfStock = _dataContext.Warehouse.Count(w => w.Quantity == 0);
+            if (quarter < 1 || quarter > 4 || year < 1990 || year > DateTime.UtcNow.Year + 10) { return null!; }
+            
 
-			return new WarehouseViewModel
-			{
-				Warehouses = warehouse,
-				LowAlert = lowAlert,
-				OutOfStock = outOfStock,
-				Pageable = new Pageable(totalProducts, page, pageSize)
-			};
-		}
+            const int pageSize = 2;
+            if (page < 1)
+            {
+                page = 1;
+            }
 
-		public WarehouseImportViewModel GetDataViewImport()
-		{
-			var products = _dataContext.Products
-				.ToList();
-			var productsDTO = _mapper.Map<List<ProductDTO>>(products);
-			var suppliers = _dataContext.Suppliers.ToList();
+            DateTime startDate = new(year, (quarter - 1) * 3 + 1, 1);
+            DateTime endDate = startDate.AddMonths(3).AddDays(-1);
 
-			return new WarehouseImportViewModel { Products = productsDTO, Suppliers = suppliers };
-		}
-	}
+            var totalProducts = _dataContext.Warehouse.Count(w => w.CreatedAt >= startDate && w.CreatedAt <= endDate);
+            var pageable = new Pageable(totalProducts, page, pageSize);
+            int skipAmount = (pageable.CurrentPage - 1) * pageSize;
+
+            var warehouse = _dataContext.Warehouse
+                .AsNoTracking()
+                .Where(w => w.CreatedAt >= startDate && w.CreatedAt <= endDate)
+                .Skip(skipAmount)
+                .Take(pageSize)
+                .Include(p => p.Product)
+                .OrderBy(w => w.WarehouseId)
+                .ToList();
+
+            int currentQuarter = (DateTime.UtcNow.Month - 1) / 3 + 1;
+            startDate = new DateTime(DateTime.UtcNow.Year, (currentQuarter - 1) * 3 + 1, 1);
+            endDate = startDate.AddMonths(3).AddDays(-1);
+
+            int lowAlert = _dataContext.Warehouse.Count(w => w.Quantity < 10 && w.Quantity > 0 && w.CreatedAt >= startDate && w.CreatedAt <= endDate);
+            int outOfStock = _dataContext.Warehouse.Count(w => w.Quantity == 0 && w.CreatedAt >= startDate && w.CreatedAt <= endDate);
+
+            var uniqueYears = _dataContext.Warehouse
+            .Select(w => w.CreatedAt.Year)
+            .Distinct()
+            .ToList();
+
+            return new WarehouseViewModel
+            {
+                Warehouses = warehouse,
+                LowAlert = lowAlert,
+                OutOfStock = outOfStock,
+                Pageable = new Pageable(totalProducts, page, pageSize),
+                Quarter = quarter,
+                Year = year,
+                ImportYears = uniqueYears
+            };
+        }
+
+        public WarehouseImportViewModel GetDataViewImport()
+        {
+            var products = _dataContext.Products
+                .ToList();
+            var productsDTO = _mapper.Map<List<ProductDTO>>(products);
+            var suppliers = _dataContext.Suppliers.ToList();
+
+            return new WarehouseImportViewModel { Products = productsDTO, Suppliers = suppliers };
+        }
+    }
 }
