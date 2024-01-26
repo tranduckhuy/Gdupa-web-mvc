@@ -31,6 +31,7 @@ public class AuthenticationController : Controller
         ViewBag.RememberMePassword = rememberMePassword;
         ViewBag.RememberMeChecked = rememberMeChecked;
 
+
         if (HttpContext.Session.GetString("User") == null)
         {
             return View();
@@ -141,16 +142,18 @@ public class AuthenticationController : Controller
                 var rememberMe = Request.Form["remember-me"].Count > 0;
 				if (rememberMe)
 				{
-					var rememberMeCookie = new CookieOptions
-					{
-						Expires = DateTime.Now.AddDays(30),
-						IsEssential = true
+                    var rememberMeCookie = new CookieOptions
+                    {
+                        Expires = DateTime.Now.AddDays(30),
+                        IsEssential = true,
+                        HttpOnly = true,
+                        Secure = true,
+                        SameSite = SameSiteMode.Unspecified
 					};
 
-
 					Response.Cookies.Append("rememberMeEmail", userDTO.Email, rememberMeCookie);
-					Response.Cookies.Append("rememberMePassword", userDTO.Password, rememberMeCookie);
-					Response.Cookies.Append("rememberMeChecked", rememberMe.ToString(), rememberMeCookie);
+                    Response.Cookies.Append("rememberMePassword", userDTO.Password, rememberMeCookie);
+                    Response.Cookies.Append("rememberMeChecked", rememberMe.ToString(), rememberMeCookie);
 				}
 				else
 				{
