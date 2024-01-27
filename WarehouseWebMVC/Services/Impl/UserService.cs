@@ -394,6 +394,18 @@ public class UserService : IUserService
         }
     }
 
+    public bool UserOwnsInformation(string userEmail, long userId)
+    {
+        var user = GetUserById(userId);
+        return user != null && user.Email == userEmail;
+    }
+
+    public long GetUserIdByEmail(string userEmail)
+    {
+        var user = _dataContext.Users.FirstOrDefault(u => u.Email == userEmail);
+
+        return user?.UserId ?? 0;
+    }
 
 
 }

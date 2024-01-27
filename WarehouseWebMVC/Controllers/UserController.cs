@@ -45,7 +45,16 @@ public class UserController : Controller
             Response.Headers.Add("Pragma", "no-cache");
             Response.Headers.Add("Expires", "0");
             var userInformationVM = _userService.GetUserById(userId);
-            return View(userInformationVM);
+            var currentUserEmail = HttpContext.Session.GetString("User");
+            if (currentUserEmail != null && _userService.UserOwnsInformation(currentUserEmail, userId))
+            {
+                return View(userInformationVM);
+            }
+            else
+            {
+                TempData["Message"] = AppConstant.MESSAGE_FAILED;
+                return RedirectToAction("UserInformation", new { userId = _userService.GetUserIdByEmail(currentUserEmail) });
+            }
         }
         TempData["Message"] = AppConstant.MESSAGE_NOT_LOGIN;
         return RedirectToAction("Login", "Authentication");
@@ -94,25 +103,34 @@ public class UserController : Controller
     {
         if (ModelState.IsValid)
         {
-            if (_userService.UpdateUser(userInformationDTO))
+            var currentUserEmail = HttpContext.Session.GetString("User");
+
+            if (currentUserEmail != null && _userService.UserOwnsInformation(currentUserEmail, userInformationDTO.UserId))
             {
-                var user = _userService.GetUserById(userInformationDTO.UserId);
-                if (user != null)
+                if (_userService.UpdateUser(userInformationDTO))
                 {
-                    byte[] userIdBytes = BitConverter.GetBytes(user.UserId);
-                    HttpContext.Session.Set("Id", userIdBytes);
-                    HttpContext.Session.SetString("Name", user.Name);
-                    HttpContext.Session.SetString("User", user.Email);
-                    HttpContext.Session.SetString("Address", user.Address);
-                    HttpContext.Session.SetString("Avatar", user.Avatar);
-                }
-                else
-                {
-                    TempData["Message"] = AppConstant.MESSAGE_FAILED;
+                    var user = _userService.GetUserById(userInformationDTO.UserId);
+                    if (user != null)
+                    {
+                        byte[] userIdBytes = BitConverter.GetBytes(user.UserId);
+                        HttpContext.Session.Set("Id", userIdBytes);
+                        HttpContext.Session.SetString("Name", user.Name);
+                        HttpContext.Session.SetString("User", user.Email);
+                        HttpContext.Session.SetString("Address", user.Address);
+                        HttpContext.Session.SetString("Avatar", user.Avatar);
+                    }
+                    else
+                    {
+                        TempData["Message"] = AppConstant.MESSAGE_FAILED;
+                        return View(_userService.GetUserById(userInformationDTO.UserId));
+                    }
+                    TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
                     return View(_userService.GetUserById(userInformationDTO.UserId));
                 }
-                TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
-                return View(_userService.GetUserById(userInformationDTO.UserId));
+            } else
+            {
+                TempData["Message"] = AppConstant.MESSAGE_FAILED;
+                return RedirectToAction("UserInformation", new { userId = _userService.GetUserIdByEmail(currentUserEmail) });
             }
         }
         TempData["Message"] = AppConstant.MESSAGE_FAILED;
@@ -125,10 +143,24 @@ public class UserController : Controller
         var user = _userService.GetUserById(userInformationDTO.UserId);
         if (ModelState.IsValid)
         {
-            if (_userService.ChangePassword(userInformationDTO))
+            var currentUserEmail = HttpContext.Session.GetString("User");
+
+            if (currentUserEmail != null && _userService.UserOwnsInformation(currentUserEmail, userInformationDTO.UserId))
             {
-                TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
-                return View("UserInformation", user);
+                if (_userService.ChangePassword(userInformationDTO))
+                {
+                    TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
+                    return View("UserInformation", user);
+                } else
+                {
+                    TempData["Message"] = AppConstant.MESSAGE_FAILED;
+                    return View("UserInformation", user);
+                }
+            }
+            else
+            {
+                TempData["Message"] = AppConstant.MESSAGE_FAILED;
+                return RedirectToAction("UserInformation", new { userId = _userService.GetUserIdByEmail(currentUserEmail) });
             }
         }
         TempData["Message"] = AppConstant.MESSAGE_FAILED;

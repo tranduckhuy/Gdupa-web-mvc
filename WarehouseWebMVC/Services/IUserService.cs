@@ -30,6 +30,10 @@ public interface IUserService
 
     public bool AddUser(AddUserDTO newUser);
 
+    bool UserOwnsInformation(string userEmail, long userId);
+
+    long GetUserIdByEmail(string userEmail);
+
 
 
 }
