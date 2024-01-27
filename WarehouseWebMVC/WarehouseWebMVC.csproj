@@ -28,6 +28,25 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\js\lib\axios\.github\dependabot.yml" />
+    <None Include="wwwroot\js\lib\axios\.github\FUNDING.yml" />
+    <None Include="wwwroot\js\lib\axios\.github\ISSUE_TEMPLATE.md" />
+    <None Include="wwwroot\js\lib\axios\.github\ISSUE_TEMPLATE\BUG_REPORT.yml" />
+    <None Include="wwwroot\js\lib\axios\.github\ISSUE_TEMPLATE\config.yml" />
+    <None Include="wwwroot\js\lib\axios\.github\ISSUE_TEMPLATE\DOCUMENTATION.yml" />
+    <None Include="wwwroot\js\lib\axios\.github\ISSUE_TEMPLATE\FEATURE_REQUEST.yml" />
+    <None Include="wwwroot\js\lib\axios\.github\ISSUE_TEMPLATE\SUPPORT_QUESTION.yml" />
+    <None Include="wwwroot\js\lib\axios\.github\PULL_REQUEST_TEMPLATE.md" />
+    <None Include="wwwroot\js\lib\axios\.github\workflows\ci.yml" />
+    <None Include="wwwroot\js\lib\axios\.github\workflows\codeql-analysis.yml" />
+    <None Include="wwwroot\js\lib\axios\.github\workflows\depsreview.yaml" />
+    <None Include="wwwroot\js\lib\axios\.github\workflows\notify.yml" />
+    <None Include="wwwroot\js\lib\axios\.github\workflows\pr.yml" />
+    <None Include="wwwroot\js\lib\axios\.github\workflows\publish.yml" />
+    <None Include="wwwroot\js\lib\axios\.github\workflows\stale.yml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Update="Views\Warehouse\WarehouseProductStatus.cshtml">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>

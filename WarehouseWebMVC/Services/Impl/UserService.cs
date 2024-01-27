@@ -119,7 +119,6 @@ public class UserService : IUserService
         }
     }
 
-
     public bool SendResetPasswordEmail(string userEmail, ISession session, HttpContext httpContext)
     {
         var user = _dataContext.Users.FirstOrDefault(u => u.Email == userEmail);
@@ -296,9 +295,28 @@ public class UserService : IUserService
 
         var usersDto = _mapper.Map<List<UserDTO>>(users);
 
+        foreach (var userDto in usersDto)
+        {
+            userDto.Address = ExtractCityFromAddress(userDto.Address);
+        }
+
         var userViewModel = new UserViewModel { Users = usersDto, Pageable = pageable };
 
         return userViewModel;
+    }
+
+    private static string ExtractCityFromAddress(string fullAddress)
+    {
+        string[] addressParts = fullAddress.Split(',');
+
+        if (addressParts.Length >= 4)
+        {
+            string city = addressParts[3].Trim(); 
+
+            return city;
+        }
+
+        return null!;
     }
 
     public UserViewModel SearchUser(string searchType, string searchValue)
@@ -368,25 +386,32 @@ public class UserService : IUserService
         }
     }
 
-    public bool AddUser(AddUserDTO newUser)
+    public bool AddUser(AddUserDTO addUserDTO)
     {
         try
         {
-            if (_dataContext.Users.Any(u => u.Email == newUser.Email))
+            if (_dataContext.Users.Any(u => u.Email == addUserDTO.Email))
             {
                 return false;
             }
             
-            if (newUser.Password != newUser.RepeatPassword)
+            if (addUserDTO.Password != addUserDTO.RepeatPassword)
             {
                 return false;
             }
 
-            newUser.Password = BCrypt.Net.BCrypt.HashPassword(newUser.Password);
+            addUserDTO.Password = BCrypt.Net.BCrypt.HashPassword(addUserDTO.Password);
+            addUserDTO.Address = 
+                addUserDTO.Apartment + ", "
+                + addUserDTO.Street + ", "
+                + addUserDTO.Ward + ", "
+                + addUserDTO.District + ", "
+                + addUserDTO.Province;
 
-            var userEntity = _mapper.Map<User>(newUser);
+            var userEntity = _mapper.Map<User>(addUserDTO);
 
             userEntity.CreatedAt = DateTime.Now;
+            userEntity.Address = addUserDTO.Address;
 
             _dataContext.Users.Add(userEntity);
             _dataContext.SaveChanges();

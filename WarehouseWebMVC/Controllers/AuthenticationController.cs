@@ -135,7 +135,8 @@ public class AuthenticationController : Controller
                         byte[] userIdBytes = BitConverter.GetBytes(user.UserId);
                         HttpContext.Session.Set("Id", userIdBytes);
                         HttpContext.Session.SetString("Name", user.Name);
-                        HttpContext.Session.SetString("Address", user.Address);
+                        string city = ExtractCityProvince(user.Address);
+                        HttpContext.Session.SetString("Address", city);
                         HttpContext.Session.SetString("Avatar", user.Avatar);
                     }
                     else
@@ -186,6 +187,20 @@ public class AuthenticationController : Controller
         return RedirectToAction("Login");
     }
 
+    private static string ExtractCityProvince(string fullAddress)
+    {
+        string[] addressParts = fullAddress.Split(',');
+
+        if (addressParts.Length >= 4)
+        {
+            string city = addressParts[3].Trim();
+            string province = addressParts[4].Trim();
+
+            return city + ", " + province;
+        }
+
+        return null!;
+    }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

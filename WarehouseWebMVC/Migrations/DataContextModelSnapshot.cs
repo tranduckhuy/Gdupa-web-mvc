@@ -598,7 +598,7 @@ namespace WarehouseWebMVC.Migrations
                         new
                         {
                             UserId = 1L,
-                            Address = "Quy Nhon",
+                            Address = "08 Tống Phước Phổ, Cao Ốc Long Thịnh, Phường Ghềnh Ráng, Thành Phố Quy Nhơn, Tỉnh Bình Định",
                             Avatar = "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky5.jpg?alt=media&token=89ff6391-2c89-4e62-a40e-1f96c5414071",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "huytdqe170235@fpt.edu.vn",
@@ -611,7 +611,7 @@ namespace WarehouseWebMVC.Migrations
                         new
                         {
                             UserId = 2L,
-                            Address = "Quy Nhon",
+                            Address = "08 Tống Phước Phổ, Cao Ốc Long Thịnh, Phường Ghềnh Ráng, Thành Phố Quy Nhơn, Tỉnh Bình Định",
                             Avatar = "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky1.jpg?alt=media&token=20f7f936-db7d-4498-9245-50875cc9f546",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "quynxqe170239@fpt.edu.vn",
@@ -624,7 +624,7 @@ namespace WarehouseWebMVC.Migrations
                         new
                         {
                             UserId = 3L,
-                            Address = "Quy Nhon",
+                            Address = "08 Tống Phước Phổ, Cao Ốc Long Thịnh, Phường Ghềnh Ráng, Thành Phố Quy Nhơn, Tỉnh Bình Định",
                             Avatar = "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky2.jpg?alt=media&token=67c90174-f0e6-4251-acdb-e17d9d88e8ec",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "sangtnqe170193@fpt.edu.vn",
@@ -637,7 +637,7 @@ namespace WarehouseWebMVC.Migrations
                         new
                         {
                             UserId = 4L,
-                            Address = "Quy Nhon",
+                            Address = "08 Tống Phước Phổ, Cao Ốc Long Thịnh, Phường Ghềnh Ráng, Thành Phố Quy Nhơn, Tỉnh Bình Định",
                             Avatar = "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky3.jpg?alt=media&token=2b2622f9-9b99-4ab4-bbc9-aa3c66dd7b24",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "hoangngqe170225@fpt.edu.vn",
@@ -650,7 +650,7 @@ namespace WarehouseWebMVC.Migrations
                         new
                         {
                             UserId = 5L,
-                            Address = "Quy Nhon",
+                            Address = "08 Tống Phước Phổ, Cao Ốc Long Thịnh, Phường Ghềnh Ráng, Thành Phố Quy Nhơn, Tỉnh Bình Định",
                             Avatar = "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky4.jpg?alt=media&token=cbd4f161-7102-4ce1-b9f2-1ccf0c9edf57",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "haonnqe170204@fpt.edu.vn",
@@ -663,7 +663,7 @@ namespace WarehouseWebMVC.Migrations
                         new
                         {
                             UserId = 6L,
-                            Address = "Quy Nhon",
+                            Address = "08 Tống Phước Phổ, Cao Ốc Long Thịnh, Phường Ghềnh Ráng, Thành Phố Quy Nhơn, Tỉnh Bình Định",
                             Avatar = "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky6.webp?alt=media&token=85db917a-6c50-4860-948d-266409314974",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "thuanndmqe170240@fpt.edu.vn",

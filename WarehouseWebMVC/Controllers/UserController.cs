@@ -60,7 +60,6 @@ public class UserController : Controller
         return RedirectToAction("Login", "Authentication");
     }
 
-
     [Filter]
     public IActionResult AddUser()
     {
@@ -73,7 +72,6 @@ public class UserController : Controller
         }
         return RedirectToAction("Login", "Authentication");
     }
-
 
     [HttpPost]
     public IActionResult AddUser(AddUserDTO addUserDTO)
@@ -96,7 +94,6 @@ public class UserController : Controller
         }
         return RedirectToAction("Login", "Authentication");
     }
-
 
     [HttpPost]
     public IActionResult UserInformation(UserInformationDTO userInformationDTO)
@@ -166,7 +163,6 @@ public class UserController : Controller
         TempData["Message"] = AppConstant.MESSAGE_FAILED;
         return View("UserInformation", user);
     }
-
 
     [HttpGet]
     public IActionResult DeactiveUser(long userId, long inforId)

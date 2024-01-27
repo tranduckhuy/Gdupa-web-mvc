@@ -890,7 +890,7 @@ Version:	1.0.0
 }
 
 .sherah-dropdown-card.sherah-dropdown-card__profile {
-    right: 0;
+    right: 50px;
     max-width: 240px;
     top: 68px;
     left: initial;
