@@ -4,9 +4,10 @@ using WarehouseWebMVC.ViewModels;
 
 namespace WarehouseWebMVC.Services
 {
-	public interface IReceiptService
+    public interface IReceiptService
 	{
 		bool Add(ImportProductsDTO importProducts);
 		ReceiptViewModel GetAll(int page);
-	}
+        ReceiptDetailVM GetDetailById(long receiptId);
+    }
 }

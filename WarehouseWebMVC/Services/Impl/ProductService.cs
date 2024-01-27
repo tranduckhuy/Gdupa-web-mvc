@@ -128,7 +128,6 @@ public class ProductService : IProductService
     public CRUProductVM GetInfoAddProduct()
     {
         var categories = _dataContext.Category.ToList();
-        var suplliers = _dataContext.Suppliers.ToList();
         var brands = _dataContext.Brand.ToList();
         var units = new List<SelectListItem>();
         units.Add(new SelectListItem { Text = "Piece", Value = "Piece"});

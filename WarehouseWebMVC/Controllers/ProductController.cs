@@ -36,13 +36,6 @@ public class ProductController : Controller
         return RedirectToAction("Login", "Authentication");
     }
 
-    [HttpGet]
-    public IActionResult TestList(int page = 1)
-    {
-        ProductViewModel productViewModel = _productService.GetAll(page);
-        return View(productViewModel);
-    }
-
     [Filter]
     [HttpGet]
     public IActionResult AddProduct()
