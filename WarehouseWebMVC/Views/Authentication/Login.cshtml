@@ -40,7 +40,7 @@
                     setTimeout(function () {
                         toast({
                             title: "Failed",
-                            message: "Account was locked or Wrong email and password!",
+                            message: "Wrong email or password!",
                             type: "danger",
                             duration: 3000,
                         });
@@ -71,6 +71,21 @@
                         toast({
                             title: "Failed",
                             message: "You are not login yet!",
+                            type: "danger",
+                            duration: 3000,
+                        });
+                    }, 600);
+                });
+            </script>
+        }
+        else if ("Locked".Equals(message))
+        {
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    setTimeout(function () {
+                        toast({
+                            title: "Failed",
+                            message: "Your account is locked. Please contact the administrator.",
                             type: "danger",
                             duration: 3000,
                         });

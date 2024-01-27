@@ -1,12 +1,13 @@
 ﻿using WarehouseWebMVC.Models.Domain;
 using WarehouseWebMVC.Models.DTOs.UserDTO;
+using WarehouseWebMVC.Services.Impl;
 using WarehouseWebMVC.ViewModels;
 
 namespace WarehouseWebMVC.Service;
 
 public interface IUserService
 {
-    bool CheckLogin(UserDTO userDTO);
+    public LoginResult CheckLogin(UserDTO userDTO);
 
     User GetUserByEmail(string email);
 

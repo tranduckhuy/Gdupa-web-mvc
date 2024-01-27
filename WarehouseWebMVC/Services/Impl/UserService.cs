@@ -26,18 +26,23 @@ public class UserService : IUserService
         _sendMailService = sendMailService;
     }
 
-    public bool CheckLogin(UserDTO userDTO)
+    public LoginResult CheckLogin(UserDTO userDTO)
     {
         var user = _dataContext.Users.SingleOrDefault(u => u.Email == userDTO.Email);
 
-        if (user != null && !user.IsLocked)
+        if (user != null)
         {
+            if (user.IsLocked)
+            {
+                return LoginResult.AccountLocked;
+            }
+
             bool isValidPassword = BCrypt.Net.BCrypt.Verify(userDTO.Password, user.Password);
 
-            return isValidPassword;
+            return isValidPassword ? LoginResult.Success : LoginResult.InvalidCredentials;
         }
 
-        return false;
+        return LoginResult.InvalidCredentials;
     }
 
 
@@ -408,4 +413,11 @@ public class UserService : IUserService
     }
 
 
+}
+
+public enum LoginResult
+{
+    Success,
+    InvalidCredentials,
+    AccountLocked
 }
