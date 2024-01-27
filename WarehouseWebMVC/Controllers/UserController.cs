@@ -5,6 +5,8 @@ using WarehouseWebMVC.Models;
 using WarehouseWebMVC.Models.Domain;
 using WarehouseWebMVC.Models.DTOs.UserDTO;
 using WarehouseWebMVC.Service;
+using WarehouseWebMVC.Services;
+using WarehouseWebMVC.Services.Helper;
 using WarehouseWebMVC.ViewModels;
 
 namespace WarehouseWebMVC.Controllers;
@@ -13,11 +15,15 @@ public class UserController : Controller
 {
     private readonly ILogger<UserController> _logger;
     private readonly IUserService _userService;
+    private readonly IAddressHelper _addressHelper;
 
-    public UserController(ILogger<UserController> logger, IUserService userService)
+    public UserController(ILogger<UserController> logger, 
+        IUserService userService,
+        IAddressHelper addressHelper)
     {
         _logger = logger;
         _userService = userService;
+        _addressHelper = addressHelper;
     }
 
     [Filter]
@@ -113,7 +119,8 @@ public class UserController : Controller
                         HttpContext.Session.Set("Id", userIdBytes);
                         HttpContext.Session.SetString("Name", user.Name);
                         HttpContext.Session.SetString("User", user.Email);
-                        HttpContext.Session.SetString("Address", user.Address);
+                        string address = _addressHelper.ExtractCityProvince(user.Address);
+                        HttpContext.Session.SetString("Address", address);
                         HttpContext.Session.SetString("Avatar", user.Avatar);
                     }
                     else
@@ -127,7 +134,7 @@ public class UserController : Controller
             } else
             {
                 TempData["Message"] = AppConstant.MESSAGE_FAILED;
-                return RedirectToAction("UserInformation", new { userId = _userService.GetUserIdByEmail(currentUserEmail) });
+                return RedirectToAction("UserInformation", new { userId = _userService.GetUserIdByEmail(currentUserEmail!) });
             }
         }
         TempData["Message"] = AppConstant.MESSAGE_FAILED;

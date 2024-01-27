@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\js\lib\axios\**" />
+    <Content Remove="wwwroot\js\lib\axios\**" />
+    <EmbeddedResource Remove="wwwroot\js\lib\axios\**" />
+    <None Remove="wwwroot\js\lib\axios\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
     <PackageReference Include="FirebaseAdmin" Version="2.4.0" />
@@ -25,25 +32,6 @@
     <Folder Include="Views\Dashboard\" />
     <Folder Include="Views\FAQ\" />
     <Folder Include="Views\Terms\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="wwwroot\js\lib\axios\.github\dependabot.yml" />
-    <None Include="wwwroot\js\lib\axios\.github\FUNDING.yml" />
-    <None Include="wwwroot\js\lib\axios\.github\ISSUE_TEMPLATE.md" />
-    <None Include="wwwroot\js\lib\axios\.github\ISSUE_TEMPLATE\BUG_REPORT.yml" />
-    <None Include="wwwroot\js\lib\axios\.github\ISSUE_TEMPLATE\config.yml" />
-    <None Include="wwwroot\js\lib\axios\.github\ISSUE_TEMPLATE\DOCUMENTATION.yml" />
-    <None Include="wwwroot\js\lib\axios\.github\ISSUE_TEMPLATE\FEATURE_REQUEST.yml" />
-    <None Include="wwwroot\js\lib\axios\.github\ISSUE_TEMPLATE\SUPPORT_QUESTION.yml" />
-    <None Include="wwwroot\js\lib\axios\.github\PULL_REQUEST_TEMPLATE.md" />
-    <None Include="wwwroot\js\lib\axios\.github\workflows\ci.yml" />
-    <None Include="wwwroot\js\lib\axios\.github\workflows\codeql-analysis.yml" />
-    <None Include="wwwroot\js\lib\axios\.github\workflows\depsreview.yaml" />
-    <None Include="wwwroot\js\lib\axios\.github\workflows\notify.yml" />
-    <None Include="wwwroot\js\lib\axios\.github\workflows\pr.yml" />
-    <None Include="wwwroot\js\lib\axios\.github\workflows\publish.yml" />
-    <None Include="wwwroot\js\lib\axios\.github\workflows\stale.yml" />
   </ItemGroup>
 
   <ItemGroup>

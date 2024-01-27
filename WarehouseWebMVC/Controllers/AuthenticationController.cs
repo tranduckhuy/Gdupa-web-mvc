@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using WarehouseWebMVC.Data;
 using WarehouseWebMVC.Models;
 using WarehouseWebMVC.Models.DTOs.UserDTO;
 using WarehouseWebMVC.Service;
+using WarehouseWebMVC.Services;
+using WarehouseWebMVC.Services.Helper;
 using WarehouseWebMVC.Services.Impl;
 
 namespace WarehouseWebMVC.Controllers;
@@ -12,13 +15,16 @@ namespace WarehouseWebMVC.Controllers;
 public class AuthenticationController : Controller
 {
     private readonly ILogger<AuthenticationController> _logger;
-
     private readonly IUserService _userService;
+    private readonly IAddressHelper _addressHelper;
 
-    public AuthenticationController(ILogger<AuthenticationController> logger, IUserService userService)
+    public AuthenticationController(ILogger<AuthenticationController> logger,
+                                    IUserService userService,
+                                    IAddressHelper addressHelper)
     {
         _logger = logger;
         _userService = userService;
+        _addressHelper = addressHelper;
     }
 
     [HttpGet]
@@ -53,7 +59,7 @@ public class AuthenticationController : Controller
     [HttpGet]
     public IActionResult ForgotPassword()
     {
-       return View();
+        return View();
     }
 
     [HttpGet]
@@ -68,7 +74,7 @@ public class AuthenticationController : Controller
         var newPassword = userDTO.NewPassword;
         var confirmPassword = userDTO.ConfirmPassword;
 
-        if(newPassword == null ||  confirmPassword == null)
+        if (newPassword == null || confirmPassword == null)
         {
             TempData["Message"] = AppConstant.MESSAGE_NULL;
             return RedirectToAction("ResetPassword", new { token = userDTO.ResetToken });
@@ -135,8 +141,8 @@ public class AuthenticationController : Controller
                         byte[] userIdBytes = BitConverter.GetBytes(user.UserId);
                         HttpContext.Session.Set("Id", userIdBytes);
                         HttpContext.Session.SetString("Name", user.Name);
-                        string city = ExtractCityProvince(user.Address);
-                        HttpContext.Session.SetString("Address", city);
+                        string address = _addressHelper.ExtractCityProvince(user.Address);
+                        HttpContext.Session.SetString("Address", address);
                         HttpContext.Session.SetString("Avatar", user.Avatar);
                     }
                     else
@@ -176,7 +182,7 @@ public class AuthenticationController : Controller
                     return RedirectToAction("Login");
 
                 case LoginResult.AccountLocked:
-                    TempData["Message"] = AppConstant.MESSAGE_LOCKED; 
+                    TempData["Message"] = AppConstant.MESSAGE_LOCKED;
                     return RedirectToAction("Login");
 
                 default:
@@ -185,21 +191,6 @@ public class AuthenticationController : Controller
             }
         }
         return RedirectToAction("Login");
-    }
-
-    private static string ExtractCityProvince(string fullAddress)
-    {
-        string[] addressParts = fullAddress.Split(',');
-
-        if (addressParts.Length >= 4)
-        {
-            string city = addressParts[3].Trim();
-            string province = addressParts[4].Trim();
-
-            return city + ", " + province;
-        }
-
-        return null!;
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

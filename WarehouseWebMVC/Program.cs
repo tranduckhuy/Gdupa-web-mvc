@@ -5,6 +5,8 @@ using WarehouseWebMVC.MappingProfiles;
 using WarehouseWebMVC.Models;
 using WarehouseWebMVC.Service;
 using WarehouseWebMVC.Services;
+using WarehouseWebMVC.Services.Helper;
+using WarehouseWebMVC.Services.Helper.Impl;
 using WarehouseWebMVC.Services.Impl;
 using WarehouseWebMVC.Services.Mail;
 
@@ -23,6 +25,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IReceiptService, ReceiptSerivce>();
 builder.Services.AddScoped<ISupplierService, SupplierService>();
 builder.Services.AddScoped<IWarehouseService, WarehouseSerivce>();
+builder.Services.AddScoped<IAddressHelper, AddressHelper>();
 
 // Enable CORS
 builder.Services.AddCors(c =>
