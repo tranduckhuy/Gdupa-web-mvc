@@ -97,19 +97,18 @@ public class WarehouseController : Controller
             Response.Headers.Add("Cache-Control", "no-store, no-cache, must-revalidate, post-check=0, pre-check=0");
             Response.Headers.Add("Pragma", "no-cache");
             Response.Headers.Add("Expires", "0");
+
             if (_warehouseService.Add(importProductsDTO))
             {
-                TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
-                return RedirectToAction("WarehouseProduct", "Warehouse");
+                return Json(new { success = true, loggedIn = true });
             }
             else
             {
-                TempData["Message"] = AppConstant.MESSAGE_FAILED;
-                return RedirectToAction("WarehouseImport", "Warehouse");
+                return Json(new { success = false, loggedIn = true });
             }
         }
-        TempData["Message"] = AppConstant.MESSAGE_NOT_LOGIN;
-        return RedirectToAction("Login", "Authentication");
+
+        return Json(new { success = false, loggedIn = false });
     }
 
     [HttpPost]
