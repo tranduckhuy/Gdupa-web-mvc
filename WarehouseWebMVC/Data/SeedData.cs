@@ -150,9 +150,12 @@ public static class SeedData
         );
 
         modelBuilder.Entity<Receipt>().HasData(
-            new Receipt { ReceiptId = 1, Total = 17599.87, UserId = 1, SupplierId = 1 },
-            new Receipt { ReceiptId = 2, Total = 2300, UserId = 1, SupplierId = 2 },
-            new Receipt { ReceiptId = 3, Total = 3399.3, UserId = 2, SupplierId = 3 }
+            new Receipt { ReceiptId = 1, Deliverer = "Nguyễn Xuân B", Reason = "Import Product",
+                ReasonDetail = "Reason Detail...", Total = 17599.87, UserId = 1, SupplierId = 1 },
+            new Receipt { ReceiptId = 2, Deliverer = "Nguyễn Xuân B", Reason = "Tranferred Warehouse", 
+                ReasonDetail = "Reason Detail...",  Total = 2300, UserId = 1, SupplierId = 2 },
+            new Receipt { ReceiptId = 3, Deliverer = "Trần Đức A", Reason = "Import Product", 
+                ReasonDetail = "Reason Detail...", Total = 3399.3, UserId = 2, SupplierId = 3 }
         );
 
         modelBuilder.Entity<ReceiptDetail>().HasData(

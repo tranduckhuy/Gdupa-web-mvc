@@ -310,9 +310,9 @@ namespace WarehouseWebMVC.Migrations
                 columns: new[] { "ReceiptId", "Deliverer", "Reason", "ReasonDetail", "SupplierId", "Total", "UserId" },
                 values: new object[,]
                 {
-                    { 1L, "", "", "", 1L, 17599.869999999999, 1L },
-                    { 2L, "", "", "", 2L, 2300.0, 1L },
-                    { 3L, "", "", "", 3L, 3399.3000000000002, 2L }
+                    { 1L, "Nguyễn Xuân B", "Import Product", "Reason Detail...", 1L, 17599.869999999999, 1L },
+                    { 2L, "Nguyễn Xuân B", "Tranferred Warehouse", "Reason Detail...", 2L, 2300.0, 1L },
+                    { 3L, "Trần Đức A", "Import Product", "Reason Detail...", 3L, 3399.3000000000002, 2L }
                 });
 
             migrationBuilder.InsertData(

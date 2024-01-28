@@ -23,7 +23,7 @@
             </td>
             <td style="max-width:150px;">
                <div class="input-group mb-3" style="max-height:30px;display:flex;justify-content:center;align-items:center;">
-                   <input type="number" name="quantity" class="price input-number form-control" value="$${pPrice.toFixed(2)}"
+                   <input type="number" name="quantity" class="price input-number form-control" value="${pPrice.toFixed(2)}"
                          id="product-import-price-${pId}" oninput="changePrice(${pId})"
                          style="text-align:center;max-height:45px;max-width:80px;margin:0 12px;padding:0;color:#5A5A5A;" />
                </div>
