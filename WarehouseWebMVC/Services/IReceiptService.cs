@@ -9,5 +9,6 @@ namespace WarehouseWebMVC.Services
 		bool Add(ImportProductsDTO importProducts);
 		ReceiptViewModel GetAll(int page);
         ReceiptDetailVM GetDetailById(long receiptId);
+        ReceiptViewModel SearchReceipt(string searchType, string searchValue);
     }
 }

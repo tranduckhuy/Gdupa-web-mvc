@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.CodeAnalysis;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using WarehouseWebMVC.Data;
@@ -113,6 +114,34 @@ namespace WarehouseWebMVC.Services.Impl
                     .Include(p => p.Product)
                     .ToList();
                 return new ReceiptDetailVM { Receipt = receipt, ReceiptDetails = receiptDetail };
+            }
+            return null!;
+        }
+
+        public ReceiptViewModel SearchReceipt(string searchType, string searchValue)
+        {
+            IQueryable<Receipt> searchReceipt = _dataContext.Receipts
+                .Include(u => u.User)
+                .Include(s => s.Supplier);
+
+            switch (searchType)
+            {
+                case "Supplier":
+                    searchReceipt = searchReceipt.Where(r => r.Supplier.Name.ToUpper().Contains(searchValue.ToUpper()));
+                    break;
+                case "Deliverer":
+                    searchReceipt = searchReceipt.Where(r => EF.Functions.Collate(r.Deliverer, "NOCASE").Contains(searchValue));
+                    break;
+                default:
+                    searchReceipt = searchReceipt.Where(r => EF.Functions.Collate(r.User.Name, "NOCASE").Contains(searchValue));
+                    break;
+            }
+
+            if (searchReceipt.Any())
+            {
+                var searchReceipts = _mapper.Map<List<Receipt>>(searchReceipt.ToList());
+                var receiptViewModel = new ReceiptViewModel { Receipts = searchReceipts };
+                return receiptViewModel;
             }
             return null!;
         }

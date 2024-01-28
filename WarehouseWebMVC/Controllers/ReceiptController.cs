@@ -5,6 +5,7 @@ using WarehouseWebMVC.Data;
 using WarehouseWebMVC.Models;
 using WarehouseWebMVC.Models.Domain;
 using WarehouseWebMVC.Services;
+using WarehouseWebMVC.Services.Impl;
 using WarehouseWebMVC.ViewModels;
 
 namespace WarehouseWebMVC.Controllers;
@@ -56,6 +57,22 @@ public class ReceiptController : Controller
 
         TempData["Message"] = AppConstant.MESSAGE_NOT_LOGIN;
         return RedirectToAction("Login", "Authentication");
+    }
+
+    [HttpPost]
+    public IActionResult SearchReceipt(string searchType, string searchValue)
+    {
+        if (ModelState.IsValid)
+        {
+            var searchReceipts = _receiptService.SearchReceipt(searchType, searchValue);
+            if (searchReceipts != null)
+            {
+                TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
+                return View("ReceiptList", searchReceipts);
+            }
+        }
+        TempData["Message"] = AppConstant.NOT_FOUND;
+        return RedirectToAction("ReceiptList");
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

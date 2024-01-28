@@ -1,6 +1,56 @@
 @model WarehouseWebMVC.ViewModels.ReceiptViewModel
 @{
     ViewData["Title"] = "Invoice";
+    var message = TempData["Message"] as string;
+}
+<div id="toast"></div>
+@if (!string.IsNullOrEmpty(message))
+{
+    if ("Success".Equals(message))
+    {
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                setTimeout(function () {
+                    toast({
+                        title: "Success",
+                        message: "Success ! Action complete.",
+                        type: "success",
+                        duration: 3000,
+                    });
+                }, 600);
+            });
+        </script>
+    }
+    else if ("Failed".Equals(message))
+    {
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                setTimeout(function () {
+                    toast({
+                        title: "Failed",
+                        message: "Oops! Action failed. Please try again.",
+                        type: "danger",
+                        duration: 3000,
+                    });
+                }, 600);
+            });
+        </script>
+    }
+    else if ("NotFound".Equals(message))
+    {
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                setTimeout(function () {
+                    toast({
+                        title: "Not found!",
+                        message: "No results found for the given search criteria.",
+                        type: "warning",
+                        duration: 3000,
+                    });
+                }, 600);
+            });
+        </script>
+    }
 }
 
 <!-- sherah Dashboard -->
@@ -28,7 +78,7 @@
                             <div class="row">
                                 <div class="col-sm-12 col-md-8"></div>
                                 <div class="col-sm-12 col-md-4">
-                                    <form method="post" asp-action="SearchProduct" asp-controller="Product">
+                                    <form method="post" asp-action="SearchReceipt" asp-controller="Receipt">
                                         <div id="sherah-table__vendor_filter" class="dataTables_filter">
                                             <label for="search-input" style="position: relative;">
                                                 <button class="sherah-data-table-label" style="font-size:1rem;position: relative; top:2.7rem; left:18.5rem; right: auto; z-index: 4; border:none;background-color: #F3F4F7;">
@@ -40,7 +90,7 @@
                                                     <option value="" selected disabled>Search Type</option>
                                                     <option value="Creator">Creator</option>
                                                     <option value="Supplier">Supplier</option>
-                                                    <option value="Deliver">Deliver</option>
+                                                    <option value="Deliverer">Deliver</option>
                                                 </select>
                                                 &nbsp;
                                                 <input style="flex-shrink:0;width:auto;z-index:2;" type="search" name="searchValue" class="col-2 form-control form-control-sm" placeholder="Search" aria-controls="sherah-table__vendor">
