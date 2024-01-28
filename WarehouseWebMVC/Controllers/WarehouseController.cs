@@ -100,12 +100,12 @@ public class WarehouseController : Controller
             if (_warehouseService.Add(importProductsDTO))
             {
                 TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
-                return RedirectToAction("WarehouseProduct", "Warehouse", new { message = TempData["Message"] });
+                return RedirectToAction("WarehouseProduct", "Warehouse");
             }
             else
             {
                 TempData["Message"] = AppConstant.MESSAGE_FAILED;
-                return RedirectToAction("WarehouseImport", "Warehouse", new { message = TempData["Message"] });
+                return RedirectToAction("WarehouseImport", "Warehouse");
             }
         }
         TempData["Message"] = AppConstant.MESSAGE_NOT_LOGIN;
