@@ -12,4 +12,5 @@ public class AppConstant
     public const string BAD_REQUEST = "BadRequest";
     public const string LOW_ALERT = "LowAlert";
     public const string OUT_OF_STOCK = "OutOfStock";
+    public const string NEW_QUARTER = "NewQuarter";
 }

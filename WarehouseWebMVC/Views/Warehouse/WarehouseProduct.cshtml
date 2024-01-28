@@ -73,6 +73,21 @@
             });
         </script>
     }
+    else if ("NewQuarter".Equals(message))
+    {
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                setTimeout(function () {
+                    toast({
+                        title: "Exciting News!",
+                        message: "The new quarter has kicked off, and product info in the warehouse has been updated.",
+                        type: "success",
+                        duration: 3000,
+                    });
+                }, 600);
+            });
+        </script>
+    }
 }
 
 <section class="sherah-adashboard sherah-show">

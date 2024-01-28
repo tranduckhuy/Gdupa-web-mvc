@@ -28,6 +28,10 @@ public class WarehouseController : Controller
             Response.Headers.Add("Cache-Control", "no-store, no-cache, must-revalidate, post-check=0, pre-check=0");
             Response.Headers.Add("Pragma", "no-cache");
             Response.Headers.Add("Expires", "0");
+            if (_warehouseService.CheckNewQuarter())
+            {
+                TempData["Message"] = AppConstant.NEW_QUARTER;
+            }
             var warehouse = _warehouseService.GetLimit(page, quarter, year);
             if (warehouse == null)
             {
@@ -93,10 +97,6 @@ public class WarehouseController : Controller
             Response.Headers.Add("Cache-Control", "no-store, no-cache, must-revalidate, post-check=0, pre-check=0");
             Response.Headers.Add("Pragma", "no-cache");
             Response.Headers.Add("Expires", "0");
-            if (ModelState.IsValid)
-            {
-                Console.WriteLine("Error");
-            }
             if (_warehouseService.Add(importProductsDTO))
             {
                 TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;

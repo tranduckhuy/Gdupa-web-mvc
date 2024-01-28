@@ -4,7 +4,7 @@
     var message = TempData["Message"] as string;
 }
 @{
-    byte[] userIdBytes = ViewContext.HttpContext.Session.Get("Id");
+    byte[]? userIdBytes = ViewContext.HttpContext.Session.Get("Id");
     long userId = userIdBytes != null ? BitConverter.ToInt64(userIdBytes, 0) : 0;
 }
 

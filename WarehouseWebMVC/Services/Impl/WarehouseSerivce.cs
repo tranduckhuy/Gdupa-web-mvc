@@ -16,6 +16,7 @@ namespace WarehouseWebMVC.Services.Impl
         private readonly DataContext _dataContext;
         private readonly IReceiptService _receiptService;
         private readonly IMapper _mapper;
+        private static readonly object _lockObject = new object();
 
         public WarehouseSerivce(DataContext dataContext, IReceiptService receiptService, IMapper mapper)
         {
@@ -36,88 +37,68 @@ namespace WarehouseWebMVC.Services.Impl
                 return false;
             }
 
-            try
+            lock (_lockObject)
             {
-                using var transaction = _dataContext.Database.BeginTransaction();
+
                 try
                 {
-                    foreach (var importProduct in importProducts)
+                    using var transaction = _dataContext.Database.BeginTransaction();
+                    try
                     {
-                        if (!IsExisted(importProduct.ProductId))
+                        foreach (var importProduct in importProducts)
                         {
-                            transaction.Rollback();
-                            return false;
-                        }
-
-                        var product = _dataContext.Warehouse
-                            .Where(p => p.ProductId == importProduct.ProductId)
-                            .ToList();
-
-                        if (product.Count == 0)
-                        {
-                            _dataContext.Warehouse.Add(
-                                new Warehouse
-                                {
-                                    ProductId = importProduct.ProductId,
-                                    Quantity = importProduct.Quantity,
-                                    QuantityAtBeginPeriod = 0,
-                                    QuantityImport = importProduct.Quantity,
-                                    PriceImport = importProduct.PriceImport
-                                }
-                            );
-                            break;
-                        }
-                        else
-                        {
-                            var currentQuarter = GetQuarter(DateTime.Now);
-                            var existingProduct = product.FirstOrDefault(p => ((p.CreatedAt.Month - 1) / 3 + 1) == currentQuarter
-                                                        && p.CreatedAt.Year == DateTime.Now.Year);
-                            if (existingProduct == null)
+                            if (!IsExisted(importProduct.ProductId))
                             {
-                                if (currentQuarter > 1)
-                                {
-                                    existingProduct = product.FirstOrDefault(p => ((p.CreatedAt.Month - 1) / 3 + 1) == (currentQuarter - 1)
-                                                            && p.CreatedAt.Year == DateTime.Now.Year);
-                                }
-                                else
-                                {
-                                    existingProduct = product.FirstOrDefault(p => ((p.CreatedAt.Month - 1) / 3 + 1) == 4
-                                                            && p.CreatedAt.Year == DateTime.Now.Year - 1);
-                                }
+                                transaction.Rollback();
+                                return false;
+                            }
 
-                                // If there is still an implicit error, return false
-                                if (existingProduct == null)
-                                {
-                                    return false;
-                                }
+                            var product = _dataContext.Warehouse
+                                .Where(p => p.ProductId == importProduct.ProductId)
+                                .ToList();
 
-                                importProduct.QuantityAtBeginPeriod = existingProduct.Quantity;
-                                importProduct.QuantityImport = importProduct.Quantity;
-                                importProduct.Quantity += existingProduct.Quantity;
-                                _dataContext.Warehouse.Add(importProduct);
+                            if (product.Count == 0)
+                            {
+                                _dataContext.Warehouse.Add(
+                                    new Warehouse
+                                    {
+                                        ProductId = importProduct.ProductId,
+                                        Quantity = importProduct.Quantity,
+                                        QuantityAtBeginPeriod = 0,
+                                        QuantityImport = importProduct.Quantity,
+                                        PriceImport = importProduct.PriceImport
+                                    }
+                                );
+                                break;
                             }
                             else
                             {
-                                existingProduct.Quantity += importProduct.Quantity;
-                                existingProduct.QuantityImport += importProduct.Quantity;
-                                existingProduct.PriceImport = importProduct.PriceImport;
+                                var currentQuarter = GetQuarter(DateTime.Now);
+                                var existingProduct = product.FirstOrDefault(p => ((p.CreatedAt.Month - 1) / 3 + 1) == currentQuarter
+                                                            && p.CreatedAt.Year == DateTime.Now.Year);
+                                if (existingProduct != null)
+                                {
+                                    existingProduct.Quantity += importProduct.Quantity;
+                                    existingProduct.QuantityImport += importProduct.Quantity;
+                                    existingProduct.PriceImport = importProduct.PriceImport;
+                                }
                             }
+                            _dataContext.SaveChanges();
                         }
-                        _dataContext.SaveChanges();
+                        transaction.Commit();
+                        return true;
                     }
-                    transaction.Commit();
-                    return true;
+                    catch (Exception)
+                    {
+                        transaction.Rollback();
+                        return false;
+                    }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    transaction.Rollback();
+                    Console.WriteLine(ex.Message);
                     return false;
                 }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return false;
             }
         }
 
@@ -145,7 +126,7 @@ namespace WarehouseWebMVC.Services.Impl
                 year = DateTime.UtcNow.Year;
             }
 
-            if (quarter < 1 || quarter > 4 || year < 1990 || year > DateTime.UtcNow.Year + 10) { return null!; }
+            if (quarter < 1 || quarter > 4 || year < 1990 || year > DateTime.UtcNow.Year) { return null!; }
 
             const int pageSize = 5;
             if (page < 1)
@@ -278,5 +259,78 @@ namespace WarehouseWebMVC.Services.Impl
             }
             return null!;
         }
+
+        public bool CheckNewQuarter()
+        {
+            int currentQuarter = (DateTime.UtcNow.Month - 1) * 3 + 1;
+            int currentYear = DateTime.UtcNow.Year;
+
+            var latestQuarter = _dataContext.Warehouse
+                .OrderByDescending(w => w.CreatedAt)
+                .Select(w => new
+                {
+                    Year = w.CreatedAt.Year,
+                    Quarter = (w.CreatedAt.Month - 1) / 3 + 1
+                })
+                .FirstOrDefault();
+
+            if (latestQuarter != null)
+            {
+                if ((latestQuarter.Year == currentYear && latestQuarter.Quarter < currentQuarter) || latestQuarter.Year < currentYear)
+                {
+                    UpdateProductsToNewQuarter(latestQuarter.Quarter, latestQuarter.Year);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private void UpdateProductsToNewQuarter(int quarter, int year)
+        {
+            lock (_lockObject)
+            {
+                DateTime startDate = new DateTime(year, (quarter - 1) * 3 + 1, 1);
+                DateTime endDate = startDate.AddMonths(3).AddDays(-1);
+
+                var warehouse = _dataContext.Warehouse
+                    .AsNoTracking()
+                    .Where(w => w.CreatedAt >= startDate && w.CreatedAt <= endDate)
+                    .OrderBy(w => w.WarehouseId)
+                    .ToList();
+
+                try
+                {
+                    using var transaction = _dataContext.Database.BeginTransaction();
+                    try
+                    {
+                        foreach (var oldQuarterProductInfo in warehouse)
+                        {
+                            _dataContext.Warehouse.Add(
+                                new Warehouse
+                                {
+                                    ProductId = oldQuarterProductInfo.ProductId,
+                                    Quantity = oldQuarterProductInfo.Quantity,
+                                    QuantityAtBeginPeriod = oldQuarterProductInfo.Quantity,
+                                    QuantityImport = 0,
+                                    PriceImport = oldQuarterProductInfo.PriceImport
+                                }
+                            );
+                            _dataContext.SaveChanges();
+                        }
+                        transaction.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        transaction.Rollback();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+        }
+
     }
 }

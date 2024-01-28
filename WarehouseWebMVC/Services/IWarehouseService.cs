@@ -11,5 +11,6 @@ namespace WarehouseWebMVC.Services
         bool Add(ImportProductsDTO importProducts);
         WarehouseImportViewModel GetDataViewImport();
         WarehouseViewModel SearchProduct(string searchType, string searchValue);
+        bool CheckNewQuarter();
     }
 }
