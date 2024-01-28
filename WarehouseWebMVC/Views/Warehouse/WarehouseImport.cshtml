@@ -80,7 +80,7 @@
                             </div>
                         </div>
                         <div class="sherah-page-inner sherah-border sherah-basic-page sherah-default-bg mg-top-25">
-                            <div class="sherah-wc__form-main" style="padding: 20px 0;">
+                            <div id="import-form" class="sherah-wc__form-main" style="padding: 20px 0;">
                                 <div class="row">
                                     <div class="col-lg-6 col-12">
                                         <!-- Product Info -->
@@ -91,16 +91,18 @@
                                                     <div class="form-group">
                                                         <label class="sherah-wc__form-label">Deliverer</label>
                                                         <div class="form-group__input">
-                                                            <input id="deliverer" class="sherah-wc__form-input" placeholder="Type here" type="text">
+                                                            <input id="deliverer" name="" class="sherah-wc__form-input" rules="required"
+                                                                   placeholder="Type here" type="text">
                                                             <input id="userId" value="@userId" type="text" style="display:none;">
                                                         </div>
+                                                        <span class="form-message"></span>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-12">
                                                     <div class="form-group">
                                                         <label class="sherah-wc__form-label">Supplier*</label>
                                                         <select id="supplierId" class="form-group__input" aria-label="Default select example">
-                                                            @foreach(var supplier in Model.Suppliers)
+                                                            @foreach (var supplier in Model.Suppliers)
                                                             {
                                                                 <option value="@supplier.SupplierId">@supplier.Name</option>
                                                             }
@@ -120,8 +122,9 @@
                                                     <div class="form-group">
                                                         <label class="sherah-wc__form-label">About Reason</label>
                                                         <div class="form-group__input">
-                                                            <input class="tinymce" id="reasonDetail" type="text">
+                                                            <input class="tinymce" id="reasonDetail" name="" rules="required" type="text">
                                                         </div>
+                                                        <span class="form-message"></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -163,7 +166,7 @@
                                                                 </td>
                                                                 <td class="sherah-table__column-4 sherah-table__data-4" style="width:15%;">
                                                                     <div class="sherah-table__status__group" style="justify-content:center;">
-                                                                        <button onclick="importProduct({pId: @product.ProductId,pName: '@product.Name',pPrice: @product.Price})"
+                                                                        <button onclick="importProduct({pId: @product.ProductId,pName: '@product.Name',pPrice: replaceComma(@product.Price)})"
                                                                                 id="button-plus@(product.ProductId)"
                                                                                 class="sherah-table__action sherah-color3 sherah-color3__bg--opactity"
                                                                                 style="border:none;">
@@ -203,7 +206,7 @@
                                     <div class="product-form-box sherah-border mg-top-10" style="padding:10px;display:flex;justify-content:space-between;">
                                         <h3 style="margin:0">Total:</h3>
                                         <h6 id="total-price-final" style="font-weight:400;margin:0;font-size:16px;"></h6>
-                                        <input id="total-input" type="number" style="display:none;"/>
+                                        <input id="total-input" type="number" style="display:none;" />
                                     </div>
                                 </div>
                             </div>
@@ -224,6 +227,15 @@
 <script src="/js/lib/tinymce/js/tinymce/tinymce.min.js"></script>
 <script src="/js/tinymce-config.js"></script>
 <script src="/js/warehouse-import-config.js"></script>
+<script src="/js/Validator.js"></script>
+<script>
+    function replaceComma(price) {
+        return price.toFixed(2).replace(',', '.');
+    }
+</script>
+<script async>
+    Validator('#import-form');
+</script>
 
 
 

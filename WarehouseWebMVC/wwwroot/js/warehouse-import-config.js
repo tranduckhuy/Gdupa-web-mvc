@@ -23,7 +23,7 @@
             </td>
             <td style="max-width:150px;">
                <div class="input-group mb-3" style="max-height:30px;display:flex;justify-content:center;align-items:center;">
-                   <input type="number" name="quantity" class="price input-number form-control" value="${pPrice.toFixed(2)}"
+                   <input type="number" name="quantity" class="price input-number form-control" value="${pPrice}"
                          id="product-import-price-${pId}" oninput="changePrice(${pId})"
                          style="text-align:center;max-height:45px;max-width:80px;margin:0 12px;padding:0;color:#5A5A5A;" />
                </div>
@@ -50,7 +50,7 @@
         `;
 
         main.appendChild(tableRow);
-
+        
         updateOverallTotal();
 
         var button = document.getElementById('button-plus' + pId);
@@ -178,10 +178,10 @@ function submitData() {
         type: 'POST',
         contentType: 'application/json',
         data: jsonString,
-        success: function (response) {
+        success: function() {
             window.location.href = '/Warehouse/WarehouseProduct';
         },
-        error: function (error) {
+        error: function() {
             Swal.fire({
                 title: 'Error',
                 text: 'Oops! Action failed. Please try again.',
