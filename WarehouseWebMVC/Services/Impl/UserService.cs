@@ -338,6 +338,12 @@ public class UserService : IUserService
         if (searchUser.Any())
         {
             var searchUserDto = _mapper.Map<List<UserDTO>>(searchUser.ToList());
+
+            foreach (var searchDto in searchUserDto)
+            {
+                searchDto.Address = ExtractCityFromAddress(searchDto.Address);
+            }
+
             var userViewModel = new UserViewModel { Users = searchUserDto };
             return userViewModel;
         }
