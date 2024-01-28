@@ -11,7 +11,7 @@ using WarehouseWebMVC.Data;
 namespace WarehouseWebMVC.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240127143643_Initial")]
+    [Migration("20240128063955_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -383,9 +383,9 @@ namespace WarehouseWebMVC.Migrations
                         {
                             ReceiptId = 1L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Deliverer = "",
-                            Reason = "",
-                            ReasonDetail = "",
+                            Deliverer = "Nguyễn Xuân B",
+                            Reason = "Import Product",
+                            ReasonDetail = "Reason Detail...",
                             SupplierId = 1L,
                             Total = 17599.869999999999,
                             UserId = 1L
@@ -394,9 +394,9 @@ namespace WarehouseWebMVC.Migrations
                         {
                             ReceiptId = 2L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Deliverer = "",
-                            Reason = "",
-                            ReasonDetail = "",
+                            Deliverer = "Nguyễn Xuân B",
+                            Reason = "Tranferred Warehouse",
+                            ReasonDetail = "Reason Detail...",
                             SupplierId = 2L,
                             Total = 2300.0,
                             UserId = 1L
@@ -405,9 +405,9 @@ namespace WarehouseWebMVC.Migrations
                         {
                             ReceiptId = 3L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Deliverer = "",
-                            Reason = "",
-                            ReasonDetail = "",
+                            Deliverer = "Trần Đức A",
+                            Reason = "Import Product",
+                            ReasonDetail = "Reason Detail...",
                             SupplierId = 3L,
                             Total = 3399.3000000000002,
                             UserId = 2L
