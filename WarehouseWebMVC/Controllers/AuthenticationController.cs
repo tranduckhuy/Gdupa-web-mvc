@@ -38,7 +38,6 @@ public class AuthenticationController : Controller
         ViewBag.RememberMePassword = rememberMePassword;
         ViewBag.RememberMeChecked = rememberMeChecked;
 
-
         if (HttpContext.Session.GetString("User") == null)
         {
             return View();
@@ -53,6 +52,11 @@ public class AuthenticationController : Controller
     {
         HttpContext.Session.Clear();
         HttpContext.Session.Remove("User");
+
+        Response.Cookies.Delete("rememberMeEmail");
+        Response.Cookies.Delete("rememberMePassword");
+        Response.Cookies.Delete("rememberMeChecked");
+
         return RedirectToAction("Index", "Home", new { v = DateTime.Now.Ticks });
     }
 
@@ -156,7 +160,7 @@ public class AuthenticationController : Controller
                     {
                         var rememberMeCookie = new CookieOptions
                         {
-                            Expires = DateTime.Now.AddDays(30),
+                            Expires = DateTime.Now.AddDays(10),
                             IsEssential = true,
                             HttpOnly = true,
                             Secure = true,
