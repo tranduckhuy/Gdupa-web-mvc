@@ -193,10 +193,45 @@ function submitData() {
         type: 'POST',
         contentType: 'application/json',
         data: jsonString,
-        success: function() {
-            window.location.href = '/Warehouse/WarehouseProduct';
+        success: function (response) {
+            if (response.success) {
+                Swal.fire({
+                    title: 'Success',
+                    text: 'Product import successful.',
+                    icon: 'success',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'OK'
+                });
+    
+                setTimeout(function () {
+                    window.location.href = '/Warehouse/WarehouseProduct';
+                }, 1000);
+            } else {
+                if (response.loggedIn) {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Failed to import products. Please try again later.',
+                        icon: 'error',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'OK'
+                    });
+                }
+                if (!response.loggedIn) {
+                    Swal.fire({
+                        title: 'Not',
+                        text: 'Your session has expired. Please login again to continue.',
+                        icon: 'error',
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'OK'
+                    });
+                    setTimeout(function () {
+                        window.location.href = '/Authentication/Login';
+                    }, 2000);
+                    
+                }
+            }
         },
-        error: function() {
+        error: function (error, status, xhr) {
             Swal.fire({
                 title: 'Error',
                 text: 'Oops! Action failed. Please try again.',
