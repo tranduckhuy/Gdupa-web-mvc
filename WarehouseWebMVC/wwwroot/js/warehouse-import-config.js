@@ -24,7 +24,7 @@
             <td style="max-width:150px;">
                <div class="input-group mb-3" style="max-height:30px;display:flex;justify-content:center;align-items:center;">
                    <input type="number" name="quantity" class="price input-number form-control" value="${pPrice}"
-                         id="product-import-price-${pId}" oninput="changePrice(${pId})"
+                         id="product-import-price-${pId}" oninput="changeInput(${pId})"
                          style="text-align:center;max-height:45px;max-width:80px;margin:0 12px;padding:0;color:#5A5A5A;" />
                </div>
             </td>
@@ -36,8 +36,9 @@
                                 <i class="fa-solid fa-minus" style="font-size:16px;color:#666;"></i>
                             </button>
                         </span>
-                        <input type="number" name="quantity" id="quantity-${pId}" class="quantity input-number form-control" value="${pQuantity}"
-                            style="text-align:center;max-height:45px;max-width:80px;margin:0 12px;padding:0;color:#5A5A5A;" />
+                        <input type="number" name="quantity" id="quantity-${pId}" oninput="changeInput(${pId})"
+                                class="quantity input-number form-control" value="${pQuantity}" 
+                                style="text-align:center;max-height:45px;max-width:80px;margin:0 12px;padding:0;color:#5A5A5A;" />
                         <span class="input-group-btn ml-2">
                             <button type="button" onclick="productIncDec(${pId},'plus')" class="quantity-right-plus btn" data-type="plus" data-field=""
                                     style="width:20px;height:20px;display:flex;justify-content:center;align-items:center;">
@@ -46,7 +47,7 @@
                         </span>
                     </div>
                </td>
-               <td class="total" id="product-import-total-${pId}" style="padding-top:20px;max-height:30px;">$${pTotal}</td>
+               <td class="total" id="product-import-total-${pId}" style="padding-top:20px; max-width:80px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">$${pTotal}</td>
         `;
 
         main.appendChild(tableRow);
@@ -94,9 +95,23 @@ function productIncDec(pId, type) {
     updateOverallTotal();
 }
 
-function changePrice(pId) {
+function changeInput(pId) {
     var quantityInput = document.getElementById('quantity-' + pId);
     var priceInput = document.getElementById('product-import-price-' + pId);
+
+    // Ensure quantity is not negative
+    var quantity = parseInt(quantityInput.value);
+    if (quantity < 0 || isNaN(quantity)) {
+        quantity = 0;
+        quantityInput.value = '0';  // Set the input value to '0'
+    }
+
+    // Ensure price is not negative
+    var price = parseFloat(priceInput.value);
+    if (price < 0 || isNaN(price)) {
+        price = 0;
+        priceInput.value = '0.00';  // Set the input value to '0.00'
+    }
 
     // Update total for the current row
     updateRowTotal(pId, quantityInput, priceInput.value);
