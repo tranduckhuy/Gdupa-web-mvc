@@ -109,13 +109,20 @@ namespace WarehouseWebMVC.Services.Impl
 
         public bool Add(ImportProductsDTO importProducts)
         {
+            if (importProducts == null || importProducts.ImportProducts == null)
+            {
+                return false;
+            }
+
             if (!ImportProducts(importProducts.ImportProducts))
             {
                 return false;
             }
+
             _receiptService.Add(importProducts);
             return true;
         }
+
 
         public WarehouseViewModel GetLimit(int page, int quarter, int year)
         {

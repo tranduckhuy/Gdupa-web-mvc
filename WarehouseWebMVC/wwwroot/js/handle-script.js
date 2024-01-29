@@ -26,7 +26,7 @@
 function handleDeactiveUser(id, uid) {
     Swal.fire({
         title: 'Are you sure?',
-        text: "You won't be able to revert this action!",
+        text: "Will you deactive this account??",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -51,7 +51,7 @@ function handleDeactiveUser(id, uid) {
 function handleActiveUser(id, uid) {
     Swal.fire({
         title: 'Are you sure?',
-        text: "You won't be able to revert this action!",
+        text: "Will you active this account??",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
