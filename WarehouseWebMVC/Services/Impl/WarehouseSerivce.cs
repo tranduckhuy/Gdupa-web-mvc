@@ -109,7 +109,7 @@ namespace WarehouseWebMVC.Services.Impl
 
         public bool Add(ImportProductsDTO importProducts)
         {
-            if (importProducts == null || importProducts.ImportProducts == null)
+            if (importProducts == null || importProducts.Deliverer.Length == 0)
             {
                 return false;
             }

@@ -101,9 +101,9 @@ function changeInput(pId) {
 
     // Ensure quantity is not negative
     var quantity = parseInt(quantityInput.value);
-    if (quantity < 0 || isNaN(quantity)) {
-        quantity = 0;
-        quantityInput.value = '0';  // Set the input value to '0'
+    if (quantity < 1 || isNaN(quantity)) {
+        quantity = 1;
+        quantityInput.value = quantity;  // Set the input value to '0'
     }
 
     // Ensure price is not negative
