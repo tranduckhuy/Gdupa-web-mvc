@@ -305,20 +305,6 @@ public class UserService : IUserService
         return userViewModel;
     }
 
-    private static string ExtractCityFromAddress(string fullAddress)
-    {
-        string[] addressParts = fullAddress.Split(',');
-
-        if (addressParts.Length >= 4)
-        {
-            string city = addressParts[3].Trim(); 
-
-            return city;
-        }
-
-        return null!;
-    }
-
     public UserViewModel SearchUser(string searchType, string searchValue)
     {
         IQueryable<User> searchUser = _dataContext.Users;
@@ -330,9 +316,9 @@ public class UserService : IUserService
                 break;
 
             default:
-				var query = $"SELECT * FROM Users WHERE {searchType} COLLATE NOCASE LIKE '%' || @searchValue || '%'";
-				searchUser = _dataContext.Users.FromSqlRaw(query, new SqliteParameter("@searchValue", searchValue));
-				break;
+                var query = $"SELECT * FROM Users WHERE {searchType} COLLATE NOCASE LIKE '%' || @searchValue || '%'";
+                searchUser = _dataContext.Users.FromSqlRaw(query, new SqliteParameter("@searchValue", searchValue));
+                break;
         }
 
         if (searchUser.Any())
@@ -400,17 +386,17 @@ public class UserService : IUserService
             {
                 return false;
             }
-            
+
             if (addUserDTO.Password != addUserDTO.RepeatPassword)
             {
                 return false;
             }
 
             addUserDTO.Password = BCrypt.Net.BCrypt.HashPassword(addUserDTO.Password);
-            addUserDTO.Address = 
-                addUserDTO.Apartment + ", "
+            addUserDTO.Address =
+                  (addUserDTO.Apartment != null && addUserDTO.Apartment != "" ? addUserDTO.Apartment + ", " : "")
                 + addUserDTO.Street + ", "
-                + addUserDTO.Ward + ", "
+                + (addUserDTO.Ward != null && addUserDTO.Ward != "" ? addUserDTO.Ward + ", " : "")
                 + addUserDTO.District + ", "
                 + addUserDTO.Province;
 
@@ -443,7 +429,15 @@ public class UserService : IUserService
         return user?.UserId ?? 0;
     }
 
+    private static string ExtractCityFromAddress(string fullAddress)
+    {
+        string[] addressParts = fullAddress.Split(',');
 
+        int maxIndex = Math.Min(4, addressParts.Length - 1);
+
+        string city = addressParts[maxIndex - 1].Trim();
+        return city;
+    }
 }
 
 public enum LoginResult

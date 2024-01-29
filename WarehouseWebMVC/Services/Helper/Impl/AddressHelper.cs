@@ -8,15 +8,12 @@ namespace WarehouseWebMVC.Services.Helper.Impl
         {
             string[] addressParts = fullAddress.Split(',');
 
-            if (addressParts.Length >= 4)
-            {
-                string city = addressParts[3].Trim();
-                string province = addressParts[4].Trim();
+            int maxIndex = Math.Min(5, addressParts.Length - 1);
 
-                return city + ", " + province;
-            }
+            string city = addressParts[maxIndex - 1].Trim();
+            string province = addressParts[maxIndex].Trim();
 
-            return null!;
+            return $"{city}, {province}";
         }
     }
 }
