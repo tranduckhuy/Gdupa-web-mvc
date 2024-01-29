@@ -51,7 +51,7 @@
         `;
 
         main.appendChild(tableRow);
-        
+
         updateOverallTotal();
 
         var button = document.getElementById('button-plus' + pId);
@@ -201,11 +201,11 @@ function submitData() {
                     icon: 'success',
                     confirmButtonColor: '#3085d6',
                     confirmButtonText: 'OK'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = '/Warehouse/WarehouseProduct';
+                    }
                 });
-    
-                setTimeout(function () {
-                    window.location.href = '/Warehouse/WarehouseProduct';
-                }, 1000);
             } else {
                 if (response.loggedIn) {
                     Swal.fire({
@@ -223,11 +223,11 @@ function submitData() {
                         icon: 'error',
                         confirmButtonColor: '#3085d6',
                         confirmButtonText: 'OK'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = '/Authentication/Login';
+                        }
                     });
-                    setTimeout(function () {
-                        window.location.href = '/Authentication/Login';
-                    }, 2000);
-                    
                 }
             }
         },

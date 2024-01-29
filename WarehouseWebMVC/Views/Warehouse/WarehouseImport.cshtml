@@ -81,7 +81,7 @@
                             </div>
                         </div>
                         <div class="sherah-page-inner sherah-border sherah-basic-page sherah-default-bg mg-top-25">
-                            <div id="import-form" class="sherah-wc__form-main" style="padding: 20px 0;">
+                            <div class="sherah-wc__form-main" style="padding: 20px 0;">
                                 <div class="row">
                                     <div class="col-lg-6 col-12">
                                         <!-- Product Info -->
@@ -92,7 +92,7 @@
                                                     <div class="form-group">
                                                         <label class="sherah-wc__form-label">Deliverer</label>
                                                         <div class="form-group__input">
-                                                            <input id="deliverer" name="" class="sherah-wc__form-input" rules="required"
+                                                            <input id="deliverer" name="" class="sherah-wc__form-input"
                                                                    placeholder="Type here" type="text">
                                                             <input id="userId" value="@userId" type="text" style="display:none;">
                                                         </div>
@@ -232,9 +232,6 @@
     function replaceComma(price) {
         return price.toFixed(2).replace(',', '.');
     }
-</script>
-<script async>
-    Validator('#import-form');
 </script>
 
 

@@ -86,6 +86,11 @@ public class UserController : Controller
         {
             ModelState.Remove("Ward");
             ModelState.Remove("Apartment");
+            if (_userService.IsEmailAlreadyExists(addUserDTO.Email))
+            {
+                TempData["Message"] = AppConstant.MESSAGE_WRONG_INFO;
+                return View(addUserDTO);
+            }
             if (ModelState.IsValid)
             {
                 addUserDTO.Avatar ??= "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fdefault_avatar.png?alt=media&token=560b08e7-3ab2-453e-aea5-def178730766";

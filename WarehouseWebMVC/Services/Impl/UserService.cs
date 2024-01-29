@@ -378,6 +378,11 @@ public class UserService : IUserService
         }
     }
 
+    public bool IsEmailAlreadyExists(string email)
+    {
+        return _dataContext.Users.Any(u => u.Email == email);
+    }
+
     public bool AddUser(AddUserDTO addUserDTO)
     {
         try

@@ -35,6 +35,6 @@ public interface IUserService
 
     long GetUserIdByEmail(string userEmail);
 
-
+    bool IsEmailAlreadyExists(string email);
 
 }

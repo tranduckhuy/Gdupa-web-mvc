@@ -13,8 +13,23 @@
                 setTimeout(function () {
                     toast({
                         title: "Failed",
-                        message: "Oops! Email existing. Please try another email.",
+                        message: "Oops! Action failed. Please try again.",
                         type: "danger",
+                        duration: 3000,
+                    });
+                }, 600);
+            });
+        </script>
+    }
+    else if ("WrongInfo".Equals(message))
+    {
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                setTimeout(function () {
+                    toast({
+                        title: "Info",
+                        message: "Oops! Email existing. Please try another email.",
+                        type: "info",
                         duration: 3000,
                     });
                 }, 600);
