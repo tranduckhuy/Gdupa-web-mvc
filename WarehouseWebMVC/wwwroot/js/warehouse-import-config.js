@@ -218,7 +218,7 @@ function submitData() {
                 }
                 if (!response.loggedIn) {
                     Swal.fire({
-                        title: 'Not',
+                        title: 'Not Login',
                         text: 'Your session has expired. Please login again to continue.',
                         icon: 'error',
                         confirmButtonColor: '#3085d6',
