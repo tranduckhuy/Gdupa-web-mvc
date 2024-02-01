@@ -2,9 +2,9 @@
 
 namespace WarehouseWebMVC.Models.DTOs
 {
-    public class ReceiptDTO
+    public class ImportNoteDTO
     {
-        public long ReceiptId { get; set; }
+        public long ImportNoteId { get; set; }
         public double Total { get; set; }
         public string Deliverer { get; set; } = string.Empty;
         public string Reason { get; set; } = string.Empty;
@@ -14,6 +14,6 @@ namespace WarehouseWebMVC.Models.DTOs
         public User User { get; set; } = null!;
         public long SupplierId { get; set; }
         public Supplier Supplier { get; set; } = null!;
-        public ICollection<ReceiptDetail> ReceiptDetails { get; set; } = new List<ReceiptDetail>();
+        public ICollection<ImportNoteDetail> ImportNoteDetails { get; set; } = new List<ImportNoteDetail>();
     }
 }

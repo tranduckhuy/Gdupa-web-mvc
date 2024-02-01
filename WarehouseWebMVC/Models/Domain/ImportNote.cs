@@ -3,10 +3,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WarehouseWebMVC.Models.Domain;
 
-public class Receipt
+public class ImportNote
 {
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public long ReceiptId { get; set; }
+    public long ImportNoteId { get; set; }
     [Required]
     public double Total { get; set; }
     [Required]
@@ -24,5 +24,5 @@ public class Receipt
     public long SupplierId { get; set; }
     public Supplier Supplier { get; set; } = null!;
 
-    public ICollection<ReceiptDetail> ReceiptDetails { get; set; } = new List<ReceiptDetail>();
+    public ICollection<ImportNoteDetail> ImportNoteDetails { get; set; } = new List<ImportNoteDetail>();
 }

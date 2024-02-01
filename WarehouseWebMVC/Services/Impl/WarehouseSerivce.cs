@@ -14,14 +14,14 @@ namespace WarehouseWebMVC.Services.Impl
     public class WarehouseSerivce : IWarehouseService
     {
         private readonly DataContext _dataContext;
-        private readonly IReceiptService _receiptService;
+        private readonly IImportNoteService _importNoteService;
         private readonly IMapper _mapper;
         private static readonly object _lockObject = new object();
 
-        public WarehouseSerivce(DataContext dataContext, IReceiptService receiptService, IMapper mapper)
+        public WarehouseSerivce(DataContext dataContext, IImportNoteService importNoteService, IMapper mapper)
         {
             _dataContext = dataContext;
-            _receiptService = receiptService;
+            _importNoteService = importNoteService;
             _mapper = mapper;
         }
 
@@ -119,7 +119,7 @@ namespace WarehouseWebMVC.Services.Impl
                 return false;
             }
 
-            _receiptService.Add(importProducts);
+            _importNoteService.Add(importProducts);
             return true;
         }
 

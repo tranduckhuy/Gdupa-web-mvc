@@ -137,10 +137,10 @@ namespace WarehouseWebMVC.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Receipts",
+                name: "ImportNotes",
                 columns: table => new
                 {
-                    ReceiptId = table.Column<long>(type: "INTEGER", nullable: false)
+                    ImportNoteId = table.Column<long>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Total = table.Column<double>(type: "REAL", nullable: false),
                     Deliverer = table.Column<string>(type: "TEXT", nullable: false),
@@ -152,15 +152,15 @@ namespace WarehouseWebMVC.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Receipts", x => x.ReceiptId);
+                    table.PrimaryKey("PK_ImportNotes", x => x.ImportNoteId);
                     table.ForeignKey(
-                        name: "FK_Receipts_Suppliers_SupplierId",
+                        name: "FK_ImportNotes_Suppliers_SupplierId",
                         column: x => x.SupplierId,
                         principalTable: "Suppliers",
                         principalColumn: "SupplierId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Receipts_Users_UserId",
+                        name: "FK_ImportNotes_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "UserId",
@@ -212,30 +212,30 @@ namespace WarehouseWebMVC.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ReceiptDetails",
+                name: "ImportNoteDetails",
                 columns: table => new
                 {
-                    ReceiptDetailId = table.Column<long>(type: "INTEGER", nullable: false)
+                    ImportNoteDetailId = table.Column<long>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     ImportPrice = table.Column<double>(type: "REAL", nullable: false),
                     Quantity = table.Column<int>(type: "INTEGER", nullable: false),
-                    ReceiptId = table.Column<long>(type: "INTEGER", nullable: false),
+                    ImportNoteId = table.Column<long>(type: "INTEGER", nullable: false),
                     ProductId = table.Column<long>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ReceiptDetails", x => x.ReceiptDetailId);
+                    table.PrimaryKey("PK_ImportNoteDetails", x => x.ImportNoteDetailId);
                     table.ForeignKey(
-                        name: "FK_ReceiptDetails_Products_ProductId",
+                        name: "FK_ImportNoteDetails_ImportNotes_ImportNoteId",
+                        column: x => x.ImportNoteId,
+                        principalTable: "ImportNotes",
+                        principalColumn: "ImportNoteId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ImportNoteDetails_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "ProductId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ReceiptDetails_Receipts_ReceiptId",
-                        column: x => x.ReceiptId,
-                        principalTable: "Receipts",
-                        principalColumn: "ReceiptId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -294,6 +294,16 @@ namespace WarehouseWebMVC.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "ImportNotes",
+                columns: new[] { "ImportNoteId", "Deliverer", "Reason", "ReasonDetail", "SupplierId", "Total", "UserId" },
+                values: new object[,]
+                {
+                    { 1L, "Nguyễn Xuân B", "Import Product", "Reason Detail...", 1L, 17599.869999999999, 1L },
+                    { 2L, "Nguyễn Xuân B", "Tranferred Warehouse", "Reason Detail...", 2L, 2300.0, 1L },
+                    { 3L, "Trần Đức A", "Import Product", "Reason Detail...", 3L, 3399.3000000000002, 2L }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Products",
                 columns: new[] { "ProductId", "BrandId", "CategoryId", "Description", "Name", "Price", "Unit" },
                 values: new object[,]
@@ -306,13 +316,15 @@ namespace WarehouseWebMVC.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Receipts",
-                columns: new[] { "ReceiptId", "Deliverer", "Reason", "ReasonDetail", "SupplierId", "Total", "UserId" },
+                table: "ImportNoteDetails",
+                columns: new[] { "ImportNoteDetailId", "ImportNoteId", "ImportPrice", "ProductId", "Quantity" },
                 values: new object[,]
                 {
-                    { 1L, "Nguyễn Xuân B", "Import Product", "Reason Detail...", 1L, 17599.869999999999, 1L },
-                    { 2L, "Nguyễn Xuân B", "Tranferred Warehouse", "Reason Detail...", 2L, 2300.0, 1L },
-                    { 3L, "Trần Đức A", "Import Product", "Reason Detail...", 3L, 3399.3000000000002, 2L }
+                    { 1L, 1L, 1399.99, 1L, 10 },
+                    { 2L, 1L, 1199.99, 2L, 3 },
+                    { 3L, 2L, 115.0, 3L, 20 },
+                    { 4L, 3L, 150.0, 4L, 16 },
+                    { 5L, 3L, 99.989999999999995, 5L, 10 }
                 });
 
             migrationBuilder.InsertData(
@@ -330,18 +342,6 @@ namespace WarehouseWebMVC.Migrations
                     { 8L, "https://firebasestorage.googleapis.com/v0/b/xhobbe-98105.appspot.com/o/logo%2FNMD_R1_Shoes_White_HQ4451_01_standard.avif?alt=media&token=16bdfe85-910a-4ae5-b120-27f28e06dc71", 4L },
                     { 9L, "https://firebasestorage.googleapis.com/v0/b/xhobbe-98105.appspot.com/o/logo%2FForum_Low_Shoes_White_FY7755_01_standard.avif?alt=media&token=e9cf282a-e6bc-445f-89e7-f270b768f500", 5L },
                     { 10L, "https://firebasestorage.googleapis.com/v0/b/xhobbe-98105.appspot.com/o/logo%2FForum_Low_Shoes_White_FY7755_02_standard_hover.avif?alt=media&token=06650fd5-295c-45b3-b698-8b320d76a7f0", 5L }
-                });
-
-            migrationBuilder.InsertData(
-                table: "ReceiptDetails",
-                columns: new[] { "ReceiptDetailId", "ImportPrice", "ProductId", "Quantity", "ReceiptId" },
-                values: new object[,]
-                {
-                    { 1L, 1399.99, 1L, 10, 1L },
-                    { 2L, 1199.99, 2L, 3, 1L },
-                    { 3L, 115.0, 3L, 20, 2L },
-                    { 4L, 150.0, 4L, 16, 3L },
-                    { 5L, 99.989999999999995, 5L, 10, 3L }
                 });
 
             migrationBuilder.InsertData(
@@ -367,6 +367,26 @@ namespace WarehouseWebMVC.Migrations
                 column: "SenderId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ImportNoteDetails_ImportNoteId",
+                table: "ImportNoteDetails",
+                column: "ImportNoteId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ImportNoteDetails_ProductId",
+                table: "ImportNoteDetails",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ImportNotes_SupplierId",
+                table: "ImportNotes",
+                column: "SupplierId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ImportNotes_UserId",
+                table: "ImportNotes",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ProductImgs_ProductId",
                 table: "ProductImgs",
                 column: "ProductId");
@@ -382,26 +402,6 @@ namespace WarehouseWebMVC.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ReceiptDetails_ProductId",
-                table: "ReceiptDetails",
-                column: "ProductId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ReceiptDetails_ReceiptId",
-                table: "ReceiptDetails",
-                column: "ReceiptId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Receipts_SupplierId",
-                table: "Receipts",
-                column: "SupplierId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Receipts_UserId",
-                table: "Receipts",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Warehouse_ProductId",
                 table: "Warehouse",
                 column: "ProductId");
@@ -414,16 +414,16 @@ namespace WarehouseWebMVC.Migrations
                 name: "Expenses");
 
             migrationBuilder.DropTable(
-                name: "ProductImgs");
+                name: "ImportNoteDetails");
 
             migrationBuilder.DropTable(
-                name: "ReceiptDetails");
+                name: "ProductImgs");
 
             migrationBuilder.DropTable(
                 name: "Warehouse");
 
             migrationBuilder.DropTable(
-                name: "Receipts");
+                name: "ImportNotes");
 
             migrationBuilder.DropTable(
                 name: "Products");

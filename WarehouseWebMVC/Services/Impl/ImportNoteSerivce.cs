@@ -12,12 +12,12 @@ using WarehouseWebMVC.ViewModels;
 
 namespace WarehouseWebMVC.Services.Impl
 {
-    public class ReceiptSerivce : IReceiptService
+    public class ImportNoteSerivce : IImportNoteService
     {
         private readonly DataContext _dataContext;
         private readonly IMapper _mapper;
 
-        public ReceiptSerivce(DataContext dataContext, IMapper mapper)
+        public ImportNoteSerivce(DataContext dataContext, IMapper mapper)
         {
             _dataContext = dataContext;
             _mapper = mapper;
@@ -30,7 +30,7 @@ namespace WarehouseWebMVC.Services.Impl
                 {
                     try
                     {
-                        var receipt = new Receipt
+                        var importNote = new ImportNote
                         {
                             Total = importProducts.Total,
                             Deliverer = importProducts.Deliverer,
@@ -40,16 +40,16 @@ namespace WarehouseWebMVC.Services.Impl
                             SupplierId = importProducts.SupplierId,
                         };
 
-                        _dataContext.Receipts.Add(receipt);
+                        _dataContext.ImportNotes.Add(importNote);
                         _dataContext.SaveChanges();
 
-                        var receiptId = receipt.ReceiptId;
+                        var ImportNoteId = importNote.ImportNoteId;
 
                         foreach (var product in importProducts.ImportProducts)
                         {
-                            _dataContext.ReceiptDetails.Add(new ReceiptDetail
+                            _dataContext.ImportNoteDetails.Add(new ImportNoteDetail
                             {
-                                ReceiptId = receiptId,
+                                ImportNoteId = ImportNoteId,
                                 ProductId = product.ProductId,
                                 ImportPrice = product.PriceImport,
                                 Quantity = product.Quantity
@@ -73,9 +73,9 @@ namespace WarehouseWebMVC.Services.Impl
             }
         }
 
-        public ReceiptViewModel GetAll(int page)
+        public ImportNoteViewModel GetAll(int page)
         {
-            var total = _dataContext.Receipts.Count();
+            var total = _dataContext.ImportNotes.Count();
 
             const int pageSize = 5;
 
@@ -87,61 +87,61 @@ namespace WarehouseWebMVC.Services.Impl
 
             int skipAmount = (pageable.CurrentPage - 1) * pageSize;
 
-            var receipts = _dataContext.Receipts
+            var importNotes = _dataContext.ImportNotes
                 .Skip(skipAmount)
                 .Take(pageSize)
                 .Include(u => u.User)
                 .Include(s => s.Supplier)
-                .OrderBy(r => r.ReceiptId)
+                .OrderBy(r => r.ImportNoteId)
                 .ToList();
 
-            var receiptsViewModel = new ReceiptViewModel { Receipts = receipts, Pageable = pageable };
+            var importNotesViewModel = new ImportNoteViewModel { ImportNotes = importNotes, Pageable = pageable };
 
-            return receiptsViewModel;
+            return importNotesViewModel;
         }
 
-        public ReceiptDetailVM GetDetailById(long receiptId)
+        public ImportNoteDetailVM GetDetailById(long importNoteId)
         {
-            var receipt = _dataContext.Receipts
+            var importNote = _dataContext.ImportNotes
                 .Include(u => u.User)
                 .Include(s => s.Supplier)
-                .FirstOrDefault(r => r.ReceiptId == receiptId);
+                .FirstOrDefault(r => r.ImportNoteId == importNoteId);
 
-            if (receipt != null)
+            if (importNote != null)
             {
-                var receiptDetail = _dataContext.ReceiptDetails
-                    .Where(r => r.ReceiptId == receipt.ReceiptId)
+                var importNoteDetail = _dataContext.ImportNoteDetails
+                    .Where(r => r.ImportNoteId == importNote.ImportNoteId)
                     .Include(p => p.Product)
                     .ToList();
-                return new ReceiptDetailVM { Receipt = receipt, ReceiptDetails = receiptDetail };
+                return new ImportNoteDetailVM { ImportNote = importNote, ImportNoteDetails = importNoteDetail };
             }
             return null!;
         }
 
-        public ReceiptViewModel SearchReceipt(string searchType, string searchValue)
+        public ImportNoteViewModel SearchImportNote(string searchType, string searchValue)
         {
-            IQueryable<Receipt> searchReceipt = _dataContext.Receipts
+            IQueryable<ImportNote> searchImportNote = _dataContext.ImportNotes
                 .Include(u => u.User)
                 .Include(s => s.Supplier);
 
             switch (searchType)
             {
                 case "Supplier":
-                    searchReceipt = searchReceipt.Where(r => r.Supplier.Name.ToUpper().Contains(searchValue.ToUpper()));
+                    searchImportNote = searchImportNote.Where(r => r.Supplier.Name.ToUpper().Contains(searchValue.ToUpper()));
                     break;
                 case "Deliverer":
-                    searchReceipt = searchReceipt.Where(r => EF.Functions.Collate(r.Deliverer, "NOCASE").Contains(searchValue));
+                    searchImportNote = searchImportNote.Where(r => EF.Functions.Collate(r.Deliverer, "NOCASE").Contains(searchValue));
                     break;
                 default:
-                    searchReceipt = searchReceipt.Where(r => EF.Functions.Collate(r.User.Name, "NOCASE").Contains(searchValue));
+                    searchImportNote = searchImportNote.Where(r => EF.Functions.Collate(r.User.Name, "NOCASE").Contains(searchValue));
                     break;
             }
 
-            if (searchReceipt.Any())
+            if (searchImportNote.Any())
             {
-                var searchReceipts = _mapper.Map<List<Receipt>>(searchReceipt.ToList());
-                var receiptViewModel = new ReceiptViewModel { Receipts = searchReceipts };
-                return receiptViewModel;
+                var searchImportNotes = _mapper.Map<List<ImportNote>>(searchImportNote.ToList());
+                var importNoteViewModel = new ImportNoteViewModel { ImportNotes = searchImportNotes };
+                return importNoteViewModel;
             }
             return null!;
         }

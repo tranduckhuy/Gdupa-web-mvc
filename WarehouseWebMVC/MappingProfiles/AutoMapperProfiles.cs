@@ -15,6 +15,6 @@ public class AutoMapperProfiles : Profile
 		CreateMap<User, UserDTO>().ReverseMap();
         CreateMap<User, AddUserDTO>().ReverseMap();
         CreateMap<User, UserInformationDTO>().ReverseMap();
-        CreateMap<Receipt, ReceiptDTO>().ReverseMap();
+        CreateMap<ImportNote, ImportNoteDTO>().ReverseMap();
     }
 }

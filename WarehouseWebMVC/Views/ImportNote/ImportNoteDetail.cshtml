@@ -1,6 +1,6 @@
-@model WarehouseWebMVC.ViewModels.ReceiptDetailVM
+@model WarehouseWebMVC.ViewModels.ImportNoteDetailVM
 @{
-    ViewData["Title"] = "Receipt";
+    ViewData["Title"] = "ImportNote";
 }
 
 <!-- sherah Dashboard -->
@@ -15,11 +15,11 @@
                             <div class="col-12 sherah-flex-between">
                                 <!-- Sherah Breadcrumb -->
                                 <div class="sherah-breadcrumb">
-                                    <h2 class="sherah-breadcrumb__title">Receipt Detail</h2>
+                                    <h2 class="sherah-breadcrumb__title">ImportNote Detail</h2>
                                     <ul class="sherah-breadcrumb__list">
                                         <li><a href="/Dashboard/Dashboard">Home</a></li>
-                                        <li><a href="/Receipt/ReceiptList">Receipt List</a></li>
-                                        <li class="active"><a href="#!">Receipt Detail</a></li>
+                                        <li><a href="/ImportNote/ImportNoteList">ImportNote List</a></li>
+                                        <li class="active"><a href="#!">ImportNote Detail</a></li>
                                     </ul>
                                 </div>
                                 <!-- End Sherah Breadcrumb -->
@@ -29,7 +29,7 @@
 
                             <div class="sherah-invoice-header">
                                 <a href="#!"> <img class="sherah-logo__main" src="/assets/images/gdupa-high-resolution-logo-transparent.png" alt="#" style="width: 200px; margin-top: 15px;"></a>
-                                <p class="sherah-invoice-header__id sherah-color1" style="font-size:20px">Receipt #@Model.Receipt.ReceiptId</p>
+                                <p class="sherah-invoice-header__id sherah-color1" style="font-size:20px">ImportNote #@Model.ImportNote.ImportNoteId</p>
                             </div>
 
                             <!-- Sherah Invoice -->
@@ -37,30 +37,30 @@
                                 <div class="sherah-invoice-form__first">
                                     <div class="sherah-invoice-form__single">
                                         <h4 class="sherah-invoice-form__title">Billed To: </h4>
-                                        <p class="sherah-invoice-form__text">@Model.Receipt.User.Name</p>
-                                        <p class="sherah-invoice-form__text">@Model.Receipt.User.Address</p>
+                                        <p class="sherah-invoice-form__text">@Model.ImportNote.User.Name</p>
+                                        <p class="sherah-invoice-form__text">@Model.ImportNote.User.Address</p>
                                     </div>
                                     <div class="sherah-invoice-form__single sherah-invoice-form__single--right">
                                         <h4 class="sherah-invoice-form__title">Shipped From:</h4>
-                                        <p class="sherah-invoice-form__text">@Model.Receipt.Supplier.Name</p>
-                                        <p class="sherah-invoice-form__text">@Model.Receipt.Supplier.Address</p>
+                                        <p class="sherah-invoice-form__text">@Model.ImportNote.Supplier.Name</p>
+                                        <p class="sherah-invoice-form__text">@Model.ImportNote.Supplier.Address</p>
                                     </div>
                                 </div>
                                 <div class="sherah-invoice-form__first">
                                     <div class="sherah-invoice-form__single">
-                                        <h4 class="sherah-invoice-form__title">Receipt Creator Information:</h4>
-                                        <p class="sherah-invoice-form__text">@Model.Receipt.User.Phone</p>
-                                        <p class="sherah-invoice-form__text">@Model.Receipt.User.Email</p>
+                                        <h4 class="sherah-invoice-form__title">ImportNote Creator Information:</h4>
+                                        <p class="sherah-invoice-form__text">@Model.ImportNote.User.Phone</p>
+                                        <p class="sherah-invoice-form__text">@Model.ImportNote.User.Email</p>
                                     </div>
                                     <div class="sherah-invoice-form__single sherah-invoice-form__single--right">
                                         <div>
                                             <h4 class="sherah-invoice-form__title">Shipped By:</h4>
-                                            <p class="sherah-invoice-form__text">@Model.Receipt.Deliverer</p>
+                                            <p class="sherah-invoice-form__text">@Model.ImportNote.Deliverer</p>
                                         </div>
                                         <br/>
                                         <div>
                                             <h4 class="sherah-invoice-form__title">Order Date:</h4>
-                                            <p class="sherah-invoice-form__text">@Model.Receipt.CreatedAt</p>
+                                            <p class="sherah-invoice-form__text">@Model.ImportNote.CreatedAt</p>
                                         </div>
                                     </div>
                                 </div>
@@ -81,32 +81,32 @@
                                                 </tr>
                                             </thead>
                                             <tbody class="sherah-table__body">
-                                                @foreach (var receiptDetail in Model.ReceiptDetails)
+                                                @foreach (var ImportNoteDetail in Model.ImportNoteDetails)
                                                 {
                                                     <tr>
                                                         <td class="sherah-table__column-4 sherah-table__data-1">
                                                             <div class="sherah-table__product-content">
-                                                                <p class="sherah-table__product-desc">@receiptDetail.Product.ProductId</p>
+                                                                <p class="sherah-table__product-desc">@ImportNoteDetail.Product.ProductId</p>
                                                             </div>
                                                         </td>
                                                         <td class="sherah-table__column-2 sherah-table__data-2">
                                                             <div class="sherah-table__product-name">
-                                                                <h4 class="sherah-table__product-name--title" style="font-size:16px">@receiptDetail.Product.Name</h4>
+                                                                <h4 class="sherah-table__product-name--title" style="font-size:16px">@ImportNoteDetail.Product.Name</h4>
                                                             </div>
                                                         </td>
                                                         <td class="sherah-table__column-3 sherah-table__data-3">
                                                             <div class="sherah-table__product-content">
-                                                                <p class="sherah-table__product-desc">$@receiptDetail.Product.Price</p>
+                                                                <p class="sherah-table__product-desc">$@ImportNoteDetail.Product.Price</p>
                                                             </div>
                                                         </td>
                                                         <td class="sherah-table__column-4 sherah-table__data-4">
                                                             <div class="sherah-table__product-content">
-                                                                <p class="sherah-table__product-desc">@receiptDetail.Quantity</p>
+                                                                <p class="sherah-table__product-desc">@ImportNoteDetail.Quantity</p>
                                                             </div>
                                                         </td>
                                                         <td class="sherah-table__column-4 sherah-table__data-4">
                                                             <div class="sherah-table__product-content">
-                                                                <p class="sherah-table__product-desc">$@receiptDetail.ImportPrice</p>
+                                                                <p class="sherah-table__product-desc">$@ImportNoteDetail.ImportPrice</p>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -115,17 +115,17 @@
                                         </table>
                                         <div class="order-totals" style="margin-right:0;">
                                             <ul class="order-totals__list" style="min-width:50%">
-                                                <li class="order-totals__list--sub"><span>Subtotal</span> <span class="order-totals__amount" style="font-size:16px">$@Model.Receipt.Total</span></li>
+                                                <li class="order-totals__list--sub"><span>Subtotal</span> <span class="order-totals__amount" style="font-size:16px">$@Model.ImportNote.Total</span></li>
                                                 <li><span style="font-size:16px">Shipping</span> <span class="order-totals__amount" style="font-size:16px">$25</span></li>
                                                 <li><span>VAT Tax</span> <span class="order-totals__amount" style="font-size:16px">$35</span></li>
-                                                <li class="order-totals__bottom"><span>Total</span> <span class="order-totals__amount" style="font-size:16px">$@((Model.Receipt.Total) + 60)</span></li>
+                                                <li class="order-totals__bottom"><span>Total</span> <span class="order-totals__amount" style="font-size:16px">$@((Model.ImportNote.Total) + 60)</span></li>
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-12 mg-top-30">
                                     <h4 class="mg-btm-10">Notes: </h4>
-                                    <p>All accounts are to be paid within 7 days from receipt of invoice. To be paid by cheque or credit card or direct payment online. If account is not paid within 7 days</p>
+                                    <p>All accounts are to be paid within 7 days from ImportNote of invoice. To be paid by cheque or credit card or direct payment online. If account is not paid within 7 days</p>
                                     <p>the credits details supplied as confirmation of work undertaken will be charged the agreed quoted fee noted above.</p>
                                 </div>
                                 <div class="col-12">
@@ -141,7 +141,7 @@
                                             </svg>
                                             Print
                                         </a>
-                                        <a href="/Receipt/ReceiptList" class="sherah-btn sherah-btn__third">Cancel</a>
+                                        <a href="/ImportNote/ImportNoteList" class="sherah-btn sherah-btn__third">Cancel</a>
                                     </div>
                                 </div>
                             </div>

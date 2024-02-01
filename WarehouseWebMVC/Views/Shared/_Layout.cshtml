@@ -2,7 +2,7 @@
     var name = ViewContext.HttpContext.Session.GetString("Name");
     var address = ViewContext.HttpContext.Session.GetString("Address");
     var avatar = ViewContext.HttpContext.Session.GetString("Avatar");
-    byte[] userIdBytes = ViewContext.HttpContext.Session.Get("Id");
+    byte[]? userIdBytes = ViewContext.HttpContext.Session.Get("Id");
     long userId = userIdBytes != null ? BitConverter.ToInt64(userIdBytes, 0) : 0;
 }
 <!DOCTYPE html>
@@ -245,7 +245,7 @@
 
                             </li>
                             <li>
-                                <a asp-area="" asp-controller="Receipt" asp-action="ReceiptList" class="collapsed">
+                                <a asp-area="" asp-controller="ImportNote" asp-action="ImportNoteList" class="collapsed">
                                     <span class="menu-bar__text">
                                         <span class="sherah-menu-icon sherah-svg-icon__v1">
                                             <svg class="sherah-svg-icon" xmlns="http://www.w3.org/2000/svg"
@@ -268,7 +268,7 @@
                                                 </g>
                                             </svg>
                                         </span>
-                                        <span class="menu-bar__name">Receipt</span>
+                                        <span class="menu-bar__name">ImportNote</span>
                                     </span>
                                 </a>
                             </li>

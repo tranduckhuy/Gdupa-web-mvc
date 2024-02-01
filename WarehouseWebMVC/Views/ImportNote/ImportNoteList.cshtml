@@ -1,6 +1,6 @@
-@model WarehouseWebMVC.ViewModels.ReceiptViewModel
+@model WarehouseWebMVC.ViewModels.ImportNoteViewModel
 @{
-    ViewData["Title"] = "Receipt";
+    ViewData["Title"] = "ImportNote";
     var message = TempData["Message"] as string;
 }
 <div id="toast"></div>
@@ -65,10 +65,10 @@
                             <div class="col-12 sherah-flex-between">
                                 <!-- Sherah Breadcrumb -->
                                 <div class="sherah-breadcrumb">
-                                    <h2 class="sherah-breadcrumb__title">Receipt list</h2>
+                                    <h2 class="sherah-breadcrumb__title">ImportNote list</h2>
                                     <ul class="sherah-breadcrumb__list">
                                         <li><a href="/Dashboard/Dashboard">Home</a></li>
-                                        <li class="active"><a href="#!">Receipt List</a></li>
+                                        <li class="active"><a href="#!">ImportNote List</a></li>
                                     </ul>
                                 </div>
                                 <!-- End Sherah Breadcrumb -->
@@ -78,7 +78,7 @@
                             <div class="row">
                                 <div class="col-sm-12 col-md-8"></div>
                                 <div class="col-sm-12 col-md-4">
-                                    <form method="post" asp-action="SearchReceipt" asp-controller="Receipt">
+                                    <form method="post" asp-action="SearchImportNote" asp-controller="ImportNote">
                                         <div id="sherah-table__vendor_filter" class="dataTables_filter">
                                             <label for="search-input" style="position: relative;">
                                                 <button class="sherah-data-table-label" style="font-size:1rem;position: relative; top:2.7rem; left:18.5rem; right: auto; z-index: 4; border:none;background-color: #F3F4F7;">
@@ -103,7 +103,7 @@
                                 <!-- sherah Table Head -->
                                 <thead class="sherah-table__head">
                                     <tr>
-                                        <th class="sherah-table__column-1 sherah-table__h1" style="width:22%;min-width:220px;font-size:16px;padding-top:12px;padding-bottom:12px;">Receipt Creator</th>
+                                        <th class="sherah-table__column-1 sherah-table__h1" style="width:22%;min-width:220px;font-size:16px;padding-top:12px;padding-bottom:12px;">ImportNote Creator</th>
                                         <th class="sherah-table__column-2 sherah-table__h2" style="width:8%;min-width:70px;font-size:16px;padding-top:12px;padding-bottom:12px;">Supplier Name</th>
                                         <th class="sherah-table__column-3 sherah-table__h3" style="width:15%;min-width:170px;font-size:16px;padding-top:12px;padding-bottom:12px;">Created Date</th>
                                         <th class="sherah-table__column-4 sherah-table__h4" style="width:20%;min-width:170px;font-size:16px;padding-top:12px;padding-bottom:12px;">Deliver Name</th>
@@ -113,41 +113,41 @@
                                     </tr>
                                 </thead>
                                 <tbody class="sherah-table__body">
-                                    @foreach (var receipt in Model.Receipts)
+                                    @foreach (var ImportNote in Model.ImportNotes)
                                     {
                                         <tr style="height:20px;">
                                             <td class="sherah-table__column-1 sherah-table__data-1" style="width:22%;">
                                                 <div class="sherah-language-form__input">
                                                     <input class="sherah-language-form__check" id="checkbox" name="checkbox" type="checkbox">
-                                                    <p class="crany-table__product--number">@receipt.User.Name</p>
+                                                    <p class="crany-table__product--number">@ImportNote.User.Name</p>
                                                 </div>
                                             </td>
                                             <td class="sherah-table__column-2 sherah-table__data-2" style="width:8%;">
                                                 <div class="sherah-table__product-content">
-                                                    <p class="sherah-table__product-desc">@receipt.Supplier.Name</p>
+                                                    <p class="sherah-table__product-desc">@ImportNote.Supplier.Name</p>
                                                 </div>
                                             </td>
                                             <td class="sherah-table__column-3 sherah-table__data-3" style="width:15%;">
-                                                <p class="sherah-table__product-desc">@receipt.CreatedAt</p>
+                                                <p class="sherah-table__product-desc">@ImportNote.CreatedAt</p>
                                             </td>
                                             <td class="sherah-table__column-4 sherah-table__data-4" style="width:20%;">
                                                 <div class="sherah-table__product-content">
-                                                    <p class="sherah-table__product-desc">@receipt.Deliverer</p>
+                                                    <p class="sherah-table__product-desc">@ImportNote.Deliverer</p>
                                                 </div>
                                             </td>
                                             <td class="sherah-table__column-5 sherah-table__data-5" style="width:10%;">
                                                 <div class="sherah-table__product-content">
-                                                    <p class="sherah-table__product-desc">$@receipt.Total</p>
+                                                    <p class="sherah-table__product-desc">$@ImportNote.Total</p>
                                                 </div>
                                             </td>
                                             <td class="sherah-table__column-6 sherah-table__data-6" style="width:15%;">
                                                 <div class="sherah-table__product-content">
-                                                    <p class="sherah-table__product-desc">@receipt.Reason</p>
+                                                    <p class="sherah-table__product-desc">@ImportNote.Reason</p>
                                                 </div>
                                             </td>
                                             <td class="sherah-table__column-7 sherah-table__data-7" style="width:10%;">
                                                 <div class="sherah-table__status__group">
-                                                    <a href="/Receipt/ReceiptDetail?receiptId=@receipt.ReceiptId" class="sherah-table__action sherah-color1 sherah-color1__bg--opactity">
+                                                    <a href="/ImportNote/ImportNoteDetail?ImportNoteId=@ImportNote.ImportNoteId" class="sherah-table__action sherah-color1 sherah-color1__bg--opactity">
                                                         <i class="fa-regular fa-eye"></i>
                                                     </a>
                                                 </div>
@@ -160,7 +160,7 @@
                                 @if (Model.Pageable != null)
                                 {
                                     <div class="col-sm-12 col-md-5">
-                                        <div class="dataTables_info" id="sherah-table__vendor_info" role="status" aria-live="polite" style="font-weight:500">Total @Model.Pageable.TotalItems receipts</div>
+                                        <div class="dataTables_info" id="sherah-table__vendor_info" role="status" aria-live="polite" style="font-weight:500">Total @Model.Pageable.TotalItems ImportNotes</div>
                                     </div>
                                 }
                                 <div class="col-sm-12 col-md-7">
@@ -170,15 +170,15 @@
                                             <ul class="sherah-pagination__list">
                                                 @if (Model.Pageable.CurrentPage > 1)
                                                 {
-                                                    <li class="sherah-pagination__button"><a href="/Receipt/ReceiptList?page=@(Model.Pageable.CurrentPage > 1 ? Model.Pageable.CurrentPage - 1 : 1)"><i class="fas fa-angle-left"></i></a></li>
+                                                    <li class="sherah-pagination__button"><a href="/ImportNote/ImportNoteList?page=@(Model.Pageable.CurrentPage > 1 ? Model.Pageable.CurrentPage - 1 : 1)"><i class="fas fa-angle-left"></i></a></li>
                                                 }
                                                 @for (var i = Model.Pageable.StartPage; i <= Model.Pageable.EndPage; i++)
                                                 {
-                                                    <li class="@(Model.Pageable.CurrentPage == i ? "active" : "")"><a href="/Receipt/ReceiptList?page=@i">@i</a></li>
+                                                    <li class="@(Model.Pageable.CurrentPage == i ? "active" : "")"><a href="/ImportNote/ImportNoteList?page=@i">@i</a></li>
                                                 }
                                                 @if (Model.Pageable.CurrentPage < Model.Pageable.TotalPages)
                                                 {
-                                                    <li class="sherah-pagination__button"><a href="/Receipt/ReceiptList?page=@(Model.Pageable.CurrentPage < Model.Pageable.TotalPages ? Model.Pageable.CurrentPage + 1 : Model.Pageable.TotalPages)"><i class="fas fa-angle-right"></i></a></li>
+                                                    <li class="sherah-pagination__button"><a href="/ImportNote/ImportNoteList?page=@(Model.Pageable.CurrentPage < Model.Pageable.TotalPages ? Model.Pageable.CurrentPage + 1 : Model.Pageable.TotalPages)"><i class="fas fa-angle-right"></i></a></li>
                                                 }
                                             </ul>
                                         </div>
