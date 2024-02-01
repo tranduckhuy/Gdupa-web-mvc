@@ -268,7 +268,7 @@ namespace WarehouseWebMVC.Services.Impl
 
         public bool CheckNewQuarter()
         {
-            int currentQuarter = (DateTime.UtcNow.Month - 1) * 3 + 1;
+            int currentQuarter = (DateTime.UtcNow.Month - 1) / 3 + 1;
             int currentYear = DateTime.UtcNow.Year;
 
             var latestQuarter = _dataContext.Warehouse
