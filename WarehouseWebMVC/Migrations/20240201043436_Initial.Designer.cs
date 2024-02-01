@@ -11,7 +11,7 @@ using WarehouseWebMVC.Data;
 namespace WarehouseWebMVC.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240128063955_Initial")]
+    [Migration("20240201043436_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -148,6 +148,151 @@ namespace WarehouseWebMVC.Migrations
                             ReceiverId = 4L,
                             SenderId = 2L,
                             Total = 3399.9000000000001
+                        });
+                });
+
+            modelBuilder.Entity("WarehouseWebMVC.Models.Domain.ImportNote", b =>
+                {
+                    b.Property<long>("ImportNoteId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("TEXT")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+                    b.Property<string>("Deliverer")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ReasonDetail")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<long>("SupplierId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<double>("Total")
+                        .HasColumnType("REAL");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("ImportNoteId");
+
+                    b.HasIndex("SupplierId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ImportNotes");
+
+                    b.HasData(
+                        new
+                        {
+                            ImportNoteId = 1L,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deliverer = "Nguyễn Xuân B",
+                            Reason = "Import Product",
+                            ReasonDetail = "Reason Detail...",
+                            SupplierId = 1L,
+                            Total = 17599.869999999999,
+                            UserId = 1L
+                        },
+                        new
+                        {
+                            ImportNoteId = 2L,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deliverer = "Nguyễn Xuân B",
+                            Reason = "Tranferred Warehouse",
+                            ReasonDetail = "Reason Detail...",
+                            SupplierId = 2L,
+                            Total = 2300.0,
+                            UserId = 1L
+                        },
+                        new
+                        {
+                            ImportNoteId = 3L,
+                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Deliverer = "Trần Đức A",
+                            Reason = "Import Product",
+                            ReasonDetail = "Reason Detail...",
+                            SupplierId = 3L,
+                            Total = 3399.3000000000002,
+                            UserId = 2L
+                        });
+                });
+
+            modelBuilder.Entity("WarehouseWebMVC.Models.Domain.ImportNoteDetail", b =>
+                {
+                    b.Property<long>("ImportNoteDetailId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("ImportNoteId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<double>("ImportPrice")
+                        .HasColumnType("REAL");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("ImportNoteDetailId");
+
+                    b.HasIndex("ImportNoteId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ImportNoteDetails");
+
+                    b.HasData(
+                        new
+                        {
+                            ImportNoteDetailId = 1L,
+                            ImportNoteId = 1L,
+                            ImportPrice = 1399.99,
+                            ProductId = 1L,
+                            Quantity = 10
+                        },
+                        new
+                        {
+                            ImportNoteDetailId = 2L,
+                            ImportNoteId = 1L,
+                            ImportPrice = 1199.99,
+                            ProductId = 2L,
+                            Quantity = 3
+                        },
+                        new
+                        {
+                            ImportNoteDetailId = 3L,
+                            ImportNoteId = 2L,
+                            ImportPrice = 115.0,
+                            ProductId = 3L,
+                            Quantity = 20
+                        },
+                        new
+                        {
+                            ImportNoteDetailId = 4L,
+                            ImportNoteId = 3L,
+                            ImportPrice = 150.0,
+                            ProductId = 4L,
+                            Quantity = 16
+                        },
+                        new
+                        {
+                            ImportNoteDetailId = 5L,
+                            ImportNoteId = 3L,
+                            ImportPrice = 99.989999999999995,
+                            ProductId = 5L,
+                            Quantity = 10
                         });
                 });
 
@@ -335,151 +480,6 @@ namespace WarehouseWebMVC.Migrations
                             ImageId = 10L,
                             ImageURL = "https://firebasestorage.googleapis.com/v0/b/xhobbe-98105.appspot.com/o/logo%2FForum_Low_Shoes_White_FY7755_02_standard_hover.avif?alt=media&token=06650fd5-295c-45b3-b698-8b320d76a7f0",
                             ProductId = 5L
-                        });
-                });
-
-            modelBuilder.Entity("WarehouseWebMVC.Models.Domain.Receipt", b =>
-                {
-                    b.Property<long>("ReceiptId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("TEXT")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-                    b.Property<string>("Deliverer")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Reason")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("ReasonDetail")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<long>("SupplierId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<double>("Total")
-                        .HasColumnType("REAL");
-
-                    b.Property<long>("UserId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("ReceiptId");
-
-                    b.HasIndex("SupplierId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Receipts");
-
-                    b.HasData(
-                        new
-                        {
-                            ReceiptId = 1L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Deliverer = "Nguyễn Xuân B",
-                            Reason = "Import Product",
-                            ReasonDetail = "Reason Detail...",
-                            SupplierId = 1L,
-                            Total = 17599.869999999999,
-                            UserId = 1L
-                        },
-                        new
-                        {
-                            ReceiptId = 2L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Deliverer = "Nguyễn Xuân B",
-                            Reason = "Tranferred Warehouse",
-                            ReasonDetail = "Reason Detail...",
-                            SupplierId = 2L,
-                            Total = 2300.0,
-                            UserId = 1L
-                        },
-                        new
-                        {
-                            ReceiptId = 3L,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Deliverer = "Trần Đức A",
-                            Reason = "Import Product",
-                            ReasonDetail = "Reason Detail...",
-                            SupplierId = 3L,
-                            Total = 3399.3000000000002,
-                            UserId = 2L
-                        });
-                });
-
-            modelBuilder.Entity("WarehouseWebMVC.Models.Domain.ReceiptDetail", b =>
-                {
-                    b.Property<long>("ReceiptDetailId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<double>("ImportPrice")
-                        .HasColumnType("REAL");
-
-                    b.Property<long>("ProductId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long>("ReceiptId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("ReceiptDetailId");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("ReceiptId");
-
-                    b.ToTable("ReceiptDetails");
-
-                    b.HasData(
-                        new
-                        {
-                            ReceiptDetailId = 1L,
-                            ImportPrice = 1399.99,
-                            ProductId = 1L,
-                            Quantity = 10,
-                            ReceiptId = 1L
-                        },
-                        new
-                        {
-                            ReceiptDetailId = 2L,
-                            ImportPrice = 1199.99,
-                            ProductId = 2L,
-                            Quantity = 3,
-                            ReceiptId = 1L
-                        },
-                        new
-                        {
-                            ReceiptDetailId = 3L,
-                            ImportPrice = 115.0,
-                            ProductId = 3L,
-                            Quantity = 20,
-                            ReceiptId = 2L
-                        },
-                        new
-                        {
-                            ReceiptDetailId = 4L,
-                            ImportPrice = 150.0,
-                            ProductId = 4L,
-                            Quantity = 16,
-                            ReceiptId = 3L
-                        },
-                        new
-                        {
-                            ReceiptDetailId = 5L,
-                            ImportPrice = 99.989999999999995,
-                            ProductId = 5L,
-                            Quantity = 10,
-                            ReceiptId = 3L
                         });
                 });
 
@@ -782,6 +782,44 @@ namespace WarehouseWebMVC.Migrations
                     b.Navigation("Sender");
                 });
 
+            modelBuilder.Entity("WarehouseWebMVC.Models.Domain.ImportNote", b =>
+                {
+                    b.HasOne("WarehouseWebMVC.Models.Domain.Supplier", "Supplier")
+                        .WithMany("ImportNotes")
+                        .HasForeignKey("SupplierId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WarehouseWebMVC.Models.Domain.User", "User")
+                        .WithMany("ImportNotes")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Supplier");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("WarehouseWebMVC.Models.Domain.ImportNoteDetail", b =>
+                {
+                    b.HasOne("WarehouseWebMVC.Models.Domain.ImportNote", "ImportNote")
+                        .WithMany("ImportNoteDetails")
+                        .HasForeignKey("ImportNoteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WarehouseWebMVC.Models.Domain.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ImportNote");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("WarehouseWebMVC.Models.Domain.Product", b =>
                 {
                     b.HasOne("WarehouseWebMVC.Models.Domain.Brand", "Brand")
@@ -812,44 +850,6 @@ namespace WarehouseWebMVC.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("WarehouseWebMVC.Models.Domain.Receipt", b =>
-                {
-                    b.HasOne("WarehouseWebMVC.Models.Domain.Supplier", "Supplier")
-                        .WithMany("Receipts")
-                        .HasForeignKey("SupplierId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WarehouseWebMVC.Models.Domain.User", "User")
-                        .WithMany("Receipts")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Supplier");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("WarehouseWebMVC.Models.Domain.ReceiptDetail", b =>
-                {
-                    b.HasOne("WarehouseWebMVC.Models.Domain.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WarehouseWebMVC.Models.Domain.Receipt", "Receipt")
-                        .WithMany("ReceiptDetails")
-                        .HasForeignKey("ReceiptId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-
-                    b.Navigation("Receipt");
-                });
-
             modelBuilder.Entity("WarehouseWebMVC.Models.Domain.Warehouse", b =>
                 {
                     b.HasOne("WarehouseWebMVC.Models.Domain.Product", "Product")
@@ -871,24 +871,24 @@ namespace WarehouseWebMVC.Migrations
                     b.Navigation("Products");
                 });
 
+            modelBuilder.Entity("WarehouseWebMVC.Models.Domain.ImportNote", b =>
+                {
+                    b.Navigation("ImportNoteDetails");
+                });
+
             modelBuilder.Entity("WarehouseWebMVC.Models.Domain.Product", b =>
                 {
                     b.Navigation("ProductImgs");
                 });
 
-            modelBuilder.Entity("WarehouseWebMVC.Models.Domain.Receipt", b =>
-                {
-                    b.Navigation("ReceiptDetails");
-                });
-
             modelBuilder.Entity("WarehouseWebMVC.Models.Domain.Supplier", b =>
                 {
-                    b.Navigation("Receipts");
+                    b.Navigation("ImportNotes");
                 });
 
             modelBuilder.Entity("WarehouseWebMVC.Models.Domain.User", b =>
                 {
-                    b.Navigation("Receipts");
+                    b.Navigation("ImportNotes");
 
                     b.Navigation("ReceivedExpenseReports");
 

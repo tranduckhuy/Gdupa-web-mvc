@@ -6,8 +6,8 @@ namespace WarehouseWebMVC.Data;
 public class DataContext : DbContext
 {
     public DbSet<User> Users { get; set; }
-    public DbSet<Receipt> Receipts { get; set; }
-    public DbSet<ReceiptDetail> ReceiptDetails { get; set; }
+    public DbSet<ImportNote> ImportNotes { get; set; }
+    public DbSet<ImportNoteDetail> ImportNoteDetails { get; set; }
     public DbSet<ExpenseReport> Expenses { get; set; }
     public DbSet<Supplier> Suppliers { get; set; }
     public DbSet<Category> Category { get; set; }
@@ -31,7 +31,7 @@ public class DataContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Supplier>()
-            .HasMany(e => e.Receipts)
+            .HasMany(e => e.ImportNotes)
             .WithOne(e => e.Supplier)
             .HasForeignKey(e => e.SupplierId)
             .IsRequired();
@@ -49,7 +49,7 @@ public class DataContext : DbContext
             .Property(e => e.ModifiedAt)
             .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
-        modelBuilder.Entity<Receipt>()
+        modelBuilder.Entity<ImportNote>()
             .Property(e => e.CreatedAt)
             .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
@@ -76,7 +76,7 @@ public class DataContext : DbContext
                 .OnDelete(DeleteBehavior.NoAction);
         }
 
-        modelBuilder.Entity<ReceiptDetail>()
+        modelBuilder.Entity<ImportNoteDetail>()
         .HasOne(invoiceDetail => invoiceDetail.Product)
         .WithMany()
         .HasForeignKey(p => p.ProductId);

@@ -10,34 +10,34 @@ using WarehouseWebMVC.ViewModels;
 
 namespace WarehouseWebMVC.Controllers;
 
-public class ReceiptController : Controller
+public class ImportNoteController : Controller
 {
-    private readonly ILogger<ReceiptController> _logger;
-    private readonly IReceiptService _receiptService;
+    private readonly ILogger<ImportNoteController> _logger;
+    private readonly IImportNoteService _importNoteService;
 
-    public ReceiptController(ILogger<ReceiptController> logger, IReceiptService receiptService)
+    public ImportNoteController(ILogger<ImportNoteController> logger, IImportNoteService importNoteService)
     {
         _logger = logger;
-        _receiptService = receiptService;
+        _importNoteService = importNoteService;
     }
 
     [Filter]
-    public IActionResult ReceiptList(int page = 1)
+    public IActionResult ImportNoteList(int page = 1)
     {
         if (HttpContext.Session.GetString("User") != null)
         {
             Response.Headers.Add("Cache-Control", "no-store, no-cache, must-revalidate, post-check=0, pre-check=0");
             Response.Headers.Add("Pragma", "no-cache");
             Response.Headers.Add("Expires", "0");
-            ReceiptViewModel receiptViewModel = _receiptService.GetAll(page);
-            return View(receiptViewModel);
+            ImportNoteViewModel importNoteViewModel = _importNoteService.GetAll(page);
+            return View(importNoteViewModel);
         }
         TempData["Message"] = AppConstant.MESSAGE_NOT_LOGIN;
         return RedirectToAction("Login", "Authentication");
     }
 
     [Filter]
-    public IActionResult ReceiptDetail(long receiptId)
+    public IActionResult ImportNoteDetail(long importNoteId)
     {
         if (HttpContext.Session.GetString("User") != null)
         {
@@ -45,14 +45,14 @@ public class ReceiptController : Controller
             Response.Headers.Add("Pragma", "no-cache");
             Response.Headers.Add("Expires", "0");
 
-            var receiptDetailVM = _receiptService.GetDetailById(receiptId);
+            var importNoteDetailVM = _importNoteService.GetDetailById(importNoteId);
 
-            if (receiptDetailVM == null)
+            if (importNoteDetailVM == null)
             {
                 TempData["Message"] = AppConstant.MESSAGE_FAILED;
-                return RedirectToAction("ReceiptList", "Receipt");
+                return RedirectToAction("ImportNoteList", "ImportNote");
             }
-            return View(receiptDetailVM);
+            return View(importNoteDetailVM);
         }
 
         TempData["Message"] = AppConstant.MESSAGE_NOT_LOGIN;
@@ -60,19 +60,19 @@ public class ReceiptController : Controller
     }
 
     [HttpPost]
-    public IActionResult SearchReceipt(string searchType, string searchValue)
+    public IActionResult SearchImportNote(string searchType, string searchValue)
     {
         if (ModelState.IsValid)
         {
-            var searchReceipts = _receiptService.SearchReceipt(searchType, searchValue);
-            if (searchReceipts != null)
+            var searchImportNotes = _importNoteService.SearchImportNote(searchType, searchValue);
+            if (searchImportNotes != null)
             {
                 TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
-                return View("ReceiptList", searchReceipts);
+                return View("ImportNoteList", searchImportNotes);
             }
         }
         TempData["Message"] = AppConstant.NOT_FOUND;
-        return RedirectToAction("ReceiptList");
+        return RedirectToAction("ImportNoteList");
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

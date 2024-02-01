@@ -4,9 +4,9 @@ using WarehouseWebMVC.Models.DTOs;
 
 namespace WarehouseWebMVC.ViewModels
 {
-	public class ReceiptViewModel
+	public class ImportNoteViewModel
 	{
-		public ICollection<Receipt> Receipts { get; set; }	= new List<Receipt>();
+		public ICollection<ImportNote> ImportNotes { get; set; }	= new List<ImportNote>();
 		public Pageable Pageable { get; set; } = null!;
 	}
 }

@@ -22,7 +22,7 @@ builder.Services.AddTransient<SendMailService>();
 builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IReceiptService, ReceiptSerivce>();
+builder.Services.AddScoped<IImportNoteService, ImportNoteSerivce>();
 builder.Services.AddScoped<ISupplierService, SupplierService>();
 builder.Services.AddScoped<IWarehouseService, WarehouseSerivce>();
 builder.Services.AddScoped<IAddressHelper, AddressHelper>();

@@ -3,18 +3,18 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WarehouseWebMVC.Models.Domain;
 
-public class ReceiptDetail
+public class ImportNoteDetail
 {
     [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public long ReceiptDetailId { get; set; }
+    public long ImportNoteDetailId { get; set; }
     [Required]
     public double ImportPrice { get; set; }
     [Required]
     public int Quantity { get; set; }
 
-    // foreign key ReceiptId
-    public long ReceiptId { get; set; }
-    public Receipt Receipt { get; set; } = null!;
+    // foreign key ImportNoteId
+    public long ImportNoteId { get; set; }
+    public ImportNote ImportNote { get; set; } = null!;
 
     // foreign key ProductId
     public long ProductId { get; set; }
