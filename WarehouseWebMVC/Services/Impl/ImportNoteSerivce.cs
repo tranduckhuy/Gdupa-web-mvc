@@ -121,8 +121,8 @@ namespace WarehouseWebMVC.Services.Impl
         public ImportNoteViewModel SearchImportNote(string searchType, string searchValue)
         {
             IQueryable<ImportNote> searchImportNote = _dataContext.ImportNotes
-                .Include(u => u.User)
-                .Include(s => s.Supplier);
+                .Include(i => i.User)
+                .Include(i => i.Supplier);
 
             switch (searchType)
             {
@@ -133,7 +133,14 @@ namespace WarehouseWebMVC.Services.Impl
                     searchImportNote = searchImportNote.Where(r => EF.Functions.Collate(r.Deliverer, "NOCASE").Contains(searchValue));
                     break;
                 default:
-                    searchImportNote = searchImportNote.Where(r => EF.Functions.Collate(r.User.Name, "NOCASE").Contains(searchValue));
+                    var query = @"SELECT ImportNotes.*, Users.*
+                                  FROM ImportNotes
+                                  JOIN Users ON ImportNotes.UserId = Users.UserId
+                                  WHERE Users.Name COLLATE NOCASE LIKE '%' || @searchValue || '%'";
+                    searchImportNote = _dataContext.ImportNotes.FromSqlRaw(query, new SqliteParameter("@searchValue", searchValue));
+                    searchImportNote = searchImportNote
+                        .Include(i => i.User)
+                        .Include(i => i.Supplier);
                     break;
             }
 
