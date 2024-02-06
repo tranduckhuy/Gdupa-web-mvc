@@ -5,6 +5,9 @@
     ViewData["Title"] = "Products";
     var message = TempData["Message"] as string;
 }
+@{
+    var searchType = ViewBag.SearchType as string ?? "";
+}
 
 <style>
     .sherah-table__vendor .sherah-table__body tr:nth-child(2n+1) {
@@ -99,9 +102,9 @@
                                             <div class="input-group display-flex" style="position: relative;">
                                                 <select class="col-2" name="searchType" style="height:40px; width: 90px; font-size:0.75rem;color:#666;">
                                                     <option value="" selected disabled>Search Type</option>
-                                                    <option value="Name">Name</option>
-                                                    <option value="Category">Category</option>
-                                                    <option value="Brand">Brand</option>
+                                                    <option value="Name" id="name_option">Name</option>
+                                                    <option value="Category" id="category_option">Category</option>
+                                                    <option value="Brand" id="brand_option">Brand</option>
                                                 </select>
                                                 &nbsp;
                                                 <input style="flex-shrink:0;width:auto;z-index:2;" type="search" name="searchValue" class="col-2 form-control form-control-sm" placeholder="Search" aria-controls="sherah-table__vendor">
@@ -218,3 +221,19 @@
     </div>
 </section>
 <!-- End sherah Dashboard -->
+<script>
+    var searchType = "@searchType";
+    if (searchType) {
+        switch(searchType){
+            case "Name":
+                document.getElementById("name_option").setAttribute("selected", "selected");
+                break;
+            case "Category":
+                document.getElementById("category_option").setAttribute("selected", "selected");
+                break;
+            case "Brand":
+                document.getElementById("brand_option").setAttribute("selected", "selected");
+                break;
+        }
+    }
+</script>

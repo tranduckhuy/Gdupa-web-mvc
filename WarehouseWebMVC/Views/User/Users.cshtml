@@ -3,8 +3,11 @@
 @{
     ViewData["Title"] = "User";
     var message = TempData["Message"] as string;
-    byte[] userIdBytes = ViewContext.HttpContext.Session.Get("Id");
+    byte[]? userIdBytes = ViewContext.HttpContext.Session.Get("Id");
     long userId = userIdBytes != null ? BitConverter.ToInt64(userIdBytes, 0) : 0;
+}
+@{
+    var searchType = ViewBag.SearchType as string ?? "";
 }
 <div id="toast"></div>
 @if (!string.IsNullOrEmpty(message))
@@ -68,103 +71,135 @@
                                 <div class="sherah-breadcrumb">
                                     <h2 class="sherah-breadcrumb__title">User List</h2>
                                     <ul class="sherah-breadcrumb__list">
-                                        <li><a asp-area="" asp-controller="Dashboard" asp-action="Dashboard">Home</a></li>
+                                        <li><a asp-area="" asp-controller="Dashboard" asp-action="Dashboard">Home</a>
+                                        </li>
                                         <li class="active"><a href="#!">User List</a></li>
                                     </ul>
                                 </div>
                                 <a asp-area="" asp-controller="User" asp-action="AddUser"
-                                   class="sherah-btn sherah-gbcolor" style="padding:8px 15px;min-width:120px;justify-content:center;">Add User</a>
+                                    class="sherah-btn sherah-gbcolor"
+                                    style="padding:8px 15px;min-width:120px;justify-content:center;">Add User</a>
                             </div>
                         </div>
-                        <div class="sherah-table sherah-page-inner sherah-border sherah-default-bg mg-top-10" style="padding-top:0;">
+                        <div class="sherah-table sherah-page-inner sherah-border sherah-default-bg mg-top-10"
+                            style="padding-top:0;">
                             <div class="row">
                                 <div class="col-sm-12 col-md-8"></div>
                                 <div class="col-sm-12 col-md-4">
                                     <form method="post" asp-action="SearchUser" asp-controller="User">
                                         <div id="sherah-table__vendor_filter" class="dataTables_filter">
                                             <label for="search-input" style="position: relative;">
-                                                <button class="sherah-data-table-label" style="font-size:1rem;position: relative; top:2.7rem; left:18.5rem; right: auto; z-index: 4; border:none;background-color: #F3F4F7;">
+                                                <button class="sherah-data-table-label"
+                                                    style="font-size:1rem;position: relative; top:2.7rem; left:18.5rem; right: auto; z-index: 4; border:none;background-color: #F3F4F7;">
                                                     Search
                                                 </button>
                                             </label>
                                             <div class="input-group display-flex" style="position: relative;">
-                                                <select class="col-2" name="searchType" style="height:40px; width: 90px; font-size:0.75rem;color:#666;">
+                                                <select class="col-2" name="searchType" id="searchType"
+                                                        style="height:40px; width: 90px; font-size:0.75rem;color:#666;">
                                                     <option value="" selected disabled>Search Type</option>
-                                                    <option value="Name">Name</option>
-                                                    <option value="Email">Email</option>
+                                                    <option value="Name" id="name_option">Name</option>
+                                                    <option value="Email" id="email_option">Email</option>
                                                 </select>
                                                 &nbsp;
-                                                <input style="flex-shrink:0;width:auto;z-index:2;" type="search" name="searchValue" class="col-2 form-control form-control-sm" placeholder="Search" aria-controls="sherah-table__vendor">
+                                                <input style="flex-shrink:0;width:auto;z-index:2;" type="search"
+                                                    name="searchValue" class="col-2 form-control form-control-sm"
+                                                    placeholder="Search" aria-controls="sherah-table__vendor">
                                             </div>
                                         </div>
                                     </form>
                                 </div>
                             </div>
-                            <table id="sherah-table__vendor" class="sherah-table__main sherah-table__main-v3" style="border: 1px solid #e2e7f1;">
+                            <table id="sherah-table__vendor" class="sherah-table__main sherah-table__main-v3"
+                                style="border: 1px solid #e2e7f1;">
                                 <!-- sherah Table Head -->
                                 <thead class="sherah-table__head">
                                     <tr>
-                                        <th class="sherah-table__column-1 sherah-table__h1" style="width:22%;min-width:290px;font-size: 16px;padding-top:12px;padding-bottom:12px;">Name</th>
-                                        <th class="sherah-table__column-2 sherah-table__h2" style="width:25%;font-size:16px;padding-top:12px;padding-bottom:12px;">Email</th>
-                                        <th class="sherah-table__column-3 sherah-table__h3" style="width:11%;font-size:16px;padding-left:12px;padding-top:12px;padding-bottom:12px;">Phone</th>
-                                        <th class="sherah-table__column-4 sherah-table__h4" style="width:14%;font-size:16px;padding-left:0;padding-top:12px;padding-bottom:12px;">Address</th>
-                                        <th class="sherah-table__column-5 sherah-table__h5" style="width:5%;font-size:16px;text-align:center;padding-top:12px;padding-bottom:12px;">Status</th>
-                                        <th class="sherah-table__column-6 sherah-table__h6" style="width:15%;font-size:16px;text-align:center;padding-top:12px;padding-bottom:12px;">Action</th>
+                                        <th class="sherah-table__column-1 sherah-table__h1"
+                                            style="width:22%;min-width:290px;font-size: 16px;padding-top:12px;padding-bottom:12px;">
+                                            Name</th>
+                                        <th class="sherah-table__column-2 sherah-table__h2"
+                                            style="width:25%;font-size:16px;padding-top:12px;padding-bottom:12px;">Email
+                                        </th>
+                                        <th class="sherah-table__column-3 sherah-table__h3"
+                                            style="width:11%;font-size:16px;padding-left:12px;padding-top:12px;padding-bottom:12px;">
+                                            Phone</th>
+                                        <th class="sherah-table__column-4 sherah-table__h4"
+                                            style="width:14%;font-size:16px;padding-left:0;padding-top:12px;padding-bottom:12px;">
+                                            Address</th>
+                                        <th class="sherah-table__column-5 sherah-table__h5"
+                                            style="width:5%;font-size:16px;text-align:center;padding-top:12px;padding-bottom:12px;">
+                                            Status</th>
+                                        <th class="sherah-table__column-6 sherah-table__h6"
+                                            style="width:15%;font-size:16px;text-align:center;padding-top:12px;padding-bottom:12px;">
+                                            Action</th>
                                     </tr>
                                 </thead>
                                 <tbody class="sherah-table__body">
                                     @foreach (var user in Model.Users)
                                     {
                                         <tr style="height: 20px;">
-                                            <td class="sherah-table__column-1 sherah-table__data-1" style="width:30%;min-width:300px;padding:12px;text-align:left;">
+                                            <td class="sherah-table__column-1 sherah-table__data-1"
+                                                style="width:30%;min-width:300px;padding:12px;text-align:left;">
                                                 <div class="sherah-table__product">
                                                     <div class="sherah-language-form__input">
-                                                        <input class="sherah-language-form__check" id="checkbox" name="checkbox" type="checkbox">
+                                                        <input class="sherah-language-form__check" id="checkbox"
+                                                            name="checkbox" type="checkbox">
                                                     </div>
                                                     <div class="sherah-table__vendor-img">
-                                                        <img src="@user.Avatar" alt="User's avatar" style="width:40px;height:40px;">
+                                                        <img src="@user.Avatar" alt="User's avatar"
+                                                            style="width:40px;height:40px;">
                                                     </div>
                                                     <h5 class="sherah-table__vendor--title">@user.Name</h5>
                                                 </div>
                                             </td>
-                                            <td class="sherah-table__column-2 sherah-table__data-2" style="width:25%;min-width:150px;padding:12px;text-align:left;">
+                                            <td class="sherah-table__column-2 sherah-table__data-2"
+                                                style="width:25%;min-width:150px;padding:12px;text-align:left;">
                                                 <div class="sherah-table__product-content">
                                                     <p class="sherah-table__product-desc">@user.Email</p>
                                                 </div>
                                             </td>
-                                            <td class="sherah-table__column-3 sherah-table__data-3" style="width: 11%;min-width:80px;padding:12px 8px 12px 12px;text-align:left;">
+                                            <td class="sherah-table__column-3 sherah-table__data-3"
+                                                style="width: 11%;min-width:80px;padding:12px 8px 12px 12px;text-align:left;">
                                                 <div class="sherah-table__product-content">
                                                     <p class="sherah-table__product-desc">@user.Phone</p>
                                                 </div>
                                             </td>
-                                            <td class="sherah-table__column-4 sherah-table__data-4" style="width: 14%;min-width:80px;padding:12px 12px 12px 0;text-align:left;">
+                                            <td class="sherah-table__column-4 sherah-table__data-4"
+                                                style="width: 14%;min-width:80px;padding:12px 12px 12px 0;text-align:left;">
                                                 <div class="sherah-table__product-content">
                                                     <p class="sherah-table__product-desc">@user.Address</p>
                                                 </div>
                                             </td>
-                                            <td class="sherah-table__column-5 sherah-table__data-5" style="width: 11%;min-width:80px;padding:12px 12px 12px 0;text-align:center;">
+                                            <td class="sherah-table__column-5 sherah-table__data-5"
+                                                style="width: 11%;min-width:80px;padding:12px 12px 12px 0;text-align:center;">
                                                 @if (@user.IsLocked == true)
                                                 {
-                                                    <div class="sherah-table__status sherah-color2 sherah-color2__bg--opactity">Locked</div>
+                                                    <div class="sherah-table__status sherah-color2 sherah-color2__bg--opactity">
+                                                        Locked</div>
                                                 }
                                                 else
                                                 {
-                                                    <div class="sherah-table__status sherah-color3 sherah-color3__bg--opactity">Active</div>
+                                                    <div class="sherah-table__status sherah-color3 sherah-color3__bg--opactity">
+                                                        Active</div>
                                                 }
                                             </td>
-                                            <td class="sherah-table__column-6 sherah-table__data-6" style="width: 15%;min-width:120px;padding:12px 12px 12px 0;margin-left:10px;">
+                                            <td class="sherah-table__column-6 sherah-table__data-6"
+                                                style="width: 15%;min-width:120px;padding:12px 12px 12px 0;margin-left:10px;">
                                                 <div class="sherah-table__status__group" style="justify-content:center;">
 
                                                     @if (@user.IsLocked == true)
                                                     {
-                                                        <a href="#" onclick="handleActiveUser(@user.UserId, @userId)" class="sherah-table__action sherah-color3 sherah-color3__bg--opactity">
+                                                        <a href="#" onclick="handleActiveUser(@user.UserId, @userId)"
+                                                            class="sherah-table__action sherah-color3 sherah-color3__bg--opactity">
                                                             <i class="fa-solid fa-link-slash"></i>
                                                         </a>
 
                                                     }
                                                     else
                                                     {
-                                                        <a href="#" onclick="handleDeactiveUser(@user.UserId, @userId)" class="sherah-table__action sherah-color2 sherah-color2__bg--offset">
+                                                        <a href="#" onclick="handleDeactiveUser(@user.UserId, @userId)"
+                                                            class="sherah-table__action sherah-color2 sherah-color2__bg--offset">
                                                             <i class="fa-solid fa-link-slash"></i>
                                                         </a>
 
@@ -179,7 +214,9 @@
                                 @if (Model.Pageable != null)
                                 {
                                     <div class="col-sm-12 col-md-5">
-                                        <div class="dataTables_info" id="sherah-table__vendor_info" role="status" aria-live="polite" style="font-weight:500">Total @Model.Pageable.TotalItems users</div>
+                                        <div class="dataTables_info" id="sherah-table__vendor_info" role="status"
+                                            aria-live="polite" style="font-weight:500">Total @Model.Pageable.TotalItems
+                                            users</div>
                                     </div>
                                 }
                                 <div class="col-sm-12 col-md-7">
@@ -189,15 +226,20 @@
                                             <ul class="sherah-pagination__list">
                                                 @if (Model.Pageable.CurrentPage > 1)
                                                 {
-                                                    <li class="sherah-pagination__button"><a href="/User/Users?page=@(Model.Pageable.CurrentPage > 1 ? Model.Pageable.CurrentPage - 1 : 1)"><i class="fas fa-angle-left"></i></a></li>
+                                                    <li class="sherah-pagination__button"><a
+                                                            href="/User/Users?page=@(Model.Pageable.CurrentPage > 1 ? Model.Pageable.CurrentPage - 1 : 1)"><i
+                                                                class="fas fa-angle-left"></i></a></li>
                                                 }
                                                 @for (var i = Model.Pageable.StartPage; i <= Model.Pageable.EndPage; i++)
                                                 {
-                                                    <li class="@(Model.Pageable.CurrentPage == i ? "active" : "")"><a href="/User/Users?page=@i">@i</a></li>
+                                                    <li class="@(Model.Pageable.CurrentPage == i ? "active" : "")"><a
+                                                            href="/User/Users?page=@i">@i</a></li>
                                                 }
                                                 @if (Model.Pageable.CurrentPage < Model.Pageable.TotalPages)
                                                 {
-                                                    <li class="sherah-pagination__button"><a href="/User/Users?page=@(Model.Pageable.CurrentPage < Model.Pageable.TotalPages ? Model.Pageable.CurrentPage + 1 : Model.Pageable.TotalPages)"><i class="fas fa-angle-right"></i></a></li>
+                                                    <li class="sherah-pagination__button"><a
+                                                            href="/User/Users?page=@(Model.Pageable.CurrentPage < Model.Pageable.TotalPages ? Model.Pageable.CurrentPage + 1 : Model.Pageable.TotalPages)"><i
+                                                                class="fas fa-angle-right"></i></a></li>
                                                 }
                                             </ul>
                                         </div>
@@ -215,3 +257,16 @@
     </div>
 </section>
 <!-- End sherah Dashboard -->
+<script>
+    var searchType = "@searchType";
+    if (searchType) {
+        switch(searchType){
+            case "Name":
+                document.getElementById("name_option").setAttribute("selected", "selected");
+                break;
+            case "Email":
+                document.getElementById("email_option").setAttribute("selected", "selected");
+                break;
+        }
+    }
+</script>

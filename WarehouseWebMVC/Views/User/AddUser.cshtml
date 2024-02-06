@@ -185,59 +185,6 @@
 <script async>
     Validator('#add-user-form');
 </script>
-@*<script>
-    const host = "https://provinces.open-api.vn/api/";
-    var callAPI = (api) => {
-        return axios.get(api)
-            .then((response) => {
-                renderData(response.data, "city");
-            });
-    }
-    callAPI('https://provinces.open-api.vn/api/?depth=1');
-    var callApiDistrict = (api) => {
-        return axios.get(api)
-            .then((response) => {
-                renderData(response.data.districts, "district");
-            });
-    }
-    var callApiWard = (api) => {
-        return axios.get(api)
-            .then((response) => {
-                renderData(response.data.wards, "ward");
-            });
-    }
-
-    var renderData = (array, select) => {
-        let row = ' <option disable value="">Choose...</option>';
-        array.forEach(element => {
-            row += '<option data-id="' + element.code + '" value="' + element.name + '">' + element.name + '</option>';
-        });
-        document.querySelector("#" + select).innerHTML = row
-    }
-
-    $("#city").change(() => {
-        callApiDistrict(host + "p/" + $("#city").find(':selected').data('id') + "?depth=2");
-        printResult();
-    });
-    $("#district").change(() => {
-        callApiWard(host + "d/" + $("#district").find(':selected').data('id') + "?depth=2");
-        printResult();
-    });
-    $("#ward").change(() => {
-        printResult();
-    })
-
-    var printResult = () => {
-        if ($("#district").find(':selected').data('id') != "" && $("#city").find(':selected').data('id') != "" &&
-            $("#ward").find(':selected').data('id') != "") {
-            let result = $("#city option:selected").text() +
-                " | " + $("#district option:selected").text() + " | " +
-                $("#ward option:selected").text();
-            $("#result").text(result)
-        }
-
-    }
-</script>*@
 <script>
     const host = "https://vapi.vnappmob.com/api/";
     var apiProvince = host + 'province/';
@@ -246,24 +193,26 @@
             .then((response) => {
                 renderDataCity(response.data, "city");
             });
-    }
+    };
+    
     var callApiDistrict = (api) => {
         return axios.get(api)
             .then((response) => {
                 renderDataDistrict(response.data, "district");
             });
-    }
+    };
+
     var callApiWard = (api) => {
         return axios.get(api)
             .then((response) => {
                 renderDataWard(response.data, "ward");
             });
-    }
+    };
 
     var renderDataCity = (data, select) => {
         if (data && data.results && Array.isArray(data.results)) {
             let row = ' <option disable value="">Choose Provinces</option>';
-            data.results.forEach(element => {
+            data.results.forEach((element) => {
                 row += '<option data-id="' + element.province_id + '" value="' + element.province_name + '">' + element.province_name + '</option>';
             });
             document.querySelector("#" + select).innerHTML = row;
@@ -274,7 +223,7 @@
     var renderDataDistrict = (data, select) => {
         if (data && data.results && Array.isArray(data.results)) {
             let row = ' <option disable value="">Choose Districts</option>';
-            data.results.forEach(element => {
+            data.results.forEach((element) => {
                 row += '<option data-id="' + element.district_id + '" value="' + element.district_name + '">' + element.district_name + '</option>';
             });
             document.querySelector("#" + select).innerHTML = row;
@@ -285,7 +234,7 @@
     var renderDataWard = (data, select) => {
         if (data && data.results && Array.isArray(data.results)) {
             let row = ' <option disable value="">Choose Wards</option>';
-            data.results.forEach(element => {
+            data.results.forEach((element) => {
                 row += '<option data-id="' + element.ward_id + '" value="' + element.ward_name + '">' + element.ward_name + '</option>';
             });
             document.querySelector("#" + select).innerHTML = row;

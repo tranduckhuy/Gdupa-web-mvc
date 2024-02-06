@@ -3,6 +3,10 @@
     ViewData["Title"] = "ImportNote";
     var message = TempData["Message"] as string;
 }
+@{
+    var searchType = ViewBag.searchType as string ?? "";
+}
+
 <div id="toast"></div>
 @if (!string.IsNullOrEmpty(message))
 {
@@ -88,9 +92,9 @@
                                             <div class="input-group display-flex" style="position: relative;">
                                                 <select class="col-2" name="searchType" style="height:40px; width: 90px; font-size:0.75rem;color:#666;">
                                                     <option value="" selected disabled>Search Type</option>
-                                                    <option value="Creator">Creator</option>
-                                                    <option value="Supplier">Supplier</option>
-                                                    <option value="Deliverer">Deliver</option>
+                                                    <option value="Creator" id="creator_option">Creator</option>
+                                                    <option value="Supplier" id="supplier_option">Supplier</option>
+                                                    <option value="Deliverer" id="deliver_option">Deliver</option>
                                                 </select>
                                                 &nbsp;
                                                 <input style="flex-shrink:0;width:auto;z-index:2;" type="search" name="searchValue" class="col-2 form-control form-control-sm" placeholder="Search" aria-controls="sherah-table__vendor">
@@ -103,7 +107,7 @@
                                 <!-- sherah Table Head -->
                                 <thead class="sherah-table__head">
                                     <tr>
-                                        <th class="sherah-table__column-1 sherah-table__h1" style="width:22%;min-width:220px;font-size:16px;padding-top:12px;padding-bottom:12px;">ImportNote Creator</th>
+                                        <th class="sherah-table__column-1 sherah-table__h1" style="width:22%;min-width:220px;font-size:16px;padding-top:12px;padding-bottom:12px;">Import Note Creator</th>
                                         <th class="sherah-table__column-2 sherah-table__h2" style="width:8%;min-width:70px;font-size:16px;padding-top:12px;padding-bottom:12px;">Supplier Name</th>
                                         <th class="sherah-table__column-3 sherah-table__h3" style="width:15%;min-width:170px;font-size:16px;padding-top:12px;padding-bottom:12px;">Created Date</th>
                                         <th class="sherah-table__column-4 sherah-table__h4" style="width:20%;min-width:170px;font-size:16px;padding-top:12px;padding-bottom:12px;">Deliver Name</th>
@@ -196,3 +200,19 @@
     </div>
 </section>
 <!-- End sherah Dashboard -->
+<script>
+    var searchType = "@searchType";
+    if (searchType) {
+        switch(searchType){
+            case "Creator":
+                document.getElementById("creator_option").setAttribute("selected", "selected");
+                break;
+            case "Supplier":
+                document.getElementById("supplier_option").setAttribute("selected", "selected");
+                break;
+            case "Deliverer":
+                document.getElementById("deliver_option").setAttribute("selected", "selected");
+                break;
+        }
+    }
+</script>

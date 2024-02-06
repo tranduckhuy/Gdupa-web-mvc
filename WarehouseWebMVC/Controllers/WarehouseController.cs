@@ -123,6 +123,7 @@ public class WarehouseController : Controller
         if (warehouseProduct != null)
         {
             TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
+            ViewBag.SearchType = searchType;
             return View("WarehouseProduct", warehouseProduct);
         }
         TempData["Message"] = AppConstant.NOT_FOUND;

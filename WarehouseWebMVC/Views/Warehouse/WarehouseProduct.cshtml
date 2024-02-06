@@ -1,8 +1,11 @@
-﻿@{
+﻿@model WarehouseWebMVC.ViewModels.WarehouseViewModel
+@{
     ViewData["Title"] = "Warehouse";
     var message = TempData["Message"] as string;
 }
-@model WarehouseWebMVC.ViewModels.WarehouseViewModel
+@{
+    var searchType = ViewBag.SearchType as string ?? "";
+}
 
 <style>
     .sherah-table__vendor .sherah-table__body tr:nth-child(2n+1) {
@@ -244,7 +247,7 @@
                                             <div class="input-group display-flex" style="position: relative;bottom:16px;">
                                                 <select class="col-2" name="searchType" style="height:40px; width: 90px; font-size:0.75rem;color:#666;">
                                                     <option value="" selected disabled>Search Type</option>
-                                                    <option value="Name">Name</option>
+                                                    <option value="Name" id="name_option">Name</option>
                                                 </select>
                                                 &nbsp;
                                                 <input style="flex-shrink:0;width:auto;z-index:2;" type="search" name="searchValue" class="col-2 form-control form-control-sm" placeholder="Search" aria-controls="sherah-table__vendor">
@@ -370,5 +373,12 @@
         var valueYear = this.options[this.selectedIndex].value;
         window.location.href = '/Warehouse/WarehouseProduct?page=1&quarter=' + valueQuarter + '&year=' + valueYear;
     }
-
+</script>
+<script>
+    var searchType = "@searchType";
+    if (searchType) {
+        if(searchType === "Name"){
+            document.getElementById('name_option').setAttribute('selected', 'selected');
+        }
+    }
 </script>

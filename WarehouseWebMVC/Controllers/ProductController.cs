@@ -152,6 +152,7 @@ public class ProductController : Controller
             if (searchProducts != null)
             {
                 TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
+                ViewBag.SearchType = searchType;
                 return View("ProductList", searchProducts);
             }
         }

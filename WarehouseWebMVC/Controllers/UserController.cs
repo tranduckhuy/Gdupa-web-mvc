@@ -59,7 +59,7 @@ public class UserController : Controller
             else
             {
                 TempData["Message"] = AppConstant.MESSAGE_FAILED;
-                return RedirectToAction("UserInformation", new { userId = _userService.GetUserIdByEmail(currentUserEmail) });
+                return RedirectToAction("UserInformation", new { userId = _userService.GetUserIdByEmail(currentUserEmail!) });
             }
         }
         TempData["Message"] = AppConstant.MESSAGE_NOT_LOGIN;
@@ -176,7 +176,7 @@ public class UserController : Controller
             else
             {
                 TempData["Message"] = AppConstant.MESSAGE_FAILED;
-                return RedirectToAction("UserInformation", new { userId = _userService.GetUserIdByEmail(currentUserEmail) });
+                return RedirectToAction("UserInformation", new { userId = _userService.GetUserIdByEmail(currentUserEmail!) });
             }
         }
         TempData["Message"] = AppConstant.MESSAGE_FAILED;
@@ -216,6 +216,7 @@ public class UserController : Controller
             if (searchUsers != null)
             {
                 TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
+                ViewBag.SearchType = searchType;
                 return View("Users", searchUsers);
             }
         }

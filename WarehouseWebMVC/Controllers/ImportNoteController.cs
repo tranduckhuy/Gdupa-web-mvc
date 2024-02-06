@@ -68,6 +68,7 @@ public class ImportNoteController : Controller
             if (searchImportNotes != null)
             {
                 TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
+                ViewBag.SearchType = searchType;
                 return View("ImportNoteList", searchImportNotes);
             }
         }
