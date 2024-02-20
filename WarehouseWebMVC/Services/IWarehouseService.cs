@@ -12,5 +12,6 @@ namespace WarehouseWebMVC.Services
         WarehouseImportViewModel GetDataViewImport();
         WarehouseViewModel SearchProduct(string searchType, string searchValue);
         bool CheckNewQuarter();
+        Task<byte[]> ExportDataToExcelAsync(int quarter, int year);
     }
 }

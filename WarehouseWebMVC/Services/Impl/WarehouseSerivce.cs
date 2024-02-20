@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Drawing.Printing;
+using OfficeOpenXml;
 using WarehouseWebMVC.Data;
 using WarehouseWebMVC.Models;
 using WarehouseWebMVC.Models.Domain;
@@ -338,5 +339,52 @@ namespace WarehouseWebMVC.Services.Impl
             }
         }
 
+        public Task<byte[]> ExportDataToExcelAsync(int quarter, int year)
+        {
+            return Task.Run(() =>
+            {
+                byte[] fileBytes = GenerateExcelFile(quarter, year);
+
+                return fileBytes;
+            });
+        }
+
+        public byte[] GenerateExcelFile(int quarter, int year)
+        {
+            //Data from DB (Huy làm dùm đi)
+            //
+
+            List<string[]> dummyData = new List<string[]>
+            {
+                new string[] { "Product 1", "Category 1", "10", "100" },
+                new string[] { "Product 2", "Category 2", "20", "200" },
+                new string[] { "Product 3", "Category 3", "30", "300" }
+            };
+
+            // New Excel Package
+            using (var package = new ExcelPackage())
+            {
+                // New Sheet
+                var worksheet = package.Workbook.Worksheets.Add("Sheet1");
+
+                // Title
+                worksheet.Cells[1, 1].Value = "Product";
+                worksheet.Cells[1, 2].Value = "Category";
+                worksheet.Cells[1, 3].Value = "Quantity";
+                worksheet.Cells[1, 4].Value = "Price";
+
+                // Data for each title
+                for (int i = 0; i < dummyData.Count; i++)
+                {
+                    for (int j = 0; j < dummyData[i].Length; j++)
+                    {
+                        worksheet.Cells[i + 2, j + 1].Value = dummyData[i][j];
+                    }
+                }
+
+                byte[] fileBytes = package.GetAsByteArray();
+                return fileBytes;
+            }
+        }
     }
 }

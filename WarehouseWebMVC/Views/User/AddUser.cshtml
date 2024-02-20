@@ -222,7 +222,7 @@
     }
     var renderDataDistrict = (data, select) => {
         if (data && data.results && Array.isArray(data.results)) {
-            let row = ' <option disable value="">Choose Districts</option>';
+            let row = '<option disable value="">Choose Districts</option>';
             data.results.forEach((element) => {
                 row += '<option data-id="' + element.district_id + '" value="' + element.district_name + '">' + element.district_name + '</option>';
             });
