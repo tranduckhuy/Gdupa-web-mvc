@@ -339,7 +339,7 @@ namespace WarehouseWebMVC.Services.Impl
             }
         }
 
-        public Task<byte[]> ExportDataToExcelAsync(int quarter, int year)
+        public Task<byte[]> ExportDataToExcel(int quarter, int year)
         {
             return Task.Run(() =>
             {
@@ -349,7 +349,7 @@ namespace WarehouseWebMVC.Services.Impl
             });
         }
 
-        public byte[] GenerateExcelFile(int quarter, int year)
+        private byte[] GenerateExcelFile(int quarter, int year)
         {
             //Data from DB (Huy làm dùm đi)
             //
@@ -361,11 +361,20 @@ namespace WarehouseWebMVC.Services.Impl
                 new string[] { "Product 3", "Category 3", "30", "300" }
             };
 
+            Dictionary<int, string> quarterMap = new Dictionary<int, string>
+            {
+                {1, "First"},
+                {2, "Second"},
+                {3, "Third"},
+                {4, "Fourth"}
+            };
+            string quarterText = quarterMap.TryGetValue(quarter, out string? value) ? value : quarter.ToString();
+
             // New Excel Package
             using (var package = new ExcelPackage())
             {
                 // New Sheet
-                var worksheet = package.Workbook.Worksheets.Add("Sheet1");
+                var worksheet = package.Workbook.Worksheets.Add($"{quarterText} Quarter - {year}");
 
                 // Title
                 worksheet.Cells[1, 1].Value = "Product";

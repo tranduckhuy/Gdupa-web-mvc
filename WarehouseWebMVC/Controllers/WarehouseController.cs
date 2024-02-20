@@ -132,10 +132,8 @@ public class WarehouseController : Controller
     [HttpPost]
     public async Task<IActionResult> ExportFile(int quarter, int year)
     {
-        // Gọi phương thức từ service để xử lý dữ liệu và tạo tệp tin excel
-        var fileBytes = await _warehouseService.ExportDataToExcelAsync(quarter, year);
+        var fileBytes = await _warehouseService.ExportDataToExcel(quarter, year);
 
-        // Trả về tệp tin excel
         return File(fileBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "WarehouseData.xlsx");
     }
 
