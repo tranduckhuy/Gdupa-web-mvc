@@ -1,3 +1,5 @@
+@model WarehouseWebMVC.Models.DTOs.DashboardDTO
+
 @{
 	ViewData["Title"] = "Dashborad";
 	Layout = "_Layout";
@@ -745,6 +747,13 @@
 				</div>	
 </section>	
 <!-- End Dashboard -->
+<script>
+    var jsonData = @Html.Raw(Json.Serialize(Model));
+    console.log(jsonData);
+	var jsonString = JSON.stringify(jsonData);
+	console.log(jsonString)
+</script>
+
 <script src="/js/chart-config.js" defer></script>
 <script src="/js/circle-config.js" defer></script>
 <script src="/js/map-config.js" defer></script>
