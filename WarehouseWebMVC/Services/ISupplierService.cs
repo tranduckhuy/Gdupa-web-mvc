@@ -7,5 +7,7 @@ namespace WarehouseWebMVC.Services
     {
         SupplierViewModel GetAll(int page);
         Supplier Add(Supplier supplier);
+
+        SupplierViewModel SearchSupplier(string searchType, string searchValue);
     }
 }

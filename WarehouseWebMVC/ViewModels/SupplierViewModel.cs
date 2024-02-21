@@ -1,9 +1,13 @@
-﻿using WarehouseWebMVC.Models.Domain;
+﻿using WarehouseWebMVC.Models;
+using WarehouseWebMVC.Models.Domain;
+using WarehouseWebMVC.Models.DTOs.SupplierDTO;
 
 namespace WarehouseWebMVC.ViewModels
 {
     public class SupplierViewModel
     {
-        public ICollection<Supplier> Suppliers { get; set; } = new List<Supplier>();
+        public ICollection<SupplierDTO> Suppliers { get; set; } = new List<SupplierDTO>();
+
+        public Pageable Pageable { get; set; } = null!;
     }
 }
