@@ -1,20 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using WarehouseWebMVC.Models;
+using WarehouseWebMVC.Models.DTOs;
+using WarehouseWebMVC.Services;
+using WarehouseWebMVC.Services.Impl;
 
 namespace WarehouseWebMVC.Controllers;
 
 public class DashboardController : Controller
 {
     private readonly ILogger<DashboardController> _logger;
+    private readonly IDashboardService _dashboardService;
 
-    public DashboardController(ILogger<DashboardController> logger)
+    public DashboardController(ILogger<DashboardController> logger, IDashboardService dashboardService)
     {
         _logger = logger;
+        _dashboardService = dashboardService;
     }
 
     [Filter]
-    public IActionResult Dashboard()
+    public IActionResult Dashboard(int year = 0)
     {
         if (HttpContext.Session.GetString("User") != null)
         {
@@ -24,7 +29,8 @@ public class DashboardController : Controller
             ViewBag.User = HttpContext.Session.GetString("User");
             ViewBag.Name = HttpContext.Session.GetString("Name");
             ViewBag.Address = HttpContext.Session.GetString("Address");
-            return View();
+            DashboardDTO dashboardDTO = _dashboardService.GetDashboardInfo(year);
+            return View(dashboardDTO);
         }
         return RedirectToAction("Login", "Authentication");
     }
