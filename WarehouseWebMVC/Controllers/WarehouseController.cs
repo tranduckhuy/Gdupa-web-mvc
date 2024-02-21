@@ -129,6 +129,13 @@ public class WarehouseController : Controller
         TempData["Message"] = AppConstant.NOT_FOUND;
         return RedirectToAction("WarehouseProduct", "Warehouse");
     }
+    [HttpPost]
+    public async Task<IActionResult> ExportFile(int quarter, int year)
+    {
+        var fileBytes = await _warehouseService.ExportDataToExcel(quarter, year);
+
+        return File(fileBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "WarehouseData.xlsx");
+    }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

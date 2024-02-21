@@ -6,6 +6,6 @@
 
 new CircleProgress('.circle__two', {
 	max: 100,
-	value: 60,
+	value: 80,
 
 });

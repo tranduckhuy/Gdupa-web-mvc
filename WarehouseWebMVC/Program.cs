@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Serialization;
+using OfficeOpenXml;
 using WarehouseWebMVC.Data;
 using WarehouseWebMVC.MappingProfiles;
 using WarehouseWebMVC.Models;
@@ -11,6 +12,8 @@ using WarehouseWebMVC.Services.Impl;
 using WarehouseWebMVC.Services.Mail;
 
 var builder = WebApplication.CreateBuilder(args);
+
+ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

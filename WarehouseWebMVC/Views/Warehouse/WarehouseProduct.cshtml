@@ -106,7 +106,9 @@
                                 <div class="sherah-breadcrumb">
                                     <h2 class="sherah-breadcrumb__title">Warehouse</h2>
                                     <ul class="sherah-breadcrumb__list">
-                                        <li><a asp-area="" asp-controller="Dashboard" asp-action="Dashboard">Home</a></li>
+                                        <li>
+                                            <a asp-area="" asp-controller="Dashboard" asp-action="Dashboard">Home</a>
+                                        </li>
                                         <li class="active"><a href="#!">Warehouse</a></li>
                                     </ul>
                                 </div>
@@ -114,44 +116,56 @@
                             </div>
                         </div>
                         <div class="row" style="margin-right: -2.2rem;">
-                            <div class="row col-10">
+                            <div class="row col-9">
                                 @if (!(Model.Title != null && "Search".Equals(Model.Title)))
                                 {
                                     <div class="col-lg-4 col-md-6 col-10">
                                         <!-- Progress Card -->
                                         <div class="sherah-progress-card sherah-border sherah-default-bg mg-top-20">
                                             <div class="sherah-progress-card__icon sherah-default-bg sherah-border">
-                                                <svg class="sherah-color4__fill" xmlns="http://www.w3.org/2000/svg" width="26.672" height="30.636" viewBox="0 0 26.672 30.636">
-                                                    <g id="Group_70" data-name="Group 70" transform="translate(-272.518 -5.918)">
-                                                        <path id="Path_251" data-name="Path 251" d="M285.855,36.554q-5.443,0-10.885,0a2.152,2.152,0,0,1-2.447-2.412q-.01-9.39.014-18.78a3.035,3.035,0,0,
+                                                <svg class="sherah-color4__fill" xmlns="http://www.w3.org/2000/svg"
+                                                     width="26.672" height="30.636" viewBox="0 0 26.672 30.636">
+                                                    <g id="Group_70" data-name="Group 70"
+                                                       transform="translate(-272.518 -5.918)">
+                                                        <path id="Path_251" data-name="Path 251"
+                                                              d="M285.855,36.554q-5.443,0-10.885,0a2.152,2.152,0,0,1-2.447-2.412q-.01-9.39.014-18.78a3.035,3.035,0,0,
                                                     1,.383-1.406c1.292-2.312,2.644-4.59,3.947-6.9a2.07,2.07,0,0,1,1.993-1.141q7,.028,13.995,0a2.075,2.075,0,0,1,1.991,1.147c1.327,2.338,2.7,4.652,4.022,6.991a2.4,2.4,0,0,
                                                     1,.306,1.124q.028,9.48.011,18.959a2.152,2.152,0,0,1-2.445,2.414Q291.3,36.556,285.855,36.554ZM297.39,15.348H274.351c-.012.211-.03.387-.031.562q0,9.057-.011,18.113c0
                                                     ,.577.186.746.758.744q10.73-.025,21.461-.011c.858,0,.86,0,.86-.861q0-8.937,0-17.874ZM284.969,7.724c-2.077,0-4.089-.01-6.1.017a.778.778,0,0,0-.516.374c-.971,1.646-
                                                     1.92,3.305-2.871,4.963a2.945,2.945,0,0,0-.152.376h9.64Zm11.423,5.748a1.4,1.4,0,0,0-.08-.258c-1-1.741-2-3.485-3.029-5.212a.773.773,0,0,0-.576-.267c-1.832-.02-3.664-.013-5.5-.009a2.737,2.737,0,0,0-.373.048v5.7Z" />
                                                         <path id="Path_252" data-name="Path 252" d="M351.281,143.152l3.6-3.605c.141-.141.275-.288.426-.418a.889.889,0,1,1,1.262,
                                                     1.253c-.4.439-.837.851-1.259,1.273q-1.582,1.583-3.166,3.164c-.63.627-1.05.632-1.669.02-.636-.629-1.274-1.258-1.9-1.9a.886.886,0,0,1-.063-1.365.906.906,0,0,1,
-                                                    1.328.1C350.317,142.133,350.762,142.615,351.281,143.152Z" transform="translate(-66.652 -117.042)" />
+                                                    1.328.1C350.317,142.133,350.762,142.615,351.281,143.152Z"
+                                                              transform="translate(-66.652 -117.042)" />
                                                     </g>
                                                 </svg>
                                             </div>
                                             <div class="sherah-progress-card__content">
                                                 <div class="sherah-progress-card__heading">
                                                     <span class="sherah-pcolor">Low Alert</span>
-                                                    <h4 class="sherah-progress-card__title"><b class="count-animate" style="font-size: 20px;">@Model.LowAlert Product</b></h4>
+                                                    <h4 class="sherah-progress-card__title">
+                                                        <b class="count-animate"
+                                                           style="font-size: 20px;">@Model.LowAlert Product</b>
+                                                    </h4>
                                                 </div>
                                                 <div class="sherah-progress-card__button">
                                                     <p class="sherah-progress-card__text sherah-color4">
-                                                        <svg class="sherah-color4__fill" xmlns="http://www.w3.org/2000/svg" width="8.407" height="15.353" viewBox="0 0 8.407 15.353">
-                                                            <g id="Arrow_Icon" data-name="Arrow Icon" transform="translate(593.377 321.353) rotate(180)">
-                                                                <path id="Path_247" data-name="Path 247" d="M267.12,84.017c-.794.794-1.506,1.529-2.249,2.231a.7.7,0,0,1-1.2-.195.615.615,0,0,1
+                                                        <svg class="sherah-color4__fill" xmlns="http://www.w3.org/2000/svg"
+                                                             width="8.407" height="15.353" viewBox="0 0 8.407 15.353">
+                                                            <g id="Arrow_Icon" data-name="Arrow Icon"
+                                                               transform="translate(593.377 321.353) rotate(180)">
+                                                                <path id="Path_247" data-name="Path 247"
+                                                                      d="M267.12,84.017c-.794.794-1.506,1.529-2.249,2.231a.7.7,0,0,1-1.2-.195.615.615,0,0,1
                                                             ,.177-.742q.744-.738,1.483-1.481.949-.949,1.9-1.9a.718.718,0,0,1,1.185-.016q1.659,1.653,3.311,3.312a.7.7,0,0,1,.077,1.067.718.718,0,0
                                                             ,1-1.069-.08c-.712-.708-1.422-1.418-2.206-2.2,0,.193,0,.312,0,.431q0,5.747.005,11.495c0,.076,0,.153,0,.229a.719.719,0,0,1-.689.8.71.71,0,0
-                                                            ,1-.718-.8q-.008-3.406-.006-6.812,0-2.44,0-4.88C267.119,84.356,267.12,84.237,267.12,84.017Z" transform="translate(321.362 224.389)" />
+                                                            ,1-.718-.8q-.008-3.406-.006-6.812,0-2.44,0-4.88C267.119,84.356,267.12,84.237,267.12,84.017Z"
+                                                                      transform="translate(321.362 224.389)" />
                                                             </g>
                                                         </svg>
                                                         Warning
                                                     </p>
-                                                    <a href="/Warehouse/WarehouseProduct/WarehouseProductStatus?status=LowAlert" class="sherah-see-all">View Details</a>
+                                                    <a href="/Warehouse/WarehouseProduct/WarehouseProductStatus?status=LowAlert"
+                                                       class="sherah-see-all">View Details</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -161,9 +175,12 @@
                                         <!-- Progress Card -->
                                         <div class="sherah-progress-card sherah-border sherah-default-bg mg-top-20">
                                             <div class="sherah-progress-card__icon sherah-default-bg sherah-border">
-                                                <svg class="sherah-color2__fill" xmlns="http://www.w3.org/2000/svg" width="26.672" height="30.636" viewBox="0 0 26.672 30.636">
-                                                    <g id="Group_70" data-name="Group 70" transform="translate(-272.518 -5.918)">
-                                                        <path id="Path_251" data-name="Path 251" d="M285.855,36.554q-5.443,0-10.885,0a2.152,2.152,0,0
+                                                <svg class="sherah-color2__fill" xmlns="http://www.w3.org/2000/svg"
+                                                     width="26.672" height="30.636" viewBox="0 0 26.672 30.636">
+                                                    <g id="Group_70" data-name="Group 70"
+                                                       transform="translate(-272.518 -5.918)">
+                                                        <path id="Path_251" data-name="Path 251"
+                                                              d="M285.855,36.554q-5.443,0-10.885,0a2.152,2.152,0,0
                                                      ,1-2.447-2.412q-.01-9.39.014-18.78a3.035,3.035,0,0,1,.383-1.406c1.292-2.312,2.644-4.59,3.947-6.9a2.07,2.07,0,0,1,1.993-1.141q7,.028,13.995,0a2.075
                                                      ,2.075,0,0,1,1.991,1.147c1.327,2.338,2.7,4.652,4.022,6.991a2.4,2.4,0,0,1,.306,1.124q.028,9.48.011,18.959a2.152,2.152,0,0,1-2.445,2.414Q291.3,36.556,285.855
                                                      ,36.554ZM297.39,15.348H274.351c-.012.211-.03.387-.031.562q0,9.057-.011,18.113c0,.577.186.746.758.744q10.73-.025,21.461-.011c.858,0,.86,0,.86-.861q0-8.937
@@ -171,28 +188,37 @@
                                                      ,5.748a1.4,1.4,0,0,0-.08-.258c-1-1.741-2-3.485-3.029-5.212a.773.773,0,0,0-.576-.267c-1.832-.02-3.664-.013-5.5-.009a2.737,2.737,0,0,0-.373.048v5.7Z" />
                                                         <path id="Path_252" data-name="Path 252" d="M351.281,143.152l3.6-3.605c.141-.141.275-.288.426-.418a.889.889
                                                      ,0,1,1,1.262,1.253c-.4.439-.837.851-1.259,1.273q-1.582,1.583-3.166,3.164c-.63.627-1.05.632-1.669.02-.636-.629-1.274-1.258-1.9-1.9a.886.886,0,0,1-.063-1.365.906.906
-                                                     ,0,0,1,1.328.1C350.317,142.133,350.762,142.615,351.281,143.152Z" transform="translate(-66.652 -117.042)" />
+                                                     ,0,0,1,1.328.1C350.317,142.133,350.762,142.615,351.281,143.152Z"
+                                                              transform="translate(-66.652 -117.042)" />
                                                     </g>
                                                 </svg>
                                             </div>
                                             <div class="sherah-progress-card__content">
                                                 <div class="sherah-progress-card__heading">
                                                     <span class="sherah-pcolor">Out of Stock</span>
-                                                    <h4 class="sherah-progress-card__title"><b class="count-animate" style="font-size: 20px;">@Model.OutOfStock Product</b></h4>
+                                                    <h4 class="sherah-progress-card__title">
+                                                        <b class="count-animate"
+                                                           style="font-size: 20px;">@Model.OutOfStock Product</b>
+                                                    </h4>
                                                 </div>
                                                 <div class="sherah-progress-card__button">
                                                     <p class="sherah-progress-card__text sherah-color2">
-                                                        <svg class="sherah-color2__fill" xmlns="http://www.w3.org/2000/svg" width="8.407" height="15.353" viewBox="0 0 8.407 15.353">
-                                                            <g id="Arrow_Icon" data-name="Arrow Icon" transform="translate(593.377 321.353) rotate(180)">
-                                                                <path id="Path_247" data-name="Path 247" d="M267.12,84.017c-.794.794-1.506,1.529-2.249,2.231a.7.7,0,0,1-1.2-.195.615.615,0
+                                                        <svg class="sherah-color2__fill" xmlns="http://www.w3.org/2000/svg"
+                                                             width="8.407" height="15.353" viewBox="0 0 8.407 15.353">
+                                                            <g id="Arrow_Icon" data-name="Arrow Icon"
+                                                               transform="translate(593.377 321.353) rotate(180)">
+                                                                <path id="Path_247" data-name="Path 247"
+                                                                      d="M267.12,84.017c-.794.794-1.506,1.529-2.249,2.231a.7.7,0,0,1-1.2-.195.615.615,0
                                                              ,0,1,.177-.742q.744-.738,1.483-1.481.949-.949,1.9-1.9a.718.718,0,0,1,1.185-.016q1.659,1.653,3.311,3.312a.7.7,0,0,1,.077,1.067.718.718,0,0
                                                              ,1-1.069-.08c-.712-.708-1.422-1.418-2.206-2.2,0,.193,0,.312,0,.431q0,5.747.005,11.495c0,.076,0,.153,0,.229a.719.719,0,0,1-.689.8.71.71,0,0
-                                                             ,1-.718-.8q-.008-3.406-.006-6.812,0-2.44,0-4.88C267.119,84.356,267.12,84.237,267.12,84.017Z" transform="translate(321.362 224.389)" />
+                                                             ,1-.718-.8q-.008-3.406-.006-6.812,0-2.44,0-4.88C267.119,84.356,267.12,84.237,267.12,84.017Z"
+                                                                      transform="translate(321.362 224.389)" />
                                                             </g>
                                                         </svg>
                                                         Danger
                                                     </p>
-                                                    <a href="/Warehouse/WarehouseProduct/WarehouseProductStatus?status=OutOfStock" class="sherah-see-all">View Details</a>
+                                                    <a href="/Warehouse/WarehouseProduct/WarehouseProductStatus?status=OutOfStock"
+                                                       class="sherah-see-all">View Details</a>
                                                 </div>
 
                                             </div>
@@ -201,36 +227,50 @@
                                     </div>
                                 }
                             </div>
-                            <div class="col-2" style="display: flex; align-items: end; justify-content: end; text-align:center">
+                            <div class="col-3"
+                                 style="display:flex;align-items:end;justify-content:end;gap:4px;text-align:center">
+                                <a onclick="exportData()"
+                                   style="padding: 8px 10px; width: 120px; background-color: #6176FE; color:#fff; border-radius: 4px;">
+                                    Export File
+                                </a>
                                 <a asp-area="" asp-controller="Warehouse" asp-action="WarehouseImport"
-                                   style="padding: 8px 15px; width: 180px; background-color: #6176FE; color:#fff; border-radius: 4px;">Warehouse Import</a>
+                                   style="padding: 8px 15px; width: 180px; background-color: #6176FE; color:#fff; border-radius: 4px;">
+                                    Warehouse
+                                    Import
+                                </a>
                             </div>
                         </div>
-                        <div class="sherah-table sherah-page-inner sherah-border sherah-default-bg mg-top-20" style="padding-top:0;">
+                        <div class="sherah-table sherah-page-inner sherah-border sherah-default-bg mg-top-20"
+                             style="padding-top:0;">
                             <div class="row">
                                 <div class="col-sm-12 col-md-8">
                                     <div class="dataTables_length" id="sherah-table__vendor_length">
                                         <label style="margin-top: 18px;">
-                                            <select name="sherah-table__vendor_length"
-                                                    id="quarter-select"
-                                                    aria-controls="sherah-table__vendor"
-                                                    class="form-select form-select-sm"
+                                            <select name="sherah-table__vendor_length" id="quarter-select"
+                                                    aria-controls="sherah-table__vendor" class="form-select form-select-sm"
                                                     style="height:40px; width: 120px; font-size:0.75rem;color:#666;">
-                                                <option value="1" selected="@(1 == Model.Quarter ? "selected" : null)">First Quarter</option>
-                                                <option value="2" selected="@(2 == Model.Quarter ? "selected" : null)">Second Quarter</option>
-                                                <option value="3" selected="@(3  == Model.Quarter ? "selected" : null)">Third Quarter</option>
-                                                <option value="4" selected="@(4 == Model.Quarter ? "selected" : null)">Fourth Quarter</option>
+                                                <option value="1" selected="@(1 == Model.Quarter ? "selected" : null)">
+                                                    First Quarter
+                                                </option>
+                                                <option value="2" selected="@(2 == Model.Quarter ? "selected" : null)">
+                                                    Second Quarter
+                                                </option>
+                                                <option value="3" selected="@(3  == Model.Quarter ? "selected" : null)">
+                                                    Third Quarter
+                                                </option>
+                                                <option value="4" selected="@(4 == Model.Quarter ? "selected" : null)">
+                                                    Fourth Quarter
+                                                </option>
                                             </select>
                                         </label>
                                         <label>
-                                            <select name="sherah-table__vendor_length"
-                                                    id="year-select"
-                                                    aria-controls="sherah-table__vendor"
-                                                    class="form-select form-select-sm"
+                                            <select name="sherah-table__vendor_length" id="year-select"
+                                                    aria-controls="sherah-table__vendor" class="form-select form-select-sm"
                                                     style="height:40px; width: 90px; font-size:0.75rem;color:#666;">
                                                 @foreach (var year in Model.ImportYears)
                                                 {
-                                                    <option value="@year" selected="@(year == Model.Year ? "selected" : null)">@year</option>
+                                                    <option value="@year"
+                                                            selected="@(year == Model.Year ? "selected" : null)">@year</option>
                                                 }
                                             </select>
                                         </label>
@@ -240,70 +280,118 @@
                                     <form method="post" asp-action="SearchProduct" asp-controller="Warehouse">
                                         <div id="sherah-table__vendor_filter" class="dataTables_filter">
                                             <label for="search-input" style="position: relative;bottom:16px;">
-                                                <button class="sherah-data-table-label" style="font-size:1rem;position: relative; top:2.7rem; left:18.5rem; right: auto; z-index: 4; border:none;background-color: #F3F4F7;">
+                                                <button class="sherah-data-table-label"
+                                                        style="font-size:1rem;position: relative; top:2.7rem; left:18.5rem; right: auto; z-index: 4; border:none;background-color: #F3F4F7;">
                                                     Search
                                                 </button>
                                             </label>
-                                            <div class="input-group display-flex" style="position: relative;bottom:16px;">
-                                                <select class="col-2" name="searchType" style="height:40px; width: 90px; font-size:0.75rem;color:#666;">
+                                            <div class="input-group display-flex"
+                                                 style="position: relative;bottom:16px;">
+                                                <select class="col-2" name="searchType"
+                                                        style="height:40px; width: 90px; font-size:0.75rem;color:#666;">
                                                     <option value="" selected disabled>Search Type</option>
                                                     <option value="Name" id="name_option">Name</option>
                                                 </select>
                                                 &nbsp;
-                                                <input style="flex-shrink:0;width:auto;z-index:2;" type="search" name="searchValue" class="col-2 form-control form-control-sm" placeholder="Search" aria-controls="sherah-table__vendor">
+                                                <input style="flex-shrink:0;width:auto;z-index:2;" type="search"
+                                                       name="searchValue" class="col-2 form-control form-control-sm"
+                                                       placeholder="Search" aria-controls="sherah-table__vendor">
                                             </div>
                                         </div>
                                     </form>
                                 </div>
                             </div>
-                            <table id="sherah-table__main-product" class="sherah-table__vendor sherah-table__main-v3" style=" border: 1px solid #e2e7f1;">
+                            <table id="sherah-table__main-product" class="sherah-table__vendor sherah-table__main-v3"
+                                   style=" border: 1px solid #e2e7f1;">
                                 <!-- sherah Table Head -->
                                 <thead class="sherah-table__head" style="display:block;">
                                     <tr>
-                                        <th class="sherah-table__column-1" style=" min-width:270px; font-size: 16px;">Product Name</th>
-                                        <th class="sherah-table__column-3" style=" min-width:40px; padding-left:16px; font-size: 16px;">Starting quantity</th>
-                                        <th class="sherah-table__column-4" style=" min-width:80px; padding-left:5px; font-size: 16px; text-align: center">Import Quantity</th>
-                                        <th class="sherah-table__column-5" style=" min-width:100px; padding-left:10px; font-size: 16px;">Import Price</th>
-                                        <th class="sherah-table__column-6" style=" min-width:40px; padding-left:16px;font-size: 16px;">Current Quantity</th>
-                                        <th class="sherah-table__column-7" style=" min-width:40px; padding-left:5px; font-size: 16px; text-align: center">Unit</th>
-                                        <th class="sherah-table__column-8" style=" min-width:120px; padding-left:0; font-size: 16px; text-align: center">Total Stock Price</th>
+                                        <th class="sherah-table__column-1" style=" min-width:270px; font-size: 16px;">
+                                            Product Name
+                                        </th>
+                                        <th class="sherah-table__column-3"
+                                            style=" min-width:40px; padding-left:16px; font-size: 16px;">
+                                            Starting
+                                            quantity
+                                        </th>
+                                        <th class="sherah-table__column-4"
+                                            style=" min-width:80px; padding-left:5px; font-size: 16px; text-align: center">
+                                            Import Quantity
+                                        </th>
+                                        <th class="sherah-table__column-5"
+                                            style=" min-width:100px; padding-left:10px; font-size: 16px;">
+                                            Import Price
+                                        </th>
+                                        <th class="sherah-table__column-6"
+                                            style=" min-width:40px; padding-left:16px;font-size: 16px;">
+                                            Current Quantity
+                                        </th>
+                                        <th class="sherah-table__column-7"
+                                            style=" min-width:40px; padding-left:5px; font-size: 16px; text-align: center">
+                                            Unit
+                                        </th>
+                                        <th class="sherah-table__column-8"
+                                            style=" min-width:120px; padding-left:0; font-size: 16px; text-align: center">
+                                            Total Stock Price
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody class="sherah-table__body" style="display:block;max-height:300px;">
                                     @foreach (var warehouse in Model.Warehouses)
                                     {
                                         <tr style="height: 20px;margin-right:16px;">
-                                            <td class="sherah-table__column-1 sherah-table__data-1" style="min-width:280px;padding:12px;text-align:center;">
+                                            <td class="sherah-table__column-1 sherah-table__data-1"
+                                                style="min-width:280px;padding:12px;text-align:center;">
                                                 <div class="sherah-language-form__input">
-                                                    <p class="crany-table__product--number"><a href="/Product/ProductDetail?productId=@warehouse.Product.ProductId" class="sherah-color1" style="font-size: 14px;">@warehouse.Product.Name</a></p>
+                                                    <p class="crany-table__product--number">
+                                                        <a href="/Product/ProductDetail?productId=@warehouse.Product.ProductId"
+                                                           class="sherah-color1"
+                                                           style="font-size: 14px;">@warehouse.Product.Name</a>
+                                                    </p>
                                                 </div>
                                             </td>
-                                            <td class="sherah-table__column-3 sherah-table__data-3" style="min-width:40px; padding:12px 20px 12px 0;text-align:center;">
+                                            <td class="sherah-table__column-3 sherah-table__data-3"
+                                                style="min-width:40px; padding:12px 20px 12px 0;text-align:center;">
                                                 <p class="sherah-table__product-desc">@warehouse.QuantityAtBeginPeriod</p>
                                             </td>
-                                            <td class="sherah-table__column-4 sherah-table__data-4" style="min-width:40px; padding:12px;text-align:center;">
+                                            <td class="sherah-table__column-4 sherah-table__data-4"
+                                                style="min-width:40px; padding:12px;text-align:center;">
                                                 <div class="sherah-table__product-content">
-                                                    <p class="sherah-table__product-desc" style="font-size: 14px;">@warehouse.QuantityImport</p>
+                                                    <p class="sherah-table__product-desc" style="font-size: 14px;">
+                                                        @warehouse.QuantityImport
+                                                    </p>
                                                 </div>
                                             </td>
-                                            <td class="sherah-table__column-5 sherah-table__data-5" style="min-width:100px; padding:12px 12px 12px 0;text-align:center;">
+                                            <td class="sherah-table__column-5 sherah-table__data-5"
+                                                style="min-width:100px; padding:12px 12px 12px 0;text-align:center;">
                                                 <div class="sherah-table__product-content">
-                                                    <p class="sherah-table__product-desc" style="font-size: 14px;">$@Math.Round((warehouse.QuantityImport * warehouse.PriceImport), 2)</p>
+                                                    <p class="sherah-table__product-desc" style="font-size: 14px;">
+                                                        $@Math.Round((warehouse.QuantityImport * warehouse.PriceImport), 2)
+                                                    </p>
                                                 </div>
                                             </td>
-                                            <td class="sherah-table__column-6 sherah-table__data-6" style="min-width:40px; padding:12px 20px 12px 0;text-align:center;">
+                                            <td class="sherah-table__column-6 sherah-table__data-6"
+                                                style="min-width:40px; padding:12px 20px 12px 0;text-align:center;">
                                                 <div class="sherah-table__product-content">
-                                                    <p class="sherah-table__product-desc" style="font-size: 14px;">@warehouse.Quantity</p>
+                                                    <p class="sherah-table__product-desc" style="font-size: 14px;">
+                                                        @warehouse.Quantity
+                                                    </p>
                                                 </div>
                                             </td>
-                                            <td class="sherah-table__column-7 sherah-table__data-7" style="min-width:40px; padding:12px 30px 12px 12px;text-align:center;">
+                                            <td class="sherah-table__column-7 sherah-table__data-7"
+                                                style="min-width:40px; padding:12px 30px 12px 12px;text-align:center;">
                                                 <div class="sherah-table__product-content">
-                                                    <p class="sherah-table__product-desc" style="font-size: 14px;">@warehouse.Product.Unit</p>
+                                                    <p class="sherah-table__product-desc" style="font-size: 14px;">
+                                                        @warehouse.Product.Unit
+                                                    </p>
                                                 </div>
                                             </td>
-                                            <td class="sherah-table__column-8 sherah-table__data-8" style="min-width:80px;padding:12px 24px 12px 0;text-align:center;">
+                                            <td class="sherah-table__column-8 sherah-table__data-8"
+                                                style="min-width:80px;padding:12px 24px 12px 0;text-align:center;">
                                                 <div class="sherah-table__product-content">
-                                                    <p class="sherah-table__product-desc" style="font-size: 14px;">$@Math.Round((warehouse.Quantity * warehouse.PriceImport), 2)</p>
+                                                    <p class="sherah-table__product-desc" style="font-size: 14px;">
+                                                        $@Math.Round((warehouse.Quantity * warehouse.PriceImport), 2)
+                                                    </p>
                                                 </div>
                                             </td>
                                         </tr>
@@ -314,7 +402,11 @@
                                 @if (Model.Pageable != null)
                                 {
                                     <div class="col-sm-12 col-md-5">
-                                        <div class="dataTables_info" id="sherah-table__vendor_info" role="status" aria-live="polite" style="font-weight:500">Total @Model.Pageable.TotalItems products</div>
+                                        <div class="dataTables_info" id="sherah-table__vendor_info" role="status"
+                                             aria-live="polite" style="font-weight:500">
+                                            Total @Model.Pageable.TotalItems
+                                            products
+                                        </div>
                                     </div>
                                 }
                                 <div class="col-sm-12 col-md-7">
@@ -377,8 +469,62 @@
 <script>
     var searchType = "@searchType";
     if (searchType) {
-        if(searchType === "Name"){
+        if (searchType === "Name") {
             document.getElementById('name_option').setAttribute('selected', 'selected');
         }
+    }
+</script>
+<script>
+    function getSelectedQuarter() {
+        var quarterSelect = document.getElementById("quarter-select");
+        var selectedQuarter = quarterSelect.options[quarterSelect.selectedIndex].value;
+        return selectedQuarter;
+    }
+
+    function getSelectedYear() {
+        var yearSelect = document.getElementById("year-select");
+        var selectedYear = yearSelect.options[yearSelect.selectedIndex].value;
+        return selectedYear;
+    }
+
+    function exportData() {
+        var selectedQuarter = getSelectedQuarter();
+        var selectedYear = getSelectedYear();
+
+        $.ajax({
+            url: "/Warehouse/ExportFile",
+            method: "POST",
+            data: { quarter: selectedQuarter, year: selectedYear },
+            xhrFields: {
+                responseType: 'blob'
+            },
+            success: function (data, status, xhr) {
+                var url = window.URL.createObjectURL(data);
+                var a = document.createElement('a');
+                a.href = url;
+                a.download = 'WarehouseData.xlsx';
+                document.body.append(a);
+                a.click();
+                a.remove();
+                window.URL.revokeObjectURL(url);
+
+                Swal.fire({
+                    title: 'Success',
+                    text: 'File export successful.',
+                    icon: 'success',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'OK'
+                });
+            },
+            error: function (xhr, status, error) {
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Failed to export file. Please try again later.',
+                    icon: 'error',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'OK'
+                });
+            }
+        });
     }
 </script>
