@@ -2,6 +2,8 @@
 using System.Diagnostics;
 using WarehouseWebMVC.Data;
 using WarehouseWebMVC.Models;
+using WarehouseWebMVC.Models.DTOs.SupplierDTO;
+using WarehouseWebMVC.Models.DTOs.UserDTO;
 using WarehouseWebMVC.Service;
 using WarehouseWebMVC.Services;
 using WarehouseWebMVC.Services.Helper;
@@ -14,11 +16,13 @@ public class SupplierController : Controller
 {
     private readonly ILogger<SupplierController> _logger;
     private readonly ISupplierService _supplierService;
+    private readonly IAddressHelper _addressHelper;
 
-    public SupplierController(ILogger<SupplierController> logger, ISupplierService supplierService)
+    public SupplierController(ILogger<SupplierController> logger, ISupplierService supplierService, IAddressHelper addressHelper)
     {
         _logger = logger;
         _supplierService = supplierService;
+        _addressHelper = addressHelper;
     }
 
     [Filter]
@@ -52,7 +56,28 @@ public class SupplierController : Controller
     }
 
     [Filter]
-    public IActionResult SupplierInformation()
+    public IActionResult SupplierInformation(long supplierId)
+    {
+        if (HttpContext.Session.GetString("User") != null)
+        {
+            Response.Headers.Add("Cache-Control", "no-store, no-cache, must-revalidate, post-check=0, pre-check=0");
+            Response.Headers.Add("Pragma", "no-cache");
+            Response.Headers.Add("Expires", "0");
+            var supplier = _supplierService.GetById(supplierId);
+            if (supplier == null)
+            {
+                TempData["Message"] = AppConstant.MESSAGE_FAILED;
+                return RedirectToAction("SupplierList");
+            }
+            return View(supplier);
+        }
+        TempData["Message"] = AppConstant.MESSAGE_NOT_LOGIN;
+        return RedirectToAction("Login", "Authentication");
+    }
+
+    [Filter]
+    [HttpGet]
+    public IActionResult AddSupplier()
     {
         if (HttpContext.Session.GetString("User") != null)
         {
@@ -61,6 +86,57 @@ public class SupplierController : Controller
             Response.Headers.Add("Expires", "0");
             return View();
         }
+        TempData["Message"] = AppConstant.MESSAGE_NOT_LOGIN;
+        return RedirectToAction("Login", "Authentication");
+    }
+
+    [HttpPost]
+    public IActionResult AddSupplier(SupplierDTO addSupplierDTO)
+    {
+        if (HttpContext.Session.GetString("User") != null)
+        {
+            ModelState.Remove("Ward");
+            ModelState.Remove("Apartment");
+            if (_supplierService.IsEmailAlreadyExists(addSupplierDTO.Email))
+            {
+                TempData["Message"] = AppConstant.MESSAGE_WRONG_INFO;
+                return View(addSupplierDTO);
+            }
+            if (ModelState.IsValid)
+            {
+                addSupplierDTO.Avatar ??= "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fdefault_avatar.png?alt=media&token=560b08e7-3ab2-453e-aea5-def178730766";
+                addSupplierDTO.Ward ??= "";
+                addSupplierDTO.Apartment ??= "";
+
+                if (_supplierService.AddSupplier(addSupplierDTO))
+                {
+                    TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
+                    return RedirectToAction("SupplierList");
+                }
+            }
+
+            TempData["Message"] = AppConstant.MESSAGE_FAILED;
+            return View(addSupplierDTO);
+        }
+        TempData["Message"] = AppConstant.MESSAGE_NOT_LOGIN;
+        return RedirectToAction("Login", "Authentication");
+    }
+    [HttpPost]
+    public IActionResult UpdateSupplier(SupplierDTO updateSupplierDTO)
+    {
+        if (HttpContext.Session.GetString("User") != null)
+        {
+            ModelState.Remove("Ward");
+            ModelState.Remove("Apartment");
+            if (!_supplierService.UpdateSupplier(updateSupplierDTO))
+            {
+                TempData["Message"] = AppConstant.MESSAGE_FAILED;
+                return RedirectToAction("SupplierInformation", new { supplierId = updateSupplierDTO.SupplierId });
+            }
+            TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
+            return RedirectToAction("SupplierInformation", new { supplierId = updateSupplierDTO.SupplierId });
+        }
+        TempData["Message"] = AppConstant.MESSAGE_NOT_LOGIN;
         return RedirectToAction("Login", "Authentication");
     }
 

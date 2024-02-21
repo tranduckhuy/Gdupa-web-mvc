@@ -21,9 +21,13 @@ namespace WarehouseWebMVC.Services.Impl
             _mapper = mapper;
         }
 
-        public Supplier Add(Supplier supplier)
+        public SupplierDTO GetById(long supplierId)
         {
-            throw new NotImplementedException();
+            var supplier = _dataContext.Suppliers
+            .Include(ipn => ipn.ImportNotes)
+            .FirstOrDefault(s => s.SupplierId == supplierId);
+
+            return supplier != null ? _mapper.Map<SupplierDTO>(supplier) : null!;
         }
 
         public SupplierViewModel GetAll(int page)
@@ -48,12 +52,89 @@ namespace WarehouseWebMVC.Services.Impl
 
             var suppliersDto = _mapper.Map<List<SupplierDTO>>(suppliers);
 
+            foreach (var supplierDto in suppliersDto)
+            {
+                supplierDto.Address = ExtractCityFromAddress(supplierDto.Address);
+            }
+
             var supplierViewModel = new SupplierViewModel { Suppliers = suppliersDto, Pageable = pageable };
 
             return supplierViewModel;
         }
+        public bool AddSupplier(SupplierDTO addSupplierDTO)
+        {
+            try
+            {
+                if (_dataContext.Suppliers.Any(u => u.Email == addSupplierDTO.Email))
+                {
+                    return false;
+                }
 
+                addSupplierDTO.Address =
+                  (addSupplierDTO.Apartment != null && addSupplierDTO.Apartment != "" ? addSupplierDTO.Apartment + ", " : "")
+                + addSupplierDTO.Street + ", "
+                + (addSupplierDTO.Ward != null && addSupplierDTO.Ward != "" ? addSupplierDTO.Ward + ", " : "")
+                + addSupplierDTO.District + ", "
+                + addSupplierDTO.Province;
 
+                var supplier = _mapper.Map<Supplier>(addSupplierDTO);
+                supplier.Address = addSupplierDTO.Address;
+
+                _dataContext.Suppliers.Add(supplier);
+                _dataContext.SaveChanges();
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        public bool UpdateSupplier(SupplierDTO updateSupplierDTO)
+        {
+            try
+            {
+                var existingSupplier = _dataContext.Suppliers.FirstOrDefault(s => s.SupplierId == updateSupplierDTO.SupplierId);
+
+                if (existingSupplier == null)
+                {
+                    return false;
+                }
+
+                if (updateSupplierDTO.Avatar == null)
+                {
+                    updateSupplierDTO.Avatar = existingSupplier.Avatar;
+                }
+
+                if (updateSupplierDTO.Name != null && updateSupplierDTO.Phone != null && updateSupplierDTO.Avatar != null)
+                {
+                    existingSupplier.Name = updateSupplierDTO.Name;
+                    existingSupplier.Phone = updateSupplierDTO.Phone;
+                    existingSupplier.Fax = updateSupplierDTO.Fax;
+                    existingSupplier.Email = updateSupplierDTO.Email;
+                    updateSupplierDTO.Address =
+                        (updateSupplierDTO.Apartment != null && updateSupplierDTO.Apartment != "" ? updateSupplierDTO.Apartment + ", " : "")
+                        + updateSupplierDTO.Street + ", "
+                        + (updateSupplierDTO.Ward != null && updateSupplierDTO.Ward != "" ? updateSupplierDTO.Ward + ", " : "")
+                        + updateSupplierDTO.District + ", "
+                        + updateSupplierDTO.Province;
+                    existingSupplier.Address = updateSupplierDTO.Address;
+                    existingSupplier.Avatar = updateSupplierDTO.Avatar;
+                }
+
+                _dataContext.Entry(existingSupplier).State = EntityState.Modified;
+                _dataContext.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        public bool IsEmailAlreadyExists(string email)
+        {
+            return _dataContext.Suppliers.Any(s => s.Email == email);
+        }
         public SupplierViewModel SearchSupplier(string searchType, string searchValue)
         {
             IQueryable<Supplier> searchSupplier = _dataContext.Suppliers;
@@ -74,10 +155,24 @@ namespace WarehouseWebMVC.Services.Impl
             {
                 var searchSupplierDto = _mapper.Map<List<SupplierDTO>>(searchSupplier.ToList());
 
+                foreach (var searchDto in searchSupplierDto)
+                {
+                    searchDto.Address = ExtractCityFromAddress(searchDto.Address);
+                }
+
                 var supplierViewModel = new SupplierViewModel { Suppliers = searchSupplierDto };
                 return supplierViewModel;
             }
             return null!;
+        }
+        private static string ExtractCityFromAddress(string fullAddress)
+        {
+            string[] addressParts = fullAddress.Split(',');
+
+            int maxIndex = Math.Min(4, addressParts.Length - 1);
+
+            string city = addressParts[maxIndex - 1].Trim();
+            return city;
         }
     }
 }

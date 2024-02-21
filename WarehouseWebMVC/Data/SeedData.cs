@@ -78,11 +78,11 @@ public static class SeedData
 
         modelBuilder.Entity<Supplier>().HasData(
             new Supplier { SupplierId = 1, Name = "Supplier A", Email = "supplierA@gmail.com", 
-                Address = "Supplier A Address", Phone = "0987654321", Fax = "123456" },    
+                Address = "08 Tống Phước Phổ, Cao Ốc Long Thịnh, Phường Ghềnh Ráng, Thành Phố Quy Nhơn, Tỉnh Bình Định", Phone = "0987654321", Fax = "123456" },    
             new Supplier { SupplierId = 2, Name = "Supplier B", Email = "supplierB@gmail.com", 
-                Address = "Supplier B Address", Phone = "0987654322", Fax = "123457" },    
+                Address = "08 Tống Phước Phổ, Cao Ốc Long Thịnh, Phường Ghềnh Ráng, Thành Phố Quy Nhơn, Tỉnh Bình Định", Phone = "0987654322", Fax = "123457" },    
             new Supplier { SupplierId = 3, Name = "Supplier C", Email = "supplierC@gmail.com", 
-                Address = "Supplier C Address", Phone = "0987654323", Fax = "123458" }
+                Address = "08 Tống Phước Phổ, Cao Ốc Long Thịnh, Phường Ghềnh Ráng, Thành Phố Quy Nhơn, Tỉnh Bình Định", Phone = "0987654323", Fax = "123458" }
         );
 
         modelBuilder.Entity<Category>().HasData(

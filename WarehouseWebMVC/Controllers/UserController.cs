@@ -67,6 +67,7 @@ public class UserController : Controller
     }
 
     [Filter]
+    [HttpGet]
     public IActionResult AddUser()
     {
         if (HttpContext.Session.GetString("User") != null)

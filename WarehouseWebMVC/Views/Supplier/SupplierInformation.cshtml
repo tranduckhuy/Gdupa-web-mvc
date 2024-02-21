@@ -1,8 +1,43 @@
 ﻿@{
     ViewData["Title"] = "Supplier Information";
+    var message = TempData["Message"] as string;
 }
 
-
+@model WarehouseWebMVC.Models.DTOs.SupplierDTO.SupplierDTO;
+<div id="toast"></div>
+@if (!string.IsNullOrEmpty(message))
+{
+    if ("Success".Equals(message))
+    {
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                setTimeout(function () {
+                    toast({
+                        title: "Success",
+                        message: "Success ! Action complete.",
+                        type: "success",
+                        duration: 3000,
+                    });
+                }, 600);
+            });
+        </script>
+    }
+    if ("Failed".Equals(message))
+    {
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                setTimeout(function () {
+                    toast({
+                        title: "Failed",
+                        message: "Oops! Action failed. Please try again.",
+                        type: "danger",
+                        duration: 3000,
+                    });
+                }, 600);
+            });
+        </script>
+    }
+}
 <!-- sherah Dashboard -->
 <section class="sherah-adashboard sherah-show">
     <div class="container">
@@ -28,12 +63,16 @@
                         </div>
 
                         <div class="sharah-profile--main sherah-default-bg sharah-border mg-top-40">
+                            <!-- Sharah Profile header -->
+                            <div class="sherah-userprofile__header">
+                                <img src="/assets/images/profile-cover.jpg" alt="#">
+                            </div>
                             <div class="col-12">
                                 <!-- Profile Info -->
                                 <div class="sherah-profile-info">
                                     <div class="sherah-profile-info__thumb">
-                                        <img src="img/profile.png" alt="#">
-                                        <h3 class="sherah-profile-info__name">Supplier A<span>supplierA@gmail.com</span></h3>
+                                        <img src="@Model.Avatar" alt="Avatar">
+                                        <h3 class="sherah-profile-info__name">@Model.Name<span>@Model.Email</span></h3>
                                     </div>
                                 </div>
                                 <!-- End Profile Info -->
@@ -47,31 +86,47 @@
                                         <div class="sherah-upcontent mg-top-30">
                                             <!-- Tab List -->
                                             <div class="sherah-pcats__bar">
-                                                <div class="sherah-pcats__list list-group " id="list-tab" role="tablist">
-                                                    <a class="list-group-item active" data-bs-toggle="list" href="#tab_1" role="tab" href="profile.html">About</a>
-                                                    <a class="list-group-item" data-bs-toggle="list" href="#tab_4" role="tab">Edit Profile</a>
+                                                <div class="sherah-pcats__list list-group " id="list-tab"
+                                                     role="tablist">
+                                                    <a class="list-group-item active" data-bs-toggle="list"
+                                                       href="#tab_1" role="tab" href="profile.html">About</a>
+                                                    <a class="list-group-item" data-bs-toggle="list" href="#tab_4"
+                                                       role="tab">Edit Profile</a>
                                                 </div>
                                             </div>
 
                                             <div class="tab-content" id="nav-tabContent">
 
-                                                <div class="tab-pane fade show active" id="tab_1" role="tabpanel" aria-labelledby="nav-home-tab">
+                                                <div class="tab-pane fade show active" id="tab_1" role="tabpanel"
+                                                     aria-labelledby="nav-home-tab">
                                                     <div class="sherah-upcontent__text sherah-border">
 
                                                         <!-- Profile Info -->
                                                         <div class="sharah-profile__about">
                                                             <h3 class="sharah-profile__title mg-btm-10">Biodata</h3>
                                                             <p class="sharah-profile__text">
-                                                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero asperiores sunt neque exercitationem, illum tempora possimus unde veniam aliquid harum natus. Deserunt quidem exercitationem nihil, molestias magnam repudiandae recusandae earum.
-                                                                Vitae modi reiciendis quia, amet fugit mollitia aperiam doloribus, vero ex nisi tenetur debitis quis perspiciatis animi aliquid exercitationem rerum voluptatibus molestias optio quaerat suscipit non? Ab debitis optio beatae.
-                                                                Recusandae modi delectus magnam temporibus nemo saepe quasi. Voluptate ad, fuga assumenda totam tempora consequuntur quo facere modi eos corporis, maxime voluptas esse nam rem dolores? Debitis fugit voluptas amet!
-                                                                Fuga voluptatibus tempora molestias voluptas! Doloremque consequatur culpa, laboriosam fugit aut libero id soluta atque perferendis aliquam, cum quos recusandae dolorem ipsum eligendi debitis maiores repellat? Quasi quis velit dolore!
-                                                                Deserunt rem ex eos soluta quod! Doloremque nam autem voluptatem? Reiciendis eum cupiditate saepe culpa, alias, facilis magni vitae tempora, doloremque debitis id delectus! Consequuntur dolore veniam quisquam ab voluptate.
+                                                                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                                                Harum possimus perspiciatis illum voluptates natus, nam
+                                                                commodi molestias? Sit nam alias distinctio,
+                                                                voluptatibus modi, dolorum rem soluta, adipisci porro
+                                                                eos laborum.
+                                                                Iusto optio vel illo recusandae nesciunt fugit eaque
+                                                                porro aut molestiae beatae animi ullam minus, nulla
+                                                                accusamus corrupti assumenda omnis quidem sequi officiis
+                                                                a perferendis. Tempora doloribus incidunt ad saepe?
+                                                                Eaque doloremque voluptatibus doloribus laboriosam,
+                                                                accusamus minus nihil consequuntur! Blanditiis dolores
+                                                                eveniet mollitia, atque quae officia nostrum magni
+                                                                officiis voluptas, fugiat distinctio ipsum praesentium
+                                                                sint tempore, earum vitae sunt veritatis?
                                                             </p>
                                                             <div class="sharah-profile__meta mg-top-40">
                                                                 <h4>GDUPA</h4>
-                                                                <p class="mg-top-10"><a href="#" class="sherah-color1">gdupa@gmail.com</a></p>
-                                                                <p class="sharah-profile__id mg-top-30">1900-2024</p>
+                                                                <p class="mg-top-10">
+                                                                    <a href="#"
+                                                                       class="sherah-color1">gdupa@gmail.com</a>
+                                                                </p>
+                                                                <p class="sharah-profile__id mg-top-30">2023-2024</p>
                                                             </div>
                                                         </div>
                                                         <div class="sherah-border-btm mg-top-30"></div>
@@ -79,130 +134,207 @@
                                                             <div class="col-lg-6 col-md-6 col-12 mg-top-30">
                                                                 <h4 class="sherah-info-title mg-btm-20">Contact</h4>
                                                                 <ul class="sherah-contact-info">
-                                                                    <li class="sherah-border"><span class="sherah-color1__bg--offset"><i class="fa-solid fa-location-dot"></i></span>14/3 Road Brown Tower New York</li>
-                                                                    <li class="sherah-border"><span class="sherah-color1__bg--offset"><i class="fa-solid fa-envelope"></i></span>Email : name@yourmail.com</li>
-                                                                    <li class="sherah-border"><span class="sherah-color1__bg--offset"><i class="fa-solid fa-phone"></i></span>Phone : +22 (5) 789 0001</li>
+                                                                    <li class="sherah-border">
+                                                                        <span class="sherah-color1__bg--offset">
+                                                                            <i class="fa-solid fa-location-dot"></i>
+                                                                        </span>
+                                                                        <p id="address-information">@Model.Address</p>
+                                                                    </li>
+                                                                    <li class="sherah-border">
+                                                                        <span class="sherah-color1__bg--offset">
+                                                                            <i class="fa-solid fa-envelope"></i>
+                                                                        </span>Email
+                                                                        : @Model.Email
+                                                                    </li>
+                                                                    <li class="sherah-border">
+                                                                        <span class="sherah-color1__bg--offset">
+                                                                            <i class="fa-solid fa-phone"></i>
+                                                                        </span>Phone
+                                                                        : @Model.Phone
+                                                                    </li>
                                                                 </ul>
                                                             </div>
                                                             <div class="col-lg-6 col-md-6 col-12 mg-top-30">
                                                                 <h4 class="sherah-info-title mg-btm-20">Social</h4>
                                                                 <ul class="sherah-contact-info sherah-contact-social">
-                                                                    <li class="sherah-border"><a href="#"><span class="sherah-color1__bg--offset"><i class="fa-brands fa-facebook-f"></i></span>Facebook</a></li>
-                                                                    <li class="sherah-border"><a href="#"><span class="sherah-color1__bg--offset"><i class="fa-brands fa-twitter"></i></span>Twitter</a></li>
-                                                                    <li class="sherah-border"><a href="#"><span class="sherah-color1__bg--offset"><i class="fa-brands fa-linkedin"></i></span>Linkedin</a></li>
-                                                                    <li class="sherah-border"><a href="#"><span class="sherah-color1__bg--offset"><i class="fa-brands fa-dribbble"></i></span>Dribbble</a></li>
-                                                                    <li class="sherah-border"><a href="#"><span class="sherah-color1__bg--offset"><i class="fa-brands fa-behance"></i></span>Behance</a></li>
-                                                                    <li class="sherah-border"><a href="#"><span class="sherah-color1__bg--offset"><i class="fa-brands fa-youtube"></i></span>Youtube</a></li>
-                                                                    <li class="sherah-border"><a href="#"><span class="sherah-color1__bg--offset"><i class="fa-brands fa-instagram"></i></span>Instagram</a></li>
+                                                                    <li class="sherah-border">
+                                                                        <a href="#">
+                                                                            <span class="sherah-color1__bg--offset">
+                                                                                <i class="fa-brands fa-facebook-f"></i>
+                                                                            </span>Facebook
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="sherah-border">
+                                                                        <a href="#">
+                                                                            <span class="sherah-color1__bg--offset">
+                                                                                <i class="fa-brands fa-twitter"></i>
+                                                                            </span>Twitter
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="sherah-border">
+                                                                        <a href="#">
+                                                                            <span class="sherah-color1__bg--offset">
+                                                                                <i class="fa-brands fa-linkedin"></i>
+                                                                            </span>Linkedin
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="sherah-border">
+                                                                        <a href="#">
+                                                                            <span class="sherah-color1__bg--offset">
+                                                                                <i class="fa-brands fa-dribbble"></i>
+                                                                            </span>Dribbble
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="sherah-border">
+                                                                        <a href="#">
+                                                                            <span class="sherah-color1__bg--offset">
+                                                                                <i class="fa-brands fa-behance"></i>
+                                                                            </span>Behance
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="sherah-border">
+                                                                        <a href="#">
+                                                                            <span class="sherah-color1__bg--offset">
+                                                                                <i class="fa-brands fa-youtube"></i>
+                                                                            </span>Youtube
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="sherah-border">
+                                                                        <a href="#">
+                                                                            <span class="sherah-color1__bg--offset">
+                                                                                <i class="fa-brands fa-instagram"></i>
+                                                                            </span>Instagram
+                                                                        </a>
+                                                                    </li>
                                                                 </ul>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="tab-pane fade" id="tab_4" role="tabpanel" aria-labelledby="nav-home-tab">
+                                                <div class="tab-pane fade" id="tab_4" role="tabpanel"
+                                                     aria-labelledby="nav-home-tab">
                                                     <div class="row">
                                                         <div class="col-12">
                                                             <!-- Sign in Form -->
-                                                            <form class="sherah-wc__form-main sherah-wc__form-profile sherah-form-main--v2 p-0" action="#" method="post">
+                                                            <form class="sherah-wc__form-main sherah-wc__form-profile sherah-form-main--v2 p-0"
+                                                                  id="update-supplier-form"
+                                                                  method="post" asp-controller="Supplier" asp-action="UpdateSupplier">
                                                                 <div class="row">
-                                                                    <div class="col-lg-6 col-md-6 col-12">
+                                                                    <div class="col-lg-12 col-md-12 col-12">
                                                                         <div class="form-group">
-                                                                            <label class="sherah-wc__form-label">First Name *</label>
+                                                                            <label class="sherah-wc__form-label">Full-Name</label>
                                                                             <div class="form-group__input">
-                                                                                <input class="sherah-wc__form-input" placeholder="Abubokkor" type="text" name="f_name" required="required">
+                                                                                <input asp-for="SupplierId" value="@Model.SupplierId" style="display:none;" readonly />
+                                                                                <input class="sherah-wc__form-input"
+                                                                                       asp-for="Name"
+                                                                                       value="@Model.Name"
+                                                                                       placeholder="Type here" type="text"
+                                                                                       name="Name" rules="required">
                                                                             </div>
+                                                                            <span class="form-message"></span>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-lg-6 col-md-6 col-12">
                                                                         <div class="form-group">
-                                                                            <label class="sherah-wc__form-label">Last Name *</label>
+                                                                            <label class="sherah-wc__form-label">Phone</label>
                                                                             <div class="form-group__input">
-                                                                                <input class="sherah-wc__form-input" placeholder="Siddik" type="text" name="l_name" required="required">
+                                                                                <input asp-for="Phone" name="Phone"
+                                                                                       value="@Model.Phone"
+                                                                                       class="sherah-wc__form-input" rules="required|max:10|phone"
+                                                                                       placeholder="Type here" type="text">
                                                                             </div>
+                                                                            <span class="form-message"></span>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-lg-6 col-md-6 col-12">
                                                                         <div class="form-group">
-                                                                            <label class="sherah-wc__form-label">Phone Number *</label>
-                                                                            <div class="form-group__input form-group__input--select">
-                                                                                <button class="flag-label dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                                                    <img src="img/flag-bd.png">+880
-                                                                                </button>
-                                                                                <ul class="dropdown-menu">
-                                                                                    <li><a class="dropdown-item" href="#">+550</a></li>
-                                                                                    <li><a class="dropdown-item" href="#">+990</a></li>
-                                                                                    <li><a class="dropdown-item" href="#">+660</a></li>
-                                                                                </ul>
-                                                                                <input class="sherah-wc__form-input" placeholder="140 8317 189" type="text" name="f_number" required="required">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-lg-6 col-md-6 col-12">
-                                                                        <div class="form-group">
-                                                                            <label class="sherah-wc__form-label">Join Date* </label>
+                                                                            <label class="sherah-wc__form-label">Fax</label>
                                                                             <div class="form-group__input">
-                                                                                <input class="sherah-wc__form-input" placeholder="Oct 14 2022" type="text" name="j_date" required="required">
+                                                                                <input class="sherah-wc__form-input"
+                                                                                       asp-for="Fax"
+                                                                                       value="@Model.Fax"
+                                                                                       placeholder="Type here"
+                                                                                       type="text" name="Fax"
+                                                                                       rules="required|min:8|max:8">
                                                                             </div>
+                                                                            <span class="form-message"></span>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-12">
                                                                         <div class="form-group">
-                                                                            <label class="sherah-wc__form-label">Email Address*</label>
+                                                                            <label class="sherah-wc__form-label">Email Address</label>
                                                                             <div class="form-group__input">
-                                                                                <input class="sherah-wc__form-input" placeholder="infosherah@gmail.com" type="text" name="e_address" required="required">
+                                                                                <input class="sherah-wc__form-input"
+                                                                                       asp-for="Email"
+                                                                                       value="@Model.Email"
+                                                                                       placeholder="Type here"
+                                                                                       type="text" name="Email"
+                                                                                       rules="required|email">
                                                                             </div>
+                                                                            <span class="form-message"></span>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-12">
+                                                                    <div class="col-lg-6 col-md-12 col-12">
                                                                         <div class="form-group">
-                                                                            <label class="sherah-wc__form-label">Website*</label>
+                                                                            <label class="sherah-wc__form-label">Street</label>
                                                                             <div class="form-group__input">
-                                                                                <input class="sherah-wc__form-input" placeholder="www.sherah.com" type="text" name="w_address" required="required">
+                                                                                <input class="sherah-wc__form-input"
+                                                                                       asp-for="Street"
+                                                                                       id="street-input"
+                                                                                       placeholder="Type here"
+                                                                                       type="text" name="Street"
+                                                                                       rules="required">
                                                                             </div>
+                                                                            <span class="form-message"></span>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-lg-4 col-md-4 col-12">
+                                                                    <div class="col-lg-6 col-md-12 col-12">
                                                                         <div class="form-group">
-                                                                            <label class="sherah-wc__form-label">Country*</label>
-                                                                            <select class="form-group__input" aria-label="Default select example">
-                                                                                <option selected>Bangladesh</option>
-                                                                                <option value="1">India</option>
-                                                                                <option value="2">China</option>
-                                                                                <option value="3">United States</option>
-                                                                                <option value="4">United Kingdom</option>
-                                                                                <option value="5">Saudi Arabia</option>
+                                                                            <label class="sherah-wc__form-label">Apartment</label>
+                                                                            <div class="form-group__input">
+                                                                                <input class="sherah-wc__form-input"
+                                                                                       asp-for="Apartment"
+                                                                                       id="apartment-input"
+                                                                                       placeholder="Type here"
+                                                                                       type="text" name="Apartment">
+                                                                            </div>
+                                                                            <span class="form-message"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-4 col-md-6 col-12">
+                                                                        <div class="form-group">
+                                                                            <label class="sherah-wc__form-label">Province*</label>
+                                                                            <select asp-for="Province" id="city">
+                                                                                <option value="" selected id="province-option"></option>
                                                                             </select>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-lg-4 col-md-4 col-12">
+                                                                    <div class="col-lg-4 col-md-6 col-12">
                                                                         <div class="form-group">
-                                                                            <label class="sherah-wc__form-label">City/Town*</label>
-                                                                            <div class="form-group__input">
-                                                                                <input class="sherah-wc__form-input" placeholder="Dhaka" type="text" name="d_address" required="required">
-                                                                            </div>
+                                                                            <label class="sherah-wc__form-label">District*</label>
+                                                                            <select asp-for="District" id="district">
+                                                                                <option value="" selected id="district-option"></option>
+                                                                            </select>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col-lg-4 col-md-4 col-12">
+                                                                    <div class="col-lg-4 col-md-6 col-12">
                                                                         <div class="form-group">
-                                                                            <label class="sherah-wc__form-label">Zip code*</label>
-                                                                            <div class="form-group__input">
-                                                                                <input class="sherah-wc__form-input" placeholder="1216" type="text" name="z_code" required="required">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-12">
-                                                                        <div class="form-group">
-                                                                            <label class="sherah-wc__form-label">About Description*</label>
-                                                                            <div class="form-group__input">
-                                                                                <textarea class="sherah-wc__form-input" placeholder="About description write here" type="text" name="d_area" required="required"></textarea>
-                                                                            </div>
+                                                                            <label class="sherah-wc__form-label">Ward*</label>
+                                                                            <select asp-for="Ward" id="ward">
+                                                                                <option value="" selected id="ward-option"></option>
+                                                                            </select>
                                                                         </div>
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="form-group mg-top-30 sherah-dflex sherah-dflex-gap-30 justify-content-end">
-                                                                    <button type="submit" class="sherah-btn sherah-btn__primary">Save</button>
-                                                                    <button type="submit" class="sherah-btn sherah-btn__third">Cancel</button>
+                                                                    <button type="submit"
+                                                                            class="sherah-btn sherah-btn__primary">
+                                                                        Save
+                                                                    </button>
+                                                                    <a href="/Supplier/SupplierList" class="sherah-btn sherah-btn__third">
+                                                                        Cancel
+                                                                    </a>
                                                                 </div>
                                                             </form>
                                                             <!-- End Sign in Form -->
@@ -228,3 +360,127 @@
     </div>
 </section>
 <!-- End sherah Dashboard -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/js/Validator.js"></script>
+<script async>
+    Validator('#update-supplier-form');
+</script>
+<script>
+    var fullAddress = "@Html.Raw(Model.Address)";
+
+    var parts = fullAddress.split(',');
+
+    var street = "";
+    var apartment = "";
+    if (parts.length > 4) {
+        apartment = parts[0].trim();
+        street = parts[1].trim();
+    } else {
+        street = parts[0].trim();
+    }
+
+    document.querySelector('#street-input').value = street;
+    document.querySelector('#apartment-input').value = apartment;
+</script>
+<script>
+    function extractCityProvince(fullAddress) {
+        var addressParts = fullAddress.split(',');
+
+        var maxIndex = Math.min(5, addressParts.length - 1);
+
+        var city = addressParts[maxIndex - 1].trim();
+        var province = addressParts[maxIndex].trim();
+
+        return city + ', ' + province;
+    }
+    document.querySelector('#address-information').textContent = extractCityProvince("@Html.Raw(Model.Address)");
+</script>
+<script>
+    var fullAddress = "@Html.Raw(Model.Address)";
+    var parts = fullAddress.split(',');
+
+    var province = document.querySelector('#province-option');
+    var district = document.querySelector('#district-option');
+    var ward = document.querySelector('#ward-option');
+
+    if (parts.length > 4) {
+        province.textContent = parts[4].trim();
+        district.textContent = parts[3].trim();
+        ward.textContent = parts[2].trim();
+    } else {
+        province.textContent = parts[3].trim();
+        district.textContent = parts[2].trim();
+        ward.textContent = parts[1].trim();
+    }
+
+</script>
+<script>
+    const host = "https://vapi.vnappmob.com/api/";
+    var apiProvince = host + 'province/';
+    var callAPI = (apiProvince) => {
+        return axios.get(apiProvince)
+            .then((response) => {
+                renderDataCity(response.data, "city");
+            });
+    };
+
+    var callApiDistrict = (api) => {
+        return axios.get(api)
+            .then((response) => {
+                renderDataDistrict(response.data, "district");
+            });
+    };
+
+    var callApiWard = (api) => {
+        return axios.get(api)
+            .then((response) => {
+                renderDataWard(response.data, "ward");
+            });
+    };
+
+    var renderDataCity = (data, select) => {
+        if (data && data.results && Array.isArray(data.results)) {
+            let row = ' <option disable value="">Choose Provinces</option>';
+            data.results.forEach((element) => {
+                row += '<option data-id="' + element.province_id + '" value="' + element.province_name + '">' + element.province_name + '</option>';
+            });
+            document.querySelector("#" + select).innerHTML = row;
+        } else {
+            console.error("Invalid or missing province data:", data);
+        }
+    }
+    var renderDataDistrict = (data, select) => {
+        if (data && data.results && Array.isArray(data.results)) {
+            let row = '<option disable value="">Choose Districts</option>';
+            data.results.forEach((element) => {
+                row += '<option data-id="' + element.district_id + '" value="' + element.district_name + '">' + element.district_name + '</option>';
+            });
+            document.querySelector("#" + select).innerHTML = row;
+        } else {
+            console.error("Invalid or missing district data:", data);
+        }
+    }
+    var renderDataWard = (data, select) => {
+        if (data && data.results && Array.isArray(data.results)) {
+            let row = ' <option disable value="">Choose Wards</option>';
+            data.results.forEach((element) => {
+                row += '<option data-id="' + element.ward_id + '" value="' + element.ward_name + '">' + element.ward_name + '</option>';
+            });
+            document.querySelector("#" + select).innerHTML = row;
+        } else {
+            console.error("Invalid or missing ward data:", data);
+        }
+    }
+
+    $("#city").change(() => {
+        callApiDistrict(host + "province/district/" + $("#city").find(':selected').data('id'));
+    });
+    $("#district").change(() => {
+        callApiWard(host + "province/ward/" + $("#district").find(':selected').data('id'));
+    });
+
+    $("#city").click(() => {
+        callAPI(apiProvince);
+    }) 
+</script>
