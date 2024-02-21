@@ -47,6 +47,7 @@ namespace WarehouseWebMVC.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
                     Email = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
+                    Avatar = table.Column<string>(type: "TEXT", nullable: false),
                     Address = table.Column<string>(type: "TEXT", nullable: false),
                     Phone = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
                     Fax = table.Column<string>(type: "TEXT", nullable: false)
@@ -262,12 +263,12 @@ namespace WarehouseWebMVC.Migrations
 
             migrationBuilder.InsertData(
                 table: "Suppliers",
-                columns: new[] { "SupplierId", "Address", "Email", "Fax", "Name", "Phone" },
+                columns: new[] { "SupplierId", "Address", "Avatar", "Email", "Fax", "Name", "Phone" },
                 values: new object[,]
                 {
-                    { 1L, "Supplier A Address", "supplierA@gmail.com", "123456", "Supplier A", "0987654321" },
-                    { 2L, "Supplier B Address", "supplierB@gmail.com", "123457", "Supplier B", "0987654322" },
-                    { 3L, "Supplier C Address", "supplierC@gmail.com", "123458", "Supplier C", "0987654323" }
+                    { 1L, "Supplier A Address", "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fdefault_avatar.png?alt=media&token=560b08e7-3ab2-453e-aea5-def178730766", "supplierA@gmail.com", "123456", "Supplier A", "0987654321" },
+                    { 2L, "Supplier B Address", "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fdefault_avatar.png?alt=media&token=560b08e7-3ab2-453e-aea5-def178730766", "supplierB@gmail.com", "123457", "Supplier B", "0987654322" },
+                    { 3L, "Supplier C Address", "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fdefault_avatar.png?alt=media&token=560b08e7-3ab2-453e-aea5-def178730766", "supplierC@gmail.com", "123458", "Supplier C", "0987654323" }
                 });
 
             migrationBuilder.InsertData(

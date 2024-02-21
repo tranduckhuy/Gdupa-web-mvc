@@ -11,7 +11,7 @@ using WarehouseWebMVC.Data;
 namespace WarehouseWebMVC.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240201043436_Initial")]
+    [Migration("20240221080118_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -493,6 +493,10 @@ namespace WarehouseWebMVC.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Avatar")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -521,6 +525,7 @@ namespace WarehouseWebMVC.Migrations
                         {
                             SupplierId = 1L,
                             Address = "Supplier A Address",
+                            Avatar = "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fdefault_avatar.png?alt=media&token=560b08e7-3ab2-453e-aea5-def178730766",
                             Email = "supplierA@gmail.com",
                             Fax = "123456",
                             Name = "Supplier A",
@@ -530,6 +535,7 @@ namespace WarehouseWebMVC.Migrations
                         {
                             SupplierId = 2L,
                             Address = "Supplier B Address",
+                            Avatar = "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fdefault_avatar.png?alt=media&token=560b08e7-3ab2-453e-aea5-def178730766",
                             Email = "supplierB@gmail.com",
                             Fax = "123457",
                             Name = "Supplier B",
@@ -539,6 +545,7 @@ namespace WarehouseWebMVC.Migrations
                         {
                             SupplierId = 3L,
                             Address = "Supplier C Address",
+                            Avatar = "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fdefault_avatar.png?alt=media&token=560b08e7-3ab2-453e-aea5-def178730766",
                             Email = "supplierC@gmail.com",
                             Fax = "123458",
                             Name = "Supplier C",
