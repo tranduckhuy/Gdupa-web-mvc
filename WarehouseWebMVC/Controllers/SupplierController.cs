@@ -124,6 +124,8 @@ public class SupplierController : Controller
     [HttpPost]
     public IActionResult UpdateSupplier(SupplierDTO updateSupplierDTO)
     {
+        ModelState.Remove("Ward");
+        ModelState.Remove("Apartment");
         if (ModelState.IsValid)
         {
             var currentSupplier = _supplierService.GetById(updateSupplierDTO.SupplierId);
@@ -133,19 +135,19 @@ public class SupplierController : Controller
                 if (!_supplierService.UpdateSupplier(updateSupplierDTO))
                 {
                     TempData["Message"] = AppConstant.MESSAGE_WRONG_INFO;
-                    return RedirectToAction("SupplierInformation", new {supplierId = updateSupplierDTO.SupplierId});
+                    return RedirectToAction("SupplierInformation", new { supplierId = updateSupplierDTO.SupplierId });
                 }
                 TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
-                return RedirectToAction("SupplierInformation", new {supplierId = updateSupplierDTO.SupplierId});
+                return RedirectToAction("SupplierInformation", new { supplierId = updateSupplierDTO.SupplierId });
             }
             else
             {
                 TempData["Message"] = AppConstant.MESSAGE_FAILED;
-                return RedirectToAction("SupplierInformation", new {supplierId = updateSupplierDTO.SupplierId});
+                return RedirectToAction("SupplierInformation", new { supplierId = updateSupplierDTO.SupplierId });
             }
         }
         TempData["Message"] = AppConstant.MESSAGE_FAILED;
-        return RedirectToAction("SupplierInformation", new {supplierId = updateSupplierDTO.SupplierId});
+        return RedirectToAction("SupplierInformation", new { supplierId = updateSupplierDTO.SupplierId });
     }
 
     [HttpPost]

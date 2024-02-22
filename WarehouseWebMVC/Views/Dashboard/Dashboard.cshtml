@@ -700,7 +700,7 @@
         gradientBg.addColorStop(0, 'rgba(97, 118, 254, 0.43)');
         gradientBg.addColorStop(1, 'rgba(97, 118, 254, 0)');
         const myChart_Total_Sales_Home = new Chart(ctx_two, {
-            type: 'bar',
+            type: 'line',
 
             data: {
                 labels: ['Quarter 1', 'Quarter 2', 'Quarter 3', 'Quarter 4'],
@@ -709,16 +709,15 @@
                     data: importData,
                     backgroundColor: gradientBg,
                     borderColor: '#6176FE',
-                    pointRadius: 0,
+                    pointRadius: 1,
                     tension: 0.5,
-                    borderWidth: 6,
+                    borderWidth: 5,
                     fill: true,
                     fillColor: '#fff',
                 }]
             },
 
             options: {
-
                 maintainAspectRatio: false,
                 responsive: true,
                 scales: {
@@ -734,7 +733,6 @@
                         suggestedMax: maxValue, suggestedMin: maxValue,
                         grid: {
                             display: true,
-
                             color: '#c5c5c573',
                             borderDash: [10, 10]
                         },

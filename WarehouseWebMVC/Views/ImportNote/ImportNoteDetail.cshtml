@@ -38,17 +38,17 @@
                                     <div class="sherah-invoice-form__single">
                                         <h4 class="sherah-invoice-form__title">Billed To: </h4>
                                         <p class="sherah-invoice-form__text">@Model.ImportNote.User.Name</p>
-                                        <p class="sherah-invoice-form__text">@Model.ImportNote.User.Address</p>
+                                        <p class="sherah-invoice-form__text" style="min-width:450px;max-width:450px;">@Model.ImportNote.User.Address</p>
                                     </div>
                                     <div class="sherah-invoice-form__single sherah-invoice-form__single--right">
                                         <h4 class="sherah-invoice-form__title">Shipped From:</h4>
                                         <p class="sherah-invoice-form__text">@Model.ImportNote.Supplier.Name</p>
-                                        <p class="sherah-invoice-form__text">@Model.ImportNote.Supplier.Address</p>
+                                        <p class="sherah-invoice-form__text" style="min-width:450px;max-width:450px;">@Model.ImportNote.Supplier.Address</p>
                                     </div>
                                 </div>
                                 <div class="sherah-invoice-form__first">
                                     <div class="sherah-invoice-form__single">
-                                        <h4 class="sherah-invoice-form__title">ImportNote Creator Information:</h4>
+                                        <h4 class="sherah-invoice-form__title">Import Note Creator Information:</h4>
                                         <p class="sherah-invoice-form__text">@Model.ImportNote.User.Phone</p>
                                         <p class="sherah-invoice-form__text">@Model.ImportNote.User.Email</p>
                                     </div>
@@ -116,9 +116,8 @@
                                         <div class="order-totals" style="margin-right:0;">
                                             <ul class="order-totals__list" style="min-width:50%">
                                                 <li class="order-totals__list--sub"><span>Subtotal</span> <span class="order-totals__amount" style="font-size:16px">$@Model.ImportNote.Total</span></li>
-                                                <li><span style="font-size:16px">Shipping</span> <span class="order-totals__amount" style="font-size:16px">$25</span></li>
                                                 <li><span>VAT Tax</span> <span class="order-totals__amount" style="font-size:16px">$35</span></li>
-                                                <li class="order-totals__bottom"><span>Total</span> <span class="order-totals__amount" style="font-size:16px">$@((Model.ImportNote.Total) + 60)</span></li>
+                                                <li class="order-totals__bottom"><span>Total</span> <span class="order-totals__amount" style="font-size:16px">$@((Model.ImportNote.Total) + 35)</span></li>
                                             </ul>
                                         </div>
                                     </div>

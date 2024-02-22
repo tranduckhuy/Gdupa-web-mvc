@@ -79,6 +79,12 @@
                             <!-- Sharah Profile header -->
                             <div class="sherah-userprofile__header">
                                 <img src="/assets/images/profile-cover.jpg" alt="#">
+                                <div class="sherah-userprofile__right">
+									<a href="#" class="sherah-btn sherah-btn__white" style="padding:16px 20px;">
+                                        <ion-icon name="camera-outline" style="color:#6176FE;font-size:20px;"></ion-icon>
+                                        Change Background
+                                    </a>
+								</div>
                             </div>
                             <div class="col-12">
                                 <!-- Profile Info -->
@@ -373,6 +379,7 @@
     </div>
 </section>
 <!-- End sherah Dashboard -->
+<script src="https://unpkg.com/ionicons@latest/dist/ionicons.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="/js/Validator.js"></script>
@@ -387,8 +394,8 @@
     var street = "";
     var apartment = "";
     if (parts.length > 4) {
-        apartment = parts[0].trim();
-        street = parts[1].trim();
+        apartment = parts[1].trim();
+        street = parts[0].trim();
     } else {
         street = parts[0].trim();
     }
@@ -429,6 +436,29 @@
 
 </script>
 <script>
+    var fullAddress = "@Html.Raw(Model.Address)";
+    var parts = fullAddress.split(',');
+
+    var province = document.querySelector('#province-option');
+    var district = document.querySelector('#district-option');
+    var ward = document.querySelector('#ward-option');
+
+    if (parts.length > 4) {
+        province.textContent = parts[4].trim();
+        province.value = parts[4].trim();
+        district.textContent = parts[3].trim();
+        district.value = parts[3].trim();
+        ward.textContent = parts[2].trim();
+        ward.value = parts[2].trim();
+    } else {
+        province.textContent = parts[3].trim();
+        province.value = parts[3].trim();
+        district.textContent = parts[2].trim();
+        district.value = parts[2].trim();
+        ward.textContent = parts[1].trim();
+        ward.value = parts[1].trim();
+    }
+
     const host = "https://vapi.vnappmob.com/api/";
     var apiProvince = host + 'province/';
     var callAPI = (apiProvince) => {
@@ -454,11 +484,19 @@
 
     var renderDataCity = (data, select) => {
         if (data && data.results && Array.isArray(data.results)) {
-            let row = ' <option disable value="">Choose Provinces</option>';
-            data.results.forEach((element) => {
-                row += '<option data-id="' + element.province_id + '" value="' + element.province_name + '">' + element.province_name + '</option>';
-            });
-            document.querySelector("#" + select).innerHTML = row;
+            let selectElement = document.querySelector("#" + select);
+            if (!selectElement.getAttribute('data-loaded')) {
+                let row = '';
+                // Kiểm tra nếu ô select có giá trị từ model thì giữ nguyên giá trị đó
+                if (!selectElement.value) {
+                    row += '<option disable value="">Choose Provinces</option>';
+                }
+                data.results.forEach((element) => {
+                    row += '<option data-id="' + element.province_id + '" value="' + element.province_name + '">' + element.province_name + '</option>';
+                });
+                selectElement.innerHTML += row;
+                selectElement.setAttribute('data-loaded', 'true');
+            }
         } else {
             console.error("Invalid or missing province data:", data);
         }

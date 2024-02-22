@@ -96,9 +96,17 @@ namespace WarehouseWebMVC.Services.Impl
             {
                 var existingSupplier = _dataContext.Suppliers.FirstOrDefault(s => s.SupplierId == updateSupplierDTO.SupplierId);
 
-                if (existingSupplier == null || IsEmailAlreadyExists(updateSupplierDTO.Email))
+                if (existingSupplier == null)
                 {
                     return false;
+                }
+
+                bool isEmailUpdated = updateSupplierDTO.Email != existingSupplier.Email;
+
+                if ((isEmailUpdated && IsEmailAlreadyExists(updateSupplierDTO.Email)) 
+                                    || (!isEmailUpdated && !SupplierOwnsInformation(updateSupplierDTO.Email, updateSupplierDTO.SupplierId)))
+                {
+                    return false; 
                 }
 
                 if (updateSupplierDTO.Avatar == null)
@@ -135,6 +143,11 @@ namespace WarehouseWebMVC.Services.Impl
         {
             return _dataContext.Suppliers.Any(s => s.Email == email);
         }
+        public bool SupplierOwnsInformation(string supplierEmail, long supplierId)
+        {
+            var supplier = GetById(supplierId);
+            return supplier != null && supplier.Email == supplierEmail;
+        }
         public SupplierViewModel SearchSupplier(string searchType, string searchValue)
         {
             IQueryable<Supplier> searchSupplier = _dataContext.Suppliers;
@@ -164,11 +177,6 @@ namespace WarehouseWebMVC.Services.Impl
                 return supplierViewModel;
             }
             return null!;
-        }
-        public bool SupplierOwnsInformation(string supplierEmail, long supplierId)
-        {
-            var supplier = GetById(supplierId);
-            return supplier != null && supplier.Email == supplierEmail;
         }
         private static string ExtractCityFromAddress(string fullAddress)
         {

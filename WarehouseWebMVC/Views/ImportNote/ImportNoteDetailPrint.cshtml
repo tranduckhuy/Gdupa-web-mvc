@@ -58,7 +58,7 @@
                                                 src="/assets/images/gdupa-high-resolution-logo-transparent.png"
                                                 alt="Avatar" style="width: 200px; margin-top: 15px;"></a>
                                         <p>
-                                            Import Note | <a href="#">Gdupa</a> - Warehouse Management
+                                            Import Note | <a href="#!">Gdupa</a> - Warehouse Management
                                         </p>
                                         <p class="sherah-invoice-header__id sherah-color1" style="font-size:20px">Import
                                             Note #@Model.ImportNote.ImportNoteId</p>
@@ -70,12 +70,16 @@
                                             <div class="sherah-invoice-form__single">
                                                 <h4 class="sherah-invoice-form__title">Billed To: </h4>
                                                 <p class="sherah-invoice-form__text">@Model.ImportNote.User.Name</p>
-                                                <p class="sherah-invoice-form__text">@Model.ImportNote.User.Address</p>
+                                                <p class="sherah-invoice-form__text"
+                                                    style="min-width:450px;max-width:450px;">
+                                                    @Model.ImportNote.User.Address</p>
                                             </div>
                                             <div class="sherah-invoice-form__single sherah-invoice-form__single--right">
                                                 <h4 class="sherah-invoice-form__title">Shipped From:</h4>
                                                 <p class="sherah-invoice-form__text">@Model.ImportNote.Supplier.Name</p>
-                                                <p class="sherah-invoice-form__text">@Model.ImportNote.Supplier.Address
+                                                <p class="sherah-invoice-form__text"
+                                                    style="min-width:450px;max-width:450px;">
+                                                    @Model.ImportNote.Supplier.Address
                                                 </p>
                                             </div>
                                         </div>
@@ -166,15 +170,12 @@
                                                                 class="order-totals__amount"
                                                                 style="font-size:16px">$@Model.ImportNote.Total</span>
                                                         </li>
-                                                        <li><span style="font-size:16px">Shipping</span> <span
-                                                                class="order-totals__amount"
-                                                                style="font-size:16px">$25</span></li>
                                                         <li><span>VAT Tax</span> <span class="order-totals__amount"
                                                                 style="font-size:16px">$35</span></li>
                                                         <li class="order-totals__bottom"><span>Total</span> <span
                                                                 class="order-totals__amount"
                                                                 style="font-size:16px">$@((Model.ImportNote.Total) +
-                                                                60)</span></li>
+                                                                35)</span></li>
                                                     </ul>
                                                 </div>
                                             </div>
@@ -258,6 +259,7 @@
                     "/assets/css/lib/bootstrap.min.css",
                     "/assets/css/lib/datatables.min.css",
                     "/assets/css/lib/jquery-ui.css",
+                    "/assets/css/lib/reset.css",
                     "/assets/css/main.css",
                 ];
 
@@ -272,8 +274,13 @@
                                 loadNextCss(index + 1);
                             },
                             error: function (xhr, status, error) {
-                                console.error("Error loading CSS file:", error);
-                                loadNextCss(index + 1);
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: 'Oops! Can not print now. Please try again later.',
+                                    icon: 'error',
+                                    confirmButtonColor: '#3085d6',
+                                    confirmButtonText: 'OK'
+                                });
                             },
                         });
                     } else {
@@ -288,7 +295,7 @@
                             A3: true,
                             honorColor: true,
                             margin: false,
-                            orientation: "landscape",
+                            orientation: "portrait",
                         });
                     }
                 }
