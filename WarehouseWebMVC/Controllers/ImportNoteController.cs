@@ -59,6 +59,28 @@ public class ImportNoteController : Controller
         return RedirectToAction("Login", "Authentication");
     }
 
+    public IActionResult ImportNoteDetailPrint(long importNoteId)
+    {
+        if (HttpContext.Session.GetString("User") != null)
+        {
+            Response.Headers.Add("Cache-Control", "no-store, no-cache, must-revalidate, post-check=0, pre-check=0");
+            Response.Headers.Add("Pragma", "no-cache");
+            Response.Headers.Add("Expires", "0");
+
+            var importNoteDetailVM = _importNoteService.GetDetailById(importNoteId);
+
+            if (importNoteDetailVM == null)
+            {
+                TempData["Message"] = AppConstant.MESSAGE_FAILED;
+                return RedirectToAction("ImportNoteList", "ImportNote");
+            }
+            return View(importNoteDetailVM);
+        }
+
+        TempData["Message"] = AppConstant.MESSAGE_NOT_LOGIN;
+        return RedirectToAction("Login", "Authentication");
+    }
+
     [HttpPost]
     public IActionResult SearchImportNote(string searchType, string searchValue)
     {

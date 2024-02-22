@@ -96,7 +96,7 @@ namespace WarehouseWebMVC.Services.Impl
             {
                 var existingSupplier = _dataContext.Suppliers.FirstOrDefault(s => s.SupplierId == updateSupplierDTO.SupplierId);
 
-                if (existingSupplier == null)
+                if (existingSupplier == null || IsEmailAlreadyExists(updateSupplierDTO.Email))
                 {
                     return false;
                 }
@@ -164,6 +164,11 @@ namespace WarehouseWebMVC.Services.Impl
                 return supplierViewModel;
             }
             return null!;
+        }
+        public bool SupplierOwnsInformation(string supplierEmail, long supplierId)
+        {
+            var supplier = GetById(supplierId);
+            return supplier != null && supplier.Email == supplierEmail;
         }
         private static string ExtractCityFromAddress(string fullAddress)
         {

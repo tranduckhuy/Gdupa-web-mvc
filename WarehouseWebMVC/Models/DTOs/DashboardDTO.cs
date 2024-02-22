@@ -2,8 +2,8 @@
 {
     public class DashboardDTO
     {
-        public int TotalProducts { get; set; } = 1;
-        public int TotalSuppliers { get; set; } = 2;
+        public int TotalProducts { get; set; }
+        public int TotalSuppliers { get; set; }
         public int TotalUsers { get; set; }
         public int TotalImportNotes { get; set; }
 

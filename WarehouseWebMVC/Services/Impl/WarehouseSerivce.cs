@@ -398,7 +398,7 @@ namespace WarehouseWebMVC.Services.Impl
 					worksheet.Cells[i + 2, 1].Value = warehouse.Product.Name;
 					worksheet.Cells[i + 2, 2].Value = warehouse.QuantityAtBeginPeriod;
 					worksheet.Cells[i + 2, 3].Value = warehouse.QuantityImport;
-					worksheet.Cells[i + 2, 4].Value = warehouse.PriceImport;
+					worksheet.Cells[i + 2, 4].Value = Math.Round(warehouse.PriceImport * warehouse.QuantityImport, 2);
 					worksheet.Cells[i + 2, 5].Value = warehouse.Quantity;
 					worksheet.Cells[i + 2, 6].Value = warehouse.Product.Unit;
 					worksheet.Cells[i + 2, 7].Value = warehouse.PriceImport * warehouse.Quantity;

@@ -22,7 +22,7 @@
             });
         </script>
     }
-    if ("Failed".Equals(message))
+    else if ("Failed".Equals(message))
     {
         <script>
             document.addEventListener('DOMContentLoaded', function () {
@@ -31,6 +31,19 @@
                         title: "Failed",
                         message: "Oops! Action failed. Please try again.",
                         type: "danger",
+                        duration: 3000,
+                    });
+                }, 600);
+            });
+        </script>
+    } else if ("WrongInfo".Equals(message)){
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                setTimeout(function () {
+                    toast({
+                        title: "Info",
+                        message: "Oops! Email existing. Please try another email.",
+                        type: "info",
                         duration: 3000,
                     });
                 }, 600);
@@ -229,7 +242,7 @@
                                                                                        asp-for="Name"
                                                                                        value="@Model.Name"
                                                                                        placeholder="Type here" type="text"
-                                                                                       name="Name" rules="required">
+                                                                                       name="Name" rules="required" autofocus>
                                                                             </div>
                                                                             <span class="form-message"></span>
                                                                         </div>

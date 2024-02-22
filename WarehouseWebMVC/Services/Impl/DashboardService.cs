@@ -18,6 +18,7 @@ namespace WarehouseWebMVC.Services.Impl
 			dashboardDTO.TotalProducts = _dataContext.Products.Count();
 			dashboardDTO.TotalImportNotes = _dataContext.ImportNotes.Count();
 			dashboardDTO.TotalUsers = _dataContext.Users.Count();
+			dashboardDTO.TotalSuppliers = _dataContext.Suppliers.Count();
 
 			if (year == 0)
 			{
