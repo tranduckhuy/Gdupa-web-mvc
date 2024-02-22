@@ -399,8 +399,8 @@ public class UserService : IUserService
 
             addUserDTO.Password = BCrypt.Net.BCrypt.HashPassword(addUserDTO.Password);
             addUserDTO.Address =
-                  (addUserDTO.Apartment != null && addUserDTO.Apartment != "" ? addUserDTO.Apartment + ", " : "")
-                + addUserDTO.Street + ", "
+                addUserDTO.Street + ", "
+                + (addUserDTO.Apartment != null && addUserDTO.Apartment != "" ? addUserDTO.Apartment + ", " : "")
                 + (addUserDTO.Ward != null && addUserDTO.Ward != "" ? addUserDTO.Ward + ", " : "")
                 + addUserDTO.District + ", "
                 + addUserDTO.Province;

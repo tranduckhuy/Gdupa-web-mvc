@@ -71,11 +71,11 @@ namespace WarehouseWebMVC.Services.Impl
                 }
 
                 addSupplierDTO.Address =
-                  (addSupplierDTO.Apartment != null && addSupplierDTO.Apartment != "" ? addSupplierDTO.Apartment + ", " : "")
-                + addSupplierDTO.Street + ", "
-                + (addSupplierDTO.Ward != null && addSupplierDTO.Ward != "" ? addSupplierDTO.Ward + ", " : "")
-                + addSupplierDTO.District + ", "
-                + addSupplierDTO.Province;
+                    addSupplierDTO.Street + ", "
+                    + (addSupplierDTO.Apartment != null && addSupplierDTO.Apartment != "" ? addSupplierDTO.Apartment + ", " : "")
+                    + (addSupplierDTO.Ward != null && addSupplierDTO.Ward != "" ? addSupplierDTO.Ward + ", " : "")
+                    + addSupplierDTO.District + ", "
+                    + addSupplierDTO.Province;
 
                 var supplier = _mapper.Map<Supplier>(addSupplierDTO);
                 supplier.Address = addSupplierDTO.Address;
@@ -113,8 +113,8 @@ namespace WarehouseWebMVC.Services.Impl
                     existingSupplier.Fax = updateSupplierDTO.Fax;
                     existingSupplier.Email = updateSupplierDTO.Email;
                     updateSupplierDTO.Address =
-                        (updateSupplierDTO.Apartment != null && updateSupplierDTO.Apartment != "" ? updateSupplierDTO.Apartment + ", " : "")
-                        + updateSupplierDTO.Street + ", "
+                        updateSupplierDTO.Street + ", "
+                        + (updateSupplierDTO.Apartment != null && updateSupplierDTO.Apartment != "" ? updateSupplierDTO.Apartment + ", " : "")
                         + (updateSupplierDTO.Ward != null && updateSupplierDTO.Ward != "" ? updateSupplierDTO.Ward + ", " : "")
                         + updateSupplierDTO.District + ", "
                         + updateSupplierDTO.Province;
