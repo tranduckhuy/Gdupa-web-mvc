@@ -21,24 +21,33 @@ public class WarehouseController : Controller
 
     [Filter]
     [HttpGet]
-    public IActionResult WarehouseProduct(int page = 1, int quarter = 0, int year = 0)
+    public async Task<IActionResult> WarehouseProduct(int page = 1, int quarter = 0, int year = 0)
     {
         if (HttpContext.Session.GetString("User") != null)
         {
-            Response.Headers.Add("Cache-Control", "no-store, no-cache, must-revalidate, post-check=0, pre-check=0");
+			Stopwatch stopwatch = new Stopwatch();
+			stopwatch.Start();
+
+			_logger.LogInformation("Starting GetDashboardInfo");
+
+			Response.Headers.Add("Cache-Control", "no-store, no-cache, must-revalidate, post-check=0, pre-check=0");
             Response.Headers.Add("Pragma", "no-cache");
             Response.Headers.Add("Expires", "0");
-            if (_warehouseService.CheckNewQuarter())
+            if (await _warehouseService.CheckNewQuarterAsync())
             {
                 TempData["Message"] = AppConstant.NEW_QUARTER;
             }
-            var warehouse = _warehouseService.GetLimit(page, quarter, year);
+            var warehouse = await _warehouseService.GetLimitAsync(page, quarter, year);
             if (warehouse == null)
             {
                 TempData["Message"] = AppConstant.BAD_REQUEST;
                 return RedirectToAction("WarehouseProduct", "Warehouse");
             }
-            return View(warehouse);
+
+			stopwatch.Stop();
+			_logger.LogInformation($"GetDashboardInfo completed in {stopwatch.ElapsedMilliseconds} milliseconds");
+
+			return View(warehouse);
         }
         TempData["Message"] = AppConstant.MESSAGE_NOT_LOGIN;
         return RedirectToAction("Login", "Authentication");
@@ -47,7 +56,7 @@ public class WarehouseController : Controller
     [Filter]
     [HttpGet]
     [Route("Warehouse/WarehouseProduct/WarehouseProductStatus")]
-    public IActionResult WarehouseProductStatus(string status)
+    public async Task<IActionResult> WarehouseProductStatus(string status)
     {
         if (!ModelState.IsValid)
         {
@@ -60,7 +69,7 @@ public class WarehouseController : Controller
             Response.Headers.Add("Pragma", "no-cache");
             Response.Headers.Add("Expires", "0");
 
-            var warehouse = _warehouseService.GetByStatus(status);
+            var warehouse = await _warehouseService.GetByStatusAsync(status);
             if (warehouse == null)
             {
                 TempData["Message"] = AppConstant.BAD_REQUEST;
@@ -74,14 +83,14 @@ public class WarehouseController : Controller
 
     [Filter]
     [HttpGet]
-    public IActionResult WarehouseImport()
+    public async Task<IActionResult> WarehouseImport()
     {
         if (HttpContext.Session.GetString("User") != null)
         {
             Response.Headers.Add("Cache-Control", "no-store, no-cache, must-revalidate, post-check=0, pre-check=0");
             Response.Headers.Add("Pragma", "no-cache");
             Response.Headers.Add("Expires", "0");
-            var warehouseImportVM = _warehouseService.GetDataViewImport();
+            var warehouseImportVM = await _warehouseService.GetDataViewImportAsync();
 
             return View(warehouseImportVM);
         }
@@ -129,6 +138,7 @@ public class WarehouseController : Controller
         TempData["Message"] = AppConstant.NOT_FOUND;
         return RedirectToAction("WarehouseProduct", "Warehouse");
     }
+
     [HttpPost]
     public async Task<IActionResult> ExportFile(int quarter, int year)
     {

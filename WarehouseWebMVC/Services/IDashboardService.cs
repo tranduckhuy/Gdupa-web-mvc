@@ -4,6 +4,7 @@ namespace WarehouseWebMVC.Services
 {
     public interface IDashboardService
     {
-        DashboardDTO GetDashboardInfo(int year);
-    }
+		Task<DashboardDTO> GetDashboardInfoAsync(int year);
+		DashboardDTO GetDashboardInfo(int year);
+	}
 }

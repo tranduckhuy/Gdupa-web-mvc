@@ -6,12 +6,18 @@ namespace WarehouseWebMVC.Services
 {
     public interface IWarehouseService
     {
-        WarehouseViewModel GetLimit(int page, int quarter, int year);
-        WarehouseViewModel GetByStatus(string status);
+        Task<WarehouseViewModel> GetLimitAsync(int page, int quarter, int year);
+
+        Task<WarehouseViewModel> GetByStatusAsync(string status);
+        
         bool Add(ImportProductsDTO importProducts);
-        WarehouseImportViewModel GetDataViewImport();
+
+        Task<WarehouseImportViewModel> GetDataViewImportAsync();
+
         WarehouseViewModel SearchProduct(string searchType, string searchValue);
-        bool CheckNewQuarter();
+
+        Task<bool> CheckNewQuarterAsync();
+
         Task<byte[]> ExportDataToExcel(int quarter, int year);
     }
 }
