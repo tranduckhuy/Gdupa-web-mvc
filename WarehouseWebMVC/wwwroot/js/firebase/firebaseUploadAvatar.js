@@ -59,10 +59,6 @@ function avatarImage(e, imageId) {
 
             avatarImage.src = downloadURL;
             document.getElementById('avatarHidden').value = downloadURL;
-            console.log(avatarImage);
-            console.log(document.getElementById('avatarHidden'));
-            console.log(document.getElementById('avatarHidden').value);
-            console.log(downloadURL);
         });
 }
 function generateUniqueFilename(filename) {

@@ -80,17 +80,24 @@
                             <div class="sherah-userprofile__header">
                                 <img src="/assets/images/profile-cover.jpg" alt="#">
                                 <div class="sherah-userprofile__right">
-									<a href="#" class="sherah-btn sherah-btn__white" style="padding:16px 20px;">
+                                    <label for="avatarFile" 
+                                           class="sherah-btn sherah-btn__white" 
+                                           style="padding:16px 20px;cursor:pointer;">
                                         <ion-icon name="camera-outline" style="color:#6176FE;font-size:20px;"></ion-icon>
+                                        Change Avatar
+                                    </label>
+									<label class="sherah-btn sherah-btn__white" style="padding:16px 20px;">
+                                        <ion-icon name="image-outline" style="color:#6176FE;font-size:20px;"></ion-icon>
                                         Change Background
-                                    </a>
+                                    </label>
 								</div>
                             </div>
                             <div class="col-12">
                                 <!-- Profile Info -->
                                 <div class="sherah-profile-info">
-                                    <div class="sherah-profile-info__thumb">
-                                        <img src="@Model.Avatar" alt="Avatar">
+                                    <div class="sherah-profile-info__thumb" style="position:relative;">
+                                        <img id="avatarImage" src="@Model.Avatar" alt="Avatar">
+                                        <input type="file" id="avatarFile" style="display:none;" accept=".png,.jpg" />
                                         <h3 class="sherah-profile-info__name">@Model.Name<span>@Model.Email</span></h3>
                                     </div>
                                 </div>
@@ -243,7 +250,8 @@
                                                                         <div class="form-group">
                                                                             <label class="sherah-wc__form-label">Full-Name</label>
                                                                             <div class="form-group__input">
-                                                                                <input asp-for="SupplierId" value="@Model.SupplierId" style="display:none;" readonly />
+                                                                                <input asp-for="SupplierId" value="@Model.SupplierId" type="text" style="display:none;" readonly />
+                                                                                <input asp-for="Avatar" type="text" id="avatarHidden" style="display:none;" readonly />
                                                                                 <input class="sherah-wc__form-input"
                                                                                        asp-for="Name"
                                                                                        value="@Model.Name"
@@ -382,6 +390,8 @@
 <script src="https://unpkg.com/ionicons@latest/dist/ionicons.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
+<script src="/js/firebase/firebaseUploadAvatar.js"></script>
 <script src="/js/Validator.js"></script>
 <script async>
     Validator('#update-supplier-form');
