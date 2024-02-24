@@ -9,7 +9,7 @@
     var searchType = ViewBag.SearchType as string ?? "";
 }
 <style>
-    .dataTables_empty{
+    .dataTables_empty {
         min-width: 1110px;
         display: flex;
         justify-content: center;
@@ -206,45 +206,45 @@
                             <div class="row" style="margin-top:16px;">
                                 @if (Model.Pageable != null)
                                 {
-                                    <div class="col-sm-12 col-md-5">
-                                        <div class="dataTables_info" id="sherah-table__vendor_info" role="status"
-                                             aria-live="polite" style="font-weight:500">
-                                            Total @Model.Pageable.TotalItems
-                                            suppliers
-                                        </div>
-                                    </div>
-                                }
-                                <div class="col-sm-12 col-md-7">
-                                    @if (Model.Pageable != null)
+                                    var lockedSuppliers = Model.Suppliers.Where(s => s.IsLocked).ToList();
+                                    if (lockedSuppliers.Any())
                                     {
-                                        <div class="sherah-pagination" style="margin-bottom: 0">
-                                            <ul class="sherah-pagination__list">
-                                                @if (Model.Pageable.CurrentPage > 1)
-                                                {
-                                                    <li class="sherah-pagination__button">
-                                                        <a href="/Supplier/SupplierList?page=@(Model.Pageable.CurrentPage > 1 ? Model.Pageable.CurrentPage - 1 : 1)">
-                                                            <i class="fas fa-angle-left"></i>
-                                                        </a>
-                                                    </li>
-                                                }
-                                                @for (var i = Model.Pageable.StartPage; i <= Model.Pageable.EndPage; i++)
-                                                {
-                                                    <li class="@(Model.Pageable.CurrentPage == i ? "active" : "")">
-                                                        <a href="/Supplier/SupplierList?page=@i">@i</a>
-                                                    </li>
-                                                }
-                                                @if (Model.Pageable.CurrentPage < Model.Pageable.TotalPages)
-                                                {
-                                                    <li class="sherah-pagination__button">
-                                                        <a href="/Supplier/SupplierList?page=@(Model.Pageable.CurrentPage < Model.Pageable.TotalPages ? Model.Pageable.CurrentPage + 1 : Model.Pageable.TotalPages)">
-                                                            <i class="fas fa-angle-right"></i>
-                                                        </a>
-                                                    </li>
-                                                }
-                                            </ul>
+                                        <div class="col-sm-12 col-md-5">
+                                            <div class="dataTables_info" id="sherah-table__vendor_info" role="status"
+                                                 aria-live="polite" style="font-weight:500">
+                                                Total @lockedSuppliers.Count suppliers
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-md-7">
+                                            <div class="sherah-pagination" style="margin-bottom: 0">
+                                                <ul class="sherah-pagination__list">
+                                                    @if (Model.Pageable.CurrentPage > 1)
+                                                    {
+                                                        <li class="sherah-pagination__button">
+                                                            <a href="/Supplier/SupplierArchive?page=@(Model.Pageable.CurrentPage > 1 ? Model.Pageable.CurrentPage - 1 : 1)">
+                                                                <i class="fas fa-angle-left"></i>
+                                                            </a>
+                                                        </li>
+                                                    }
+                                                    @for (var i = Model.Pageable.StartPage; i <= Model.Pageable.EndPage; i++)
+                                                    {
+                                                        <li class="@(Model.Pageable.CurrentPage == i ? "active" : "")">
+                                                            <a href="/Supplier/SupplierArchive?page=@i">@i</a>
+                                                        </li>
+                                                    }
+                                                    @if (Model.Pageable.CurrentPage < Model.Pageable.TotalPages)
+                                                    {
+                                                        <li class="sherah-pagination__button">
+                                                            <a href="/Supplier/SupplierArchive?page=@(Model.Pageable.CurrentPage < Model.Pageable.TotalPages ? Model.Pageable.CurrentPage + 1 : Model.Pageable.TotalPages)">
+                                                                <i class="fas fa-angle-right"></i>
+                                                            </a>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            </div>
                                         </div>
                                     }
-                                </div>
+                                }
                             </div>
                         </div>
                     </div>

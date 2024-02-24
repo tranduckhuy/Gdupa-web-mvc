@@ -183,10 +183,10 @@ public class SupplierController : Controller
         if (_supplierService.Active(supplierId))
         {
             TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
-            return RedirectToAction("SupplierList");
+            return RedirectToAction("SupplierArchive");
         }
         TempData["Message"] = AppConstant.MESSAGE_FAILED;
-        return RedirectToAction("SupplierList");
+        return RedirectToAction("SupplierArchive");
     }
 
     [HttpPost]
