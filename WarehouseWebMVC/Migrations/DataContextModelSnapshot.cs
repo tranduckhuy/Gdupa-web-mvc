@@ -494,6 +494,10 @@ namespace WarehouseWebMVC.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Background")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -502,6 +506,9 @@ namespace WarehouseWebMVC.Migrations
                     b.Property<string>("Fax")
                         .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsLocked")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -523,8 +530,10 @@ namespace WarehouseWebMVC.Migrations
                             SupplierId = 1L,
                             Address = "08 Tống Phước Phổ, Cao Ốc Long Thịnh, Phường Ghềnh Ráng, Thành Phố Quy Nhơn, Tỉnh Bình Định",
                             Avatar = "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fdefault_avatar.png?alt=media&token=560b08e7-3ab2-453e-aea5-def178730766",
+                            Background = "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/supplier-background%2Fprofile-cover.jpg?alt=media&token=cf51dca2-8021-40ee-bd58-66000ab49c10",
                             Email = "supplierA@gmail.com",
                             Fax = "123456",
+                            IsLocked = false,
                             Name = "Supplier A",
                             Phone = "0987654321"
                         },
@@ -533,8 +542,10 @@ namespace WarehouseWebMVC.Migrations
                             SupplierId = 2L,
                             Address = "08 Tống Phước Phổ, Cao Ốc Long Thịnh, Phường Ghềnh Ráng, Thành Phố Quy Nhơn, Tỉnh Bình Định",
                             Avatar = "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fdefault_avatar.png?alt=media&token=560b08e7-3ab2-453e-aea5-def178730766",
+                            Background = "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/supplier-background%2Fprofile-cover.jpg?alt=media&token=cf51dca2-8021-40ee-bd58-66000ab49c10",
                             Email = "supplierB@gmail.com",
                             Fax = "123457",
+                            IsLocked = false,
                             Name = "Supplier B",
                             Phone = "0987654322"
                         },
@@ -543,8 +554,10 @@ namespace WarehouseWebMVC.Migrations
                             SupplierId = 3L,
                             Address = "08 Tống Phước Phổ, Cao Ốc Long Thịnh, Phường Ghềnh Ráng, Thành Phố Quy Nhơn, Tỉnh Bình Định",
                             Avatar = "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fdefault_avatar.png?alt=media&token=560b08e7-3ab2-453e-aea5-def178730766",
+                            Background = "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/supplier-background%2Fprofile-cover.jpg?alt=media&token=cf51dca2-8021-40ee-bd58-66000ab49c10",
                             Email = "supplierC@gmail.com",
                             Fax = "123458",
+                            IsLocked = false,
                             Name = "Supplier C",
                             Phone = "0987654323"
                         });
