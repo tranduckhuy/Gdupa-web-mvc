@@ -89,9 +89,10 @@
                         <div class="sharah-profile--main sherah-default-bg sharah-border mg-top-40">
                             <!-- Sharah Profile header -->
                             <div class="sherah-userprofile__header">
-                                <img src="/assets/images/profile-cover.jpg" alt="#">
+                                <img id="backgroundImage" src="@Model.Background" alt="Background">
                                 <div class="sherah-userprofile__right">
-									<label class="sherah-btn sherah-btn__white" style="padding:16px 20px;cursor:pointer;">
+                                    <label for="backgroundFile" class="sherah-btn sherah-btn__white" style="padding:16px 20px;cursor:pointer;">
+                                        <input type="file" id="backgroundFile" style="display:none;" accept=".png,.jpg" />
                                         <i class="fa-solid fa-camera" style="color:#333;font-size:16px;"></i>
                                         Change Background
                                     </label>
@@ -260,6 +261,7 @@
                                                                             <div class="form-group__input">
                                                                                 <input asp-for="SupplierId" value="@Model.SupplierId" type="text" style="display:none;" readonly />
                                                                                 <input asp-for="Avatar" type="text" id="avatarHidden" style="display:none;" readonly />
+                                                                                <input asp-for="Background" type="text" id="backgroundHidden" style="display:none;" readonly />
                                                                                 <input class="sherah-wc__form-input"
                                                                                        asp-for="Name"
                                                                                        value="@Model.Name"
@@ -398,7 +400,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
-<script src="/js/firebase/firebaseUploadAvatar.js"></script>
+<script src="/js/firebase/firebaseUploadFileSupplier.js"></script>
 <script src="/js/Validator.js"></script>
 <script async>
     Validator('#update-supplier-form');

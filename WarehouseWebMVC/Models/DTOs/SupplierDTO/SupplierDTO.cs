@@ -30,5 +30,9 @@ namespace WarehouseWebMVC.Models.DTOs.SupplierDTO
         public string Phone { get; set; } = string.Empty;
 
         public string Fax { get; set; } = string.Empty;
+
+        public bool IsLocked { get; set; } = false;
+
+        public string Background { get; set; } = "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/supplier-background%2Fprofile-cover.jpg?alt=media&token=cf51dca2-8021-40ee-bd58-66000ab49c10";
     }
 }

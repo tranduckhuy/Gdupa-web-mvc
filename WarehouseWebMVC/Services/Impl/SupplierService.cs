@@ -114,7 +114,12 @@ namespace WarehouseWebMVC.Services.Impl
                     updateSupplierDTO.Avatar = existingSupplier.Avatar;
                 }
 
-                if (updateSupplierDTO.Name != null && updateSupplierDTO.Phone != null && updateSupplierDTO.Avatar != null)
+                if (updateSupplierDTO.Background == null)
+                {
+                    updateSupplierDTO.Background = existingSupplier.Background;
+                }
+
+                if (updateSupplierDTO.Name != null && updateSupplierDTO.Phone != null && updateSupplierDTO.Avatar != null && updateSupplierDTO.Background != null)
                 {
                     existingSupplier.Name = updateSupplierDTO.Name;
                     existingSupplier.Phone = updateSupplierDTO.Phone;
@@ -128,6 +133,7 @@ namespace WarehouseWebMVC.Services.Impl
                         + updateSupplierDTO.Province;
                     existingSupplier.Address = updateSupplierDTO.Address;
                     existingSupplier.Avatar = updateSupplierDTO.Avatar;
+                    existingSupplier.Background = updateSupplierDTO.Background;
                 }
 
                 _dataContext.Entry(existingSupplier).State = EntityState.Modified;
@@ -186,6 +192,48 @@ namespace WarehouseWebMVC.Services.Impl
 
             string city = addressParts[maxIndex - 1].Trim();
             return city;
+        }
+
+        public bool Deactive(long supplierId)
+        {
+            try
+            {
+                var supplier = _dataContext.Suppliers.FirstOrDefault(u => u.SupplierId == supplierId);
+                if (supplier == null)
+                {
+                    return false;
+                }
+                supplier.IsLocked = true;
+                _dataContext.Entry(supplier).State = EntityState.Modified;
+                _dataContext.SaveChanges();
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public bool Active(long supplierId)
+        {
+            try
+            {
+                var supplier = _dataContext.Suppliers.FirstOrDefault(u => u.SupplierId == supplierId);
+                if (supplier == null)
+                {
+                    return false;
+                }
+                supplier.IsLocked = false;
+                _dataContext.Entry(supplier).State = EntityState.Modified;
+                _dataContext.SaveChanges();
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
     }
 }

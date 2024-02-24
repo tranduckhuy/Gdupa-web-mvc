@@ -13,5 +13,7 @@ namespace WarehouseWebMVC.Services
         bool UpdateSupplier(SupplierDTO updateSupplierDTO);
         bool IsEmailAlreadyExists(string email);
         bool SupplierOwnsInformation(string supplierEmail, long supplierId);
+        bool Deactive(long supplierId);
+        bool Active(long supplierId);
     }
 }

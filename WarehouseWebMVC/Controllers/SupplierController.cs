@@ -150,6 +150,30 @@ public class SupplierController : Controller
         return RedirectToAction("SupplierInformation", new { supplierId = updateSupplierDTO.SupplierId });
     }
 
+    [HttpGet]
+    public IActionResult DeactiveSupplier(long supplierId)
+    {
+        if (_supplierService.Deactive(supplierId))
+        {
+            TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
+            return RedirectToAction("SupplierList");
+        }
+        TempData["Message"] = AppConstant.MESSAGE_FAILED;
+        return RedirectToAction("SupplierList");
+    }
+
+    [HttpGet]
+    public IActionResult ActiveSupplier(long supplierId)
+    {
+        if (_supplierService.Active(supplierId))
+        {
+            TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
+            return RedirectToAction("SupplierList");
+        }
+        TempData["Message"] = AppConstant.MESSAGE_FAILED;
+        return RedirectToAction("SupplierList");
+    }
+
     [HttpPost]
     public IActionResult SearchSupplier(string searchType, string searchValue)
     {
