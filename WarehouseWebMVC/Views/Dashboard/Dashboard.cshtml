@@ -693,7 +693,7 @@
         var warehouseStatistics = data.WarehouseStatistics;
         var importData = warehouseStatistics.map(stat => stat.Import);
         var maxValue = Math.max(...importData);
-        maxValue = Math.ceil(maxValue / 2) * 2 + 10;
+        maxValue = Math.ceil(maxValue / 2) * 2 + 20;
 
         const gradientBg = ctx_two.createLinearGradient(0, 0, 0, 190);
 
@@ -730,7 +730,7 @@
 
                     },
                     y: {
-                        suggestedMax: maxValue, suggestedMin: maxValue,
+                        suggestedMax: maxValue, suggestedMin: 0,
                         grid: {
                             display: true,
                             color: '#c5c5c573',
