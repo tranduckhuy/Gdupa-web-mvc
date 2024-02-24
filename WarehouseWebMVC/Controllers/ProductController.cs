@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 using WarehouseWebMVC.Data;
 using WarehouseWebMVC.Models;
@@ -117,6 +118,34 @@ public class ProductController : Controller
         ViewBag.Brands = new SelectList(addProductVM.Brands, "BrandId", "Name");
         ViewBag.Units = addProductVM.Units;
         return View();
+    }
+    [HttpPost]
+    public IActionResult AddCategory([FromBody] JObject data)
+    {
+        string categoryName = data["categoryName"]!.ToString();
+        if (!string.IsNullOrEmpty(categoryName))
+        {
+            if (_productService.AddCategory(categoryName))
+            {
+                var addProductVM = _productService.GetInfoAddProduct(); 
+                return Json(new { success = true, category = new { addProductVM.Categories.Last().CategoryId, addProductVM.Categories.Last().Name } });
+            }
+        }
+        return Json(new { success = false });
+    }
+    [HttpPost]
+    public IActionResult AddBrand([FromBody] JObject data)
+    {
+        string brandName = data["brandName"]!.ToString();
+        if (!string.IsNullOrEmpty(brandName))
+        {
+            if (_productService.AddBrand(brandName))
+            {
+                var addProductVM = _productService.GetInfoAddProduct();
+                return Json(new { success = true, brand = new { addProductVM.Brands.Last().BrandId, addProductVM.Brands.Last().Name } });
+            }
+        }
+        return Json(new { success = false });
     }
 
     [HttpPost]

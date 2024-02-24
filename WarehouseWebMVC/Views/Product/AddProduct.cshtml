@@ -69,9 +69,9 @@
                                                     <div class="form-group">
                                                         <label class="sherah-wc__form-label">Product Name</label>
                                                         <div class="form-group__input">
-                                                            <input asp-for="Name" name="Name" rules="required" 
-                                                                class="sherah-wc__form-input" 
-                                                                placeholder="Type here" type="text" autofocus>
+                                                            <input asp-for="Name" name="Name" rules="required"
+                                                                   class="sherah-wc__form-input"
+                                                                   placeholder="Type here" type="text" autofocus>
                                                         </div>
                                                         <span class="form-message"></span>
                                                     </div>
@@ -79,13 +79,13 @@
                                                 <div class="col-lg-6 col-md-6 col-12">
                                                     <div class="form-group">
                                                         <label class="sherah-wc__form-label">Category*</label>
-                                                        <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-group__input" aria-label="Default select example"></select>
+                                                        <select id="CategoryId" asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-group__input" aria-label="Default select example"></select>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-12">
                                                     <div class="form-group">
                                                         <label class="sherah-wc__form-label">Brand*</label>
-                                                        <select asp-for="BrandId" asp-items="ViewBag.Brands" class="form-group__input" aria-label="Default select example"></select>
+                                                        <select id="BrandId" asp-for="BrandId" asp-items="ViewBag.Brands" class="form-group__input" aria-label="Default select example"></select>
                                                     </div>
                                                 </div>
                                                 <div class="col-12">
@@ -107,15 +107,15 @@
                                             <div class="form-group">
                                                 <label class="sherah-wc__form-label">Add Category</label>
                                                 <div class="form-group__input">
-                                                    <input class="sherah-wc__form-input" placeholder="Type here" type="text" name="p_title">
-                                                    <button class="sherah-btn__add sherah-btn sherah-btn__secondary" type="button">Add</button>
+                                                    <input class="sherah-wc__form-input" placeholder="Type here" type="text" id="category-input" name="categoryName">
+                                                    <button type="button" onclick="addCategory()" class="sherah-btn__add sherah-btn sherah-btn__secondary">Add</button>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="sherah-wc__form-label">Add Brand</label>
                                                 <div class="form-group__input">
-                                                    <input class="sherah-wc__form-input" placeholder="Type here" type="text" name="p_title">
-                                                    <button class="sherah-btn__add sherah-btn sherah-btn__secondary" type="button">Add</button>
+                                                    <input class="sherah-wc__form-input" placeholder="Type here" type="text" id="brand-input" name="brandName">
+                                                    <button type="button" onclick="addBrand()" class="sherah-btn__add sherah-btn sherah-btn__secondary">Add</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -205,5 +205,121 @@
 <script src="/js/Validator.js"></script>
 <script async>
     Validator('#add-form');
+</script>
+<script>
+    function addCategory() {
+        var categoryValue = document.getElementById("category-input").value;
+        if (categoryValue.trim() === "") {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Category field have to be filled!",
+                footer: '<a href="#">Gdupa so sorry about this confuse?</a>'
+            });
+        } else {
+            var xhr = new XMLHttpRequest();
+
+            var url = "/Product/AddCategory";
+            var method = "POST";
+
+            xhr.open(method, url, true);
+
+            xhr.setRequestHeader("Content-Type", "application/json"); 
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        var response = JSON.parse(xhr.responseText);
+                        if (response.success) {
+                            Swal.fire({
+                                title: "Yeah!",
+                                text: "Your category has been added.",
+                                icon: "success"
+                            });
+                            document.getElementById("category-input").value = "";
+                            var select = document.getElementById("CategoryId");
+                            var option = document.createElement("option");
+                            option.value = response.category.CategoryId;
+                            option.text = response.category.Name;
+                            select.appendChild(option);
+                        } else {
+                            Swal.fire({
+                                title: "Oops...",
+                                text: "Failed to add category. Please try again.",
+                                icon: "error"
+                            });
+                        }
+                    } else {
+                        Swal.fire({
+                            title: "Oops...",
+                            text: "Failed to communicate with server. Please try again later.",
+                            icon: "error"
+                        });
+                    }
+                }
+            };
+
+            var data = JSON.stringify({ categoryName: categoryValue }); 
+            xhr.send(data);
+        }
+    }
+
+
+    function addBrand() {
+        var brandValue = document.getElementById("brand-input").value;
+        if (brandValue.trim() === "") {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Brand field have to be filled!",
+                footer: '<a href="#">Gdupa so sorry about this confuse?</a>'
+            });
+        } else {
+            var xhr = new XMLHttpRequest();
+
+            var url = "/Product/AddBrand";
+            var method = "POST";
+
+            xhr.open(method, url, true);
+
+            xhr.setRequestHeader("Content-Type", "application/json"); 
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        var response = JSON.parse(xhr.responseText);
+                        if (response.success) {
+                            Swal.fire({
+                                title: "Yeah!",
+                                text: "Your brand has been added.",
+                                icon: "success"
+                            });
+                            document.getElementById("brand-input").value = "";
+                            var select = document.getElementById("BrandId");
+                            var option = document.createElement("option");
+                            option.value = response.brand.BrandId;
+                            option.text = response.brand.Name;
+                            select.appendChild(option);
+                        } else {
+                            Swal.fire({
+                                title: "Oops...",
+                                text: "Failed to add brand! Please try again.",
+                                icon: "error"
+                            });
+                        }
+                    } else {
+                        Swal.fire({
+                            title: "Oops...",
+                            text: "Failed to communicate with server! Please try again later.",
+                            icon: "error"
+                        });
+                    }
+                }
+            };
+
+            var data = JSON.stringify({ brandName: brandValue }); 
+            xhr.send(data);
+        }
+    }
 </script>
 

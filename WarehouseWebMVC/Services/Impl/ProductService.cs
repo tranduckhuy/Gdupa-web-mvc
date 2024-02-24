@@ -205,4 +205,40 @@ public class ProductService : IProductService
         }
         return null!;
     }
+    public bool AddCategory(string categoryName)
+    {
+        try
+        {
+            if (!string.IsNullOrEmpty(categoryName))
+            {
+                var category = new Category { Name = categoryName };
+                _dataContext.Category.Add(category);
+                _dataContext.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+    }
+    public bool AddBrand(string brandName)
+    {
+        try
+        {
+            if (!string.IsNullOrEmpty(brandName))
+            {
+                var brand = new Brand { Name = brandName };
+                _dataContext.Brand.Add(brand);
+                _dataContext.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+    }
 }
