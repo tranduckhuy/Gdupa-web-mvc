@@ -37,6 +37,7 @@
     <link rel="stylesheet" href="/assets/css/main.css">
     <link rel="stylesheet" href="/assets/css/main-toast.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
     <!-- Script -->
     <script src="https://cdn.jsdelivr.net/gh/AmagiTech/JSLoader/amagiloader.js"></script>
@@ -55,7 +56,7 @@
                 <div class="logo sherah-sidebar-padding">
                     <a id="logo-link" asp-area="" asp-controller="Dashboard" asp-action="Dashboard">
                         <img class="sherah-logo__main" src="/assets/images/gdupa-high-resolution-logo-transparent.png"
-                             alt="#" style="width: 170px; margin-top: 15px;">
+                             alt="#" style="width: 170px; margin-top: 15px;user-select:none;">
                     </a>
                     <div class="sherah__sicon close-icon d-xl-none">
                         <svg width="9" height="15" viewBox="0 0 9 15" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -142,8 +143,16 @@
                                                 </span>
                                             </a>
                                         </li>
-                                        @* <li><a href="vendor-profile.html"><span class="menu-bar__text"><span
-                                        class="menu-bar__name">Vendor Profile</span></span></a></li> *@
+                                        <li>
+                                            <a asp-area="" asp-controller="Supplier" asp-action="SupplierArchive">
+                                                <span class="menu-bar__text">
+                                                    <span class="menu-bar__name">
+                                                        Supplier
+                                                        Archive
+                                                    </span>
+                                                </span>
+                                            </a>
+                                        </li>
                                     </ul>
                                 </div>
                             </li>

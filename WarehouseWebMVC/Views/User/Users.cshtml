@@ -8,6 +8,13 @@
 @{
     var searchType = ViewBag.SearchType as string ?? "";
 }
+<style>
+    .dataTables_empty {
+        min-width: 1110px;
+        display: flex;
+        justify-content: center;
+    }
+</style>
 <div id="toast"></div>
 @if (!string.IsNullOrEmpty(message))
 {

@@ -9,7 +9,7 @@
     var searchType = ViewBag.SearchType as string ?? "";
 }
 <style>
-    .dataTables_empty {
+    .dataTables_empty{
         min-width: 1110px;
         display: flex;
         justify-content: center;
@@ -75,19 +75,14 @@
                         <div class="row mg-top-20">
                             <div class="col-12 sherah-flex-between">
                                 <div class="sherah-breadcrumb">
-                                    <h2 class="sherah-breadcrumb__title">Supplier List</h2>
+                                    <h2 class="sherah-breadcrumb__title">Supplier Archive List</h2>
                                     <ul class="sherah-breadcrumb__list">
                                         <li>
                                             <a asp-area="" asp-controller="Dashboard" asp-action="Dashboard">Home</a>
                                         </li>
-                                        <li class="active"><a href="#!">Supplier List</a></li>
+                                        <li class="active"><a href="#!">Supplier Archive List</a></li>
                                     </ul>
                                 </div>
-                                <a asp-area="" asp-controller="Supplier" asp-action="AddSupplier"
-                                   class="sherah-btn sherah-gbcolor"
-                                   style="padding:8px 15px;min-width:120px;justify-content:center;">
-                                    Add Supplier
-                                </a>
                             </div>
                         </div>
                         <div class="sherah-table sherah-page-inner sherah-border sherah-default-bg mg-top-10"
@@ -153,7 +148,7 @@
                                 <tbody class="sherah-table__body" style="display:block;max-height:300px;overflow-y:auto;scrollbar-width:thin;">
                                     @foreach (var supplier in Model.Suppliers)
                                     {
-                                        @if (@supplier.IsLocked == false)
+                                        @if (@supplier.IsLocked == true)
                                         {
                                             <tr>
                                                 <td class="sherah-table__column-1 sherah-table__data-1"
@@ -197,9 +192,9 @@
                                                 <td class="sherah-table__column-6 sherah-table__data-6"
                                                     style="width: 3%;min-width:120px;padding:12px 12px 12px 0;margin-left:10px;">
                                                     <div class="sherah-table__status__group" style="justify-content:center;">
-                                                        <a href="#" onclick="handleDeactiveSupplier(@supplier.SupplierId)"
-                                                           class="sherah-table__action sherah-color2 sherah-color2__bg--offset">
-                                                            <i class="material-icons">archive</i>
+                                                        <a href="#" onclick="handleActiveSupplier(@supplier.SupplierId)"
+                                                           class="sherah-table__action sherah-color3 sherah-color3__bg--opactity">
+                                                            <i class="material-icons">unarchive</i>
                                                         </a>
                                                     </div>
                                                 </td>

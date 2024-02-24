@@ -78,7 +78,13 @@
                                     <h2 class="sherah-breadcrumb__title">Suppliers</h2>
                                     <ul class="sherah-breadcrumb__list">
                                         <li><a href="/Dashboard/Dashboard">Home</a></li>
-                                        <li><a href="/Supplier/SupplierList">Suppliers</a></li>
+                                        @if(Model.IsLocked == false)
+                                        {
+                                            <li><a href="/Supplier/SupplierList">Supplier List</a></li>
+                                        } else
+                                        {
+                                            <li><a href="/Supplier/SupplierArchive">Supplier Archive</a></li>
+                                        }
                                         <li class="active"><a href="#!">Supplier Profile</a></li>
                                     </ul>
                                 </div>
