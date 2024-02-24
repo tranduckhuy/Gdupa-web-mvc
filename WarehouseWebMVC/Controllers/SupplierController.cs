@@ -206,6 +206,23 @@ public class SupplierController : Controller
         return RedirectToAction("SupplierList");
     }
 
+    [HttpPost]
+    public IActionResult SearchSupplierArchive(string searchType, string searchValue)
+    {
+        if (ModelState.IsValid)
+        {
+            var searchSuppliers = _supplierService.SearchSupplierArchive(searchType, searchValue);
+            if (searchSuppliers != null)
+            {
+                TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
+                ViewBag.SearchType = searchType;
+                return View("SupplierArchive", searchSuppliers);
+            }
+        }
+        TempData["Message"] = AppConstant.NOT_FOUND;
+        return RedirectToAction("SupplierArchive");
+    }
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {

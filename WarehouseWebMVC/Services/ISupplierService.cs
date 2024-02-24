@@ -9,6 +9,7 @@ namespace WarehouseWebMVC.Services
         SupplierDTO GetById(long supplierId);
         SupplierViewModel GetAll(int page);
         SupplierViewModel SearchSupplier(string searchType, string searchValue);
+        SupplierViewModel SearchSupplierArchive(string searchType, string searchValue);
         bool AddSupplier(SupplierDTO addSupplierDTO);
         bool UpdateSupplier(SupplierDTO updateSupplierDTO);
         bool IsEmailAlreadyExists(string email);

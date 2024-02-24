@@ -161,11 +161,11 @@ namespace WarehouseWebMVC.Services.Impl
             switch (searchType)
             {
                 case "Email":
-                    searchSupplier = searchSupplier.Where(u => u.Email.ToUpper().Contains(searchValue.ToUpper()));
+                    searchSupplier = searchSupplier.Where(s => s.Email.ToUpper().Contains(searchValue.ToUpper()) && s.IsLocked == false);
                     break;
 
                 default:
-                    var query = $"SELECT * FROM Suppliers WHERE {searchType} COLLATE NOCASE LIKE '%' || @searchValue || '%'";
+                    var query = $"SELECT * FROM Suppliers WHERE {searchType} COLLATE NOCASE LIKE '%' || @searchValue || '%' AND IsLocked = 0";
                     searchSupplier = _dataContext.Suppliers.FromSqlRaw(query, new SqliteParameter("@searchValue", searchValue));
                     break;
             }
@@ -184,14 +184,36 @@ namespace WarehouseWebMVC.Services.Impl
             }
             return null!;
         }
-        private static string ExtractCityFromAddress(string fullAddress)
+
+        public SupplierViewModel SearchSupplierArchive(string searchType, string searchValue)
         {
-            string[] addressParts = fullAddress.Split(',');
+            IQueryable<Supplier> searchSupplier = _dataContext.Suppliers;
 
-            int maxIndex = Math.Min(4, addressParts.Length - 1);
+            switch (searchType)
+            {
+                case "Email":
+                    searchSupplier = searchSupplier.Where(s => s.Email.ToUpper().Contains(searchValue.ToUpper()) && s.IsLocked == true);
+                    break;
 
-            string city = addressParts[maxIndex - 1].Trim();
-            return city;
+                default:
+                    var query = $"SELECT * FROM Suppliers WHERE {searchType} COLLATE NOCASE LIKE '%' || @searchValue || '%' AND IsLocked = 1";
+                    searchSupplier = _dataContext.Suppliers.FromSqlRaw(query, new SqliteParameter("@searchValue", searchValue));
+                    break;
+            }
+
+            if (searchSupplier.Any())
+            {
+                var searchSupplierDto = _mapper.Map<List<SupplierDTO>>(searchSupplier.ToList());
+
+                foreach (var searchDto in searchSupplierDto)
+                {
+                    searchDto.Address = ExtractCityFromAddress(searchDto.Address);
+                }
+
+                var supplierViewModel = new SupplierViewModel { Suppliers = searchSupplierDto };
+                return supplierViewModel;
+            }
+            return null!;
         }
 
         public bool Deactive(long supplierId)
@@ -234,6 +256,16 @@ namespace WarehouseWebMVC.Services.Impl
             {
                 return false;
             }
+        }
+
+        private static string ExtractCityFromAddress(string fullAddress)
+        {
+            string[] addressParts = fullAddress.Split(',');
+
+            int maxIndex = Math.Min(4, addressParts.Length - 1);
+
+            string city = addressParts[maxIndex - 1].Trim();
+            return city;
         }
     }
 }
