@@ -115,40 +115,40 @@
                             <table id="sherah-table__vendor" class="sherah-table__main sherah-table__main-v3"
                                    style="border: 1px solid #e2e7f1;">
                                 <!-- sherah Table Head -->
-                                <thead class="sherah-table__head">
+                                <thead class="sherah-table__head" style="display:block;">
                                     <tr>
                                         <th class="sherah-table__column-1 sherah-table__h1"
-                                            style="width:22%;min-width:290px;font-size: 16px;padding-top:12px;padding-bottom:12px;">
+                                            style="min-width:300px;font-size: 16px;padding-top:12px;padding-bottom:12px;">
                                             Name
                                         </th>
                                         <th class="sherah-table__column-2 sherah-table__h2"
-                                            style="width:25%;font-size:16px;padding-top:12px;padding-bottom:12px;">
+                                            style="min-width:190px;font-size:16px;padding-top:12px;padding-bottom:12px;">
                                             Email
                                         </th>
                                         <th class="sherah-table__column-3 sherah-table__h3"
-                                            style="width:11%;font-size:16px;padding-left:12px;padding-top:12px;padding-bottom:12px;">
+                                            style="max-width:90px;font-size:16px;padding:12px 40px 12px 12px;">
                                             Phone
                                         </th>
                                         <th class="sherah-table__column-4 sherah-table__h4"
-                                            style="width:14%;font-size:16px;padding-left:0;padding-top:12px;padding-bottom:12px;">
+                                            style="min-width:100px;font-size:16px;padding-left:0;padding-top:12px;padding-bottom:12px;">
                                             Address
                                         </th>
                                         <th class="sherah-table__column-5 sherah-table__h5"
-                                            style="width:7%;font-size:16px;text-align:center;padding-top:12px;padding-bottom:12px;">
+                                            style="min-width:120px;font-size:16px;text-align:center;padding-top:12px;padding-bottom:12px;">
                                             Fax
                                         </th>
                                         <th class="sherah-table__column-6 sherah-table__h6"
-                                            style="width:12%;font-size:16px;text-align:center;padding-top:12px;padding-bottom:12px;">
+                                            style="min-width:80px;font-size:16px;text-align:center;padding-top:12px;padding-bottom:12px;">
                                             Action
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody class="sherah-table__body">
+                                <tbody class="sherah-table__body" style="display:block;max-height:300px;overflow-y:auto;scrollbar-width:thin;">
                                     @foreach (var supplier in Model.Suppliers)
                                     {
-                                        <tr style="height: 20px;">
+                                        <tr>
                                             <td class="sherah-table__column-1 sherah-table__data-1"
-                                                style="width:23%;min-width:300px;padding:12px;text-align:left;">
+                                                style="min-width:300px;padding:12px;text-align:left;">
                                                 <div class="sherah-table__product">
                                                     <div class="sherah-language-form__input">
                                                         <input class="sherah-language-form__check" id="checkbox"
@@ -162,31 +162,31 @@
                                                 </div>
                                             </td>
                                             <td class="sherah-table__column-2 sherah-table__data-2"
-                                                style="width:25%;min-width:150px;padding:12px;text-align:left;">
+                                                style="min-width:210px;padding:12px;text-align:left;">
                                                 <div class="sherah-table__product-content">
                                                     <p class="sherah-table__product-desc">@supplier.Email</p>
                                                 </div>
                                             </td>
                                             <td class="sherah-table__column-3 sherah-table__data-3"
-                                                style="width: 13%;min-width:80px;padding:12px 8px 12px 12px;text-align:left;">
+                                                style="max-width:55px;padding:12px 8px 12px 12px;text-align:left;">
                                                 <div class="sherah-table__product-content">
                                                     <p class="sherah-table__product-desc">@supplier.Phone</p>
                                                 </div>
                                             </td>
                                             <td class="sherah-table__column-4 sherah-table__data-4"
-                                                style="width: 17%;min-width:80px;padding:12px 12px 12px 0;text-align:left;">
+                                                style="min-width:130px;padding:12px 12px 12px 0;text-align:left;">
                                                 <div class="sherah-table__product-content">
                                                     <p class="sherah-table__product-desc">@supplier.Address</p>
                                                 </div>
                                             </td>
                                             <td class="sherah-table__column-5 sherah-table__data-5"
-                                                style="width: 15%;min-width:80px;padding:12px 12px 12px 0;text-align:center;">
+                                                style="min-width:120px;padding:12px 0;text-align:center;">
                                                 <div class="sherah-table__status sherah-color3__bg--opactity">
                                                     <p class="sherah-table__product-desc sherah-color3">@supplier.Fax</p>
                                                 </div>
                                             </td>
                                             <td class="sherah-table__column-6 sherah-table__data-6"
-                                                style="width: 13%;min-width:120px;padding:12px 12px 12px 0;margin-left:10px;">
+                                                style="min-width:120px;padding:12px 0;margin-left:10px;">
                                                 <div class="sherah-table__status__group" style="justify-content:center;">
                                                     <a href="#"
                                                        class="sherah-table__action sherah-color2 sherah-color2__bg--offset">
