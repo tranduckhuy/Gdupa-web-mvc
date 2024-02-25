@@ -210,7 +210,7 @@ public class ProductService : IProductService
     {
         try
         {
-            if (!string.IsNullOrEmpty(categoryName) || !IsCategoryNameExist(categoryName))
+            if (string.IsNullOrEmpty(categoryName) || IsCategoryNameExist(categoryName.Trim()))
             {
                 return false;
             }
@@ -229,7 +229,7 @@ public class ProductService : IProductService
     {
         try
         {
-            if (string.IsNullOrEmpty(brandName) || !IsBrandNameExist(brandName))
+            if (string.IsNullOrEmpty(brandName) || IsBrandNameExist(brandName.Trim()))
             {
                 return false;
             }
@@ -244,6 +244,33 @@ public class ProductService : IProductService
             return false;
         }
     }
+
+    public bool AddUnit(string unitName)
+    {
+        try
+        {
+            if (string.IsNullOrEmpty(unitName) || IsUnitNameExist(unitName.Trim()))
+            {
+                return false;
+            }
+
+            var unit = new SelectListItem { Text = unitName, Value = unitName };
+            var productVM = GetInfoAddProduct();
+            productVM.Units.Add(unit);
+
+            return true;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+    }
+
+    private bool IsUnitNameExist(string unitName)
+    {
+        return GetInfoAddProduct().Units.Any(u => u.Text == unitName);
+    }
+
 
     private bool IsCategoryNameExist(string categoryName)
     {

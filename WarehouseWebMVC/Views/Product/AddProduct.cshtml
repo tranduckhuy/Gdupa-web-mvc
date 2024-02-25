@@ -1,5 +1,5 @@
-@model WarehouseWebMVC.Models.DTOs.ProductDTO.AddProductDTO
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+    @model WarehouseWebMVC.Models.DTOs.ProductDTO.AddProductDTO
+    @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
     ViewData["Title"] = "Products";
@@ -118,6 +118,13 @@
                                                     <button type="button" onclick="addBrand()" class="sherah-btn__add sherah-btn sherah-btn__secondary">Add</button>
                                                 </div>
                                             </div>
+                                            <div class="form-group">
+                                                <label class="sherah-wc__form-label">Add Unit</label>
+                                                <div class="form-group__input">
+                                                    <input class="sherah-wc__form-input" placeholder="Type here" type="text" id="unit-input" name="unitName">
+                                                    <button type="button" onclick="addUnit()" class="sherah-btn__add sherah-btn sherah-btn__secondary">Add</button>
+                                                </div>
+                                            </div>
                                         </div>
                                         <!-- End Organization -->
                                         <!-- Specification -->
@@ -223,7 +230,7 @@
 
             xhr.open(method, url, true);
 
-            xhr.setRequestHeader("Content-Type", "application/json"); 
+            xhr.setRequestHeader("Content-Type", "application/json");
 
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4) {
@@ -258,7 +265,7 @@
                 }
             };
 
-            var data = JSON.stringify({ categoryName: categoryValue }); 
+            var data = JSON.stringify({ categoryName: categoryValue });
             xhr.send(data);
         }
     }
@@ -279,7 +286,7 @@
 
             xhr.open(method, url, true);
 
-            xhr.setRequestHeader("Content-Type", "application/json"); 
+            xhr.setRequestHeader("Content-Type", "application/json");
 
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4) {
@@ -314,9 +321,63 @@
                 }
             };
 
-            var data = JSON.stringify({ brandName: brandValue }); 
+            var data = JSON.stringify({ brandName: brandValue });
             xhr.send(data);
         }
     }
+
+    function updateUnitDropdown() {
+        var storedUnits = localStorage.getItem("units");
+        var units = storedUnits ? JSON.parse(storedUnits) : [];
+        var select = document.getElementById("unit-select");
+
+        units.forEach(function (unit) {
+            var option = document.createElement("option");
+            option.value = unit.value;
+            option.text = unit.text;
+            select.appendChild(option);
+        });
+    }
+
+    function addUnit() {
+        var unitValue = document.getElementById("unit-input").value;
+        if (unitValue.trim() === "" || isUnitExist(unitValue)) {
+            Swal.fire({
+                icon: "error",
+                title: "Error!!",
+                text: "Unit name already exists or is invalid!!",
+            });
+        } else {
+            var storedUnits = localStorage.getItem("units");
+            var units = storedUnits ? JSON.parse(storedUnits) : [];
+            units.push({ text: unitValue, value: unitValue });
+            localStorage.setItem("units", JSON.stringify(units));
+
+            updateUnitDropdown();
+
+            Swal.fire({
+                title: "Yeah!",
+                text: "Your brand has been added.",
+                icon: "success"
+            });
+
+            document.getElementById("unit-input").value = "";
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        updateUnitDropdown();
+    });
+
+    function isUnitExist(unitValue) {
+        var storedUnits = localStorage.getItem("units");
+        var units = storedUnits ? JSON.parse(storedUnits) : [];
+
+        return units.some(function (unit) {
+            return unit.value === unitValue;
+        });
+    }
+
+
 </script>
 

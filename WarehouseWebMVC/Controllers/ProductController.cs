@@ -149,6 +149,21 @@ public class ProductController : Controller
     }
 
     [HttpPost]
+    public IActionResult AddUnit([FromBody] JObject data)
+    {
+        string unitName = data["unitName"]!.ToString();
+        if (!string.IsNullOrEmpty(unitName))
+        {
+            if (_productService.AddUnit(unitName))
+            {
+                var productVM = _productService.GetInfoAddProduct();
+                return Json(new { success = true, unit = new { productVM.Units.Last().Value, productVM.Units.Last().Text } });
+            }
+        }
+        return Json(new { success = false });
+    }
+
+    [HttpPost]
     public IActionResult UpdateProduct([FromForm] AddProductDTO updateProductDTO)
     {
         if (_productService.Update(updateProductDTO))

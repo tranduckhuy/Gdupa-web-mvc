@@ -12,8 +12,10 @@ namespace WarehouseWebMVC.Services
         AddProductDTO Add(AddProductDTO addProductDTO);
         bool AddCategory(string categoryName);
         bool AddBrand(string brandName);
+        bool AddUnit(string unitName);
         bool Update(AddProductDTO addProductDTO);
 		bool Delete(long id);
 		CRUProductVM GetInfoAddProduct();
+
     }
 }
