@@ -347,7 +347,7 @@
 
     function addUnit() {
         var unitValue = document.getElementById("unit-input").value;
-        if (unitValue.trim() === "" || isUnitExist(unitValue)) {
+        if (unitValue.trim() === "" || isUnitExist(unitValue) || isReservedUnit(unitValue)) {
             Swal.fire({
                 icon: "error",
                 title: "Error!!",
@@ -383,5 +383,11 @@
             return unit.value === unitValue;
         });
     }
+
+    function isReservedUnit(unitValue) {
+        var reservedValues = ["Piece", "Pair", "piece", "pair"];
+        return reservedValues.includes(unitValue);
+    }
+
 
 </script>

@@ -245,39 +245,14 @@ public class ProductService : IProductService
         }
     }
 
-    public bool AddUnit(string unitName)
-    {
-        try
-        {
-            if (string.IsNullOrEmpty(unitName) || IsUnitNameExist(unitName.Trim()))
-            {
-                return false;
-            }
-
-            var unit = new SelectListItem { Text = unitName, Value = unitName };
-            var productVM = GetInfoAddProduct();
-            productVM.Units.Add(unit);
-
-            return true;
-        }
-        catch (Exception)
-        {
-            return false;
-        }
-    }
-
-    private bool IsUnitNameExist(string unitName)
-    {
-        return GetInfoAddProduct().Units.Any(u => u.Text == unitName);
-    }
-
-
     private bool IsCategoryNameExist(string categoryName)
     {
-        return _dataContext.Category.Any(c => c.Name == categoryName);
+        return _dataContext.Category.Any(c => c.Name.ToUpper() == categoryName.ToUpper());
     }
+
     private bool IsBrandNameExist(string brandName)
     {
-        return _dataContext.Brand.Any(b => b.Name == brandName);
+        return _dataContext.Brand.Any(b => b.Name.ToUpper() == brandName.ToUpper());
     }
+
 }
