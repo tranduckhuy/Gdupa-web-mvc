@@ -71,7 +71,7 @@
                                                         <div class="form-group__input">
                                                             <input asp-for="Name" name="Name" rules="required"
                                                                    class="sherah-wc__form-input"
-                                                                   placeholder="Type here" type="text" autofocus>
+                                                                   placeholder="Type here" type="text">
                                                         </div>
                                                         <span class="form-message"></span>
                                                     </div>
@@ -79,13 +79,13 @@
                                                 <div class="col-lg-6 col-md-6 col-12">
                                                     <div class="form-group">
                                                         <label class="sherah-wc__form-label">Category*</label>
-                                                        <select id="CategoryId" asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-group__input" aria-label="Default select example"></select>
+                                                        <select id="category-select" asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-group__input" aria-label="Default select example"></select>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-12">
                                                     <div class="form-group">
                                                         <label class="sherah-wc__form-label">Brand*</label>
-                                                        <select id="BrandId" asp-for="BrandId" asp-items="ViewBag.Brands" class="form-group__input" aria-label="Default select example"></select>
+                                                        <select id="brand-select" asp-for="BrandId" asp-items="ViewBag.Brands" class="form-group__input" aria-label="Default select example"></select>
                                                     </div>
                                                 </div>
                                                 <div class="col-12">
@@ -136,7 +136,7 @@
                                                 <div class="col-lg-6 col-md-6 col-12">
                                                     <div class="form-group">
                                                         <label class="sherah-wc__form-label">Unit*</label>
-                                                        <select asp-for="Unit" asp-items="ViewBag.Units" class="form-group__input" aria-label="Default select example"></select>
+                                                        <select id="unit-select" asp-for="Unit" asp-items="ViewBag.Units" class="form-group__input" aria-label="Default select example"></select>
                                                     </div>
                                                 </div>
                                             </div>
@@ -212,9 +212,8 @@
         if (categoryValue.trim() === "") {
             Swal.fire({
                 icon: "error",
-                title: "Oops...",
+                title: "Error!",
                 text: "Category field have to be filled!",
-                footer: '<a href="#">Gdupa so sorry about this confuse?</a>'
             });
         } else {
             var xhr = new XMLHttpRequest();
@@ -237,21 +236,21 @@
                                 icon: "success"
                             });
                             document.getElementById("category-input").value = "";
-                            var select = document.getElementById("CategoryId");
+                            var select = document.getElementById("category-select");
                             var option = document.createElement("option");
                             option.value = response.category.CategoryId;
                             option.text = response.category.Name;
                             select.appendChild(option);
                         } else {
                             Swal.fire({
-                                title: "Oops...",
-                                text: "Failed to add category. Please try again.",
+                                title: "Error!",
+                                text: "Oops! The category name already exists. Please try another category.",
                                 icon: "error"
                             });
                         }
                     } else {
                         Swal.fire({
-                            title: "Oops...",
+                            title: "Error!",
                             text: "Failed to communicate with server. Please try again later.",
                             icon: "error"
                         });
@@ -264,15 +263,13 @@
         }
     }
 
-
     function addBrand() {
         var brandValue = document.getElementById("brand-input").value;
         if (brandValue.trim() === "") {
             Swal.fire({
                 icon: "error",
-                title: "Oops...",
+                title: "Error!",
                 text: "Brand field have to be filled!",
-                footer: '<a href="#">Gdupa so sorry about this confuse?</a>'
             });
         } else {
             var xhr = new XMLHttpRequest();
@@ -295,21 +292,21 @@
                                 icon: "success"
                             });
                             document.getElementById("brand-input").value = "";
-                            var select = document.getElementById("BrandId");
+                            var select = document.getElementById("brand-select");
                             var option = document.createElement("option");
                             option.value = response.brand.BrandId;
                             option.text = response.brand.Name;
                             select.appendChild(option);
                         } else {
                             Swal.fire({
-                                title: "Oops...",
-                                text: "Failed to add brand! Please try again.",
+                                title: "Error!",
+                                text: "Oops! The brand name already exists. Please try another brand.",
                                 icon: "error"
                             });
                         }
                     } else {
                         Swal.fire({
-                            title: "Oops...",
+                            title: "Error!",
                             text: "Failed to communicate with server! Please try again later.",
                             icon: "error"
                         });
