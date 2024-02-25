@@ -5,7 +5,7 @@
 
 @model WarehouseWebMVC.Models.DTOs.SupplierDTO.SupplierDTO;
 <style>
-    .avatar-badge{
+    .avatar-badge {
         position: absolute;
         left: 116px;
         bottom: -8px;
@@ -47,7 +47,9 @@
                 }, 600);
             });
         </script>
-    } else if ("WrongInfo".Equals(message)){
+    }
+    else if ("WrongInfo".Equals(message))
+    {
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 setTimeout(function () {
@@ -78,10 +80,11 @@
                                     <h2 class="sherah-breadcrumb__title">Suppliers</h2>
                                     <ul class="sherah-breadcrumb__list">
                                         <li><a href="/Dashboard/Dashboard">Home</a></li>
-                                        @if(Model.IsLocked == false)
+                                        @if (Model.IsLocked == false)
                                         {
                                             <li><a href="/Supplier/SupplierList">Supplier List</a></li>
-                                        } else
+                                        }
+                                        else
                                         {
                                             <li><a href="/Supplier/SupplierArchive">Supplier Archive</a></li>
                                         }
@@ -102,7 +105,7 @@
                                         <i class="fa-solid fa-camera" style="color:#333;font-size:16px;"></i>
                                         Change Background
                                     </label>
-								</div>
+                                </div>
                             </div>
                             <div class="col-12" style="position:relative;">
                                 <!-- Profile Info -->
@@ -115,6 +118,12 @@
                                         <input type="file" id="avatarFile" style="display:none;" accept=".png,.jpg" />
                                         <h3 class="sherah-profile-info__name">@Model.Name<span>@Model.Email</span></h3>
                                     </div>
+                                    @if (Model.IsLocked == true)
+                                    {
+                                        <div class="sherah-table__status sherah-color2__bg--opactity" style="bottom:16px;">
+                                            <p class="sherah-table__product-desc sherah-color2">Archived</p>
+                                        </div>
+                                    }
                                 </div>
                                 <!-- End Profile Info -->
                             </div>
