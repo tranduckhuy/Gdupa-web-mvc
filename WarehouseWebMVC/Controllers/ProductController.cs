@@ -117,7 +117,7 @@ public class ProductController : Controller
         ViewBag.Categories = new SelectList(addProductVM.Categories, "CategoryId", "Name");
         ViewBag.Brands = new SelectList(addProductVM.Brands, "BrandId", "Name");
         ViewBag.Units = addProductVM.Units;
-        return View();
+        return View(addProductDTO);
     }
     [HttpPost]
     public IActionResult AddCategory([FromBody] JObject data)

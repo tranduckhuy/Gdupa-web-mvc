@@ -7,6 +7,35 @@
 @{
     var message = TempData["Message"] as string;
 }
+<style>
+    #year-item {
+        font-weight: 400;
+        font-size: .8rem;
+        background: transparent;
+        opacity: 0.7;
+    }
+
+    select#year-tab {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background-image: url("data:image/svg+xml;utf8,<svg width='13' height='6' viewBox='0 0 13 6' fill='rgb(104, 124, 254)' xmlns='http://www.w3.org/2000/svg'><path opacity='0.7' d='M12.4124 0.247421C12.3327 0.169022 12.2379 0.106794 12.1335 0.0643287C12.0291 0.0218632 11.917 0 11.8039 0C11.6908 0 11.5787 0.0218632 11.4743 0.0643287C11.3699 0.106794 11.2751 0.169022 11.1954 0.247421L7.27012 4.07837C7.19045 4.15677 7.09566 4.219 6.99122 4.26146C6.88678 4.30393 6.77476 4.32579 6.66162 4.32579C6.54848 4.32579 6.43646 4.30393 6.33202 4.26146C6.22758 4.219 6.13279 4.15677 6.05312 4.07837L2.12785 0.247421C2.04818 0.169022 1.95338 0.106794 1.84895 0.0643287C1.74451 0.0218632 1.63249 0 1.51935 0C1.40621 0 1.29419 0.0218632 1.18975 0.0643287C1.08531 0.106794 0.990517 0.169022 0.910844 0.247421C0.751218 0.404141 0.661621 0.616141 0.661621 0.837119C0.661621 1.0581 0.751218 1.2701 0.910844 1.42682L4.84468 5.26613C5.32677 5.73605 5.98027 6 6.66162 6C7.34297 6 7.99647 5.73605 8.47856 5.26613L12.4124 1.42682C12.572 1.2701 12.6616 1.0581 12.6616 0.837119C12.6616 0.616141 12.572 0.404141 12.4124 0.247421Z'></path></svg>");
+        background-repeat: no-repeat;
+        background-position-x: 85%;
+        background-position-y: 48%;
+        margin-right: 1rem;
+        padding: .5rem;
+        padding-right: .8rem;
+        color: #3b3b3b !important;
+        opacity: 1;
+        border-radius: 4px !important;
+        height: 35px;
+        line-height: 12px;
+    }
+
+    .circle__two .circle-progress-value {
+        stroke: #6176FE;
+    }
+</style>
 <div id="toast"></div>
 @if (!string.IsNullOrEmpty(message))
 {
@@ -233,22 +262,22 @@
                             <div class="col-lg-6 col-12">
                                 <!-- Charts Two -->
                                 <div class="charts-main sherah-default-bg charts-home-two sherah-border mg-top-30">
-                                    <div class="charts-main__heading  mg-btm-20 charts-main__heading--v2">
+                                    <div class="charts-main__heading mg-btm-20 charts-main__heading--v2">
                                         <h3 class="sherah-heading__title">Total Products Import</h3>
                                         <div class="sherah-charts-tabs">
                                             <!-- Tab List -->
                                             <div class="sherah-charts-tabs__list list-group " id="list-tab"
                                                  role="tablist">
-                                                <a class="list-group-item" data-bs-toggle="list"
-                                                   href="#sherah_tab1" role="tab"
-                                                   style="padding: 6px 15px;">Yearly</a>
+                                                <p class="list-group-item"
+                                                   style="padding: 6px 15px;">
+                                                   Current Year Import - @Model.ImportYears.ElementAt(Model.ImportYears.Count - 1)
+                                                </p>
                                             </div>
                                         </div>
                                         <!-- End Topbar -->
                                     </div>
                                     <div class="tab-content" id="nav-tabContent">
-                                        <div class="tab-pane fade show active" id="sherah_tab1" role="tabpanel"
-                                             aria-labelledby="sherah_tab1">
+                                        <div class="tab-pane fade show active">
                                             <div class="sherah-chart__inside sherah-chart__total--sales">
                                                 <canvas id="myChart_Total_Sales_Home"></canvas>
                                             </div>
@@ -280,9 +309,9 @@
                                         <div class="sherah-order-card sherah-default-bg sherah-border sherah-flex-between mg-top-30">
                                             <div class="sherah-order-card__first">
                                                 <p class="sherah-order-card__text mg-btm-10">
-                                                    Recent Product
+                                                    Recent User
                                                     <br />
-                                                    <span class="sherah-bcolor" id="total-recent-product"></span>
+                                                    <span class="sherah-bcolor" id="total-recent-user"></span>
                                                 </p>
                                                 <div class="sherah-chart__inside sherah-chart__inside--aorder">
                                                     <canvas id="myChart_recent_orders"></canvas>
@@ -332,30 +361,15 @@
                                         </div>
                                         <!-- Chart Dropdown Menu -->
                                         <div class="sherah-chart__dropdown sherah-chart__dropdown--bg">
-                                            <ul class="nav nav-tabs sherah-dropdown__list" id="nav-tab" role="tablist">
-                                                <li class="nav-item dropdown">
-                                                    <a class="sherah-sidebar_btn sherah-offset-bg  sherah-border sherah-heading__tabs nav-link dropdown-toggle"
-                                                       data-bs-toggle="dropdown" href="#" role="button"
-                                                       aria-expanded="false">
-                                                        2024
-                                                        <svg width="13" height="6"
-                                                             viewBox="0 0 13 6" fill="none"
-                                                             xmlns="http://www.w3.org/2000/svg">
-                                                            <path opacity="0.7"
-                                                                  d="M12.4124 0.247421C12.3327 0.169022 12.2379 0.106794 12.1335 0.0643287C12.0291 0.0218632 11.917 0 11.8039 0C11.6908 0 11.5787 0.0218632 11.4743 0.0643287C11.3699 0.106794 11.2751 0.169022 11.1954 0.247421L7.27012 4.07837C7.19045 4.15677 7.09566 4.219 6.99122 4.26146C6.88678 4.30393 6.77476 4.32579 6.66162 4.32579C6.54848 4.32579 6.43646 4.30393 6.33202 4.26146C6.22758 4.219 6.13279 4.15677 6.05312 4.07837L2.12785 0.247421C2.04818 0.169022 1.95338 0.106794 1.84895 0.0643287C1.74451 0.0218632 1.63249 0 1.51935 0C1.40621 0 1.29419 0.0218632 1.18975 0.0643287C1.08531 0.106794 0.990517 0.169022 0.910844 0.247421C0.751218 0.404141 0.661621 0.616141 0.661621 0.837119C0.661621 1.0581 0.751218 1.2701 0.910844 1.42682L4.84468 5.26613C5.32677 5.73605 5.98027 6 6.66162 6C7.34297 6 7.99647 5.73605 8.47856 5.26613L12.4124 1.42682C12.572 1.2701 12.6616 1.0581 12.6616 0.837119C12.6616 0.616141 12.572 0.404141 12.4124 0.247421Z">
-                                                            </path>
-                                                        </svg>
-                                                    </a>
-                                                    <ul class="dropdown-menu sherah-sidebar_dropdown">
-                                                        <a class="list-group-item" data-bs-toggle="list"
-                                                           data-bs-target="#sherah-chart__t1" role="tab">2023</a>
-                                                        <a class="list-group-item" data-bs-toggle="list"
-                                                           data-bs-target="#sherah-chart__t1" role="tab">2022</a>
-                                                        <a class="list-group-item" data-bs-toggle="list"
-                                                           data-bs-target="#sherah-chart__t1" role="tab">2021</a>
-                                                    </ul>
-                                                </li>
-                                            </ul>
+                                            <select class="nav nav-tabs sherah-dropdown__list" id="year-tab" role="tablist">
+                                                @foreach (var year in Model.ImportYears)
+                                                {
+                                                    <option value="@year" selected="@(year == Model.SelectedYear ? "selected" : null)"
+                                                            class="nav-item dropdown" id="year-item">
+                                                        @year
+                                                    </option>
+                                                }
+                                            </select>
                                         </div>
                                         <!-- End Chart Dropdown Menu -->
                                     </div>
@@ -625,8 +639,7 @@
     function chartTwo(data) {
         const ctx_two = document.getElementById('myChart_Total_Sales_Home').getContext('2d');
 
-        var warehouseStatistics = data.WarehouseStatistics;
-        var importData = warehouseStatistics.map(stat => stat.Import);
+        var importData = data.CurrentYearTotalImport;
         var maxValue = Math.max(...importData);
         maxValue = Math.ceil(maxValue / 2) * 2 + 20;
 
@@ -708,7 +721,7 @@
     }
 
     function circleTwo(data) {
-        var totalData = data.TotalProducts;
+        var totalData = data.TotalUsers ;
 
         new CircleProgress('.circle__two', {
             max: 100,
@@ -722,7 +735,7 @@
         var totalUser = document.querySelector('#total-user');
         var totalNote = document.querySelector('#total-note');
         var totalRecentNote = document.querySelector('#total-recent-note');
-        var totalRecentProduct = document.querySelector('#total-recent-product');
+        var totalRecentUser = document.querySelector('#total-recent-user');
         var stockElement = document.querySelector('#total-stock');
         var importElement = document.querySelector('#total-import');
         var exportElement = document.querySelector('#total-export');
@@ -737,7 +750,7 @@
         totalUser.textContent = data.TotalUsers + " Users";
         totalNote.textContent = data.TotalImportNotes + " Import Notes";
         totalRecentNote.textContent = data.TotalImportNotes + " Import Notes";
-        totalRecentProduct.textContent = data.TotalProducts + " Products";
+        totalRecentUser.textContent = data.TotalUsers + " Users";
         stockElement.textContent = totalStock + " Products";
         importElement.textContent = totalImport + " Products";
         exportElement.textContent = totalExport + " Products";
@@ -752,4 +765,11 @@
     circleOne(jsonData);
     circleTwo(jsonData);
     renderData(jsonData);
+</script>
+<script>
+    var year = document.getElementById('year-tab');
+    year.onchange = function (event) {
+        var valueYear = this.options[this.selectedIndex].value;
+        window.location.href = '/Dashboard/Dashboard?year=' + valueYear;
+    }
 </script>

@@ -16,30 +16,40 @@ namespace WarehouseWebMVC.Services.Impl
 
 		public async Task<DashboardDTO> GetDashboardInfoAsync(int year)
 		{
-			DashboardDTO dashboardDTO = new();
-			dashboardDTO.TotalProducts = await _dataContext.Products.CountAsync();
-			dashboardDTO.TotalImportNotes = await _dataContext.ImportNotes.CountAsync();
-			dashboardDTO.TotalUsers = await _dataContext.Users.CountAsync();
-			dashboardDTO.TotalSuppliers = await _dataContext.Suppliers.CountAsync();
+            DashboardDTO dashboardDTO = new()
+            {
+                TotalProducts = await _dataContext.Products.CountAsync(),
+                TotalImportNotes = await _dataContext.ImportNotes.CountAsync(),
+                TotalUsers = await _dataContext.Users.CountAsync(),
+                TotalSuppliers = await _dataContext.Suppliers.CountAsync()
+            };
 
-			if (year == 0)
+            if (year == 0)
 			{
 				year = DateTime.UtcNow.Year;
 			}
 
-			for (int i = 1; i <= 4; i++)
+            int currentYear = DateTime.UtcNow.Year;
+            for (int i = 1; i <= 4; i++)
 			{
 				DateTime startDate = new(year, (i - 1) * 3 + 1, 1);
 				DateTime endDate = startDate.AddMonths(3).AddDays(-1);
+
 				int sumQuantityImport = await _dataContext.Warehouse
 					.Where(w => w.CreatedAt >= startDate && w.CreatedAt <= endDate)
 					.SumAsync(qi => qi.QuantityImport);
-
 				int stock = await _dataContext.Warehouse
 					.Where(w => w.CreatedAt >= startDate && w.CreatedAt <= endDate)
 					.SumAsync(q => q.Quantity);
 
-				dashboardDTO.WarehouseStatistics.Add(new WarehouseStatistic { Stock = stock, Import = sumQuantityImport });
+                dashboardDTO.WarehouseStatistics.Add(new WarehouseStatistic { Stock = stock, Import = sumQuantityImport });
+
+                startDate = new(currentYear, (i - 1) * 3 + 1, 1);
+				endDate = startDate.AddMonths(3).AddDays(-1);
+                sumQuantityImport = await _dataContext.Warehouse
+                    .Where(w => w.CreatedAt >= startDate && w.CreatedAt <= endDate)
+                    .SumAsync(qi => qi.QuantityImport);
+
 				dashboardDTO.CurrentYearTotalImport.Add(sumQuantityImport);
 			}
 
@@ -48,6 +58,7 @@ namespace WarehouseWebMVC.Services.Impl
             .Distinct()
             .ToListAsync();
 
+			dashboardDTO.SelectedYear = year;
 			dashboardDTO.ImportYears = uniqueYears;
 
 			return dashboardDTO;

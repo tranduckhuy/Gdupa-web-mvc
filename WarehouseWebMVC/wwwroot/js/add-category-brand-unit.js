@@ -153,7 +153,7 @@ function addUnit() {
 
         Swal.fire({
             title: "Yeah!",
-            text: "Your brand has been added.",
+            text: "Your unit has been added.",
             icon: "success"
         });
 

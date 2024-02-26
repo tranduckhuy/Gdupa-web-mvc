@@ -184,8 +184,22 @@
                                                     <div id="progress-container2" style="max-width: 220px; margin: 0 4px;"></div>
                                                 </label>
                                             </div>
-                                            <div id="imgDiv1" class="image-upload-group__single image-upload-group__single--upload" style="cursor:default;"></div>
-                                            <div id="imgDiv2" class="image-upload-group__single image-upload-group__single--upload" style="cursor:default;"></div>
+                                            <div id="imgDiv1" class="image-upload-group__single image-upload-group__single--upload" style="cursor:default;">
+                                                @if (Model != null)
+                                                {
+                                                    <div style="padding:12px;">
+                                                        <img src="@Model.ImageURL1" alt="Product's Image 1" style="max-width:200px;max-height:250px" />
+                                                    </div>
+                                                }
+                                            </div>
+                                            <div id="imgDiv2" class="image-upload-group__single image-upload-group__single--upload" style="cursor:default;">
+                                                @if (Model != null)
+                                                {
+                                                    <div style="padding:12px;">
+                                                        <img src="@Model.ImageURL2" alt="Product's Image 2" style="max-width:200px;max-height:250px" />
+                                                    </div>
+                                                }
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -206,6 +220,7 @@
 </section>
 <script src="/js/lib/progressbar.min.js"></script>
 <script src="/js/lib/tinymce/js/tinymce/tinymce.min.js"></script>
+@*<script src="https://cdn.tiny.cloud/1/91b6oksn0skc1vp1vwcwwi1f0fqzsdvdgoq2aoqa7zpq80j1/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>*@
 <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
 <script src="/js/firebase/firebaseUpload.js"></script>
 <script src="/js/tinymce-config.js"></script>
