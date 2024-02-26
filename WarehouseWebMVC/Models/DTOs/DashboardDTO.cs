@@ -8,6 +8,8 @@
         public int TotalImportNotes { get; set; }
 
         public ICollection<WarehouseStatistic> WarehouseStatistics { get; set; } = new List<WarehouseStatistic>();
+        public ICollection<int> CurrentYearTotalImport { get; set; } = new List<int>();
+        public ICollection<int> ImportYears { get; set; } = new List<int>();
     }
 
     public class WarehouseStatistic

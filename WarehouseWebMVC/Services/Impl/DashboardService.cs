@@ -40,7 +40,15 @@ namespace WarehouseWebMVC.Services.Impl
 					.SumAsync(q => q.Quantity);
 
 				dashboardDTO.WarehouseStatistics.Add(new WarehouseStatistic { Stock = stock, Import = sumQuantityImport });
+				dashboardDTO.CurrentYearTotalImport.Add(sumQuantityImport);
 			}
+
+			var uniqueYears = await _dataContext.Warehouse
+            .Select(w => w.CreatedAt.Year)
+            .Distinct()
+            .ToListAsync();
+
+			dashboardDTO.ImportYears = uniqueYears;
 
 			return dashboardDTO;
 		}
