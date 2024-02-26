@@ -549,6 +549,7 @@
 <script src="/js/map-config.js" defer></script>
 <script defer>
     var jsonData = @Html.Raw(Json.Serialize(Model));
+    console.log(jsonData)
 
     function chartOne(data) {
         const ctx = document.getElementById('myChart_one_monthly').getContext('2d');
