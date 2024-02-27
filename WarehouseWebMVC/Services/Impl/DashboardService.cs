@@ -56,6 +56,7 @@ namespace WarehouseWebMVC.Services.Impl
 			var uniqueYears = await _dataContext.Warehouse
             .Select(w => w.CreatedAt.Year)
             .Distinct()
+			.OrderBy(w => w)
             .ToListAsync();
 
 			dashboardDTO.SelectedYear = year;
