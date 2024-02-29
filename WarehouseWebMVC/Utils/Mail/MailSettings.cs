@@ -1,4 +1,4 @@
-﻿namespace WarehouseWebMVC.Models;
+﻿namespace WarehouseWebMVC.Utils.Mail;
 
 public class MailSettings
 {

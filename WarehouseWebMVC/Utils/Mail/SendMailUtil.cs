@@ -1,24 +1,22 @@
 ﻿using MailKit.Security;
 using Microsoft.Extensions.Options;
 using MimeKit;
-using WarehouseWebMVC.Models;
 
-namespace WarehouseWebMVC.Services.Mail;
-
-public class SendMailService
+namespace WarehouseWebMVC.Utils.Mail;
+public class SendMailUtil
 {
-    MailSettings _mailSettings { get; set; }
+    private MailSettings MailSettings { get; set; }
 
-    public SendMailService(IOptions<MailSettings> mailSettings)
+    public SendMailUtil(IOptions<MailSettings> mailSettings)
     {
-        _mailSettings = mailSettings.Value;
+        MailSettings = mailSettings.Value;
     }
 
     public async Task<string> SendMail(MailContent mailContent)
     {
         var email = new MimeMessage();
-        email.Sender = new MailboxAddress(_mailSettings.DisplayName, _mailSettings.Email);
-        email.From.Add(new MailboxAddress(_mailSettings.DisplayName, _mailSettings.Email));
+        email.Sender = new MailboxAddress(MailSettings.DisplayName, MailSettings.Email);
+        email.From.Add(new MailboxAddress(MailSettings.DisplayName, MailSettings.Email));
         email.To.Add(new MailboxAddress(mailContent.To, mailContent.To));
         email.Subject = mailContent.Subject;
 
@@ -31,8 +29,8 @@ public class SendMailService
 
         try
         {
-            await smtp.ConnectAsync(_mailSettings.Host, _mailSettings.Port, SecureSocketOptions.StartTls);
-            await smtp.AuthenticateAsync(_mailSettings.Email, _mailSettings.Password);
+            await smtp.ConnectAsync(MailSettings.Host, MailSettings.Port, SecureSocketOptions.StartTls);
+            await smtp.AuthenticateAsync(MailSettings.Email, MailSettings.Password);
             await smtp.SendAsync(email);
         }
         catch (Exception e)
@@ -45,8 +43,6 @@ public class SendMailService
         return "SEND SUCCESSFULLY";
     }
 }
-
-
 public class MailContent
 {
     public string To { get; set; } = string.Empty;

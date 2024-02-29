@@ -1,12 +1,10 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using WarehouseWebMVC.Data;
 using WarehouseWebMVC.Models;
-using WarehouseWebMVC.Models.Domain;
 using WarehouseWebMVC.Services;
-using WarehouseWebMVC.Services.Impl;
 using WarehouseWebMVC.ViewModels;
+using WarehouseWebMVC.AuthenticationFilter;
 
 namespace WarehouseWebMVC.Controllers;
 

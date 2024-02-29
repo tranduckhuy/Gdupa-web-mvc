@@ -5,7 +5,6 @@ using WarehouseWebMVC.Data;
 using WarehouseWebMVC.Models;
 using WarehouseWebMVC.Models.Domain;
 using WarehouseWebMVC.Models.DTOs.SupplierDTO;
-using WarehouseWebMVC.Models.DTOs.UserDTO;
 using WarehouseWebMVC.ViewModels;
 
 namespace WarehouseWebMVC.Services.Impl
@@ -65,11 +64,11 @@ namespace WarehouseWebMVC.Services.Impl
         {
             try
             {
-                if (_dataContext.Suppliers.Any(u => u.Email == addSupplierDTO.Email))
+                if (IsEmailAlreadyExists(addSupplierDTO.Email))
                 {
                     return false;
                 }
-
+                addSupplierDTO.Avatar ??= "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fdefault_avatar.png?alt=media&token=560b08e7-3ab2-453e-aea5-def178730766";
                 addSupplierDTO.Address =
                     addSupplierDTO.Street + ", "
                     + (addSupplierDTO.Apartment != null && addSupplierDTO.Apartment != "" ? addSupplierDTO.Apartment + ", " : "")

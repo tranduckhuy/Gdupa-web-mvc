@@ -7,6 +7,7 @@ using WarehouseWebMVC.Models;
 using WarehouseWebMVC.Models.DTOs.ProductDTO;
 using WarehouseWebMVC.Services;
 using WarehouseWebMVC.ViewModels;
+using WarehouseWebMVC.AuthenticationFilter;
 
 namespace WarehouseWebMVC.Controllers;
 

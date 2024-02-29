@@ -1,6 +1,6 @@
-﻿using WarehouseWebMVC.Services.Helper;
+﻿using WarehouseWebMVC.Utils.Helper;
 
-namespace WarehouseWebMVC.Services.Helper.Impl
+namespace WarehouseWebMVC.Utils.Helper.Impl
 {
     public class AddressHelper : IAddressHelper
     {

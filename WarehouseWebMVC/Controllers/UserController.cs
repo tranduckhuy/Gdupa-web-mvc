@@ -2,12 +2,11 @@
 using System.Diagnostics;
 using WarehouseWebMVC.Data;
 using WarehouseWebMVC.Models;
-using WarehouseWebMVC.Models.Domain;
 using WarehouseWebMVC.Models.DTOs.UserDTO;
 using WarehouseWebMVC.Service;
-using WarehouseWebMVC.Services;
-using WarehouseWebMVC.Services.Helper;
+using WarehouseWebMVC.Utils.Helper;
 using WarehouseWebMVC.ViewModels;
+using WarehouseWebMVC.AuthenticationFilter;
 
 namespace WarehouseWebMVC.Controllers;
 
@@ -94,12 +93,6 @@ public class UserController : Controller
             }
             if (ModelState.IsValid)
             {
-                addUserDTO.Avatar ??= "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fdefault_avatar.png?alt=media&token=560b08e7-3ab2-453e-aea5-def178730766";
-                addUserDTO.Role = "FE";
-                addUserDTO.IsLocked = false;
-                addUserDTO.Ward ??= "";
-                addUserDTO.Apartment ??= "";
-
                 if (_userService.AddUser(addUserDTO))
                 {
                     TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
@@ -132,9 +125,9 @@ public class UserController : Controller
                         HttpContext.Session.Set("Id", userIdBytes);
                         HttpContext.Session.SetString("Name", user.Name);
                         HttpContext.Session.SetString("User", user.Email);
+                        HttpContext.Session.SetString("Avatar", user.Avatar);
                         string address = _addressHelper.ExtractCityProvince(user.Address);
                         HttpContext.Session.SetString("Address", address);
-                        HttpContext.Session.SetString("Avatar", user.Avatar);
                     }
                     else
                     {

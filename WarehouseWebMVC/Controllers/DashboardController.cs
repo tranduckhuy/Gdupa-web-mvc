@@ -3,7 +3,7 @@ using System.Diagnostics;
 using WarehouseWebMVC.Models;
 using WarehouseWebMVC.Models.DTOs;
 using WarehouseWebMVC.Services;
-using WarehouseWebMVC.Services.Impl;
+using WarehouseWebMVC.AuthenticationFilter;
 
 namespace WarehouseWebMVC.Controllers;
 

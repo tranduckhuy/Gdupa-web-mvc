@@ -1,4 +1,4 @@
-﻿namespace WarehouseWebMVC.Services.Helper
+﻿namespace WarehouseWebMVC.Utils.Helper
 {
     public interface IAddressHelper
     {

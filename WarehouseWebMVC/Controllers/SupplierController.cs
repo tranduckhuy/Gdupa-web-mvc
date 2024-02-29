@@ -3,12 +3,10 @@ using System.Diagnostics;
 using WarehouseWebMVC.Data;
 using WarehouseWebMVC.Models;
 using WarehouseWebMVC.Models.DTOs.SupplierDTO;
-using WarehouseWebMVC.Models.DTOs.UserDTO;
-using WarehouseWebMVC.Service;
 using WarehouseWebMVC.Services;
-using WarehouseWebMVC.Services.Helper;
-using WarehouseWebMVC.Services.Impl;
+using WarehouseWebMVC.Utils.Helper;
 using WarehouseWebMVC.ViewModels;
+using WarehouseWebMVC.AuthenticationFilter;
 
 namespace WarehouseWebMVC.Controllers;
 
@@ -119,10 +117,6 @@ public class SupplierController : Controller
             }
             if (ModelState.IsValid)
             {
-                addSupplierDTO.Avatar ??= "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fdefault_avatar.png?alt=media&token=560b08e7-3ab2-453e-aea5-def178730766";
-                addSupplierDTO.Ward ??= "";
-                addSupplierDTO.Apartment ??= "";
-
                 if (_supplierService.AddSupplier(addSupplierDTO))
                 {
                     TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;

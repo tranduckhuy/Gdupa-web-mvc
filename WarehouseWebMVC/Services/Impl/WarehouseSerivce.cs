@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Drawing.Printing;
 using OfficeOpenXml;
 using WarehouseWebMVC.Data;
 using WarehouseWebMVC.Models;

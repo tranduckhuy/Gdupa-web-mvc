@@ -2,12 +2,10 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using WarehouseWebMVC.Data;
 using WarehouseWebMVC.Models;
 using WarehouseWebMVC.Models.Domain;
 using WarehouseWebMVC.Models.DTOs;
-using WarehouseWebMVC.Models.DTOs.ProductDTO;
 using WarehouseWebMVC.ViewModels;
 
 namespace WarehouseWebMVC.Services.Impl
