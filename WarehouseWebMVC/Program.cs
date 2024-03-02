@@ -29,7 +29,7 @@ builder.Services.AddScoped<ISupplierService, SupplierService>();
 builder.Services.AddScoped<IWarehouseService, WarehouseSerivce>();
 builder.Services.AddScoped<IDashboardService, DashboardService>();
 builder.Services.AddScoped<IAddressHelper, AddressHelper>();
-builder.Services.AddScoped<IResetPasswordHelper, ResetPasswordHelper>();
+builder.Services.AddScoped<IEmailHelper, EmailHelper>();
 
 // Enable CORS
 builder.Services.AddCors(c =>

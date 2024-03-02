@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Security.Authentication;
 using WarehouseWebMVC.Data;
 using WarehouseWebMVC.Models;
+using WarehouseWebMVC.Models.Domain;
 using WarehouseWebMVC.Models.DTOs.UserDTO;
 using WarehouseWebMVC.Service;
 using WarehouseWebMVC.Services.Impl;
@@ -36,7 +38,9 @@ public class AuthenticationController : Controller
         ViewBag.RememberMePassword = rememberMePassword;
         ViewBag.RememberMeChecked = rememberMeChecked;
 
-        if (HttpContext.Session.GetString("User") == null)
+        var email = HttpContext.Session.GetString("User");
+        var addedUserEmail = HttpContext.Session.GetString("AddTokenUserEmail");
+        if (email == null || email != addedUserEmail)
         {
             return View();
         }
@@ -137,63 +141,64 @@ public class AuthenticationController : Controller
             {
                 case LoginResult.Success:
                     var user = _userService.GetUserByEmail(userDTO.Email);
-                    HttpContext.Session.SetString("User", userDTO.Email);
                     if (user != null)
                     {
-                        byte[] userIdBytes = BitConverter.GetBytes(user.UserId);
-                        HttpContext.Session.Set("Id", userIdBytes);
-                        HttpContext.Session.SetString("Name", user.Name);
-                        HttpContext.Session.SetString("Avatar", user.Avatar);
-                        HttpContext.Session.SetString("Role", user.Role);
-                        string address = _addressHelper.ExtractCityProvince(user.Address);
-                        HttpContext.Session.SetString("Address", address);
+                        SetUserSession(user);
+                        HandleRememberMeCookie(userDTO);
+                        TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
+                        return RedirectToAction("Dashboard", "Dashboard");
                     }
-                    else
-                    {
-                        TempData["Message"] = AppConstant.MESSAGE_FAILED;
-                        return RedirectToAction("Login");
-                    }
-
-                    var rememberMe = Request.Form["remember-me"].Count > 0;
-                    if (rememberMe)
-                    {
-                        var rememberMeCookie = new CookieOptions
-                        {
-                            Expires = DateTime.Now.AddDays(10),
-                            IsEssential = true,
-                            HttpOnly = true,
-                            Secure = true,
-                            SameSite = SameSiteMode.Unspecified
-                        };
-
-                        Response.Cookies.Append("rememberMeEmail", userDTO.Email, rememberMeCookie);
-                        Response.Cookies.Append("rememberMePassword", userDTO.Password, rememberMeCookie);
-                        Response.Cookies.Append("rememberMeChecked", rememberMe.ToString(), rememberMeCookie);
-                    }
-                    else
-                    {
-                        Response.Cookies.Delete("rememberMeEmail");
-                        Response.Cookies.Delete("rememberMePassword");
-                        Response.Cookies.Delete("rememberMeChecked");
-                    }
-
-                    TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
-                    return RedirectToAction("Dashboard", "Dashboard");
-
+                    break;
                 case LoginResult.InvalidCredentials:
                     TempData["Message"] = AppConstant.MESSAGE_FAILED;
-                    return RedirectToAction("Login");
-
+                    break;
                 case LoginResult.AccountLocked:
                     TempData["Message"] = AppConstant.MESSAGE_LOCKED;
-                    return RedirectToAction("Login");
-
+                    break;
                 default:
                     TempData["Message"] = AppConstant.MESSAGE_FAILED;
-                    return RedirectToAction("Login");
+                    break;
             }
         }
         return RedirectToAction("Login");
+    }
+
+    private void SetUserSession(User user)
+    {
+        HttpContext.Session.SetString("User", user.Email);
+        byte[] userIdBytes = BitConverter.GetBytes(user.UserId);
+        HttpContext.Session.Set("Id", userIdBytes);
+        HttpContext.Session.SetString("Name", user.Name);
+        HttpContext.Session.SetString("Avatar", user.Avatar);
+        HttpContext.Session.SetString("Role", user.Role);
+        string address = _addressHelper.ExtractCityProvince(user.Address);
+        HttpContext.Session.SetString("Address", address);
+    }
+
+    private void HandleRememberMeCookie(UserDTO userDTO)
+    {
+        var rememberMe = Request.Form["remember-me"].Count > 0;
+        if (rememberMe)
+        {
+            var rememberMeCookie = new CookieOptions
+            {
+                Expires = DateTime.Now.AddDays(10),
+                IsEssential = true,
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.Unspecified
+            };
+
+            Response.Cookies.Append("rememberMeEmail", userDTO.Email, rememberMeCookie);
+            Response.Cookies.Append("rememberMePassword", userDTO.Password, rememberMeCookie);
+            Response.Cookies.Append("rememberMeChecked", rememberMe.ToString(), rememberMeCookie);
+        }
+        else
+        {
+            Response.Cookies.Delete("rememberMeEmail");
+            Response.Cookies.Delete("rememberMePassword");
+            Response.Cookies.Delete("rememberMeChecked");
+        }
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

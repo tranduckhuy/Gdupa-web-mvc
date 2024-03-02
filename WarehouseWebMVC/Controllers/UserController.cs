@@ -16,7 +16,7 @@ public class UserController : Controller
     private readonly IUserService _userService;
     private readonly IAddressHelper _addressHelper;
 
-    public UserController(ILogger<UserController> logger, 
+    public UserController(ILogger<UserController> logger,
         IUserService userService,
         IAddressHelper addressHelper)
     {
@@ -93,15 +93,25 @@ public class UserController : Controller
             }
             if (ModelState.IsValid)
             {
-                if (_userService.AddUser(addUserDTO))
+                if (_userService.SendAddUserEmail(addUserDTO.Email, HttpContext.Session, HttpContext))
                 {
-                    TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
-                    return RedirectToAction("Users");
+                    if (_userService.AddUser(addUserDTO))
+                    {
+                        TempData["Message"] = AppConstant.MESSAGE_SENT_SUCCESSFUL;
+                        return RedirectToAction("Users");
+                    }
+                    else
+                    {
+                        TempData["Message"] = AppConstant.MESSAGE_FAILED;
+                        return View(addUserDTO);
+                    }
+                }
+                else
+                {
+                    TempData["Message"] = AppConstant.MESSAGE_NULL;
+                    return View(addUserDTO);
                 }
             }
-
-            TempData["Message"] = AppConstant.MESSAGE_FAILED;
-            return View(addUserDTO);
         }
         TempData["Message"] = AppConstant.MESSAGE_NOT_LOGIN;
         return RedirectToAction("Login", "Authentication");
@@ -137,7 +147,8 @@ public class UserController : Controller
                     TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
                     return View(_userService.GetUserById(userInformationDTO.UserId));
                 }
-            } else
+            }
+            else
             {
                 TempData["Message"] = AppConstant.MESSAGE_FAILED;
                 return RedirectToAction("UserInformation", new { userId = _userService.GetUserIdByEmail(currentUserEmail!) });
@@ -161,7 +172,8 @@ public class UserController : Controller
                 {
                     TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
                     return View("UserInformation", user);
-                } else
+                }
+                else
                 {
                     TempData["Message"] = AppConstant.MESSAGE_FAILED;
                     return View("UserInformation", user);
@@ -199,6 +211,18 @@ public class UserController : Controller
         }
         TempData["Message"] = AppConstant.MESSAGE_FAILED;
         return RedirectToAction("Users");
+    }
+
+    [HttpGet]
+    public IActionResult ActiveByEmail(string email, string experyTime)
+    {
+        if (_userService.ActiveByEmail(email, experyTime))
+        {
+            TempData["Message"] = AppConstant.MESSAGE_ACTIVE_SUCCESSFUL;
+            return RedirectToAction("Login", "Authentication");
+        }
+        TempData["Message"] = AppConstant.MESSAGE_FAILED;
+        return RedirectToAction("Login", "Authentication");
     }
 
     [HttpPost]

@@ -18,15 +18,15 @@ public class UserService : IUserService
     private readonly DataContext _dataContext;
     private readonly IMapper _mapper;
     private readonly SendMailUtil _sendMailUtil;
-    private readonly IResetPasswordHelper _resetPasswordHelper;
+    private readonly IEmailHelper _emailHelper;
 
-    public UserService(DataContext dataContext, IMapper mapper, 
-                        SendMailUtil sendMailUtil, IResetPasswordHelper resetPasswordHelper)
+    public UserService(DataContext dataContext, IMapper mapper,
+                        SendMailUtil sendMailUtil, IEmailHelper emailHelper)
     {
         _dataContext = dataContext;
         _mapper = mapper;
         _sendMailUtil = sendMailUtil;
-        _resetPasswordHelper = resetPasswordHelper;
+        _emailHelper = emailHelper;
     }
 
     public LoginResult CheckLogin(UserDTO userDTO)
@@ -124,10 +124,15 @@ public class UserService : IUserService
 
     public bool SendResetPasswordEmail(string userEmail, ISession session, HttpContext httpContext)
     {
-        var user = _dataContext.Users.FirstOrDefault(u => u.Email == userEmail);
-
-        if (user != null)
+        try
         {
+            var user = _dataContext.Users.FirstOrDefault(u => u.Email == userEmail);
+
+            if (user == null)
+            {
+                return false;
+            }
+
             var resetToken = Guid.NewGuid().ToString();
             var resetTokenExpiryTime = DateTime.UtcNow.AddMinutes(2);
 
@@ -140,60 +145,83 @@ public class UserService : IUserService
             {
                 To = userEmail,
                 Subject = "Reset Password",
-                Body = _resetPasswordHelper.RenderBodyResetPassword(resetLink)
+                Body = _emailHelper.RenderBodyResetPassword(resetLink)
             };
+
             _sendMailUtil.SendMail(mailContent).Wait();
 
             return true;
         }
-        return false;
+        catch (Exception)
+        {
+            return false;
+        }
+    }
+
+    public bool SendAddUserEmail(string userEmail, ISession session, HttpContext httpContext)
+    {
+        try
+        {
+            if (string.IsNullOrEmpty(userEmail))
+            {
+                return false;
+            }
+
+            var addTokenExpiryTime = DateTime.UtcNow.AddDays(5);
+
+            session.SetString("AddTokenUserEmail", userEmail);
+
+            var resetLink = $"{httpContext.Request.Scheme}://{httpContext.Request.Host}/User/ActiveByEmail?email={userEmail}&expiryDate={addTokenExpiryTime}";
+            var mailContent = new MailContent
+            {
+                To = userEmail,
+                Subject = "Active account!",
+                Body = _emailHelper.RenderBodyActive(userEmail, resetLink)
+            };
+
+            _sendMailUtil.SendMail(mailContent).Wait();
+
+            return true;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
     }
 
     public bool ResetPassword(string newPassword, ISession session)
     {
-        var sessionToken = session.GetString("ResetToken");
-        var sessionExpiryTime = session.GetString("ResetTokenExpiryTime");
-
-        if (string.IsNullOrEmpty(sessionToken) || string.IsNullOrEmpty(sessionExpiryTime) || DateTime.Parse(sessionExpiryTime) <= DateTime.UtcNow)
-        {
-            return false;
-        }
-
-        var userEmailFromSession = session.GetString("ResetTokenUserEmail");
-
-        if (string.IsNullOrEmpty(userEmailFromSession))
-        {
-            Console.WriteLine("User email from session is null or empty.");
-            return false;
-        }
-
         try
         {
+            var sessionToken = session.GetString("ResetToken");
+            var sessionExpiryTime = session.GetString("ResetTokenExpiryTime");
+            var userEmailFromSession = session.GetString("ResetTokenUserEmail");
+
+            if (string.IsNullOrEmpty(sessionToken) || string.IsNullOrEmpty(sessionExpiryTime) || DateTime.Parse(sessionExpiryTime) <= DateTime.UtcNow || string.IsNullOrEmpty(userEmailFromSession))
+            {
+                return false;
+            }
+
             var user = _dataContext.Users.FirstOrDefault(u => u.Email == userEmailFromSession);
-
-            if (user != null)
+            if (user == null)
             {
-                newPassword = BCrypt.Net.BCrypt.HashPassword(newPassword);
-                user.Password = newPassword;
-
-                session.Remove("ResetToken");
-                session.Remove("ResetTokenExpiryTime");
-                session.Remove("ResetTokenUserEmail");
-
-                _dataContext.SaveChanges();
-                return true;
+                return false;
             }
-            else
-            {
-                Console.WriteLine($"User with email '{userEmailFromSession}' not found in the database.");
-            }
+
+            newPassword = BCrypt.Net.BCrypt.HashPassword(newPassword);
+            user.Password = newPassword;
+
+            session.Remove("ResetToken");
+            session.Remove("ResetTokenExpiryTime");
+            session.Remove("ResetTokenUserEmail");
+
+            _dataContext.SaveChanges();
+            return true;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            Console.WriteLine($"Error saving changes to the database: {ex.Message}");
+            return false;
         }
-
-        return false;
     }
 
     public UserViewModel GetAll(int page)
@@ -302,6 +330,40 @@ public class UserService : IUserService
         }
     }
 
+    public bool ActiveByEmail(string email, string expiryTime)
+    {
+        try
+        {
+            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(expiryTime))
+            {
+                return false;
+            }
+
+            var user = _dataContext.Users.FirstOrDefault(u => u.Email == email);
+            if (user == null)
+            {
+                return false;
+            }
+
+            var expiryDateTime = DateTime.Parse(expiryTime);
+            if (expiryDateTime <= DateTime.UtcNow)
+            {
+                _dataContext.Users.Remove(user);
+                _dataContext.SaveChanges();
+                return false;
+            }
+
+            user.IsLocked = false;
+            _dataContext.SaveChanges();
+
+            return true;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+    }
+
     public bool IsEmailAlreadyExists(string email)
     {
         return _dataContext.Users.Any(u => u.Email == email);
@@ -323,7 +385,7 @@ public class UserService : IUserService
 
             addUserDTO.Avatar ??= "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fdefault_avatar.png?alt=media&token=560b08e7-3ab2-453e-aea5-def178730766";
             addUserDTO.Role = "Staff";
-            addUserDTO.IsLocked = false;
+            addUserDTO.IsLocked = true;
             addUserDTO.Password = BCrypt.Net.BCrypt.HashPassword(addUserDTO.Password);
             addUserDTO.Address =
                 addUserDTO.Street + ", "

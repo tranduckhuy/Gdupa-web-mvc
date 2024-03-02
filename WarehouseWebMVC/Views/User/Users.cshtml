@@ -25,7 +25,7 @@
                 setTimeout(function () {
                     toast({
                         title: "Success",
-                        message: "Success ! Action complete.",
+                        message: "Success! Action complete.",
                         type: "success",
                         duration: 3000,
                     });
@@ -57,6 +57,21 @@
                         title: "Not found!",
                         message: "No results found for the given search criteria.",
                         type: "warning",
+                        duration: 3000,
+                    });
+                }, 600);
+            });
+        </script>
+    }
+    else if ("SentSuccess".Equals(message))
+    {
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                setTimeout(function () {
+                    toast({
+                        title: "Success",
+                        message: "Success! Please tell that user check email.",
+                        type: "success",
                         duration: 3000,
                     });
                 }, 600);
