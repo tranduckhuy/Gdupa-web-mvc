@@ -2,6 +2,7 @@
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
+using System.Threading;
 using WarehouseWebMVC.Data;
 using WarehouseWebMVC.Models;
 using WarehouseWebMVC.Models.Domain;
@@ -32,7 +33,6 @@ public class UserService : IUserService
     public LoginResult CheckLogin(UserDTO userDTO)
     {
         var user = _dataContext.Users.SingleOrDefault(u => u.Email == userDTO.Email);
-
         if (user != null)
         {
             if (user.IsLocked)
@@ -44,7 +44,6 @@ public class UserService : IUserService
 
             return isValidPassword ? LoginResult.Success : LoginResult.InvalidCredentials;
         }
-
         return LoginResult.InvalidCredentials;
     }
 
@@ -148,7 +147,12 @@ public class UserService : IUserService
                 Body = _emailHelper.RenderBodyResetPassword(resetLink)
             };
 
-            _sendMailUtil.SendMail(mailContent).Wait();
+            Thread emailThread = new(() =>
+            {
+                _sendMailUtil.SendMail(mailContent).Wait();
+            });
+
+            emailThread.Start();
 
             return true;
         }
@@ -171,7 +175,7 @@ public class UserService : IUserService
 
             session.SetString("AddTokenUserEmail", userEmail);
 
-            var resetLink = $"{httpContext.Request.Scheme}://{httpContext.Request.Host}/User/ActiveByEmail?email={userEmail}&expiryDate={addTokenExpiryTime}";
+            var resetLink = $"{httpContext.Request.Scheme}://{httpContext.Request.Host}/User/ActiveByEmail?email={userEmail}&expiryTime={addTokenExpiryTime}";
             var mailContent = new MailContent
             {
                 To = userEmail,
@@ -179,7 +183,12 @@ public class UserService : IUserService
                 Body = _emailHelper.RenderBodyActive(userEmail, resetLink)
             };
 
-            _sendMailUtil.SendMail(mailContent).Wait();
+            Thread emailThread = new(() =>
+            {
+                _sendMailUtil.SendMail(mailContent).Wait();
+            });
+
+            emailThread.Start();
 
             return true;
         }

@@ -214,9 +214,9 @@ public class UserController : Controller
     }
 
     [HttpGet]
-    public IActionResult ActiveByEmail(string email, string experyTime)
+    public IActionResult ActiveByEmail(string email, string expiryTime)
     {
-        if (_userService.ActiveByEmail(email, experyTime))
+        if (_userService.ActiveByEmail(email, expiryTime))
         {
             TempData["Message"] = AppConstant.MESSAGE_ACTIVE_SUCCESSFUL;
             return RedirectToAction("Login", "Authentication");

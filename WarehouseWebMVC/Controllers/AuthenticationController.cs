@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using System.Security.Authentication;
 using WarehouseWebMVC.Data;
 using WarehouseWebMVC.Models;
 using WarehouseWebMVC.Models.Domain;
@@ -133,7 +132,16 @@ public class AuthenticationController : Controller
     [HttpPost]
     public IActionResult Login(UserDTO userDTO)
     {
-        if (HttpContext.Session.GetString("User") == null)
+        var userSession = HttpContext.Session.GetString("User");
+        var emailSession = HttpContext.Session.GetString("AddTokenUserEmail");
+
+        if (!string.IsNullOrEmpty(userSession) && userSession == userDTO.Email)
+        {
+            TempData["Message"] = AppConstant.MESSAGE_LOGGED_IN;
+            return RedirectToAction("Login");
+        }
+
+        if (userSession == null || userSession != null && userSession != userDTO.Email || emailSession != null)
         {
             var loginResult = _userService.CheckLogin(userDTO);
 

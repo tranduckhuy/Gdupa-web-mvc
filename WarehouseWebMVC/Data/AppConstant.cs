@@ -8,6 +8,7 @@ public class AppConstant
     public const string MESSAGE_SENT_SUCCESSFUL = "SentSuccess";
     public const string MESSAGE_ACTIVE_SUCCESSFUL = "ActiveSuccess";
     public const string MESSAGE_NOT_LOGIN = "NotLoginYet";
+    public const string MESSAGE_LOGGED_IN = "LoggedIn";
     public const string MESSAGE_WRONG_INFO = "WrongInfo";
     public const string MESSAGE_NULL = "Null";
     public const string NOT_FOUND = "NotFound";
