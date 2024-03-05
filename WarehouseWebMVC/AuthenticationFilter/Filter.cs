@@ -8,7 +8,8 @@ public class Filter : ActionFilterAttribute
     public override void OnActionExecuting(ActionExecutingContext context)
     {
         var controller = context.RouteData.Values["controller"]?.ToString();
-        if (controller == "User")
+        var action = context.RouteData.Values["action"]?.ToString();
+        if (controller == "User" && action != "UserInformation")
         {
             var role = context.HttpContext.Session.GetString("Role");
             if (role == "Staff")
