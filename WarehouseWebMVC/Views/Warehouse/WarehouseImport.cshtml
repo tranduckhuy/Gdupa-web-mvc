@@ -7,7 +7,59 @@
     byte[]? userIdBytes = ViewContext.HttpContext.Session.Get("Id");
     long userId = userIdBytes != null ? BitConverter.ToInt64(userIdBytes, 0) : 0;
 }
+<style>
+    span {
+        transition: none;
+    }
 
+    .select2-container .select2-selection--single {
+        width: 100%;
+        padding: 5px 50px 5px 20px;
+        background: #FAFAFA;
+        color: #5A5A5A;
+        border: 1px solid #E4F2FF;
+        border-radius: 4px;
+        padding-left: 30px;
+        height: 55px;
+        padding-right: 30px;
+        background-color: #fff;
+    }
+
+    .select2-selection__rendered {
+        color: #5A5A5A;
+        line-height: 45px !important;
+    }
+
+    .select2-selection__clear {
+        height: 45px !important;
+        margin-right: 0 !important;
+    }
+
+    .select2-selection__arrow {
+        height: 52px !important;
+    }
+
+    .select2-selection__placeholder {
+        color: #5A5A5A !important;
+    }
+
+    .select2-dropdown {
+        border: 1px solid #E4F2FF !important;
+        box-shadow: 1px 1px 2px #BABABA;
+    }
+
+    .select2-container--default .select2-search--dropdown .select2-search__field {
+        border: 1px solid #E4F2FF !important;
+    }
+
+    .select2-search__field {
+        height: 36px !important;
+    }
+
+        .select2-search__field:focus {
+            min-height: 36px !important;
+        }
+</style>
 <div id="toast"></div>
 @if (!string.IsNullOrEmpty(message))
 {
@@ -109,6 +161,7 @@
                                                     <div class="form-group">
                                                         <label class="sherah-wc__form-label">Supplier*</label>
                                                         <select id="supplierId" class="form-group__input" aria-label="Default select example">
+                                                            <option></option>
                                                             @foreach (var supplier in Model.Suppliers)
                                                             {
                                                                 if (supplier.IsLocked == false)
@@ -237,6 +290,8 @@
     </div>
 </section>
 <script src="/js/lib/tinymce/js/tinymce/tinymce.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="/js/tinymce-config.js"></script>
 <script src="/js/warehouse-import-config.js"></script>
 <script src="/js/Validator.js"></script>
@@ -247,6 +302,14 @@
 </script>
 <script>
     Validator('#import-form');
+</script>
+<script>
+    $('#supplierId').select2({
+        placeholder: "Choose a Supplier",
+        allowClear: true,
+        closeOnSelect: true,
+        selectOnClose: false
+    });
 </script>
 
 

@@ -181,11 +181,9 @@ function submitData() {
         ReasonDetail: reasonDetail,
         Deliverer: deliverer
     };
-    console.log(jsonData);
 
     // Convert jsonData to JSON string and send it to the controller
     var jsonString = JSON.stringify(jsonData);
-    console.log(jsonString);
 
     // Send jsonString to the controller using your preferred method (AJAX)
     $.ajax({
