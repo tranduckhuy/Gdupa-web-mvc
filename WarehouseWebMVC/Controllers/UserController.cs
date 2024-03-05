@@ -2,12 +2,11 @@
 using System.Diagnostics;
 using WarehouseWebMVC.Data;
 using WarehouseWebMVC.Models;
-using WarehouseWebMVC.Models.Domain;
 using WarehouseWebMVC.Models.DTOs.UserDTO;
 using WarehouseWebMVC.Service;
-using WarehouseWebMVC.Services;
-using WarehouseWebMVC.Services.Helper;
+using WarehouseWebMVC.Utils.Helper;
 using WarehouseWebMVC.ViewModels;
+using WarehouseWebMVC.AuthenticationFilter;
 
 namespace WarehouseWebMVC.Controllers;
 
@@ -17,7 +16,7 @@ public class UserController : Controller
     private readonly IUserService _userService;
     private readonly IAddressHelper _addressHelper;
 
-    public UserController(ILogger<UserController> logger, 
+    public UserController(ILogger<UserController> logger,
         IUserService userService,
         IAddressHelper addressHelper)
     {
@@ -59,7 +58,7 @@ public class UserController : Controller
             else
             {
                 TempData["Message"] = AppConstant.MESSAGE_FAILED;
-                return RedirectToAction("UserInformation", new { userId = _userService.GetUserIdByEmail(currentUserEmail) });
+                return RedirectToAction("UserInformation", new { userId = _userService.GetUserIdByEmail(currentUserEmail!) });
             }
         }
         TempData["Message"] = AppConstant.MESSAGE_NOT_LOGIN;
@@ -67,6 +66,7 @@ public class UserController : Controller
     }
 
     [Filter]
+    [HttpGet]
     public IActionResult AddUser()
     {
         if (HttpContext.Session.GetString("User") != null)
@@ -91,24 +91,27 @@ public class UserController : Controller
                 TempData["Message"] = AppConstant.MESSAGE_WRONG_INFO;
                 return View(addUserDTO);
             }
-
             if (ModelState.IsValid)
             {
-                addUserDTO.Avatar ??= "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fdefault_avatar.png?alt=media&token=560b08e7-3ab2-453e-aea5-def178730766";
-                addUserDTO.Role = "FE";
-                addUserDTO.IsLocked = false;
-                addUserDTO.Ward ??= "";
-                addUserDTO.Apartment ??= "";
-
-                if (_userService.AddUser(addUserDTO))
+                if (_userService.SendAddUserEmail(addUserDTO.Email, HttpContext.Session, HttpContext))
                 {
-                    TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
-                    return RedirectToAction("Users");
+                    if (_userService.AddUser(addUserDTO))
+                    {
+                        TempData["Message"] = AppConstant.MESSAGE_SENT_SUCCESSFUL;
+                        return RedirectToAction("Users");
+                    }
+                    else
+                    {
+                        TempData["Message"] = AppConstant.MESSAGE_FAILED;
+                        return View(addUserDTO);
+                    }
+                }
+                else
+                {
+                    TempData["Message"] = AppConstant.MESSAGE_NULL;
+                    return View(addUserDTO);
                 }
             }
-
-            TempData["Message"] = AppConstant.MESSAGE_FAILED;
-            return View(addUserDTO);
         }
         TempData["Message"] = AppConstant.MESSAGE_NOT_LOGIN;
         return RedirectToAction("Login", "Authentication");
@@ -132,9 +135,9 @@ public class UserController : Controller
                         HttpContext.Session.Set("Id", userIdBytes);
                         HttpContext.Session.SetString("Name", user.Name);
                         HttpContext.Session.SetString("User", user.Email);
+                        HttpContext.Session.SetString("Avatar", user.Avatar);
                         string address = _addressHelper.ExtractCityProvince(user.Address);
                         HttpContext.Session.SetString("Address", address);
-                        HttpContext.Session.SetString("Avatar", user.Avatar);
                     }
                     else
                     {
@@ -144,7 +147,8 @@ public class UserController : Controller
                     TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
                     return View(_userService.GetUserById(userInformationDTO.UserId));
                 }
-            } else
+            }
+            else
             {
                 TempData["Message"] = AppConstant.MESSAGE_FAILED;
                 return RedirectToAction("UserInformation", new { userId = _userService.GetUserIdByEmail(currentUserEmail!) });
@@ -168,7 +172,8 @@ public class UserController : Controller
                 {
                     TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
                     return View("UserInformation", user);
-                } else
+                }
+                else
                 {
                     TempData["Message"] = AppConstant.MESSAGE_FAILED;
                     return View("UserInformation", user);
@@ -177,7 +182,7 @@ public class UserController : Controller
             else
             {
                 TempData["Message"] = AppConstant.MESSAGE_FAILED;
-                return RedirectToAction("UserInformation", new { userId = _userService.GetUserIdByEmail(currentUserEmail) });
+                return RedirectToAction("UserInformation", new { userId = _userService.GetUserIdByEmail(currentUserEmail!) });
             }
         }
         TempData["Message"] = AppConstant.MESSAGE_FAILED;
@@ -208,6 +213,18 @@ public class UserController : Controller
         return RedirectToAction("Users");
     }
 
+    [HttpGet]
+    public IActionResult ActiveByEmail(string email, string expiryTime)
+    {
+        if (_userService.ActiveByEmail(email, expiryTime))
+        {
+            TempData["Message"] = AppConstant.MESSAGE_ACTIVE_SUCCESSFUL;
+            return RedirectToAction("Login", "Authentication");
+        }
+        TempData["Message"] = AppConstant.MESSAGE_FAILED;
+        return RedirectToAction("Login", "Authentication");
+    }
+
     [HttpPost]
     public IActionResult SearchUser(string searchType, string searchValue)
     {
@@ -217,6 +234,7 @@ public class UserController : Controller
             if (searchUsers != null)
             {
                 TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
+                ViewBag.SearchType = searchType;
                 return View("Users", searchUsers);
             }
         }

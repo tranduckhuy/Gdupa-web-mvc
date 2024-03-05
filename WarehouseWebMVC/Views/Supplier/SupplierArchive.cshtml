@@ -1,0 +1,272 @@
+@model WarehouseWebMVC.ViewModels.SupplierViewModel;
+@{
+    ViewData["Title"] = "Suppliers";
+    var message = TempData["Message"] as string;
+    byte[]? userIdBytes = ViewContext.HttpContext.Session.Get("Id");
+    long userId = userIdBytes != null ? BitConverter.ToInt64(userIdBytes, 0) : 0;
+}
+@{
+    var searchType = ViewBag.SearchType as string ?? "";
+}
+<style>
+    .dataTables_empty {
+        min-width: 1110px;
+        display: flex;
+        justify-content: center;
+    }
+</style>
+<div id="toast"></div>
+@if (!string.IsNullOrEmpty(message))
+{
+    if ("Success".Equals(message))
+    {
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                setTimeout(function () {
+                    toast({
+                        title: "Success",
+                        message: "Success ! Action complete.",
+                        type: "success",
+                        duration: 3000,
+                    });
+                }, 600);
+            });
+        </script>
+    }
+    else if ("Failed".Equals(message))
+    {
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                setTimeout(function () {
+                    toast({
+                        title: "Failed",
+                        message: "Oops! Action failed. Please try again.",
+                        type: "danger",
+                        duration: 3000,
+                    });
+                }, 600);
+            });
+        </script>
+    }
+    else if ("NotFound".Equals(message))
+    {
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                setTimeout(function () {
+                    toast({
+                        title: "Not found!",
+                        message: "No results found for the given search criteria.",
+                        type: "warning",
+                        duration: 3000,
+                    });
+                }, 600);
+            });
+        </script>
+    }
+}
+<!-- sherah Dashboard -->
+<section class="sherah-adashboard sherah-show">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="sherah-body">
+                    <!-- Dashboard Inner -->
+                    <div class="sherah-dsinner">
+                        <div class="row mg-top-20">
+                            <div class="col-12 sherah-flex-between">
+                                <div class="sherah-breadcrumb">
+                                    <h2 class="sherah-breadcrumb__title">Supplier Archive List</h2>
+                                    <ul class="sherah-breadcrumb__list">
+                                        <li>
+                                            <a asp-area="" asp-controller="Dashboard" asp-action="Dashboard">Home</a>
+                                        </li>
+                                        <li class="active"><a href="#!">Supplier Archive List</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sherah-table sherah-page-inner sherah-border sherah-default-bg mg-top-10"
+                             style="padding-top:0;">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-8"></div>
+                                <div class="col-sm-12 col-md-4">
+                                    <form method="post" asp-action="SearchSupplierArchive" asp-controller="Supplier">
+                                        <div id="sherah-table__vendor_filter" class="dataTables_filter">
+                                            <label for="search-input" style="position: relative;">
+                                                <button class="sherah-data-table-label"
+                                                        style="font-size:1rem;position: relative; top:2.7rem; left:18.5rem; right: auto; z-index: 4; border:none;background-color: #F3F4F7;">
+                                                    Search
+                                                </button>
+                                            </label>
+                                            <div class="input-group display-flex" style="position: relative;">
+                                                <select class="col-2" name="searchType" id="searchType"
+                                                        style="height:40px; width: 90px; font-size:0.75rem;color:#666;">
+                                                    <option value="" selected disabled>Search Type</option>
+                                                    <option value="Name" id="name_option">Name</option>
+                                                    <option value="Email" id="email_option">Email</option>
+                                                </select>
+                                                &nbsp;
+                                                <input style="flex-shrink:0;width:auto;z-index:2;" type="search"
+                                                       name="searchValue" class="col-2 form-control form-control-sm"
+                                                       placeholder="Search" aria-controls="sherah-table__vendor">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <table id="sherah-table__vendor" class="sherah-table__main sherah-table__main-v3"
+                                   style="border: 1px solid #e2e7f1;">
+                                <!-- sherah Table Head -->
+                                <thead class="sherah-table__head" style="display:block;">
+                                    <tr>
+                                        <th class="sherah-table__column-1 sherah-table__h1"
+                                            style="min-width:300px;font-size: 16px;padding-top:12px;padding-bottom:12px;">
+                                            Name
+                                        </th>
+                                        <th class="sherah-table__column-2 sherah-table__h2"
+                                            style="min-width:190px;font-size:16px;padding-top:12px;padding-bottom:12px;">
+                                            Email
+                                        </th>
+                                        <th class="sherah-table__column-3 sherah-table__h3"
+                                            style="max-width:90px;font-size:16px;padding:12px 40px 12px 12px;">
+                                            Phone
+                                        </th>
+                                        <th class="sherah-table__column-4 sherah-table__h4"
+                                            style="min-width:100px;font-size:16px;padding-left:0;padding-top:12px;padding-bottom:12px;">
+                                            Address
+                                        </th>
+                                        <th class="sherah-table__column-5 sherah-table__h5"
+                                            style="min-width:120px;font-size:16px;text-align:center;padding-top:12px;padding-bottom:12px;">
+                                            Fax
+                                        </th>
+                                        <th class="sherah-table__column-6 sherah-table__h6"
+                                            style="min-width:80px;font-size:16px;text-align:center;padding-top:12px;padding-bottom:12px;">
+                                            Action
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="sherah-table__body" style="display:block;max-height:300px;overflow-y:auto;scrollbar-width:thin;">
+                                    @foreach (var supplier in Model.Suppliers)
+                                    {
+                                        @if (@supplier.IsLocked == true)
+                                        {
+                                            <tr>
+                                                <td class="sherah-table__column-1 sherah-table__data-1"
+                                                    style="min-width:300px;padding:12px;text-align:left;">
+                                                    <div class="sherah-table__product">
+                                                        <div class="sherah-language-form__input">
+                                                            <input class="sherah-language-form__check" id="checkbox"
+                                                                   name="checkbox" type="checkbox">
+                                                        </div>
+                                                        <div class="sherah-table__vendor-img">
+                                                            <img src="@supplier.Avatar" alt="User's avatar"
+                                                                 style="width:40px;height:40px;">
+                                                        </div>
+                                                        <h5 class="sherah-table__vendor--title"><a href="/Supplier/SupplierInformation?supplierId=@supplier.SupplierId">@supplier.Name</a></h5>
+                                                    </div>
+                                                </td>
+                                                <td class="sherah-table__column-2 sherah-table__data-2"
+                                                    style="min-width:210px;padding:12px;text-align:left;">
+                                                    <div class="sherah-table__product-content">
+                                                        <p class="sherah-table__product-desc">@supplier.Email</p>
+                                                    </div>
+                                                </td>
+                                                <td class="sherah-table__column-3 sherah-table__data-3"
+                                                    style="max-width:55px;padding:12px 8px 12px 12px;text-align:left;">
+                                                    <div class="sherah-table__product-content">
+                                                        <p class="sherah-table__product-desc">@supplier.Phone</p>
+                                                    </div>
+                                                </td>
+                                                <td class="sherah-table__column-4 sherah-table__data-4"
+                                                    style="min-width:130px;padding:12px 12px 12px 0;text-align:left;">
+                                                    <div class="sherah-table__product-content">
+                                                        <p class="sherah-table__product-desc">@supplier.Address</p>
+                                                    </div>
+                                                </td>
+                                                <td class="sherah-table__column-5 sherah-table__data-5"
+                                                    style="min-width:120px;padding:12px 0;text-align:center;">
+                                                    <div class="sherah-table__status sherah-color1__bg--opactity">
+                                                        <p class="sherah-table__product-desc sherah-color1">@supplier.Fax</p>
+                                                    </div>
+                                                </td>
+                                                <td class="sherah-table__column-6 sherah-table__data-6"
+                                                    style="width: 3%;min-width:120px;padding:12px 12px 12px 0;margin-left:10px;">
+                                                    <div class="sherah-table__status__group" style="justify-content:center;">
+                                                        <a href="#" onclick="handleActiveSupplier(@supplier.SupplierId)"
+                                                           class="sherah-table__action sherah-color3 sherah-color3__bg--opactity">
+                                                            <i class="material-icons">unarchive</i>
+                                                        </a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                            <div class="row" style="margin-top:16px;">
+                                @if (Model.Pageable != null)
+                                {
+                                    var lockedSuppliers = Model.Suppliers.Where(s => s.IsLocked).ToList();
+                                    if (lockedSuppliers.Any())
+                                    {
+                                        <div class="col-sm-12 col-md-5">
+                                            <div class="dataTables_info" id="sherah-table__vendor_info" role="status"
+                                                 aria-live="polite" style="font-weight:500">
+                                                Total @lockedSuppliers.Count suppliers
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 col-md-7">
+                                            <div class="sherah-pagination" style="margin-bottom: 0">
+                                                <ul class="sherah-pagination__list">
+                                                    @if (Model.Pageable.CurrentPage > 1)
+                                                    {
+                                                        <li class="sherah-pagination__button">
+                                                            <a href="/Supplier/SupplierArchive?page=@(Model.Pageable.CurrentPage > 1 ? Model.Pageable.CurrentPage - 1 : 1)">
+                                                                <i class="fas fa-angle-left"></i>
+                                                            </a>
+                                                        </li>
+                                                    }
+                                                    @for (var i = Model.Pageable.StartPage; i <= Model.Pageable.EndPage; i++)
+                                                    {
+                                                        <li class="@(Model.Pageable.CurrentPage == i ? "active" : "")">
+                                                            <a href="/Supplier/SupplierArchive?page=@i">@i</a>
+                                                        </li>
+                                                    }
+                                                    @if (Model.Pageable.CurrentPage < Model.Pageable.TotalPages)
+                                                    {
+                                                        <li class="sherah-pagination__button">
+                                                            <a href="/Supplier/SupplierArchive?page=@(Model.Pageable.CurrentPage < Model.Pageable.TotalPages ? Model.Pageable.CurrentPage + 1 : Model.Pageable.TotalPages)">
+                                                                <i class="fas fa-angle-right"></i>
+                                                            </a>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Dashboard Inner -->
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</section>
+<!-- End sherah Dashboard -->
+<script>
+    var searchType = "@searchType";
+    if (searchType) {
+        switch (searchType) {
+            case "Name":
+                document.getElementById("name_option").setAttribute("selected", "selected");
+                break;
+            case "Email":
+                document.getElementById("email_option").setAttribute("selected", "selected");
+                break;
+        }
+    }
+</script>

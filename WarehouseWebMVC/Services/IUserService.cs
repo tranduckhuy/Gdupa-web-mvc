@@ -7,13 +7,15 @@ namespace WarehouseWebMVC.Service;
 
 public interface IUserService
 {
-    public LoginResult CheckLogin(UserDTO userDTO);
+    LoginResult CheckLogin(UserDTO userDTO);
 
     User GetUserByEmail(string email);
 
     UserInformationDTO GetUserById(long userId);
 
     bool SendResetPasswordEmail(string userEmail, ISession session, HttpContext httpContext);
+
+    bool SendAddUserEmail(string userEmail, ISession session, HttpContext httpContext);
 
     bool ResetPassword(string newPassword, ISession session);
 
@@ -24,6 +26,8 @@ public interface IUserService
     bool Deactive(long id, long inforId);
 
     bool Active(long id, long inforId);
+
+    bool ActiveByEmail(string email, string expiryTime);
 
     UserViewModel GetAll(int page);
 
@@ -36,6 +40,5 @@ public interface IUserService
     long GetUserIdByEmail(string userEmail);
 
     bool IsEmailAlreadyExists(string email);
-
 
 }

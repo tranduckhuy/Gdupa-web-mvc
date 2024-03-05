@@ -15,6 +15,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@ViewData["Title"] - Warehouse Management</title>
 
+    <link href="/assets/images/favicon.png" rel="icon">
+
     <!-- Font Icon -->
     <link rel="stylesheet" href="/assets/fonts/material-icon/css/material-design-iconic-font.min.css">
 
@@ -86,6 +88,36 @@
                         toast({
                             title: "Failed",
                             message: "Your account is locked. Please contact the administrator.",
+                            type: "danger",
+                            duration: 3000,
+                        });
+                    }, 600);
+                });
+            </script>
+        }
+        else if ("ActiveSuccess".Equals(message))
+        {
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    setTimeout(function () {
+                        toast({
+                            title: "Success",
+                            message: "Active successfully.",
+                            type: "success",
+                            duration: 3000,
+                        });
+                    }, 600);
+                });
+            </script>
+        }
+        else if ("LoggedIn".Equals(message))
+        {
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    setTimeout(function () {
+                        toast({
+                            title: "Failed",
+                            message: "Your account have been logged in.",
                             type: "danger",
                             duration: 3000,
                         });

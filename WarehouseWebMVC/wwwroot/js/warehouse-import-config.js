@@ -51,7 +51,7 @@
         `;
 
         main.appendChild(tableRow);
-        
+
         updateOverallTotal();
 
         var button = document.getElementById('button-plus' + pId);
@@ -101,9 +101,9 @@ function changeInput(pId) {
 
     // Ensure quantity is not negative
     var quantity = parseInt(quantityInput.value);
-    if (quantity < 0 || isNaN(quantity)) {
-        quantity = 0;
-        quantityInput.value = '0';  // Set the input value to '0'
+    if (quantity < 1 || isNaN(quantity)) {
+        quantity = 1;
+        quantityInput.value = quantity;  // Set the input value to '0'
     }
 
     // Ensure price is not negative
@@ -201,11 +201,11 @@ function submitData() {
                     icon: 'success',
                     confirmButtonColor: '#3085d6',
                     confirmButtonText: 'OK'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = '/Warehouse/WarehouseProduct';
+                    }
                 });
-    
-                setTimeout(function () {
-                    window.location.href = '/Warehouse/WarehouseProduct';
-                }, 1000);
             } else {
                 if (response.loggedIn) {
                     Swal.fire({
@@ -218,16 +218,16 @@ function submitData() {
                 }
                 if (!response.loggedIn) {
                     Swal.fire({
-                        title: 'Not',
+                        title: 'Not Login',
                         text: 'Your session has expired. Please login again to continue.',
                         icon: 'error',
                         confirmButtonColor: '#3085d6',
                         confirmButtonText: 'OK'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = '/Authentication/Login';
+                        }
                     });
-                    setTimeout(function () {
-                        window.location.href = '/Authentication/Login';
-                    }, 2000);
-                    
                 }
             }
         },

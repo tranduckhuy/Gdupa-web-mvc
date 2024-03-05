@@ -28,7 +28,7 @@ public class User
     public bool IsLocked {  get; set; } = false;
     [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
     public DateTime CreatedAt { get; set; }
-    public ICollection<Receipt> Receipts { get; } = new List<Receipt>();
+    public ICollection<ImportNote> ImportNotes { get; } = new List<ImportNote>();
     public ICollection<ExpenseReport> SentExpenseReports { get; set; } = new List<ExpenseReport>();
     public ICollection<ExpenseReport> ReceivedExpenseReports { get; set; } = new List<ExpenseReport>();
 }

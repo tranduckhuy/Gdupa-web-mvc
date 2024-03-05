@@ -1,0 +1,245 @@
+﻿@model WarehouseWebMVC.Models.DTOs.SupplierDTO.SupplierDTO
+@{
+    ViewData["Title"] = "Supplier";
+    var message = TempData["Message"] as string;
+}
+<div id="toast"></div>
+@if (!string.IsNullOrEmpty(message))
+{
+    if ("Failed".Equals(message))
+    {
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                setTimeout(function () {
+                    toast({
+                        title: "Failed",
+                        message: "Oops! Action failed. Please try again.",
+                        type: "danger",
+                        duration: 3000,
+                    });
+                }, 600);
+            });
+        </script>
+    }
+    else if ("WrongInfo".Equals(message))
+    {
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                setTimeout(function () {
+                    toast({
+                        title: "Info",
+                        message: "Oops! Email existing. Please try another email.",
+                        type: "info",
+                        duration: 3000,
+                    });
+                }, 600);
+            });
+        </script>
+    }
+}
+
+<!-- sherah Dashboard -->
+<section class="sherah-adashboard sherah-show">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="sherah-body">
+                    <!-- Dashboard Inner -->
+                    <div class="sherah-dsinner">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="sherah-breadcrumb mg-top-20">
+                                    <h2 class="sherah-breadcrumb__title">Add Supplier</h2>
+                                    <ul class="sherah-breadcrumb__list">
+                                        <li><a href="/Dashboard/Dashboard">Home</a></li>
+                                        <li><a href="/Supplier/SupplierList">Supplier List</a></li>
+                                        <li class="active"><a href="#!">Add Supplier</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sherah-page-inner sherah-border sherah-basic-page sherah-default-bg mg-top-10 p-0">
+                            <form id="add-supplier-form" class="sherah-wc__form-main" method="post" asp-action="AddSupplier" asp-controller="Supplier">
+                                <div class="row">
+                                    <div class="col-lg-12 col-12">
+                                        <!-- User Info -->
+                                        <div class="product-form-box sherah-border mg-top-30">
+                                            <h4 class="form-title m-0">Basic Information</h4>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <label class="sherah-wc__form-label">Full-Name</label>
+                                                        <div class="form-group__input">
+                                                            <input asp-for="Name" name="Name" class="sherah-wc__form-input" rules="required"
+                                                                   placeholder="Type here" type="text" autofocus>
+                                                        </div>
+                                                        <span class="form-message"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-12">
+                                                    <div class="form-group">
+                                                        <label class="sherah-wc__form-label">Phone</label>
+                                                        <div class="form-group__input">
+                                                            <input asp-for="Phone" name="Phone" class="sherah-wc__form-input" rules="required|max:10|phone"
+                                                                   placeholder="Type here" type="text">
+                                                        </div>
+                                                        <span class="form-message"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-12">
+                                                    <div class="form-group">
+                                                        <label class="sherah-wc__form-label">Fax</label>
+                                                        <div class="form-group__input">
+                                                            <input asp-for="Fax" name="FAX" class="sherah-wc__form-input" rules="required|min:8|max:8"
+                                                                   placeholder="Type here" type="text">
+                                                        </div>
+                                                        <span class="form-message"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12">
+                                                    <div class="form-group">
+                                                        <label class="sherah-wc__form-label">Email</label>
+                                                        <div class="form-group__input">
+                                                            <input asp-for="Email" name="Email" class="sherah-wc__form-input" rules="required|email"
+                                                                   placeholder="Type here" type="text">
+                                                        </div>
+                                                        <span class="form-message"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-12">
+                                                    <div class="form-group">
+                                                        <label class="sherah-wc__form-label">Street</label>
+                                                        <div class="form-group__input">
+                                                            <input asp-for="Street" name="Street" class="sherah-wc__form-input" rules="required"
+                                                                   placeholder="Type here" type="text">
+                                                        </div>
+                                                        <span class="form-message"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-12">
+                                                    <div class="form-group">
+                                                        <label class="sherah-wc__form-label">Apartment</label>
+                                                        <div class="form-group__input">
+                                                            <input asp-for="Apartment" name="Apartment" class="sherah-wc__form-input" placeholder="Type here" type="text">
+                                                        </div>
+                                                        <span class="form-message"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-6 col-12">
+                                                    <div class="form-group">
+                                                        <label class="sherah-wc__form-label">Province*</label>
+                                                        <select asp-for="Province" id="city">
+                                                            <option value="" selected>Choose Provinces</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-6 col-12">
+                                                    <div class="form-group">
+                                                        <label class="sherah-wc__form-label">District*</label>
+                                                        <select asp-for="District" id="district">
+                                                            <option value="" selected>Choose Districts</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-4 col-md-6 col-12">
+                                                    <div class="form-group">
+                                                        <label class="sherah-wc__form-label">Ward*</label>
+                                                        <select asp-for="Ward" id="ward">
+                                                            <option value="" selected>Choose Wards</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- End User Info -->
+                                    </div>
+                                    <div class=" mg-top-40 sherah-dflex sherah-dflex-gap-30 justify-content-end">
+                                        <button type="submit" class="sherah-btn sherah-btn__primary">Add Supplier</button>
+                                        <a href="/Supplier/SupplierList" class="sherah-btn sherah-btn__third">Cancel</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- End Dashboard Inner -->
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/js/Validator.js"></script>
+<script async>
+    Validator('#add-supplier-form');
+</script>
+<script>
+    const host = "https://vapi.vnappmob.com/api/";
+    var apiProvince = host + 'province/';
+    var callAPI = (apiProvince) => {
+        return axios.get(apiProvince)
+            .then((response) => {
+                renderDataCity(response.data, "city");
+            });
+    };
+    
+    var callApiDistrict = (api) => {
+        return axios.get(api)
+            .then((response) => {
+                renderDataDistrict(response.data, "district");
+            });
+    };
+
+    var callApiWard = (api) => {
+        return axios.get(api)
+            .then((response) => {
+                renderDataWard(response.data, "ward");
+            });
+    };
+
+    var renderDataCity = (data, select) => {
+        if (data && data.results && Array.isArray(data.results)) {
+            let row = ' <option disable value="">Choose Provinces</option>';
+            data.results.forEach((element) => {
+                row += '<option data-id="' + element.province_id + '" value="' + element.province_name + '">' + element.province_name + '</option>';
+            });
+            document.querySelector("#" + select).innerHTML = row;
+        } else {
+            console.error("Invalid or missing province data:", data);
+        }
+    }
+    var renderDataDistrict = (data, select) => {
+        if (data && data.results && Array.isArray(data.results)) {
+            let row = '<option disable value="">Choose Districts</option>';
+            data.results.forEach((element) => {
+                row += '<option data-id="' + element.district_id + '" value="' + element.district_name + '">' + element.district_name + '</option>';
+            });
+            document.querySelector("#" + select).innerHTML = row;
+        } else {
+            console.error("Invalid or missing district data:", data);
+        }
+    }
+    var renderDataWard = (data, select) => {
+        if (data && data.results && Array.isArray(data.results)) {
+            let row = ' <option disable value="">Choose Wards</option>';
+            data.results.forEach((element) => {
+                row += '<option data-id="' + element.ward_id + '" value="' + element.ward_name + '">' + element.ward_name + '</option>';
+            });
+            document.querySelector("#" + select).innerHTML = row;
+        } else {
+            console.error("Invalid or missing ward data:", data);
+        }
+    }
+
+    $("#city").change(() => {
+        callApiDistrict(host + "province/district/" + $("#city").find(':selected').data('id'));
+    });
+    $("#district").change(() => {
+        callApiWard(host + "province/ward/" + $("#district").find(':selected').data('id'));
+    });
+
+    callAPI(apiProvince);
+</script>
+

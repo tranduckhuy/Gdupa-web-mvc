@@ -1,515 +1,561 @@
 ﻿@{
     ViewData["Title"] = "Supplier Information";
+    var message = TempData["Message"] as string;
 }
 
+@model WarehouseWebMVC.Models.DTOs.SupplierDTO.SupplierDTO;
+<style>
+    .avatar-badge {
+        position: absolute;
+        left: 116px;
+        bottom: -8px;
+        padding: 4px 8px;
+        border-radius: 50%;
+        background: #f4f4f4;
+        border: 4px solid #fff;
+    }
+</style>
+<div id="toast"></div>
+@if (!string.IsNullOrEmpty(message))
+{
+    if ("Success".Equals(message))
+    {
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                setTimeout(function () {
+                    toast({
+                        title: "Success",
+                        message: "Success ! Action complete.",
+                        type: "success",
+                        duration: 3000,
+                    });
+                }, 600);
+            });
+        </script>
+    }
+    else if ("Failed".Equals(message))
+    {
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                setTimeout(function () {
+                    toast({
+                        title: "Failed",
+                        message: "Oops! Action failed. Please try again.",
+                        type: "danger",
+                        duration: 3000,
+                    });
+                }, 600);
+            });
+        </script>
+    }
+    else if ("WrongInfo".Equals(message))
+    {
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                setTimeout(function () {
+                    toast({
+                        title: "Info",
+                        message: "Oops! Email existing. Please try another email.",
+                        type: "info",
+                        duration: 3000,
+                    });
+                }, 600);
+            });
+        </script>
+    }
+}
 <!-- sherah Dashboard -->
 <section class="sherah-adashboard sherah-show">
-	<div class="container">
-		<div class="row">
-			<div class="col-12">
-				<div class="sherah-body">
-					<!-- Dashboard Inner -->
-					<div class="sherah-dsinner">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="sherah-body">
+                    <!-- Dashboard Inner -->
+                    <div class="sherah-dsinner">
 
-						<div class="row mg-top-30">
-							<div class="col-12 sherah-flex-between">
-								<!-- Sherah Breadcrumb -->
-								<div class="sherah-breadcrumb">
-									<h2 class="sherah-breadcrumb__title">Suppliers</h2>
-									<ul class="sherah-breadcrumb__list">
-										<li><a href="/Dashboard/Dashboard">Home</a></li>
-										<li><a href="/Supplier/SupplierList">Suppliers</a></li>
-										<li class="active"><a href="#!">Supplier Profile</a></li>
-									</ul>
-								</div>
-								<!-- End Sherah Breadcrumb -->
-							</div>
-						</div>
+                        <div class="row mg-top-30">
+                            <div class="col-12 sherah-flex-between">
+                                <!-- Sherah Breadcrumb -->
+                                <div class="sherah-breadcrumb">
+                                    <h2 class="sherah-breadcrumb__title">Suppliers</h2>
+                                    <ul class="sherah-breadcrumb__list">
+                                        <li><a href="/Dashboard/Dashboard">Home</a></li>
+                                        @if (Model.IsLocked == false)
+                                        {
+                                            <li><a href="/Supplier/SupplierList">Supplier List</a></li>
+                                        }
+                                        else
+                                        {
+                                            <li><a href="/Supplier/SupplierArchive">Supplier Archive</a></li>
+                                        }
+                                        <li class="active"><a href="#!">Supplier Profile</a></li>
+                                    </ul>
+                                </div>
+                                <!-- End Sherah Breadcrumb -->
+                            </div>
+                        </div>
 
-						<div class="sharah-profile--main sherah-default-bg sharah-border mg-top-40">
-                            <div class="col-12">
-								<!-- Profile Info -->
-								<div class="sherah-profile-info">
-									<div class="sherah-profile-info__thumb">
-										<img src="img/profile.png" alt="#">
-										<h3 class="sherah-profile-info__name">Mendorcart<span>mendorcart@gmail.com</span></h3>
-									</div>
-								</div>
-								<!-- End Profile Info -->
-							</div>
+                        <div class="sharah-profile--main sherah-default-bg sharah-border mg-top-40">
+                            <!-- Sharah Profile header -->
+                            <div class="sherah-userprofile__header">
+                                <img id="backgroundImage" src="@Model.Background" alt="Background" style="height:190px;max-height:200px;">
+                                <div class="sherah-userprofile__right">
+                                    <label for="backgroundFile" class="sherah-btn sherah-btn__white" style="padding:16px 20px;cursor:pointer;">
+                                        <input type="file" id="backgroundFile" style="display:none;" accept=".png,.jpg" />
+                                        <i class="fa-solid fa-camera" style="color:#333;font-size:16px;"></i>
+                                        Change Background
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-12" style="position:relative;">
+                                <!-- Profile Info -->
+                                <div class="sherah-profile-info">
+                                    <div class="sherah-profile-info__thumb" style="position:relative;">
+                                        <img id="avatarImage" src="@Model.Avatar" alt="Avatar">
+                                        <label for="avatarFile" class="avatar-badge" style="cursor:pointer;">
+                                            <i class="fa-solid fa-camera" style="color:#5f5f5f;font-size:16px;"></i>
+                                        </label>
+                                        <input type="file" id="avatarFile" style="display:none;" accept=".png,.jpg" />
+                                        <h3 class="sherah-profile-info__name">@Model.Name<span>@Model.Email</span></h3>
+                                    </div>
+                                    @if (Model.IsLocked == true)
+                                    {
+                                        <div class="sherah-table__status sherah-color2__bg--opactity" style="bottom:16px;">
+                                            <p class="sherah-table__product-desc sherah-color2">Archived</p>
+                                        </div>
+                                    }
+                                </div>
+                                <!-- End Profile Info -->
+                            </div>
 
-							<!-- Profile Inner Section -->
-							<div class="sherah-upinner">
-								<div class="row">
-									<div class="col-12">
-										<!-- Profile Overview -->
-										<div class="sherah-upcontent mg-top-30">
-											<!-- Tab List -->
-											<div class="sherah-pcats__bar">
-												<div class="sherah-pcats__list list-group " id="list-tab" role="tablist">
-													<a class="list-group-item active" data-bs-toggle="list" href="#tab_1" role="tab" href="profile.html">About</a>
-													<a class="list-group-item" data-bs-toggle="list" href="#tab_2" role="tab">Products</a>
-													<a class="list-group-item" data-bs-toggle="list" href="#tab_4" role="tab">Edit Profile</a>
-												</div>
-											</div>
+                            <!-- Profile Inner Section -->
+                            <div class="sherah-upinner">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <!-- Profile Overview -->
+                                        <div class="sherah-upcontent mg-top-30">
+                                            <!-- Tab List -->
+                                            <div class="sherah-pcats__bar">
+                                                <div class="sherah-pcats__list list-group " id="list-tab"
+                                                     role="tablist">
+                                                    <a class="list-group-item active" data-bs-toggle="list"
+                                                       href="#tab_1" role="tab">About</a>
+                                                    <a class="list-group-item" data-bs-toggle="list" href="#tab_4"
+                                                       role="tab">Edit Profile</a>
+                                                </div>
+                                            </div>
 
-											<div class="tab-content" id="nav-tabContent">
+                                            <div class="tab-content" id="nav-tabContent">
 
-												<div class="tab-pane fade show active" id="tab_1" role="tabpanel" aria-labelledby="nav-home-tab">
-													<div class="sherah-upcontent__text sherah-border">
+                                                <div class="tab-pane fade show active" id="tab_1" role="tabpanel"
+                                                     aria-labelledby="nav-home-tab">
+                                                    <div class="sherah-upcontent__text sherah-border">
 
-														<!-- Profile Info -->
-														<div class="sharah-profile__about">
-															<h3 class="sharah-profile__title mg-btm-10">Biodata</h3>
-															<p class="sharah-profile__text">Hi I'm Petey Cruiser,has been the industry's standard dummy text ever since the 1500s, when an unknown printer took Link galley of type. Done pede justo, a fringilla vel, aliquet nec,vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.Cras dapibus. Vivamus elementumsemper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.</p>
-															<div class="sharah-profile__meta mg-top-40">
-																<h4>Senior Graphic Designer</h4>
-																<p class="mg-top-10"><a href="#" class="sherah-color1">quomodosoft.com</a></p>
-																<p class="sharah-profile__id mg-top-30">2007-2009</p>
-															</div>
-														</div>
-														<div class="sherah-border-btm mg-top-30"></div>
-														<div class="row">
-															<div class="col-lg-6 col-md-6 col-12 mg-top-30">
-																<h4 class="sherah-info-title mg-btm-20">Contact</h4>
-																<ul class="sherah-contact-info">
-																	<li class="sherah-border"><span class="sherah-color1__bg--offset"><i class="fa-solid fa-location-dot"></i></span>14/3 Road Brown Tower New York</li>
-																	<li class="sherah-border"><span class="sherah-color1__bg--offset"><i class="fa-solid fa-envelope"></i></span>Email : name@yourmail.com</li>
-																	<li class="sherah-border"><span class="sherah-color1__bg--offset"><i class="fa-solid fa-phone"></i></span>Phone : +22 (5) 789 0001</li>
-																</ul>
-															</div>
-															<div class="col-lg-6 col-md-6 col-12 mg-top-30">
-																<h4 class="sherah-info-title mg-btm-20">Social</h4>
-																<ul class="sherah-contact-info sherah-contact-social">
-																	<li class="sherah-border"><a href="#"><span class="sherah-color1__bg--offset"><i class="fa-brands fa-facebook-f"></i></span>Facebook</a></li>
-																	<li class="sherah-border"><a href="#"><span class="sherah-color1__bg--offset"><i class="fa-brands fa-twitter"></i></span>Twitter</a></li>
-																	<li class="sherah-border"><a href="#"><span class="sherah-color1__bg--offset"><i class="fa-brands fa-linkedin"></i></span>Linkedin</a></li>
-																	<li class="sherah-border"><a href="#"><span class="sherah-color1__bg--offset"><i class="fa-brands fa-dribbble"></i></span>Dribbble</a></li>
-																	<li class="sherah-border"><a href="#"><span class="sherah-color1__bg--offset"><i class="fa-brands fa-behance"></i></span>Behance</a></li>
-																	<li class="sherah-border"><a href="#"><span class="sherah-color1__bg--offset"><i class="fa-brands fa-youtube"></i></span>Youtube</a></li>
-																	<li class="sherah-border"><a href="#"><span class="sherah-color1__bg--offset"><i class="fa-brands fa-instagram"></i></span>Instagram</a></li>
-																</ul>
-															</div>
-														</div>
-													</div>
-												</div>
+                                                        <!-- Profile Info -->
+                                                        <div class="sharah-profile__about">
+                                                            <h3 class="sharah-profile__title mg-btm-10">Biodata</h3>
+                                                            <p class="sharah-profile__text">
 
-												<div class="tab-pane fade" id="tab_2" role="tabpanel" aria-labelledby="nav-home-tab">
-													<div class="row">
-														<div class="col-xxl-3 col-lg-4 col-12">
-															<!-- Product Category Sidebar -->
-															<div class="sherah-product-sidebar sherah-offset-bg mg-top-30">
-																<h4 class="sherah-product-sidebar__title sherah-border-btm">Product Categories</h4>
-																<ul class="sherah-product-sidebar__list">
-																	<li><a href="#"><span><i class="fa-solid fa-chevron-right"></i>Women’s Bag</span><span class="count">15</span></a></li>
-																	<li><a href="#"><span><i class="fa-solid fa-chevron-right"></i>Men’s Accessories</span><span class="count">20</span></a></li>
-																	<li><a href="#"><span><i class="fa-solid fa-chevron-right"></i>School Bag</span><span class="count">33</span></a></li>
-																</ul>
-															</div>
-															<!-- End Product Category Sidebar -->
+                                                                @Model.Name is a seasoned financial service provider with decades 
+                                                                of experience in the industry. With dedication and extensive knowledge, 
+                                                                she has built a solid reputation for delivering flexible and effective 
+                                                                financial solutions to various businesses. Professionalism, commitment 
+                                                                to client success, and flexibility in thinking are prominent characteristics of @Model.Name.
+                                                            </p>
+                                                            <div class="sharah-profile__meta mg-top-40">
+                                                                <h4>GDUPA</h4>
+                                                                <p class="mg-top-10">
+                                                                    <a href="#"
+                                                                       class="sherah-color1">gdupa@gmail.com</a>
+                                                                </p>
+                                                                <p class="sharah-profile__id mg-top-30">2023-2024</p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="sherah-border-btm mg-top-30"></div>
+                                                        <div class="row">
+                                                            <div class="col-lg-6 col-md-6 col-12 mg-top-30">
+                                                                <h4 class="sherah-info-title mg-btm-20">Contact</h4>
+                                                                <ul class="sherah-contact-info">
+                                                                    <li class="sherah-border">
+                                                                        <span class="sherah-color1__bg--offset">
+                                                                            <i class="fa-solid fa-location-dot"></i>
+                                                                        </span>
+                                                                        <p id="address-information">@Model.Address</p>
+                                                                    </li>
+                                                                    <li class="sherah-border">
+                                                                        <span class="sherah-color1__bg--offset">
+                                                                            <i class="fa-solid fa-envelope"></i>
+                                                                        </span>Email
+                                                                        : @Model.Email
+                                                                    </li>
+                                                                    <li class="sherah-border">
+                                                                        <span class="sherah-color1__bg--offset">
+                                                                            <i class="fa-solid fa-phone"></i>
+                                                                        </span>Phone
+                                                                        : @Model.Phone
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                            <div class="col-lg-6 col-md-6 col-12 mg-top-30">
+                                                                <h4 class="sherah-info-title mg-btm-20">Social</h4>
+                                                                <ul class="sherah-contact-info sherah-contact-social">
+                                                                    <li class="sherah-border">
+                                                                        <a href="#">
+                                                                            <span class="sherah-color1__bg--offset">
+                                                                                <i class="fa-brands fa-facebook-f"></i>
+                                                                            </span>Facebook
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="sherah-border">
+                                                                        <a href="#">
+                                                                            <span class="sherah-color1__bg--offset">
+                                                                                <i class="fa-brands fa-twitter"></i>
+                                                                            </span>Twitter
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="sherah-border">
+                                                                        <a href="#">
+                                                                            <span class="sherah-color1__bg--offset">
+                                                                                <i class="fa-brands fa-linkedin"></i>
+                                                                            </span>Linkedin
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="sherah-border">
+                                                                        <a href="#">
+                                                                            <span class="sherah-color1__bg--offset">
+                                                                                <i class="fa-brands fa-dribbble"></i>
+                                                                            </span>Dribbble
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="sherah-border">
+                                                                        <a href="#">
+                                                                            <span class="sherah-color1__bg--offset">
+                                                                                <i class="fa-brands fa-behance"></i>
+                                                                            </span>Behance
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="sherah-border">
+                                                                        <a href="#">
+                                                                            <span class="sherah-color1__bg--offset">
+                                                                                <i class="fa-brands fa-youtube"></i>
+                                                                            </span>Youtube
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="sherah-border">
+                                                                        <a href="#">
+                                                                            <span class="sherah-color1__bg--offset">
+                                                                                <i class="fa-brands fa-instagram"></i>
+                                                                            </span>Instagram
+                                                                        </a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane fade" id="tab_4" role="tabpanel"
+                                                     aria-labelledby="nav-home-tab">
+                                                    <div class="row">
+                                                        <div class="col-12">
+                                                            <!-- Sign in Form -->
+                                                            <form class="sherah-wc__form-main sherah-wc__form-profile sherah-form-main--v2 p-0"
+                                                                  id="update-supplier-form"
+                                                                  method="post" asp-controller="Supplier" asp-action="UpdateSupplier">
+                                                                <div class="row">
+                                                                    <div class="col-lg-12 col-md-12 col-12">
+                                                                        <div class="form-group">
+                                                                            <label class="sherah-wc__form-label">Full-Name</label>
+                                                                            <div class="form-group__input">
+                                                                                <input asp-for="SupplierId" value="@Model.SupplierId" type="text" style="display:none;" readonly />
+                                                                                <input asp-for="Avatar" type="text" id="avatarHidden" style="display:none;" readonly />
+                                                                                <input asp-for="Background" type="text" id="backgroundHidden" style="display:none;" readonly />
+                                                                                <input class="sherah-wc__form-input"
+                                                                                       asp-for="Name"
+                                                                                       value="@Model.Name"
+                                                                                       placeholder="Type here" type="text"
+                                                                                       name="Name" rules="required" autofocus>
+                                                                            </div>
+                                                                            <span class="form-message"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-6 col-md-6 col-12">
+                                                                        <div class="form-group">
+                                                                            <label class="sherah-wc__form-label">Phone</label>
+                                                                            <div class="form-group__input">
+                                                                                <input asp-for="Phone" name="Phone"
+                                                                                       value="@Model.Phone"
+                                                                                       class="sherah-wc__form-input" rules="required|max:10|phone"
+                                                                                       placeholder="Type here" type="text">
+                                                                            </div>
+                                                                            <span class="form-message"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-6 col-md-6 col-12">
+                                                                        <div class="form-group">
+                                                                            <label class="sherah-wc__form-label">Fax</label>
+                                                                            <div class="form-group__input">
+                                                                                <input class="sherah-wc__form-input"
+                                                                                       asp-for="Fax"
+                                                                                       value="@Model.Fax"
+                                                                                       placeholder="Type here"
+                                                                                       type="text" name="Fax"
+                                                                                       rules="required|min:8|max:8">
+                                                                            </div>
+                                                                            <span class="form-message"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-12">
+                                                                        <div class="form-group">
+                                                                            <label class="sherah-wc__form-label">Email Address</label>
+                                                                            <div class="form-group__input">
+                                                                                <input class="sherah-wc__form-input"
+                                                                                       asp-for="Email"
+                                                                                       value="@Model.Email"
+                                                                                       placeholder="Type here"
+                                                                                       type="text" name="Email"
+                                                                                       rules="required|email">
+                                                                            </div>
+                                                                            <span class="form-message"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-6 col-md-12 col-12">
+                                                                        <div class="form-group">
+                                                                            <label class="sherah-wc__form-label">Street</label>
+                                                                            <div class="form-group__input">
+                                                                                <input class="sherah-wc__form-input"
+                                                                                       asp-for="Street"
+                                                                                       id="street-input"
+                                                                                       placeholder="Type here"
+                                                                                       type="text" name="Street"
+                                                                                       rules="required">
+                                                                            </div>
+                                                                            <span class="form-message"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-6 col-md-12 col-12">
+                                                                        <div class="form-group">
+                                                                            <label class="sherah-wc__form-label">Apartment</label>
+                                                                            <div class="form-group__input">
+                                                                                <input class="sherah-wc__form-input"
+                                                                                       asp-for="Apartment"
+                                                                                       id="apartment-input"
+                                                                                       placeholder="Type here"
+                                                                                       type="text" name="Apartment">
+                                                                            </div>
+                                                                            <span class="form-message"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-4 col-md-6 col-12">
+                                                                        <div class="form-group">
+                                                                            <label class="sherah-wc__form-label">Province*</label>
+                                                                            <select asp-for="Province" id="city">
+                                                                                <option value="" selected id="province-option"></option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-4 col-md-6 col-12">
+                                                                        <div class="form-group">
+                                                                            <label class="sherah-wc__form-label">District*</label>
+                                                                            <select asp-for="District" id="district">
+                                                                                <option value="" selected id="district-option"></option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-4 col-md-6 col-12">
+                                                                        <div class="form-group">
+                                                                            <label class="sherah-wc__form-label">Ward*</label>
+                                                                            <select asp-for="Ward" id="ward">
+                                                                                <option value="" selected id="ward-option"></option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
 
-															<!-- Product Price Range Sidebar -->
-															<!--<div class="sherah-product-sidebar sherah-offset-bg mg-top-30">
-																<h4 class="sherah-product-sidebar__title sherah-border-btm">Price Range</h4>
-																<div class="price-filter">
-																	<div class="price-filter-inner">
-																		<div id="slider-range"></div>
-																		<div class="price_slider_amount">
-																			<div class="label-input">
-																				<span>Range:</span><input type="text" id="amount" name="price" placeholder="Add Your Price" />
-																			</div>
-																		</div>
-																	</div>
-																</div>
-															</div>-->
+                                                                <div class="form-group mg-top-30 sherah-dflex sherah-dflex-gap-30 justify-content-end">
+                                                                    <button type="submit"
+                                                                            class="sherah-btn sherah-btn__primary">
+                                                                        Save
+                                                                    </button>
+                                                                    <a href="/Supplier/SupplierList" class="sherah-btn sherah-btn__third">
+                                                                        Cancel
+                                                                    </a>
+                                                                </div>
+                                                            </form>
+                                                            <!-- End Sign in Form -->
+                                                        </div>
+                                                    </div>
+                                                </div>
 
-															<!-- End Product Price Range Sidebar -->
-															<!-- Product Brand Sidebar -->
-															<div class="sherah-product-sidebar sherah-offset-bg mg-top-30">
-																<h4 class="sherah-product-sidebar__title sherah-border-btm">Product Brands</h4>
-																<ul class="sherah-product-sidebar__list">
-																	<li><a href="#"><span><i class="fa-solid fa-chevron-right"></i>Nike</span></a></li>
-																	<li><a href="#"><span><i class="fa-solid fa-chevron-right"></i>Zara</span></a></li>
-																	<li><a href="#"><span><i class="fa-solid fa-chevron-right"></i>Denim</span></a></li>
-																	<li><a href="#"><span><i class="fa-solid fa-chevron-right"></i>Madame</span></a></li>
-																	<li><a href="#"><span><i class="fa-solid fa-chevron-right"></i>Arong</span></a></li>
-																</ul>
-															</div>
-															<!-- End Product Brand Sidebar -->
-														</div>
-														<div class="col-xxl-9 col-lg-8 col-12">
-															<div class="row">
-																<div class="col-xxl-4 col-lg-6 col-md-6 col-12">
-																	<!-- Single Product -->
-																	<div class="sherah-product-card sherah-product-card__v2  sherah-default-bg sherah-border mg-top-30">
-																		<!-- Card Image -->
-																		<div class="sherah-product-card__img">
-																			<img src="img/product-img1.png">
-																			<div class="sherah-product-card__buttons">
-																				<a class="sherah-product-card__buttons--single sherah-default-bg sherah-border" href="#">
-																					<svg class="sherah-default__fill sherah-default__heart" xmlns="http://www.w3.org/2000/svg" width="21.559" height="19.349" viewBox="0 0 21.559 19.349">
-																						<path id="Path_533" data-name="Path 533" d="M111.852,15.093v.924a1.034,1.034,0,0,0-.03.135,7.2,7.2,0,0,1-1.211,3.339,14.326,14.326,0,0,1-2.5,2.868c-1.887,1.684-3.8,3.337-5.713,4.994a1.2,1.2,0,0,1-1.7-.04q-2.192-1.885-4.378-3.777a22.751,22.751,0,0,1-3.411-3.5,7.509,7.509,0,0,1-1.514-3.347,6.362,6.362,0,0,1,1.4-5.335,5.368,5.368,0,0,1,5.028-1.9,5.245,5.245,0,0,1,3.221,1.768c.184.2.352.414.539.635.092-.119.171-.225.255-.327s.18-.216.277-.318a5.235,5.235,0,0,1,5.72-1.543,5.583,5.583,0,0,1,3.813,4.222C111.746,14.284,111.784,14.692,111.852,15.093Z" transform="translate(-90.794 -8.871)" stroke-width="1" />
-																					</svg>
-																				</a>
-																				<a class="sherah-product-card__buttons--single sherah-default-bg sherah-border" href="#">
-																					<svg class="sherah-default__fill" xmlns="http://www.w3.org/2000/svg" width="15.671" height="15.67" viewBox="0 0 15.671 15.67">
-																						<g id="View_full" data-name="View full" transform="translate(0 -0.33)">
-																							<path id="Path_529" data-name="Path 529" d="M0,2.448V4.566H1.093V2.221L3.621,4.749,6.15,7.277l.4-.4.4-.4L4.419,3.952,1.89,1.423H4.236V.33H0Z" />
-																							<path id="Path_530" data-name="Path 530" d="M11.435.877v.547h2.346L11.253,3.952,8.725,6.48l.4.4.4.4L12.05,4.749l2.528-2.528V4.566h1.093V.33H11.435Z" />
-																							<path id="Path_531" data-name="Path 531" d="M3.608,11.59,1.093,14.11V11.764H0V16H4.236V14.907H1.89l2.528-2.528L6.947,9.85,6.56,9.463a4.274,4.274,0,0,0-.41-.387C6.136,9.076,4.993,10.21,3.608,11.59Z" />
-																							<path id="Path_532" data-name="Path 532" d="M9.112,9.463l-.387.387,2.528,2.528,2.528,2.528H11.435V16h4.236V11.764H14.578V14.11L12.059,11.59c-1.38-1.38-2.524-2.514-2.537-2.514A4.273,4.273,0,0,0,9.112,9.463Z" />
-																						</g>
-																					</svg>
-																				</a>
-																				<a class="sherah-product-card__buttons--single sherah-default-bg sherah-border" href="#">
-																					<svg class="sherah-default__fill" xmlns="http://www.w3.org/2000/svg" width="18" height="20" viewBox="0 0 18 20">
-																						<g id="Com" transform="translate(-0.268 0)">
-																							<path id="Path_527" data-name="Path 527" d="M7.895.663a4.9,4.9,0,0,1-.024.662c-.012,0-.206.035-.425.082A8.8,8.8,0,0,0,.334,8.8,9.839,9.839,0,0,0,.45,11.808a8.86,8.86,0,0,0,3.875,5.507l.226.14.56-.413a6.464,6.464,0,0,0,.56-.436.953.953,0,0,0-.218-.136,7.762,7.762,0,0,1-1.934-1.524,7.446,7.446,0,0,1-1.878-3.917,9.631,9.631,0,0,1,0-2.085,7.5,7.5,0,0,1,1.116-2.95A7.776,7.776,0,0,1,5.751,3.352a8.609,8.609,0,0,1,2.017-.678l.127-.023V3.2a3.624,3.624,0,0,0,.02.546c.04,0,2.521-1.843,2.521-1.871S7.954,0,7.915,0A5.311,5.311,0,0,0,7.895.663Z" transform="translate(0 0)" />
-																							<path id="Path_528" data-name="Path 528" d="M13.219,2.958a3.6,3.6,0,0,0-.54.44,1.467,1.467,0,0,0,.27.168,7.818,7.818,0,0,1,2.918,2.95,7.809,7.809,0,0,1,.842,2.615,8.959,8.959,0,0,1-.1,2.362,7.546,7.546,0,0,1-4.848,5.514,10.126,10.126,0,0,1-1.275.343c-.044,0-.056-.1-.056-.546a3.622,3.622,0,0,0-.02-.546c-.04,0-2.521,1.843-2.521,1.871S10.376,20,10.416,20a5.307,5.307,0,0,0,.02-.662v-.659l.151-.023a14,14,0,0,0,1.755-.468A8.765,8.765,0,0,0,18,11.154a9.922,9.922,0,0,0-.119-2.962,8.86,8.86,0,0,0-3.875-5.507l-.226-.14Z" transform="translate(0.206)" />
-																						</g>
-																					</svg>
-																				</a>
-																			</div>
-																		</div>
-																		<!-- Card Content -->
-																		<div class="sherah-product-card__content sherah-dflex-column sherah-flex-gap-5">
-																			<h4 class="sherah-product-card__title">
-																				<a href="product-detail.html" class="sherah-pcolor">Polka Dots Woman Dress</a>
-																			</h4>
-																			<div class="sherah-product__bottom">
-																				<div class="sherah-product__bottom--single">
-																					<h5 class="sherah-product-card__price"><del>$155</del>$135</h5>
-																					<div class="sherah-product-card__meta sherah-dflex sherah-flex-gap-30">
-																						<div class="sherah-product-card__rating sherah-dflex sherah-flex-gap-5">
-																							<span class="sherah-color4"><i class="fa fa-star"></i></span>
-																							<span class="sherah-color4"><i class="fa fa-star"></i></span>
-																							<span class="sherah-color4"><i class="fa fa-star"></i></span>
-																							<span class="sherah-color4"><i class="fa fa-star"></i></span>
-																							<span class="sherah-color4"><i class="fa fa-star"></i></span>
-																							(33)
-																						</div>
-																					</div>
-																				</div>
-																				<a href="product-detail.html" class="sherah-btn default">Add to Cart</a>
-																			</div>
-																		</div>
-																	</div>
-																	<!-- End Single Product -->
-																</div>
-																<div class="col-xxl-4 col-lg-6 col-md-6 col-12">
-																	<!-- Single Product -->
-																	<div class="sherah-product-card sherah-product-card__v2  sherah-default-bg sherah-border mg-top-30">
-																		<!-- Card Image -->
-																		<div class="sherah-product-card__img">
-																			<img src="img/product-img2.png">
-																			<div class="sherah-product-card__buttons">
-																				<a class="sherah-product-card__buttons--single sherah-default-bg sherah-border" href="#">
-																					<svg class="sherah-default__fill sherah-default__heart" xmlns="http://www.w3.org/2000/svg" width="21.559" height="19.349" viewBox="0 0 21.559 19.349">
-																						<path id="Path_533" data-name="Path 533" d="M111.852,15.093v.924a1.034,1.034,0,0,0-.03.135,7.2,7.2,0,0,1-1.211,3.339,14.326,14.326,0,0,1-2.5,2.868c-1.887,1.684-3.8,3.337-5.713,4.994a1.2,1.2,0,0,1-1.7-.04q-2.192-1.885-4.378-3.777a22.751,22.751,0,0,1-3.411-3.5,7.509,7.509,0,0,1-1.514-3.347,6.362,6.362,0,0,1,1.4-5.335,5.368,5.368,0,0,1,5.028-1.9,5.245,5.245,0,0,1,3.221,1.768c.184.2.352.414.539.635.092-.119.171-.225.255-.327s.18-.216.277-.318a5.235,5.235,0,0,1,5.72-1.543,5.583,5.583,0,0,1,3.813,4.222C111.746,14.284,111.784,14.692,111.852,15.093Z" transform="translate(-90.794 -8.871)" stroke-width="1" />
-																					</svg>
-																				</a>
-																				<a class="sherah-product-card__buttons--single sherah-default-bg sherah-border" href="#">
-																					<svg class="sherah-default__fill" xmlns="http://www.w3.org/2000/svg" width="15.671" height="15.67" viewBox="0 0 15.671 15.67">
-																						<g id="View_full" data-name="View full" transform="translate(0 -0.33)">
-																							<path id="Path_529" data-name="Path 529" d="M0,2.448V4.566H1.093V2.221L3.621,4.749,6.15,7.277l.4-.4.4-.4L4.419,3.952,1.89,1.423H4.236V.33H0Z" />
-																							<path id="Path_530" data-name="Path 530" d="M11.435.877v.547h2.346L11.253,3.952,8.725,6.48l.4.4.4.4L12.05,4.749l2.528-2.528V4.566h1.093V.33H11.435Z" />
-																							<path id="Path_531" data-name="Path 531" d="M3.608,11.59,1.093,14.11V11.764H0V16H4.236V14.907H1.89l2.528-2.528L6.947,9.85,6.56,9.463a4.274,4.274,0,0,0-.41-.387C6.136,9.076,4.993,10.21,3.608,11.59Z" />
-																							<path id="Path_532" data-name="Path 532" d="M9.112,9.463l-.387.387,2.528,2.528,2.528,2.528H11.435V16h4.236V11.764H14.578V14.11L12.059,11.59c-1.38-1.38-2.524-2.514-2.537-2.514A4.273,4.273,0,0,0,9.112,9.463Z" />
-																						</g>
-																					</svg>
-																				</a>
-																				<a class="sherah-product-card__buttons--single sherah-default-bg sherah-border" href="#">
-																					<svg class="sherah-default__fill" xmlns="http://www.w3.org/2000/svg" width="18" height="20" viewBox="0 0 18 20">
-																						<g id="Com" transform="translate(-0.268 0)">
-																							<path id="Path_527" data-name="Path 527" d="M7.895.663a4.9,4.9,0,0,1-.024.662c-.012,0-.206.035-.425.082A8.8,8.8,0,0,0,.334,8.8,9.839,9.839,0,0,0,.45,11.808a8.86,8.86,0,0,0,3.875,5.507l.226.14.56-.413a6.464,6.464,0,0,0,.56-.436.953.953,0,0,0-.218-.136,7.762,7.762,0,0,1-1.934-1.524,7.446,7.446,0,0,1-1.878-3.917,9.631,9.631,0,0,1,0-2.085,7.5,7.5,0,0,1,1.116-2.95A7.776,7.776,0,0,1,5.751,3.352a8.609,8.609,0,0,1,2.017-.678l.127-.023V3.2a3.624,3.624,0,0,0,.02.546c.04,0,2.521-1.843,2.521-1.871S7.954,0,7.915,0A5.311,5.311,0,0,0,7.895.663Z" transform="translate(0 0)" />
-																							<path id="Path_528" data-name="Path 528" d="M13.219,2.958a3.6,3.6,0,0,0-.54.44,1.467,1.467,0,0,0,.27.168,7.818,7.818,0,0,1,2.918,2.95,7.809,7.809,0,0,1,.842,2.615,8.959,8.959,0,0,1-.1,2.362,7.546,7.546,0,0,1-4.848,5.514,10.126,10.126,0,0,1-1.275.343c-.044,0-.056-.1-.056-.546a3.622,3.622,0,0,0-.02-.546c-.04,0-2.521,1.843-2.521,1.871S10.376,20,10.416,20a5.307,5.307,0,0,0,.02-.662v-.659l.151-.023a14,14,0,0,0,1.755-.468A8.765,8.765,0,0,0,18,11.154a9.922,9.922,0,0,0-.119-2.962,8.86,8.86,0,0,0-3.875-5.507l-.226-.14Z" transform="translate(0.206)" />
-																						</g>
-																					</svg>
-																				</a>
-																			</div>
-																		</div>
-																		<!-- Card Content -->
-																		<div class="sherah-product-card__content sherah-dflex-column sherah-flex-gap-5">
-																			<h4 class="sherah-product-card__title">
-																				<a href="product-detail.html" class="sherah-pcolor">Double breasted suit</a>
-																			</h4>
-																			<div class="sherah-product__bottom">
-																				<div class="sherah-product__bottom--single">
-																					<h5 class="sherah-product-card__price">$160</h5>
-																					<div class="sherah-product-card__meta sherah-dflex sherah-flex-gap-30">
-																						<div class="sherah-product-card__rating sherah-dflex sherah-flex-gap-5">
-																							<span class="sherah-color4"><i class="fa fa-star"></i></span>
-																							<span class="sherah-color4"><i class="fa fa-star"></i></span>
-																							<span class="sherah-color4"><i class="fa fa-star"></i></span>
-																							<span class="sherah-color4"><i class="fa fa-star"></i></span>
-																							<span class="sherah-color4"><i class="fa fa-star"></i></span>
-																							(33)
-																						</div>
-																					</div>
-																				</div>
-																				<a href="product-detail.html" class="sherah-btn default">Add to Cart</a>
-																			</div>
-																		</div>
-																	</div>
-																	<!-- End Single Product -->
-																</div>
-																<div class="col-xxl-4 col-lg-6 col-md-6 col-12">
-																	<!-- Single Product -->
-																	<div class="sherah-product-card sherah-product-card__v2  sherah-default-bg sherah-border mg-top-30">
-																		<!-- Card Image -->
-																		<div class="sherah-product-card__img">
-																			<img src="img/product-img3.png">
-																			<div class="sherah-product-card__buttons">
-																				<a class="sherah-product-card__buttons--single sherah-default-bg sherah-border" href="#">
-																					<svg class="sherah-default__fill sherah-default__heart" xmlns="http://www.w3.org/2000/svg" width="21.559" height="19.349" viewBox="0 0 21.559 19.349">
-																						<path id="Path_533" data-name="Path 533" d="M111.852,15.093v.924a1.034,1.034,0,0,0-.03.135,7.2,7.2,0,0,1-1.211,3.339,14.326,14.326,0,0,1-2.5,2.868c-1.887,1.684-3.8,3.337-5.713,4.994a1.2,1.2,0,0,1-1.7-.04q-2.192-1.885-4.378-3.777a22.751,22.751,0,0,1-3.411-3.5,7.509,7.509,0,0,1-1.514-3.347,6.362,6.362,0,0,1,1.4-5.335,5.368,5.368,0,0,1,5.028-1.9,5.245,5.245,0,0,1,3.221,1.768c.184.2.352.414.539.635.092-.119.171-.225.255-.327s.18-.216.277-.318a5.235,5.235,0,0,1,5.72-1.543,5.583,5.583,0,0,1,3.813,4.222C111.746,14.284,111.784,14.692,111.852,15.093Z" transform="translate(-90.794 -8.871)" stroke-width="1" />
-																					</svg>
-																				</a>
-																				<a class="sherah-product-card__buttons--single sherah-default-bg sherah-border" href="#">
-																					<svg class="sherah-default__fill" xmlns="http://www.w3.org/2000/svg" width="15.671" height="15.67" viewBox="0 0 15.671 15.67">
-																						<g id="View_full" data-name="View full" transform="translate(0 -0.33)">
-																							<path id="Path_529" data-name="Path 529" d="M0,2.448V4.566H1.093V2.221L3.621,4.749,6.15,7.277l.4-.4.4-.4L4.419,3.952,1.89,1.423H4.236V.33H0Z" />
-																							<path id="Path_530" data-name="Path 530" d="M11.435.877v.547h2.346L11.253,3.952,8.725,6.48l.4.4.4.4L12.05,4.749l2.528-2.528V4.566h1.093V.33H11.435Z" />
-																							<path id="Path_531" data-name="Path 531" d="M3.608,11.59,1.093,14.11V11.764H0V16H4.236V14.907H1.89l2.528-2.528L6.947,9.85,6.56,9.463a4.274,4.274,0,0,0-.41-.387C6.136,9.076,4.993,10.21,3.608,11.59Z" />
-																							<path id="Path_532" data-name="Path 532" d="M9.112,9.463l-.387.387,2.528,2.528,2.528,2.528H11.435V16h4.236V11.764H14.578V14.11L12.059,11.59c-1.38-1.38-2.524-2.514-2.537-2.514A4.273,4.273,0,0,0,9.112,9.463Z" />
-																						</g>
-																					</svg>
-																				</a>
-																				<a class="sherah-product-card__buttons--single sherah-default-bg sherah-border" href="#">
-																					<svg class="sherah-default__fill" xmlns="http://www.w3.org/2000/svg" width="18" height="20" viewBox="0 0 18 20">
-																						<g id="Com" transform="translate(-0.268 0)">
-																							<path id="Path_527" data-name="Path 527" d="M7.895.663a4.9,4.9,0,0,1-.024.662c-.012,0-.206.035-.425.082A8.8,8.8,0,0,0,.334,8.8,9.839,9.839,0,0,0,.45,11.808a8.86,8.86,0,0,0,3.875,5.507l.226.14.56-.413a6.464,6.464,0,0,0,.56-.436.953.953,0,0,0-.218-.136,7.762,7.762,0,0,1-1.934-1.524,7.446,7.446,0,0,1-1.878-3.917,9.631,9.631,0,0,1,0-2.085,7.5,7.5,0,0,1,1.116-2.95A7.776,7.776,0,0,1,5.751,3.352a8.609,8.609,0,0,1,2.017-.678l.127-.023V3.2a3.624,3.624,0,0,0,.02.546c.04,0,2.521-1.843,2.521-1.871S7.954,0,7.915,0A5.311,5.311,0,0,0,7.895.663Z" transform="translate(0 0)" />
-																							<path id="Path_528" data-name="Path 528" d="M13.219,2.958a3.6,3.6,0,0,0-.54.44,1.467,1.467,0,0,0,.27.168,7.818,7.818,0,0,1,2.918,2.95,7.809,7.809,0,0,1,.842,2.615,8.959,8.959,0,0,1-.1,2.362,7.546,7.546,0,0,1-4.848,5.514,10.126,10.126,0,0,1-1.275.343c-.044,0-.056-.1-.056-.546a3.622,3.622,0,0,0-.02-.546c-.04,0-2.521,1.843-2.521,1.871S10.376,20,10.416,20a5.307,5.307,0,0,0,.02-.662v-.659l.151-.023a14,14,0,0,0,1.755-.468A8.765,8.765,0,0,0,18,11.154a9.922,9.922,0,0,0-.119-2.962,8.86,8.86,0,0,0-3.875-5.507l-.226-.14Z" transform="translate(0.206)" />
-																						</g>
-																					</svg>
-																				</a>
-																			</div>
-																		</div>
-																		<!-- Card Content -->
-																		<div class="sherah-product-card__content sherah-dflex-column sherah-flex-gap-5">
-																			<h4 class="sherah-product-card__title">
-																				<a href="product-detail.html" class="sherah-pcolor">Sweater For Women</a>
-																			</h4>
-																			<div class="sherah-product__bottom">
-																				<div class="sherah-product__bottom--single">
-																					<h5 class="sherah-product-card__price"><del>$130</del>$120</h5>
-																					<div class="sherah-product-card__meta sherah-dflex sherah-flex-gap-30">
-																						<div class="sherah-product-card__rating sherah-dflex sherah-flex-gap-5">
-																							<span class="sherah-color4"><i class="fa fa-star"></i></span>
-																							<span class="sherah-color4"><i class="fa fa-star"></i></span>
-																							<span class="sherah-color4"><i class="fa fa-star"></i></span>
-																							<span class="sherah-color4"><i class="fa fa-star"></i></span>
-																							<span class="sherah-color4"><i class="fa fa-star"></i></span>
-																							(33)
-																						</div>
-																					</div>
-																				</div>
-																				<a href="product-detail.html" class="sherah-btn default">Add to Cart</a>
-																			</div>
-																		</div>
-																	</div>
-																	<!-- End Single Product -->
-																</div>
-																<div class="col-xxl-4 col-lg-6 col-md-6 col-12">
-																	<!-- Single Product -->
-																	<div class="sherah-product-card sherah-product-card__v2  sherah-default-bg sherah-border mg-top-30">
-																		<!-- Card Image -->
-																		<div class="sherah-product-card__img">
-																			<img src="img/product-img4.png">
-																			<div class="sherah-product-card__buttons">
-																				<a class="sherah-product-card__buttons--single sherah-default-bg sherah-border" href="#">
-																					<svg class="sherah-default__fill sherah-default__heart" xmlns="http://www.w3.org/2000/svg" width="21.559" height="19.349" viewBox="0 0 21.559 19.349">
-																						<path id="Path_533" data-name="Path 533" d="M111.852,15.093v.924a1.034,1.034,0,0,0-.03.135,7.2,7.2,0,0,1-1.211,3.339,14.326,14.326,0,0,1-2.5,2.868c-1.887,1.684-3.8,3.337-5.713,4.994a1.2,1.2,0,0,1-1.7-.04q-2.192-1.885-4.378-3.777a22.751,22.751,0,0,1-3.411-3.5,7.509,7.509,0,0,1-1.514-3.347,6.362,6.362,0,0,1,1.4-5.335,5.368,5.368,0,0,1,5.028-1.9,5.245,5.245,0,0,1,3.221,1.768c.184.2.352.414.539.635.092-.119.171-.225.255-.327s.18-.216.277-.318a5.235,5.235,0,0,1,5.72-1.543,5.583,5.583,0,0,1,3.813,4.222C111.746,14.284,111.784,14.692,111.852,15.093Z" transform="translate(-90.794 -8.871)" stroke-width="1" />
-																					</svg>
-																				</a>
-																				<a class="sherah-product-card__buttons--single sherah-default-bg sherah-border" href="#">
-																					<svg class="sherah-default__fill" xmlns="http://www.w3.org/2000/svg" width="15.671" height="15.67" viewBox="0 0 15.671 15.67">
-																						<g id="View_full" data-name="View full" transform="translate(0 -0.33)">
-																							<path id="Path_529" data-name="Path 529" d="M0,2.448V4.566H1.093V2.221L3.621,4.749,6.15,7.277l.4-.4.4-.4L4.419,3.952,1.89,1.423H4.236V.33H0Z" />
-																							<path id="Path_530" data-name="Path 530" d="M11.435.877v.547h2.346L11.253,3.952,8.725,6.48l.4.4.4.4L12.05,4.749l2.528-2.528V4.566h1.093V.33H11.435Z" />
-																							<path id="Path_531" data-name="Path 531" d="M3.608,11.59,1.093,14.11V11.764H0V16H4.236V14.907H1.89l2.528-2.528L6.947,9.85,6.56,9.463a4.274,4.274,0,0,0-.41-.387C6.136,9.076,4.993,10.21,3.608,11.59Z" />
-																							<path id="Path_532" data-name="Path 532" d="M9.112,9.463l-.387.387,2.528,2.528,2.528,2.528H11.435V16h4.236V11.764H14.578V14.11L12.059,11.59c-1.38-1.38-2.524-2.514-2.537-2.514A4.273,4.273,0,0,0,9.112,9.463Z" />
-																						</g>
-																					</svg>
-																				</a>
-																				<a class="sherah-product-card__buttons--single sherah-default-bg sherah-border" href="#">
-																					<svg class="sherah-default__fill" xmlns="http://www.w3.org/2000/svg" width="18" height="20" viewBox="0 0 18 20">
-																						<g id="Com" transform="translate(-0.268 0)">
-																							<path id="Path_527" data-name="Path 527" d="M7.895.663a4.9,4.9,0,0,1-.024.662c-.012,0-.206.035-.425.082A8.8,8.8,0,0,0,.334,8.8,9.839,9.839,0,0,0,.45,11.808a8.86,8.86,0,0,0,3.875,5.507l.226.14.56-.413a6.464,6.464,0,0,0,.56-.436.953.953,0,0,0-.218-.136,7.762,7.762,0,0,1-1.934-1.524,7.446,7.446,0,0,1-1.878-3.917,9.631,9.631,0,0,1,0-2.085,7.5,7.5,0,0,1,1.116-2.95A7.776,7.776,0,0,1,5.751,3.352a8.609,8.609,0,0,1,2.017-.678l.127-.023V3.2a3.624,3.624,0,0,0,.02.546c.04,0,2.521-1.843,2.521-1.871S7.954,0,7.915,0A5.311,5.311,0,0,0,7.895.663Z" transform="translate(0 0)" />
-																							<path id="Path_528" data-name="Path 528" d="M13.219,2.958a3.6,3.6,0,0,0-.54.44,1.467,1.467,0,0,0,.27.168,7.818,7.818,0,0,1,2.918,2.95,7.809,7.809,0,0,1,.842,2.615,8.959,8.959,0,0,1-.1,2.362,7.546,7.546,0,0,1-4.848,5.514,10.126,10.126,0,0,1-1.275.343c-.044,0-.056-.1-.056-.546a3.622,3.622,0,0,0-.02-.546c-.04,0-2.521,1.843-2.521,1.871S10.376,20,10.416,20a5.307,5.307,0,0,0,.02-.662v-.659l.151-.023a14,14,0,0,0,1.755-.468A8.765,8.765,0,0,0,18,11.154a9.922,9.922,0,0,0-.119-2.962,8.86,8.86,0,0,0-3.875-5.507l-.226-.14Z" transform="translate(0.206)" />
-																						</g>
-																					</svg>
-																				</a>
-																			</div>
-																		</div>
-																		<!-- Card Content -->
-																		<div class="sherah-product-card__content sherah-dflex-column sherah-flex-gap-5">
-																			<h4 class="sherah-product-card__title">
-																				<a href="product-detail.html" class="sherah-pcolor">Luxury T-shirt  For men</a>
-																			</h4>
-																			<div class="sherah-product__bottom">
-																				<div class="sherah-product__bottom--single">
-																					<h5 class="sherah-product-card__price">$180</h5>
-																					<div class="sherah-product-card__meta sherah-dflex sherah-flex-gap-30">
-																						<div class="sherah-product-card__rating sherah-dflex sherah-flex-gap-5">
-																							<span class="sherah-color4"><i class="fa fa-star"></i></span>
-																							<span class="sherah-color4"><i class="fa fa-star"></i></span>
-																							<span class="sherah-color4"><i class="fa fa-star"></i></span>
-																							<span class="sherah-color4"><i class="fa fa-star"></i></span>
-																							<span class="sherah-color4"><i class="fa fa-star"></i></span>
-																							(33)
-																						</div>
-																					</div>
-																				</div>
-																				<a href="product-detail.html" class="sherah-btn default">Add to Cart</a>
-																			</div>
-																		</div>
-																	</div>
-																	<!-- End Single Product -->
-																</div>
-															</div>
-															<div class="row mg-top-40">
-																<div class="sherah-pagination">
-																	<ul class="sherah-pagination__list">
-																		<li class="sherah-pagination__button"><a href="#"><i class="fas fa-angle-left"></i></a></li>
-																		<li><a href="#">01</a></li>
-																		<li class="active"><a href="#">02</a></li>
-																		<li><a href="#">03</a></li>
-																		<li><a href="#">04</a></li>
-																		<li><a href="#">05</a></li>
-																		<li class="sherah-pagination__button"><a href="#"><i class="fas fa-angle-right"></i></a></li>
-																	</ul>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="tab-pane fade" id="tab_4" role="tabpanel" aria-labelledby="nav-home-tab">
-													<div class="row">
-														<div class="col-12">
-															<!-- Sign in Form -->
-															<form class="sherah-wc__form-main sherah-wc__form-profile sherah-form-main--v2 p-0" action="#" method="post">
-																<div class="row">
-																	<div class="col-lg-6 col-md-6 col-12">
-																		<div class="form-group">
-																			<label class="sherah-wc__form-label">First Name *</label>
-																			<div class="form-group__input">
-																				<input class="sherah-wc__form-input" placeholder="Abubokkor" type="text" name="f_name" required="required">
-																			</div>
-																		</div>
-																	</div>
-																	<div class="col-lg-6 col-md-6 col-12">
-																		<div class="form-group">
-																			<label class="sherah-wc__form-label">Last Name *</label>
-																			<div class="form-group__input">
-																				<input class="sherah-wc__form-input" placeholder="Siddik" type="text" name="l_name" required="required">
-																			</div>
-																		</div>
-																	</div>
-																	<div class="col-lg-6 col-md-6 col-12">
-																		<div class="form-group">
-																			<label class="sherah-wc__form-label">Phone Number *</label>
-																			<div class="form-group__input form-group__input--select">
-																				<button class="flag-label dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-																					<img src="img/flag-bd.png">+880
-																				</button>
-																				<ul class="dropdown-menu">
-																					<li><a class="dropdown-item" href="#">+550</a></li>
-																					<li><a class="dropdown-item" href="#">+990</a></li>
-																					<li><a class="dropdown-item" href="#">+660</a></li>
-																				</ul>
-																				<input class="sherah-wc__form-input" placeholder="140 8317 189" type="text" name="f_number" required="required">
-																			</div>
-																		</div>
-																	</div>
-																	<div class="col-lg-6 col-md-6 col-12">
-																		<div class="form-group">
-																			<label class="sherah-wc__form-label">Join Date* </label>
-																			<div class="form-group__input">
-																				<input class="sherah-wc__form-input" placeholder="Oct 14 2022" type="text" name="j_date" required="required">
-																			</div>
-																		</div>
-																	</div>
-																	<div class="col-12">
-																		<div class="form-group">
-																			<label class="sherah-wc__form-label">Email Address*</label>
-																			<div class="form-group__input">
-																				<input class="sherah-wc__form-input" placeholder="infosherah@gmail.com" type="text" name="e_address" required="required">
-																			</div>
-																		</div>
-																	</div>
-																	<div class="col-12">
-																		<div class="form-group">
-																			<label class="sherah-wc__form-label">Website*</label>
-																			<div class="form-group__input">
-																				<input class="sherah-wc__form-input" placeholder="www.sherah.com" type="text" name="w_address" required="required">
-																			</div>
-																		</div>
-																	</div>
-																	<div class="col-lg-4 col-md-4 col-12">
-																		<div class="form-group">
-																			<label class="sherah-wc__form-label">Country*</label>
-																			<select class="form-group__input" aria-label="Default select example">
-																				<option selected>Bangladesh</option>
-																				<option value="1">India</option>
-																				<option value="2">China</option>
-																				<option value="3">United States</option>
-																				<option value="4">United Kingdom</option>
-																				<option value="5">Saudi Arabia</option>
-																			</select>
-																		</div>
-																	</div>
-																	<div class="col-lg-4 col-md-4 col-12">
-																		<div class="form-group">
-																			<label class="sherah-wc__form-label">City/Town*</label>
-																			<div class="form-group__input">
-																				<input class="sherah-wc__form-input" placeholder="Dhaka" type="text" name="d_address" required="required">
-																			</div>
-																		</div>
-																	</div>
-																	<div class="col-lg-4 col-md-4 col-12">
-																		<div class="form-group">
-																			<label class="sherah-wc__form-label">Zip code*</label>
-																			<div class="form-group__input">
-																				<input class="sherah-wc__form-input" placeholder="1216" type="text" name="z_code" required="required">
-																			</div>
-																		</div>
-																	</div>
-																	<div class="col-12">
-																		<div class="form-group">
-																			<label class="sherah-wc__form-label">About Description*</label>
-																			<div class="form-group__input">
-																				<textarea class="sherah-wc__form-input" placeholder="About description write here" type="text" name="d_area" required="required"></textarea>
-																			</div>
-																		</div>
-																	</div>
-																</div>
-
-																<div class="form-group mg-top-30 sherah-dflex sherah-dflex-gap-30 justify-content-end">
-																	<button type="submit" class="sherah-btn sherah-btn__primary">Save</button>
-																	<button type="submit" class="sherah-btn sherah-btn__third">Cancel</button>
-																</div>
-															</form>
-															<!-- End Sign in Form -->
-														</div>
-													</div>
-												</div>
-
-											</div>
-										</div>
-										<!-- End Profile Overview -->
-									</div>
-								</div>
-							</div>
-							<!-- End Profile Inner Section -->
-						</div>
-					</div>
-					<!-- End Dashboard Inner -->
-				</div>
-			</div>
+                                            </div>
+                                        </div>
+                                        <!-- End Profile Overview -->
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Profile Inner Section -->
+                        </div>
+                    </div>
+                    <!-- End Dashboard Inner -->
+                </div>
+            </div>
 
 
-		</div>
-	</div>
+        </div>
+    </div>
 </section>
 <!-- End sherah Dashboard -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" referrerpolicy="no-referrer"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
+<script src="/js/firebase/firebaseUploadFileSupplier.js"></script>
+<script src="/js/Validator.js"></script>
+<script async>
+    Validator('#update-supplier-form');
+</script>
+<script>
+    var fullAddress = "@Html.Raw(Model.Address)";
+
+    var parts = fullAddress.split(',');
+
+    var street = "";
+    var apartment = "";
+    if (parts.length > 4) {
+        apartment = parts[1].trim();
+        street = parts[0].trim();
+    } else {
+        street = parts[0].trim();
+    }
+
+    document.querySelector('#street-input').value = street;
+    document.querySelector('#apartment-input').value = apartment;
+</script>
+<script>
+    function extractCityProvince(fullAddress) {
+        var addressParts = fullAddress.split(',');
+
+        var maxIndex = Math.min(5, addressParts.length - 1);
+
+        var city = addressParts[maxIndex - 1].trim();
+        var province = addressParts[maxIndex].trim();
+
+        return city + ', ' + province;
+    }
+    document.querySelector('#address-information').textContent = extractCityProvince("@Html.Raw(Model.Address)");
+</script>
+<script>
+    var fullAddress = "@Html.Raw(Model.Address)";
+    var parts = fullAddress.split(',');
+
+    var province = document.querySelector('#province-option');
+    var district = document.querySelector('#district-option');
+    var ward = document.querySelector('#ward-option');
+
+    if (parts.length > 4) {
+        province.textContent = parts[4].trim();
+        district.textContent = parts[3].trim();
+        ward.textContent = parts[2].trim();
+    } else {
+        province.textContent = parts[3].trim();
+        district.textContent = parts[2].trim();
+        ward.textContent = parts[1].trim();
+    }
+
+</script>
+<script>
+    var fullAddress = "@Html.Raw(Model.Address)";
+    var parts = fullAddress.split(',');
+
+    var province = document.querySelector('#province-option');
+    var district = document.querySelector('#district-option');
+    var ward = document.querySelector('#ward-option');
+
+    if (parts.length > 4) {
+        province.textContent = parts[4].trim();
+        province.value = parts[4].trim();
+        district.textContent = parts[3].trim();
+        district.value = parts[3].trim();
+        ward.textContent = parts[2].trim();
+        ward.value = parts[2].trim();
+    } else {
+        province.textContent = parts[3].trim();
+        province.value = parts[3].trim();
+        district.textContent = parts[2].trim();
+        district.value = parts[2].trim();
+        ward.textContent = parts[1].trim();
+        ward.value = parts[1].trim();
+    }
+
+    const host = "https://vapi.vnappmob.com/api/";
+    var apiProvince = host + 'province/';
+    var callAPI = (apiProvince) => {
+        return axios.get(apiProvince)
+            .then((response) => {
+                renderDataCity(response.data, "city");
+            });
+    };
+
+    var callApiDistrict = (api) => {
+        return axios.get(api)
+            .then((response) => {
+                renderDataDistrict(response.data, "district");
+            });
+    };
+
+    var callApiWard = (api) => {
+        return axios.get(api)
+            .then((response) => {
+                renderDataWard(response.data, "ward");
+            });
+    };
+
+    var renderDataCity = (data, select) => {
+        if (data && data.results && Array.isArray(data.results)) {
+            let selectElement = document.querySelector("#" + select);
+            if (!selectElement.getAttribute('data-loaded')) {
+                let row = '';
+                // Kiểm tra nếu ô select có giá trị từ model thì giữ nguyên giá trị đó
+                if (!selectElement.value) {
+                    row += '<option disable value="">Choose Provinces</option>';
+                }
+                data.results.forEach((element) => {
+                    row += '<option data-id="' + element.province_id + '" value="' + element.province_name + '">' + element.province_name + '</option>';
+                });
+                selectElement.innerHTML += row;
+                selectElement.setAttribute('data-loaded', 'true');
+            }
+        } else {
+            console.error("Invalid or missing province data:", data);
+        }
+    }
+    var renderDataDistrict = (data, select) => {
+        if (data && data.results && Array.isArray(data.results)) {
+            let row = '<option disable value="">Choose Districts</option>';
+            data.results.forEach((element) => {
+                row += '<option data-id="' + element.district_id + '" value="' + element.district_name + '">' + element.district_name + '</option>';
+            });
+            document.querySelector("#" + select).innerHTML = row;
+        } else {
+            console.error("Invalid or missing district data:", data);
+        }
+    }
+    var renderDataWard = (data, select) => {
+        if (data && data.results && Array.isArray(data.results)) {
+            let row = ' <option disable value="">Choose Wards</option>';
+            data.results.forEach((element) => {
+                row += '<option data-id="' + element.ward_id + '" value="' + element.ward_name + '">' + element.ward_name + '</option>';
+            });
+            document.querySelector("#" + select).innerHTML = row;
+        } else {
+            console.error("Invalid or missing ward data:", data);
+        }
+    }
+
+    $("#city").change(() => {
+        callApiDistrict(host + "province/district/" + $("#city").find(':selected').data('id'));
+    });
+    $("#district").change(() => {
+        callApiWard(host + "province/ward/" + $("#district").find(':selected').data('id'));
+    });
+
+    callAPI(apiProvince);
+</script>

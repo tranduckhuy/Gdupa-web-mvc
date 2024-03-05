@@ -32,12 +32,13 @@ public class ProductService : IProductService
                 // Add product base information
                 _dataContext.Products.Add(product);
                 _dataContext.SaveChanges();
-                
+
                 // Add product images
                 var productId = product.ProductId;
-                _dataContext.ProductImgs.Add(new ProductImg { 
-                    ProductId = productId, 
-                    ImageURL = addProductDTO.ImageURL1 
+                _dataContext.ProductImgs.Add(new ProductImg
+                {
+                    ProductId = productId,
+                    ImageURL = addProductDTO.ImageURL1
                 });
                 _dataContext.ProductImgs.Add(new ProductImg
                 {
@@ -130,8 +131,8 @@ public class ProductService : IProductService
         var categories = _dataContext.Category.ToList();
         var brands = _dataContext.Brand.ToList();
         var units = new List<SelectListItem>();
-        units.Add(new SelectListItem { Text = "Piece", Value = "Piece"});
-        units.Add(new SelectListItem { Text = "Pair", Value = "Pair"});
+        units.Add(new SelectListItem { Text = "Piece", Value = "Piece" });
+        units.Add(new SelectListItem { Text = "Pair", Value = "Pair" });
 
         return new CRUProductVM
         {
@@ -141,41 +142,41 @@ public class ProductService : IProductService
         };
     }
 
-	public bool Update(AddProductDTO updateProductDTO)
-	{
-		try
-		{
-			var existingProduct = _dataContext.Products
-				.Include(p => p.ProductImgs)
-				.FirstOrDefault(p => p.ProductId == updateProductDTO.ProductId);
+    public bool Update(AddProductDTO updateProductDTO)
+    {
+        try
+        {
+            var existingProduct = _dataContext.Products
+                .Include(p => p.ProductImgs)
+                .FirstOrDefault(p => p.ProductId == updateProductDTO.ProductId);
 
-			if (existingProduct == null)
-			{
-				return false;
-			}
+            if (existingProduct == null)
+            {
+                return false;
+            }
 
-			if (updateProductDTO.ImageURL1 != null)
-			{
-				existingProduct.ProductImgs.ElementAt(0).ImageURL = updateProductDTO.ImageURL1;
-			}
-			if (updateProductDTO.ImageURL2 != null)
-			{
-				existingProduct.ProductImgs.ElementAt(1).ImageURL = updateProductDTO.ImageURL2;
-			}
+            if (updateProductDTO.ImageURL1 != null)
+            {
+                existingProduct.ProductImgs.ElementAt(0).ImageURL = updateProductDTO.ImageURL1;
+            }
+            if (updateProductDTO.ImageURL2 != null)
+            {
+                existingProduct.ProductImgs.ElementAt(1).ImageURL = updateProductDTO.ImageURL2;
+            }
 
-			updateProductDTO.ProductImgs.Add(existingProduct.ProductImgs.ElementAt(0));
+            updateProductDTO.ProductImgs.Add(existingProduct.ProductImgs.ElementAt(0));
             updateProductDTO.ProductImgs.Add(existingProduct.ProductImgs.ElementAt(1));
-			
-			_mapper.Map(updateProductDTO, existingProduct);
+
+            _mapper.Map(updateProductDTO, existingProduct);
             var product = existingProduct;
-			_dataContext.SaveChanges();
-			return true;
-		}
-		catch (Exception)
-		{
-			return false;
-		}
-	}
+            _dataContext.SaveChanges();
+            return true;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+    }
 
     public ProductViewModel SearchProduct(string searchType, string searchValue)
     {
@@ -196,7 +197,7 @@ public class ProductService : IProductService
                 searchProduct = searchProduct.Where(p => p.Name.ToUpper().Contains(searchValue.ToUpper()));
                 break;
         }
-        
+
         if (searchProduct.Any())
         {
             var searchProductsDto = _mapper.Map<List<ProductDTO>>(searchProduct.ToList());
@@ -205,4 +206,53 @@ public class ProductService : IProductService
         }
         return null!;
     }
+    public bool AddCategory(string categoryName)
+    {
+        try
+        {
+            if (string.IsNullOrEmpty(categoryName) || IsCategoryNameExist(categoryName.Trim()))
+            {
+                return false;
+            }
+            var category = new Category { Name = categoryName };
+            _dataContext.Category.Add(category);
+            _dataContext.SaveChanges();
+            
+            return true;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+    }
+    public bool AddBrand(string brandName)
+    {
+        try
+        {
+            if (string.IsNullOrEmpty(brandName) || IsBrandNameExist(brandName.Trim()))
+            {
+                return false;
+            }
+            var brand = new Brand { Name = brandName };
+            _dataContext.Brand.Add(brand);
+            _dataContext.SaveChanges();
+
+            return true;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+    }
+
+    private bool IsCategoryNameExist(string categoryName)
+    {
+        return _dataContext.Category.Any(c => c.Name.ToUpper() == categoryName.ToUpper());
+    }
+
+    private bool IsBrandNameExist(string brandName)
+    {
+        return _dataContext.Brand.Any(b => b.Name.ToUpper() == brandName.ToUpper());
+    }
+
 }

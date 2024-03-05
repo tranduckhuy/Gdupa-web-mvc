@@ -31,8 +31,12 @@ if (localStorage.getItem("isDark") === "true") {
 
 /* Sherah Sidebar Menu */
 const cs_button = document.querySelectorAll(".sherah__sicon");
+const menuItems = document.querySelectorAll("#sherahMenu li a");
+const menuItemsWithChildren = document.querySelectorAll("#sherahMenu li a[data-bs-toggle='collapse']");
+const dashboardLink = document.querySelector("#dashboard-link");
+const logo = document.querySelector("#logo-link");
 const cs_action = document.querySelectorAll(
-  ".sherah-smenu, .sherah-header, .sherah-adashboard"
+  "#sherahMenu, .sherah-header, .sherah-adashboard"
 );
 
 cs_button.forEach((button) => {
@@ -53,7 +57,68 @@ if (localStorage.getItem("iscicon") === "true") {
   });
 }
 
+const menuState = {};
+menuItems.forEach((menuItem) => {
+    menuItem.addEventListener("click", function () {
+        menuItems.forEach((item) => {
+            item.classList.add("collapsed");
+        });
 
+        this.classList.remove("collapsed");
 
+        menuItems.forEach((item) => {
+            menuState[item.getAttribute('href')] = item.classList.contains('collapsed');
+        });
+        localStorage.setItem('menuState', JSON.stringify(menuState));
+    });
+});
+menuItemsWithChildren.forEach((menuItem) => {
+    menuItem.addEventListener("click", function () {
+        const isExpanded = this.getAttribute("aria-expanded") === "true"; 
 
+        if (isExpanded) {
+            this.classList.remove("collapsed");
+            this.setAttribute("aria-expanded", "false"); 
+        } else {
+            this.classList.add("collapsed");
+            this.setAttribute("aria-expanded", "true");
+        }
 
+        menuState[this.getAttribute('href')] = !isExpanded;
+        localStorage.setItem('menuState', JSON.stringify(menuState));
+    });
+});
+
+function restoreMenuState() {
+    const menuState = JSON.parse(localStorage.getItem('menuState'));
+    if (menuState) {
+        Object.keys(menuState).forEach((link) => {
+            const menuItem = document.querySelector(`#sherahMenu li a[href="${link}"]`);
+            if (menuItem) {
+                if (menuState[link]) {
+                    menuItem.classList.add('collapsed');
+                } else {
+                    menuItem.classList.remove('collapsed');
+                }
+            }
+        });
+    }
+
+    const currentPageUrl = window.location.pathname;
+    if (currentPageUrl === "/Dashboard/Dashboard") {
+        dashboardLink.classList.remove('collapsed');
+        menuItems.forEach((item) => {
+            if (item !== dashboardLink) {
+                item.classList.add("collapsed");
+            }
+        });
+    }
+
+    menuItemsWithChildren.forEach((menuItem) => {
+        const submenu = document.querySelector(menuItem.getAttribute('data-bs-target'));
+        if (submenu && submenu.contains(document.querySelector(`a[href="${currentPageUrl}"]`))) {
+            menuItem.classList.remove('collapsed');
+        }
+    });
+}
+window.addEventListener('load', restoreMenuState());

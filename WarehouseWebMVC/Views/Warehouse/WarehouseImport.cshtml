@@ -58,6 +58,11 @@
         -webkit-appearance: none;
         margin: 0;
     }
+    .dataTable_empty{
+        min-width: 440px;
+        display: flex;
+        justify-content: center;
+    }
 </style>
 
 <!-- sherah Dashboard -->
@@ -93,7 +98,7 @@
                                                         <label class="sherah-wc__form-label">Deliverer</label>
                                                         <div class="form-group__input">
                                                             <input id="deliverer" name="" class="sherah-wc__form-input" rules="required"
-                                                                   placeholder="Type here" type="text">
+                                                                   placeholder="Type here" type="text" autofocus>
                                                             <input id="userId" value="@userId" type="text" style="display:none;">
                                                         </div>
                                                         <span class="form-message"></span>
@@ -105,7 +110,10 @@
                                                         <select id="supplierId" class="form-group__input" aria-label="Default select example">
                                                             @foreach (var supplier in Model.Suppliers)
                                                             {
-                                                                <option value="@supplier.SupplierId">@supplier.Name</option>
+                                                                if (supplier.IsLocked == false)
+                                                                {
+                                                                    <option value="@supplier.SupplierId">@supplier.Name</option>
+                                                                }   
                                                             }
                                                         </select>
                                                     </div>
@@ -233,7 +241,7 @@
         return price.toFixed(2).replace(',', '.');
     }
 </script>
-<script async>
+<script>
     Validator('#import-form');
 </script>
 

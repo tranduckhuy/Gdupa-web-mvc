@@ -2,6 +2,7 @@
 using WarehouseWebMVC.Models.Domain;
 using WarehouseWebMVC.Models.DTOs;
 using WarehouseWebMVC.Models.DTOs.ProductDTO;
+using WarehouseWebMVC.Models.DTOs.SupplierDTO;
 using WarehouseWebMVC.Models.DTOs.UserDTO;
 
 namespace WarehouseWebMVC.MappingProfiles;
@@ -15,6 +16,7 @@ public class AutoMapperProfiles : Profile
 		CreateMap<User, UserDTO>().ReverseMap();
         CreateMap<User, AddUserDTO>().ReverseMap();
         CreateMap<User, UserInformationDTO>().ReverseMap();
-        CreateMap<Receipt, ReceiptDTO>().ReverseMap();
+        CreateMap<ImportNote, ImportNoteDTO>().ReverseMap();
+        CreateMap<Supplier, SupplierDTO>().ReverseMap();
     }
 }

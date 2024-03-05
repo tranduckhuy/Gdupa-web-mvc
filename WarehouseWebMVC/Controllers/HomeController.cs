@@ -4,8 +4,8 @@ using WarehouseWebMVC.Data;
 using WarehouseWebMVC.Models;
 using WarehouseWebMVC.Models.DTOs.UserDTO;
 using WarehouseWebMVC.Service;
-using WarehouseWebMVC.Services.Helper;
 using WarehouseWebMVC.Services.Impl;
+using WarehouseWebMVC.Utils.Helper;
 
 namespace WarehouseWebMVC.Controllers;
 
@@ -50,9 +50,10 @@ public class HomeController : Controller
                         byte[] userIdBytes = BitConverter.GetBytes(user.UserId);
                         HttpContext.Session.Set("Id", userIdBytes);
                         HttpContext.Session.SetString("Name", user.Name);
+                        HttpContext.Session.SetString("Avatar", user.Avatar);
+                        HttpContext.Session.SetString("Role", user.Role);
                         string address = _addressHelper.ExtractCityProvince(user.Address);
                         HttpContext.Session.SetString("Address", address);
-                        HttpContext.Session.SetString("Avatar", user.Avatar);
                     }
                     else
                     {

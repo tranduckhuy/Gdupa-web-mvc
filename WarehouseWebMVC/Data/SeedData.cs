@@ -78,11 +78,11 @@ public static class SeedData
 
         modelBuilder.Entity<Supplier>().HasData(
             new Supplier { SupplierId = 1, Name = "Supplier A", Email = "supplierA@gmail.com", 
-                Address = "Supplier A Address", Phone = "0987654321", Fax = "123456" },    
+                Address = "08 Tống Phước Phổ, Cao Ốc Long Thịnh, Phường Ghềnh Ráng, Thành Phố Quy Nhơn, Tỉnh Bình Định", Phone = "0987654321", Fax = "123456" },    
             new Supplier { SupplierId = 2, Name = "Supplier B", Email = "supplierB@gmail.com", 
-                Address = "Supplier B Address", Phone = "0987654322", Fax = "123457" },    
+                Address = "08 Tống Phước Phổ, Cao Ốc Long Thịnh, Phường Ghềnh Ráng, Thành Phố Quy Nhơn, Tỉnh Bình Định", Phone = "0987654322", Fax = "123457" },    
             new Supplier { SupplierId = 3, Name = "Supplier C", Email = "supplierC@gmail.com", 
-                Address = "Supplier C Address", Phone = "0987654323", Fax = "123458" }
+                Address = "08 Tống Phước Phổ, Cao Ốc Long Thịnh, Phường Ghềnh Ráng, Thành Phố Quy Nhơn, Tỉnh Bình Định", Phone = "0987654323", Fax = "123458" }
         );
 
         modelBuilder.Entity<Category>().HasData(
@@ -149,21 +149,21 @@ public static class SeedData
                 ImageURL = "https://firebasestorage.googleapis.com/v0/b/xhobbe-98105.appspot.com/o/logo%2FForum_Low_Shoes_White_FY7755_02_standard_hover.avif?alt=media&token=06650fd5-295c-45b3-b698-8b320d76a7f0" }
         );
 
-        modelBuilder.Entity<Receipt>().HasData(
-            new Receipt { ReceiptId = 1, Deliverer = "Nguyễn Xuân B", Reason = "Import Product",
+        modelBuilder.Entity<ImportNote>().HasData(
+            new ImportNote { ImportNoteId = 1, Deliverer = "Nguyễn Xuân B", Reason = "Import Product",
                 ReasonDetail = "Reason Detail...", Total = 17599.87, UserId = 1, SupplierId = 1 },
-            new Receipt { ReceiptId = 2, Deliverer = "Nguyễn Xuân B", Reason = "Tranferred Warehouse", 
+            new ImportNote { ImportNoteId = 2, Deliverer = "Nguyễn Xuân B", Reason = "Tranferred Warehouse", 
                 ReasonDetail = "Reason Detail...",  Total = 2300, UserId = 1, SupplierId = 2 },
-            new Receipt { ReceiptId = 3, Deliverer = "Trần Đức A", Reason = "Import Product", 
+            new ImportNote { ImportNoteId = 3, Deliverer = "Trần Đức A", Reason = "Import Product", 
                 ReasonDetail = "Reason Detail...", Total = 3399.3, UserId = 2, SupplierId = 3 }
         );
 
-        modelBuilder.Entity<ReceiptDetail>().HasData(
-            new ReceiptDetail { ReceiptDetailId = 1, ReceiptId = 1, ProductId = 1, ImportPrice = 1399.99, Quantity = 10 },
-            new ReceiptDetail { ReceiptDetailId = 2, ReceiptId = 1, ProductId = 2, ImportPrice = 1199.99, Quantity = 3 },
-            new ReceiptDetail { ReceiptDetailId = 3, ReceiptId = 2, ProductId = 3, ImportPrice = 115, Quantity = 20 },
-            new ReceiptDetail { ReceiptDetailId = 4, ReceiptId = 3, ProductId = 4, ImportPrice = 150, Quantity = 16 },
-            new ReceiptDetail { ReceiptDetailId = 5, ReceiptId = 3, ProductId = 5, ImportPrice = 99.99, Quantity = 10 }
+        modelBuilder.Entity<ImportNoteDetail>().HasData(
+            new ImportNoteDetail { ImportNoteDetailId = 1, ImportNoteId = 1, ProductId = 1, ImportPrice = 1399.99, Quantity = 10 },
+            new ImportNoteDetail { ImportNoteDetailId = 2, ImportNoteId = 1, ProductId = 2, ImportPrice = 1199.99, Quantity = 3 },
+            new ImportNoteDetail { ImportNoteDetailId = 3, ImportNoteId = 2, ProductId = 3, ImportPrice = 115, Quantity = 20 },
+            new ImportNoteDetail { ImportNoteDetailId = 4, ImportNoteId = 3, ProductId = 4, ImportPrice = 150, Quantity = 16 },
+            new ImportNoteDetail { ImportNoteDetailId = 5, ImportNoteId = 3, ProductId = 5, ImportPrice = 99.99, Quantity = 10 }
         );
 
         modelBuilder.Entity<ExpenseReport>().HasData(

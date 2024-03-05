@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Drawing.Printing;
+using OfficeOpenXml;
 using WarehouseWebMVC.Data;
 using WarehouseWebMVC.Models;
 using WarehouseWebMVC.Models.Domain;
@@ -14,14 +13,14 @@ namespace WarehouseWebMVC.Services.Impl
     public class WarehouseSerivce : IWarehouseService
     {
         private readonly DataContext _dataContext;
-        private readonly IReceiptService _receiptService;
+        private readonly IImportNoteService _importNoteService;
         private readonly IMapper _mapper;
         private static readonly object _lockObject = new object();
 
-        public WarehouseSerivce(DataContext dataContext, IReceiptService receiptService, IMapper mapper)
+        public WarehouseSerivce(DataContext dataContext, IImportNoteService importNoteService, IMapper mapper)
         {
             _dataContext = dataContext;
-            _receiptService = receiptService;
+            _importNoteService = importNoteService;
             _mapper = mapper;
         }
 
@@ -109,7 +108,7 @@ namespace WarehouseWebMVC.Services.Impl
 
         public bool Add(ImportProductsDTO importProducts)
         {
-            if (importProducts == null || importProducts.ImportProducts == null)
+            if (importProducts == null || importProducts.Deliverer.Length == 0)
             {
                 return false;
             }
@@ -119,79 +118,22 @@ namespace WarehouseWebMVC.Services.Impl
                 return false;
             }
 
-            _receiptService.Add(importProducts);
+            _importNoteService.Add(importProducts);
             return true;
         }
 
-
-        public WarehouseViewModel GetLimit(int page, int quarter, int year)
+        public async Task<WarehouseImportViewModel> GetDataViewImportAsync()
         {
-
-            if (quarter == 0 && year == 0)
-            {
-                quarter = (DateTime.UtcNow.Month - 1) / 3 + 1;
-                year = DateTime.UtcNow.Year;
-            }
-
-            if (quarter < 1 || quarter > 4 || year < 1990 || year > DateTime.UtcNow.Year) { return null!; }
-
-            const int pageSize = 5;
-            if (page < 1)
-            {
-                page = 1;
-            }
-
-            DateTime startDate = new(year, (quarter - 1) * 3 + 1, 1);
-            DateTime endDate = startDate.AddMonths(3).AddDays(-1);
-
-            var totalProducts = _dataContext.Warehouse.Count(w => w.CreatedAt >= startDate && w.CreatedAt <= endDate);
-            var pageable = new Pageable(totalProducts, page, pageSize);
-            int skipAmount = (pageable.CurrentPage - 1) * pageSize;
-
-            var warehouse = _dataContext.Warehouse
-                .AsNoTracking()
-                .Where(w => w.CreatedAt >= startDate && w.CreatedAt <= endDate)
-                .Skip(skipAmount)
-                .Take(pageSize)
-                .Include(p => p.Product)
-                .OrderBy(w => w.WarehouseId)
-                .ToList();
-
-            int currentQuarter = (DateTime.UtcNow.Month - 1) / 3 + 1;
-            startDate = new DateTime(DateTime.UtcNow.Year, (currentQuarter - 1) * 3 + 1, 1);
-            endDate = startDate.AddMonths(3).AddDays(-1);
-
-            int lowAlert = _dataContext.Warehouse.Count(w => w.Quantity < 10 && w.Quantity > 0 && w.CreatedAt >= startDate && w.CreatedAt <= endDate);
-            int outOfStock = _dataContext.Warehouse.Count(w => w.Quantity == 0 && w.CreatedAt >= startDate && w.CreatedAt <= endDate);
-
-            var uniqueYears = _dataContext.Warehouse
-            .Select(w => w.CreatedAt.Year)
-            .Distinct()
-            .ToList();
-
-            return new WarehouseViewModel
-            {
-                Warehouses = warehouse,
-                LowAlert = lowAlert,
-                OutOfStock = outOfStock,
-                Pageable = new Pageable(totalProducts, page, pageSize),
-                Quarter = quarter,
-                Year = year,
-                ImportYears = uniqueYears
-            };
-        }
-
-        public WarehouseImportViewModel GetDataViewImport()
-        {
-            var products = _dataContext.Products
-                .ToList();
+            var products = await _dataContext.Products
+                .ToListAsync();
             var productsDTO = _mapper.Map<List<ProductDTO>>(products);
-            var suppliers = _dataContext.Suppliers.ToList();
+            var suppliers = await _dataContext.Suppliers.ToListAsync();
 
             return new WarehouseImportViewModel { Products = productsDTO, Suppliers = suppliers };
         }
 
-        public WarehouseViewModel GetByStatus(string status)
+
+        public async Task<WarehouseViewModel> GetByStatusAsync(string status)
         {
             int quarter = (DateTime.UtcNow.Month - 1) / 3 + 1;
             int year = DateTime.UtcNow.Year;
@@ -205,22 +147,22 @@ namespace WarehouseWebMVC.Services.Impl
             switch (status)
             {
                 case AppConstant.LOW_ALERT:
-                    warehouse = _dataContext.Warehouse
+                    warehouse = await _dataContext.Warehouse
                                 .AsNoTracking()
                                 .Where(w => w.Quantity < 10 && w.Quantity > 0 && w.CreatedAt >= startDate && w.CreatedAt <= endDate)
                                 .Include(p => p.Product)
                                 .OrderBy(w => w.WarehouseId)
-                                .ToList();
+                                .ToListAsync();
                     warehouseViewModel.LowAlert = warehouse.Count;
                     warehouseViewModel.Title = "Low-Stock Products";
                     break;
                 case AppConstant.OUT_OF_STOCK:
-                    warehouse = _dataContext.Warehouse
+                    warehouse = await _dataContext.Warehouse
                                 .AsNoTracking()
                                 .Where(w => w.Quantity == 0 && w.CreatedAt >= startDate && w.CreatedAt <= endDate)
                                 .Include(p => p.Product)
                                 .OrderBy(w => w.WarehouseId)
-                                .ToList();
+                                .ToListAsync();
                     warehouseViewModel.OutOfStock = warehouse.Count;
                     warehouseViewModel.Title = "Out-of-Stock Products";
                     break;
@@ -269,7 +211,7 @@ namespace WarehouseWebMVC.Services.Impl
 
         public bool CheckNewQuarter()
         {
-            int currentQuarter = (DateTime.UtcNow.Month - 1) * 3 + 1;
+            int currentQuarter = (DateTime.UtcNow.Month - 1) / 3 + 1;
             int currentYear = DateTime.UtcNow.Year;
 
             var latestQuarter = _dataContext.Warehouse
@@ -337,6 +279,158 @@ namespace WarehouseWebMVC.Services.Impl
                     Console.WriteLine(ex.Message);
                 }
             }
+        }
+
+        public Task<byte[]> ExportDataToExcel(int quarter, int year)
+        {
+            return Task.Run(() =>
+            {
+                byte[] fileBytes = GenerateExcelFile(quarter, year);
+
+                return fileBytes;
+            });
+        }
+
+        private byte[] GenerateExcelFile(int quarter, int year)
+        {
+            if (quarter == 0 && year == 0)
+            {
+                quarter = (DateTime.UtcNow.Month - 1) / 3 + 1;
+                year = DateTime.UtcNow.Year;
+            }
+
+            DateTime startDate = new(year, (quarter - 1) * 3 + 1, 1);
+            DateTime endDate = startDate.AddMonths(3).AddDays(-1);
+
+            List<Warehouse> warehouseData = _dataContext.Warehouse
+                .AsNoTracking()
+                .Where(w => w.CreatedAt >= startDate && w.CreatedAt <= endDate)
+                .Include(p => p.Product)
+                .OrderBy(w => w.WarehouseId)
+                .ToList();
+
+            Dictionary<int, string> quarterMap = new Dictionary<int, string>
+            {
+                {1, "First"},
+                {2, "Second"},
+                {3, "Third"},
+                {4, "Fourth"}
+            };
+            string quarterText = quarterMap.TryGetValue(quarter, out string? value) ? value : quarter.ToString();
+
+            // New Excel Package
+            using (var package = new ExcelPackage())
+            {
+                // New Sheet
+                var worksheet = package.Workbook.Worksheets.Add($"{quarterText} Quarter - {year}");
+
+                // Title
+                worksheet.Cells[1, 1].Value = "Product";
+                worksheet.Cells[1, 2].Value = "Starting Quantity";
+                worksheet.Cells[1, 3].Value = "Import Quantity";
+                worksheet.Cells[1, 4].Value = "Import Price";
+                worksheet.Cells[1, 5].Value = "Current Quantity";
+                worksheet.Cells[1, 6].Value = "Unit";
+                worksheet.Cells[1, 7].Value = "Total Stock Price";
+
+                // Data for each title
+                for (int i = 0; i < warehouseData.Count; i++)
+                {
+                    Warehouse warehouse = warehouseData.ElementAt(i);
+                    worksheet.Cells[i + 2, 1].Value = warehouse.Product.Name;
+                    worksheet.Cells[i + 2, 2].Value = warehouse.QuantityAtBeginPeriod;
+                    worksheet.Cells[i + 2, 3].Value = warehouse.QuantityImport;
+                    worksheet.Cells[i + 2, 4].Value = Math.Round(warehouse.PriceImport * warehouse.QuantityImport, 2);
+                    worksheet.Cells[i + 2, 5].Value = warehouse.Quantity;
+                    worksheet.Cells[i + 2, 6].Value = warehouse.Product.Unit;
+                    worksheet.Cells[i + 2, 7].Value = warehouse.PriceImport * warehouse.Quantity;
+                }
+
+                byte[] fileBytes = package.GetAsByteArray();
+                return fileBytes;
+            }
+        }
+
+        public async Task<WarehouseViewModel> GetLimitAsync(int page, int quarter, int year)
+        {
+            if (quarter == 0 && year == 0)
+            {
+                quarter = (DateTime.UtcNow.Month - 1) / 3 + 1;
+                year = DateTime.UtcNow.Year;
+            }
+
+            if (quarter < 1 || quarter > 4 || year < 1990 || year > DateTime.UtcNow.Year) { return null!; }
+
+            const int pageSize = 5;
+            if (page < 1)
+            {
+                page = 1;
+            }
+
+            DateTime startDate = new(year, (quarter - 1) * 3 + 1, 1);
+            DateTime endDate = startDate.AddMonths(3).AddDays(-1);
+
+            var totalProducts = await _dataContext.Warehouse.CountAsync(w => w.CreatedAt >= startDate && w.CreatedAt <= endDate);
+            var pageable = new Pageable(totalProducts, page, pageSize);
+            int skipAmount = (pageable.CurrentPage - 1) * pageSize;
+
+            var warehouse = await _dataContext.Warehouse
+                .AsNoTracking()
+                .Where(w => w.CreatedAt >= startDate && w.CreatedAt <= endDate)
+                .Skip(skipAmount)
+                .Take(pageSize)
+                .Include(p => p.Product)
+                .OrderBy(w => w.WarehouseId)
+                .ToListAsync();
+
+            int currentQuarter = (DateTime.UtcNow.Month - 1) / 3 + 1;
+            startDate = new DateTime(DateTime.UtcNow.Year, (currentQuarter - 1) * 3 + 1, 1);
+            endDate = startDate.AddMonths(3).AddDays(-1);
+
+            int lowAlert = await _dataContext.Warehouse.CountAsync(w => w.Quantity < 10 && w.Quantity > 0 && w.CreatedAt >= startDate && w.CreatedAt <= endDate);
+            int outOfStock = await _dataContext.Warehouse.CountAsync(w => w.Quantity == 0 && w.CreatedAt >= startDate && w.CreatedAt <= endDate);
+
+            var uniqueYears = await _dataContext.Warehouse
+            .Select(w => w.CreatedAt.Year)
+            .Distinct()
+            .ToListAsync();
+
+            return new WarehouseViewModel
+            {
+                Warehouses = warehouse,
+                LowAlert = lowAlert,
+                OutOfStock = outOfStock,
+                Pageable = new Pageable(totalProducts, page, pageSize),
+                Quarter = quarter,
+                Year = year,
+                ImportYears = uniqueYears
+            };
+        }
+
+        public async Task<bool> CheckNewQuarterAsync()
+        {
+            int currentQuarter = (DateTime.UtcNow.Month - 1) / 3 + 1;
+            int currentYear = DateTime.UtcNow.Year;
+
+            var latestQuarter = await _dataContext.Warehouse
+                .OrderByDescending(w => w.CreatedAt)
+                .Select(w => new
+                {
+                    Year = w.CreatedAt.Year,
+                    Quarter = (w.CreatedAt.Month - 1) / 3 + 1
+                })
+                .FirstOrDefaultAsync();
+
+            if (latestQuarter != null)
+            {
+                if ((latestQuarter.Year == currentYear && latestQuarter.Quarter < currentQuarter) || latestQuarter.Year < currentYear)
+                {
+                    UpdateProductsToNewQuarter(latestQuarter.Quarter, latestQuarter.Year);
+                    return true;
+                }
+            }
+
+            return false;
         }
 
     }

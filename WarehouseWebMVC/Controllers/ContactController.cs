@@ -1,20 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using WarehouseWebMVC.Data;
-using WarehouseWebMVC.Models;
-using WarehouseWebMVC.Services.Mail;
+using WarehouseWebMVC.Utils.Mail;
 using WarehouseWebMVC.ViewModels;
 
 namespace WarehouseWebMVC.Controllers;
 
 public class ContactController : Controller
 {
-    private readonly SendMailService _sendMailService;
+    private readonly SendMailUtil _sendMailUtil;
     private readonly MailSettings _mailSettings;
 
-    public ContactController(SendMailService sendMailService, IOptions<MailSettings> mailSettings)
+    public ContactController(SendMailUtil sendMailUtil, IOptions<MailSettings> mailSettings)
     {
-        _sendMailService = sendMailService;
+        _sendMailUtil = sendMailUtil;
         _mailSettings = mailSettings.Value;
     }
 
@@ -30,7 +29,7 @@ public class ContactController : Controller
                 Body = $"You have a new contact request from {model.Name} ({model.Email}). Message: {model.Message}"
             };
 
-            var result = await _sendMailService.SendMail(mailContent);
+            var result = await _sendMailUtil.SendMail(mailContent);
 
             if (result.StartsWith("Error"))     
             {
@@ -57,7 +56,7 @@ public class ContactController : Controller
                 Body = $"You have a new subscribe from {email}."
             };
 
-            var result = await _sendMailService.SendMail(mailContent);
+            var result = await _sendMailUtil.SendMail(mailContent);
 
             if (result.StartsWith("Error"))
             {

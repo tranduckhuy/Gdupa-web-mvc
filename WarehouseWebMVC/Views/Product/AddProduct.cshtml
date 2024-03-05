@@ -1,5 +1,5 @@
-@model WarehouseWebMVC.Models.DTOs.ProductDTO.AddProductDTO
-@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+    @model WarehouseWebMVC.Models.DTOs.ProductDTO.AddProductDTO
+    @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
     ViewData["Title"] = "Products";
@@ -69,7 +69,9 @@
                                                     <div class="form-group">
                                                         <label class="sherah-wc__form-label">Product Name</label>
                                                         <div class="form-group__input">
-                                                            <input asp-for="Name" name="Name" rules="required" class="sherah-wc__form-input" placeholder="Type here" type="text">
+                                                            <input asp-for="Name" name="Name" rules="required"
+                                                                   class="sherah-wc__form-input"
+                                                                   placeholder="Type here" type="text">
                                                         </div>
                                                         <span class="form-message"></span>
                                                     </div>
@@ -77,13 +79,13 @@
                                                 <div class="col-lg-6 col-md-6 col-12">
                                                     <div class="form-group">
                                                         <label class="sherah-wc__form-label">Category*</label>
-                                                        <select asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-group__input" aria-label="Default select example"></select>
+                                                        <select id="category-select" asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-group__input" aria-label="Default select example"></select>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-12">
                                                     <div class="form-group">
                                                         <label class="sherah-wc__form-label">Brand*</label>
-                                                        <select asp-for="BrandId" asp-items="ViewBag.Brands" class="form-group__input" aria-label="Default select example"></select>
+                                                        <select id="brand-select" asp-for="BrandId" asp-items="ViewBag.Brands" class="form-group__input" aria-label="Default select example"></select>
                                                     </div>
                                                 </div>
                                                 <div class="col-12">
@@ -105,15 +107,22 @@
                                             <div class="form-group">
                                                 <label class="sherah-wc__form-label">Add Category</label>
                                                 <div class="form-group__input">
-                                                    <input class="sherah-wc__form-input" placeholder="Type here" type="text" name="p_title">
-                                                    <button class="sherah-btn__add sherah-btn sherah-btn__secondary" type="button">Add</button>
+                                                    <input class="sherah-wc__form-input" placeholder="Type here" type="text" id="category-input" name="categoryName">
+                                                    <button type="button" onclick="addCategory()" class="sherah-btn__add sherah-btn sherah-btn__secondary">Add</button>
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="sherah-wc__form-label">Add Brand</label>
                                                 <div class="form-group__input">
-                                                    <input class="sherah-wc__form-input" placeholder="Type here" type="text" name="p_title">
-                                                    <button class="sherah-btn__add sherah-btn sherah-btn__secondary" type="button">Add</button>
+                                                    <input class="sherah-wc__form-input" placeholder="Type here" type="text" id="brand-input" name="brandName">
+                                                    <button type="button" onclick="addBrand()" class="sherah-btn__add sherah-btn sherah-btn__secondary">Add</button>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="sherah-wc__form-label">Add Unit</label>
+                                                <div class="form-group__input">
+                                                    <input class="sherah-wc__form-input" placeholder="Type here" type="text" id="unit-input" name="unitName">
+                                                    <button type="button" onclick="addUnit()" class="sherah-btn__add sherah-btn sherah-btn__secondary">Add</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -134,7 +143,7 @@
                                                 <div class="col-lg-6 col-md-6 col-12">
                                                     <div class="form-group">
                                                         <label class="sherah-wc__form-label">Unit*</label>
-                                                        <select asp-for="Unit" asp-items="ViewBag.Units" class="form-group__input" aria-label="Default select example"></select>
+                                                        <select id="unit-select" asp-for="Unit" asp-items="ViewBag.Units" class="form-group__input" aria-label="Default select example"></select>
                                                     </div>
                                                 </div>
                                             </div>
@@ -175,8 +184,22 @@
                                                     <div id="progress-container2" style="max-width: 220px; margin: 0 4px;"></div>
                                                 </label>
                                             </div>
-                                            <div id="imgDiv1" class="image-upload-group__single image-upload-group__single--upload" style="cursor:default;"></div>
-                                            <div id="imgDiv2" class="image-upload-group__single image-upload-group__single--upload" style="cursor:default;"></div>
+                                            <div id="imgDiv1" class="image-upload-group__single image-upload-group__single--upload" style="cursor:default;">
+                                                @if (Model != null)
+                                                {
+                                                    <div style="padding:12px;">
+                                                        <img src="@Model.ImageURL1" alt="Product's Image 1" style="max-width:200px;max-height:250px" />
+                                                    </div>
+                                                }
+                                            </div>
+                                            <div id="imgDiv2" class="image-upload-group__single image-upload-group__single--upload" style="cursor:default;">
+                                                @if (Model != null)
+                                                {
+                                                    <div style="padding:12px;">
+                                                        <img src="@Model.ImageURL2" alt="Product's Image 2" style="max-width:200px;max-height:250px" />
+                                                    </div>
+                                                }
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -197,11 +220,14 @@
 </section>
 <script src="/js/lib/progressbar.min.js"></script>
 <script src="/js/lib/tinymce/js/tinymce/tinymce.min.js"></script>
+@*<script src="https://cdn.tiny.cloud/1/91b6oksn0skc1vp1vwcwwi1f0fqzsdvdgoq2aoqa7zpq80j1/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>*@
 <script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
 <script src="/js/firebase/firebaseUpload.js"></script>
 <script src="/js/tinymce-config.js"></script>
 <script src="/js/Validator.js"></script>
+<script src="/js/add-category-brand-unit.js"></script>
 <script async>
     Validator('#add-form');
+    updateUnitDropdown();
 </script>
 

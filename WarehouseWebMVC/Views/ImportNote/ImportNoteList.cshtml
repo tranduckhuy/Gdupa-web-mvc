@@ -1,0 +1,225 @@
+@model WarehouseWebMVC.ViewModels.ImportNoteViewModel
+@{
+    ViewData["Title"] = "ImportNote";
+    var message = TempData["Message"] as string;
+}
+@{
+    var searchType = ViewBag.searchType as string ?? "";
+}
+
+<style>
+    .dataTables_empty {
+        min-width: 1110px;
+        display: flex;
+        justify-content: center;
+    }
+</style>
+<div id="toast"></div>
+@if (!string.IsNullOrEmpty(message))
+{
+    if ("Success".Equals(message))
+    {
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                setTimeout(function () {
+                    toast({
+                        title: "Success",
+                        message: "Success ! Action complete.",
+                        type: "success",
+                        duration: 3000,
+                    });
+                }, 600);
+            });
+        </script>
+    }
+    else if ("Failed".Equals(message))
+    {
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                setTimeout(function () {
+                    toast({
+                        title: "Failed",
+                        message: "Oops! Action failed. Please try again.",
+                        type: "danger",
+                        duration: 3000,
+                    });
+                }, 600);
+            });
+        </script>
+    }
+    else if ("NotFound".Equals(message))
+    {
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                setTimeout(function () {
+                    toast({
+                        title: "Not found!",
+                        message: "No results found for the given search criteria.",
+                        type: "warning",
+                        duration: 3000,
+                    });
+                }, 600);
+            });
+        </script>
+    }
+}
+
+<!-- sherah Dashboard -->
+<section class="sherah-adashboard sherah-show">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="sherah-body">
+                    <!-- Dashboard Inner -->
+                    <div class="sherah-dsinner">
+                        <div class="row mg-top-20">
+                            <div class="col-12 sherah-flex-between">
+                                <!-- Sherah Breadcrumb -->
+                                <div class="sherah-breadcrumb">
+                                    <h2 class="sherah-breadcrumb__title">Import Note list</h2>
+                                    <ul class="sherah-breadcrumb__list">
+                                        <li><a href="/Dashboard/Dashboard">Home</a></li>
+                                        <li class="active"><a href="#!">ImportNote List</a></li>
+                                    </ul>
+                                </div>
+                                <!-- End Sherah Breadcrumb -->
+                            </div>
+                        </div>
+                        <div class="sherah-table sherah-page-inner sherah-border sherah-default-bg mg-top-10" style="padding-top:0">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-8"></div>
+                                <div class="col-sm-12 col-md-4">
+                                    <form method="post" asp-action="SearchImportNote" asp-controller="ImportNote">
+                                        <div id="sherah-table__vendor_filter" class="dataTables_filter">
+                                            <label for="search-input" style="position: relative;">
+                                                <button class="sherah-data-table-label" style="font-size:1rem;position: relative; top:2.7rem; left:18.5rem; right: auto; z-index: 4; border:none;background-color: #F3F4F7;">
+                                                    Search
+                                                </button>
+                                            </label>
+                                            <div class="input-group display-flex" style="position: relative;">
+                                                <select class="col-2" name="searchType" style="height:40px; width: 90px; font-size:0.75rem;color:#666;">
+                                                    <option value="" selected disabled>Search Type</option>
+                                                    <option value="Creator" id="creator_option">Creator</option>
+                                                    <option value="Supplier" id="supplier_option">Supplier</option>
+                                                    <option value="Deliverer" id="deliver_option">Deliver</option>
+                                                </select>
+                                                &nbsp;
+                                                <input style="flex-shrink:0;width:auto;z-index:2;" type="search" name="searchValue" class="col-2 form-control form-control-sm" placeholder="Search" aria-controls="sherah-table__vendor">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <table id="sherah-table__vendor" class="sherah-table__main sherah-table__main-v3" style="border: 1px solid #e2e7f1;">
+                                <!-- sherah Table Head -->
+                                <thead class="sherah-table__head" style="display:block;">
+                                    <tr>
+                                        <th class="sherah-table__column-1 sherah-table__h1" style="width:20%;font-size:16px;padding: 12px 26px 12px 20px;">Import Note Creator</th>
+                                        <th class="sherah-table__column-2 sherah-table__h2" style="width:15%;font-size:16px;padding: 12px 26px 12px 20px;">Supplier Name</th>
+                                        <th class="sherah-table__column-3 sherah-table__h3" style="width:20%;font-size:16px;padding: 12px 26px 12px 20px;">Created Date</th>
+                                        <th class="sherah-table__column-4 sherah-table__h4" style="width:15%;font-size:16px;padding: 12px 26px 12px 20px;">Deliver Name</th>
+                                        <th class="sherah-table__column-5 sherah-table__h5" style="width:10%;font-size:16px;padding: 12px 26px 12px 20px;">Total</th>
+                                        <th class="sherah-table__column-6 sherah-table__h6" style="width:15%;font-size:16px;padding: 12px 26px 12px 20px;">Import Reason</th>
+                                        <th class="sherah-table__column-7 sherah-table__h7" style="width:5%;font-size:16px;padding: 12px 26px 12px 20px;">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="sherah-table__body" style="display:block;max-height:300px;overflow-y:auto;scrollbar-width:thin;">
+                                    @foreach (var ImportNote in Model.ImportNotes)
+                                    {
+                                        <tr>
+                                            <td class="sherah-table__column-1 sherah-table__data-1" style="width:20%;padding:12px 10px 12px 20px;">
+                                                <div class="sherah-language-form__input">
+                                                    <input class="sherah-language-form__check" id="checkbox" name="checkbox" type="checkbox">
+                                                    <p class="crany-table__product--number">@ImportNote.User.Name</p>
+                                                </div>
+                                            </td>
+                                            <td class="sherah-table__column-2 sherah-table__data-2" style="width:15%;padding:12px 10px 12px 16px;">
+                                                <div class="sherah-table__product-content">
+                                                    <p class="sherah-table__product-desc">@ImportNote.Supplier.Name</p>
+                                                </div>
+                                            </td>
+                                            <td class="sherah-table__column-3 sherah-table__data-3" style="width:20%;padding:12px 10px 12px 14px;">
+                                                <p class="sherah-table__product-desc">@ImportNote.CreatedAt</p>
+                                            </td>
+                                            <td class="sherah-table__column-4 sherah-table__data-4" style="width:15%;padding:12px 10px 12px 16px;">
+                                                <div class="sherah-table__product-content">
+                                                    <p class="sherah-table__product-desc">@ImportNote.Deliverer</p>
+                                                </div>
+                                            </td>
+                                            <td class="sherah-table__column-5 sherah-table__data-5" style="width:10%;padding:12px 10px 12px 8px;">
+                                                <div class="sherah-table__product-content">
+                                                    <p class="sherah-table__product-desc">$@ImportNote.Total</p>
+                                                </div>
+                                            </td>
+                                            <td class="sherah-table__column-6 sherah-table__data-6" style="width:15%;padding:12px 10px 12px 17.5px;">
+                                                <div class="sherah-table__product-content">
+                                                    <p class="sherah-table__product-desc">@ImportNote.Reason</p>
+                                                </div>
+                                            </td>
+                                            <td class="sherah-table__column-7 sherah-table__data-7" style="width:5%;min-width:80px;padding:12px 10px 12px 0;display:flex;justify-content:center;">
+                                                <div class="sherah-table__status__group">
+                                                    <a href="/ImportNote/ImportNoteDetail?ImportNoteId=@ImportNote.ImportNoteId" class="sherah-table__action sherah-color1 sherah-color1__bg--opactity">
+                                                        <i class="fa-regular fa-eye"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                            <div class="row" style="margin-top:16px;">
+                                @if (Model.Pageable != null)
+                                {
+                                    <div class="col-sm-12 col-md-5">
+                                        <div class="dataTables_info" id="sherah-table__vendor_info" role="status" aria-live="polite" style="font-weight:500">Total @Model.Pageable.TotalItems ImportNotes</div>
+                                    </div>
+                                }
+                                <div class="col-sm-12 col-md-7">
+                                    @if (Model.Pageable != null)
+                                    {
+                                        <div class="sherah-pagination" style="margin-bottom: 0">
+                                            <ul class="sherah-pagination__list">
+                                                @if (Model.Pageable.CurrentPage > 1)
+                                                {
+                                                    <li class="sherah-pagination__button"><a href="/ImportNote/ImportNoteList?page=@(Model.Pageable.CurrentPage > 1 ? Model.Pageable.CurrentPage - 1 : 1)"><i class="fas fa-angle-left"></i></a></li>
+                                                }
+                                                @for (var i = Model.Pageable.StartPage; i <= Model.Pageable.EndPage; i++)
+                                                {
+                                                    <li class="@(Model.Pageable.CurrentPage == i ? "active" : "")"><a href="/ImportNote/ImportNoteList?page=@i">@i</a></li>
+                                                }
+                                                @if (Model.Pageable.CurrentPage < Model.Pageable.TotalPages)
+                                                {
+                                                    <li class="sherah-pagination__button"><a href="/ImportNote/ImportNoteList?page=@(Model.Pageable.CurrentPage < Model.Pageable.TotalPages ? Model.Pageable.CurrentPage + 1 : Model.Pageable.TotalPages)"><i class="fas fa-angle-right"></i></a></li>
+                                                }
+                                            </ul>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Dashboard Inner -->
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</section>
+<!-- End sherah Dashboard -->
+<script>
+    var searchType = "@searchType";
+    if (searchType) {
+        switch(searchType){
+            case "Creator":
+                document.getElementById("creator_option").setAttribute("selected", "selected");
+                break;
+            case "Supplier":
+                document.getElementById("supplier_option").setAttribute("selected", "selected");
+                break;
+            case "Deliverer":
+                document.getElementById("deliver_option").setAttribute("selected", "selected");
+                break;
+        }
+    }
+</script>

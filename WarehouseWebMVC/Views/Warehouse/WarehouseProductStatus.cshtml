@@ -4,6 +4,13 @@
 }
 @model WarehouseWebMVC.ViewModels.WarehouseViewModel
 
+<style>
+    .dataTables_empty {
+        min-width: 1110px;
+        display: flex;
+        justify-content: center;
+    }
+</style>
 <div id="toast"></div>
 @if (!string.IsNullOrEmpty(message))
 {
@@ -158,7 +165,7 @@
                                    style="padding: 8px 15px; width: 180px; background-color: #6176FE; color:#fff; border-radius: 4px;">Warehouse Import</a>
                             </div>
                         </div>
-                        <div class="sherah-table sherah-page-inner sherah-border sherah-default-bg mg-top-20" style="padding-top:0;">
+                        <div class="sherah-table sherah-page-inner sherah-border sherah-default-bg mg-top-20">
                             <table id="sherah-table__main-product" class="sherah-table__vendor sherah-table__main-v3" style=" border: 1px solid #e2e7f1;">
                                 <!-- sherah Table Head -->
                                 <thead class="sherah-table__head" style="display:block;">
@@ -172,7 +179,7 @@
                                         <th class="sherah-table__column-8" style=" min-width:120px; padding-left:0; font-size: 16px; text-align: center">Total Stock Price</th>
                                     </tr>
                                 </thead>
-                                <tbody class="sherah-table__body" style="display:block;overflow-y:scroll;max-height:300px;">
+                                <tbody class="sherah-table__body" style="display:block;overflow-y:scroll;max-height:350px;">
                                     @foreach (var warehouse in Model.Warehouses)
                                     {
                                         <tr style="height: 20px;">
