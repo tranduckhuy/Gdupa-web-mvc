@@ -10,15 +10,12 @@ public class ErrorController : Controller
     {
         if (statusCode.HasValue)
         {
-            switch (statusCode)
+            return statusCode switch
             {
-                case 404:
-                    return View("404");
-                case 403:
-                    return View("403");
-                default:
-                    return View("500");
-            }
+                404 => View("404"),
+                403 => View("403"),
+                _ => View("500"),
+            };
         }
         else
         {

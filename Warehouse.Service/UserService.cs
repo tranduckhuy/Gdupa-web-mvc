@@ -148,12 +148,7 @@ public class UserService : IUserService
                 Body = _emailHelper.RenderBodyResetPassword(resetLink)
             };
 
-            Thread emailThread = new(() =>
-            {
-                _sendMailUtil.SendMail(mailContent).Wait();
-            });
-
-            emailThread.Start();
+            _ = _sendMailUtil.SendMail(mailContent);
 
             return true;
         }
@@ -184,7 +179,7 @@ public class UserService : IUserService
                 Body = _emailHelper.RenderBodyActive(userEmail, resetLink)
             };
 
-            _ = Task.Run(() => _sendMailUtil.SendMail(mailContent));
+            _ = _sendMailUtil.SendMail(mailContent);
 
             return true;
         }
