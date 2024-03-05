@@ -184,12 +184,7 @@ public class UserService : IUserService
                 Body = _emailHelper.RenderBodyActive(userEmail, resetLink)
             };
 
-            Thread emailThread = new(() =>
-            {
-                _sendMailUtil.SendMail(mailContent).Wait();
-            });
-
-            emailThread.Start();
+            _ = Task.Run(() => _sendMailUtil.SendMail(mailContent));
 
             return true;
         }
