@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using WarehouseWebMVC.Data;
-using WarehouseWebMVC.Models;
-using WarehouseWebMVC.Models.DTOs;
-using WarehouseWebMVC.Services;
+using Warehouse.Domain.DTOs;
+using Warehouse.Domain.Interfaces;
+using Warehouse.Infrastructure;
 using WarehouseWebMVC.AuthenticationFilter;
 
 namespace WarehouseWebMVC.Controllers;
@@ -147,9 +146,4 @@ public class WarehouseController : Controller
         return File(fileBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "WarehouseData.xlsx");
     }
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-    }
 }

@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-using WarehouseWebMVC.Data;
-using WarehouseWebMVC.Models;
-using WarehouseWebMVC.Models.DTOs.UserDTO;
-using WarehouseWebMVC.Service;
-using WarehouseWebMVC.Utils.Helper;
-using WarehouseWebMVC.ViewModels;
+using Warehouse.Domain.DTOs.UserDTO;
+using Warehouse.Domain.Interfaces;
+using Warehouse.Domain.ViewModels;
+using Warehouse.Infrastructure;
+using Warehouse.Infrastructure.Utils.Helper;
 using WarehouseWebMVC.AuthenticationFilter;
 
 namespace WarehouseWebMVC.Controllers;
@@ -240,11 +238,5 @@ public class UserController : Controller
         }
         TempData["Message"] = AppConstant.NOT_FOUND;
         return RedirectToAction("Users");
-    }
-
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }

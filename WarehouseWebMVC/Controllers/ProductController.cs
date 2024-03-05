@@ -1,12 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json.Linq;
-using System.Diagnostics;
-using WarehouseWebMVC.Data;
-using WarehouseWebMVC.Models;
-using WarehouseWebMVC.Models.DTOs.ProductDTO;
-using WarehouseWebMVC.Services;
-using WarehouseWebMVC.ViewModels;
+using Warehouse.Domain.DTOs.ProductDTO;
+using Warehouse.Domain.Interfaces;
+using Warehouse.Domain.ViewModels;
+using Warehouse.Infrastructure;
 using WarehouseWebMVC.AuthenticationFilter;
 
 namespace WarehouseWebMVC.Controllers;
@@ -190,9 +188,4 @@ public class ProductController : Controller
         return RedirectToAction("ProductList");
     }
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-    }
 }

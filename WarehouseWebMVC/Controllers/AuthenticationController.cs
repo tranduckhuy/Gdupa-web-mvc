@@ -1,13 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using WarehouseWebMVC.Data;
-using WarehouseWebMVC.Models;
-using WarehouseWebMVC.Models.Domain;
-using WarehouseWebMVC.Models.DTOs.UserDTO;
-using WarehouseWebMVC.Service;
-using WarehouseWebMVC.Services.Impl;
-using WarehouseWebMVC.Utils.Helper;
+using Warehouse.Domain.DTOs.UserDTO;
+using Warehouse.Domain.Entities;
+using Warehouse.Domain.Interfaces;
+using Warehouse.Infrastructure;
+using Warehouse.Infrastructure.Utils.Helper;
 
 namespace WarehouseWebMVC.Controllers;
 
@@ -209,9 +207,4 @@ public class AuthenticationController : Controller
         }
     }
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-    }
 }
