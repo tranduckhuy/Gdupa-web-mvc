@@ -1,4 +1,4 @@
-@model WarehouseWebMVC.ViewModels.ProductViewModel;
+@model Warehouse.Domain.ViewModels.ProductViewModel;
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
@@ -140,7 +140,7 @@
                                     </tr>
                                 </thead>
                                 <!--style="height: 100%;"-->
-                                <tbody class="sherah-table__body" style="display:block;max-height:300px;overflow-y:auto;">
+                                <tbody class="sherah-table__body" style="display:block;max-height:350px;overflow-y:auto;">
                                     @foreach (var product in Model.Products)
                                     {
                                         <tr>
