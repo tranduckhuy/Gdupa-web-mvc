@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-using WarehouseWebMVC.Data;
-using WarehouseWebMVC.Models;
-using WarehouseWebMVC.Models.DTOs.SupplierDTO;
-using WarehouseWebMVC.Services;
-using WarehouseWebMVC.Utils.Helper;
-using WarehouseWebMVC.ViewModels;
+using Warehouse.Domain.DTOs;
+using Warehouse.Domain.Interfaces;
+using Warehouse.Domain.ViewModels;
+using Warehouse.Infrastructure;
+using Warehouse.Infrastructure.Utils.Helper;
 using WarehouseWebMVC.AuthenticationFilter;
 
 namespace WarehouseWebMVC.Controllers;
@@ -217,9 +215,4 @@ public class SupplierController : Controller
         return RedirectToAction("SupplierArchive");
     }
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-    }
 }

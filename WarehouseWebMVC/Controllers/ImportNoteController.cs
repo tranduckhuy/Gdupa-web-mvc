@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-using WarehouseWebMVC.Data;
-using WarehouseWebMVC.Models;
-using WarehouseWebMVC.Services;
-using WarehouseWebMVC.ViewModels;
+using Warehouse.Domain.Interfaces;
+using Warehouse.Domain.ViewModels;
+using Warehouse.Infrastructure;
 using WarehouseWebMVC.AuthenticationFilter;
 
 namespace WarehouseWebMVC.Controllers;
@@ -96,9 +94,4 @@ public class ImportNoteController : Controller
         return RedirectToAction("ImportNoteList");
     }
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-    }
 }

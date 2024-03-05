@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using WarehouseWebMVC.Models;
 
 namespace WarehouseWebMVC.Controllers;
 
@@ -11,21 +10,16 @@ public class ErrorController : Controller
     {
         if (statusCode.HasValue)
         {
-            switch (statusCode)
+            return statusCode switch
             {
-                case 404:
-                    return View("404");
-                case 500:
-                    return View("500");
-                case 403:
-                    return View("403");
-                default:
-                    return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-            }
+                404 => View("404"),
+                403 => View("403"),
+                _ => View("500"),
+            };
         }
         else
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View("500");
         }
     }
 }

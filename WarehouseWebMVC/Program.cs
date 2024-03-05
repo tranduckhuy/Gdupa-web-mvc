@@ -1,35 +1,23 @@
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Serialization;
 using OfficeOpenXml;
-using WarehouseWebMVC.Data;
-using WarehouseWebMVC.MappingProfiles;
-using WarehouseWebMVC.Service;
-using WarehouseWebMVC.Services;
-using WarehouseWebMVC.Services.Impl;
-using WarehouseWebMVC.Utils.Mail;
-using WarehouseWebMVC.Utils.Helper;
-using WarehouseWebMVC.Utils.Helper.Impl;
+using Warehouse.Infrastructure;
+using Warehouse.Infrastructure.Utils.Mail;
+using Warehouse.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
 ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-    
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<DataContext>(
-		options => options.UseSqlite(builder.Configuration.GetConnectionString("WarehouseDB"))
-	);
+//
+builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddService();
+
+// Mail service
 builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
 builder.Services.AddTransient<SendMailUtil>();
-builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
-builder.Services.AddScoped<IProductService, ProductService>();
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IImportNoteService, ImportNoteSerivce>();
-builder.Services.AddScoped<ISupplierService, SupplierService>();
-builder.Services.AddScoped<IWarehouseService, WarehouseSerivce>();
-builder.Services.AddScoped<IDashboardService, DashboardService>();
-builder.Services.AddScoped<IAddressHelper, AddressHelper>();
-builder.Services.AddScoped<IEmailHelper, EmailHelper>();
+
 
 // Enable CORS
 builder.Services.AddCors(c =>
