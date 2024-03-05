@@ -90,6 +90,7 @@ namespace Warehouse.Infrastructure.Migrations
                     Description = table.Column<string>(type: "TEXT", nullable: false),
                     Price = table.Column<double>(type: "REAL", nullable: false),
                     Unit = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
+                    IsDiscontinued = table.Column<bool>(type: "INTEGER", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
                     ModifiedAt = table.Column<DateTime>(type: "TEXT", nullable: true, defaultValueSql: "CURRENT_TIMESTAMP"),
                     CategoryId = table.Column<long>(type: "INTEGER", nullable: false),
@@ -285,7 +286,7 @@ namespace Warehouse.Infrastructure.Migrations
                     { 5L, "08 Tống Phước Phổ, Cao Ốc Long Thịnh, Phường Ghềnh Ráng, Thành Phố Quy Nhơn, Tỉnh Bình Định", "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky4.jpg?alt=media&token=cbd4f161-7102-4ce1-b9f2-1ccf0c9edf57", "haonnqe170204@fpt.edu.vn", false, "Nguyễn Nhật Hào", "$2y$10$O0/b51uLUnO7W7ewUB1UoOnevFdVLLxQjU3R7PD7fD3LRZcvEAXlC", "0963456785", "FE" },
                     { 6L, "08 Tống Phước Phổ, Cao Ốc Long Thịnh, Phường Ghềnh Ráng, Thành Phố Quy Nhơn, Tỉnh Bình Định", "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky6.webp?alt=media&token=85db917a-6c50-4860-948d-266409314974", "thuanndmqe170240@fpt.edu.vn", false, "Nguyễn Đào Minh Thuận", "$2y$10$yUCV0ag395.rVlDjMTOzzuh9psKpf94DajeJVYgWjuEnIc/4ftpx.", "0963456784", "BE" },
                     { 7L, "08 Tống Phước Phổ, Cao Ốc Long Thịnh, Phường Ghềnh Ráng, Thành Phố Quy Nhơn, Tỉnh Bình Định", "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky6.webp?alt=media&token=85db917a-6c50-4860-948d-266409314974", "nguyendirector@gmail.com", false, "Nguyễn Director", "$2y$10$yUCV0ag395.rVlDjMTOzzuh9psKpf94DajeJVYgWjuEnIc/4ftpx.", "0963456712", "Director" },
-                    { 8L, "08 Tống Phước Phổ, Cao Ốc Long Thịnh, Phường Ghềnh Ráng, Thành Phố Quy Nhơn, Tỉnh Bình Định", "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky6.webp?alt=media&token=85db917a-6c50-4860-948d-266409314974", "ngostaff@gmail.vn", false, "Ngô Staff", "$2y$10$yUCV0ag395.rVlDjMTOzzuh9psKpf94DajeJVYgWjuEnIc/4ftpx.", "0963456711", "Staff" }
+                    { 8L, "08 Tống Phước Phổ, Cao Ốc Long Thịnh, Phường Ghềnh Ráng, Thành Phố Quy Nhơn, Tỉnh Bình Định", "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky6.webp?alt=media&token=85db917a-6c50-4860-948d-266409314974", "ngostaff@gmail.com", false, "Ngô Staff", "$2y$10$yUCV0ag395.rVlDjMTOzzuh9psKpf94DajeJVYgWjuEnIc/4ftpx.", "0963456711", "Staff" }
                 });
 
             migrationBuilder.InsertData(
@@ -310,14 +311,14 @@ namespace Warehouse.Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "Products",
-                columns: new[] { "ProductId", "BrandId", "CategoryId", "Description", "Name", "Price", "Unit" },
+                columns: new[] { "ProductId", "BrandId", "CategoryId", "Description", "IsDiscontinued", "Name", "Price", "Unit" },
                 values: new object[,]
                 {
-                    { 1L, 1L, 1L, "18GB Unified Memory, 512GB SSD Storage. Works with iPhone/iPad; Space Black", "Apple 2023 MacBook Pro Laptop M3 Pro", 1399.99, "Piece" },
-                    { 2L, 1L, 2L, "iPhone 15 Pro Max has a strong and light aerospace-grade titanium design with a textured matte-glass back.&nbsp;", "Apple iPhone 15 Pro Max (512 GB)", 1199.99, "Piece" },
-                    { 3L, 3L, 3L, "Designed by Bruce Kilgore and introduced in 1982, the Air Force 1 was the first-ever basketball shoe to feature Nike Air technology", "Air Force 1", 115.0, "Pair" },
-                    { 4L, 4L, 3L, "With these adidas NMD_R1 shoes, all it takes is seconds. Seconds, and you're comfortable, ready to go, out the door.", "NMD_R1 SHOES", 150.0, "Pair" },
-                    { 5L, 4L, 3L, "More than just a shoe, it's a statement. The adidas Forum hit the scene in '84 and gained major love on both the hardwood and in the music biz.", "FORUM LOW SHOES", 99.989999999999995, "Pair" }
+                    { 1L, 1L, 1L, "18GB Unified Memory, 512GB SSD Storage. Works with iPhone/iPad; Space Black", false, "Apple 2023 MacBook Pro Laptop M3 Pro", 1399.99, "Piece" },
+                    { 2L, 1L, 2L, "iPhone 15 Pro Max has a strong and light aerospace-grade titanium design with a textured matte-glass back.&nbsp;", false, "Apple iPhone 15 Pro Max (512 GB)", 1199.99, "Piece" },
+                    { 3L, 3L, 3L, "Designed by Bruce Kilgore and introduced in 1982, the Air Force 1 was the first-ever basketball shoe to feature Nike Air technology", false, "Air Force 1", 115.0, "Pair" },
+                    { 4L, 4L, 3L, "With these adidas NMD_R1 shoes, all it takes is seconds. Seconds, and you're comfortable, ready to go, out the door.", false, "NMD_R1 SHOES", 150.0, "Pair" },
+                    { 5L, 4L, 3L, "More than just a shoe, it's a statement. The adidas Forum hit the scene in '84 and gained major love on both the hardwood and in the music biz.", false, "FORUM LOW SHOES", 99.989999999999995, "Pair" }
                 });
 
             migrationBuilder.InsertData(

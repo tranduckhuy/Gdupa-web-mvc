@@ -14,6 +14,7 @@ namespace Warehouse.Domain.DTOs.ProductDTO
         public Category Category { get; set; } = null!;
         public long BrandId { get; set; }
         public Brand Brand { get; set; } = null!;
+        public bool IsDiscontinued { get; set; } = false;
         public ICollection<ProductImg> ProductImgs { get; set; } = new List<ProductImg>();
     }
 

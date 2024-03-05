@@ -314,6 +314,9 @@ namespace Warehouse.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("IsDiscontinued")
+                        .HasColumnType("INTEGER");
+
                     b.Property<DateTime?>("ModifiedAt")
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("TEXT")
@@ -348,6 +351,7 @@ namespace Warehouse.Infrastructure.Migrations
                             CategoryId = 1L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "18GB Unified Memory, 512GB SSD Storage. Works with iPhone/iPad; Space Black",
+                            IsDiscontinued = false,
                             Name = "Apple 2023 MacBook Pro Laptop M3 Pro",
                             Price = 1399.99,
                             Unit = "Piece"
@@ -359,6 +363,7 @@ namespace Warehouse.Infrastructure.Migrations
                             CategoryId = 2L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "iPhone 15 Pro Max has a strong and light aerospace-grade titanium design with a textured matte-glass back.&nbsp;",
+                            IsDiscontinued = false,
                             Name = "Apple iPhone 15 Pro Max (512 GB)",
                             Price = 1199.99,
                             Unit = "Piece"
@@ -370,6 +375,7 @@ namespace Warehouse.Infrastructure.Migrations
                             CategoryId = 3L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "Designed by Bruce Kilgore and introduced in 1982, the Air Force 1 was the first-ever basketball shoe to feature Nike Air technology",
+                            IsDiscontinued = false,
                             Name = "Air Force 1",
                             Price = 115.0,
                             Unit = "Pair"
@@ -381,6 +387,7 @@ namespace Warehouse.Infrastructure.Migrations
                             CategoryId = 3L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "With these adidas NMD_R1 shoes, all it takes is seconds. Seconds, and you're comfortable, ready to go, out the door.",
+                            IsDiscontinued = false,
                             Name = "NMD_R1 SHOES",
                             Price = 150.0,
                             Unit = "Pair"
@@ -392,6 +399,7 @@ namespace Warehouse.Infrastructure.Migrations
                             CategoryId = 3L,
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "More than just a shoe, it's a statement. The adidas Forum hit the scene in '84 and gained major love on both the hardwood and in the music biz.",
+                            IsDiscontinued = false,
                             Name = "FORUM LOW SHOES",
                             Price = 99.989999999999995,
                             Unit = "Pair"
@@ -712,7 +720,7 @@ namespace Warehouse.Infrastructure.Migrations
                             Address = "08 Tống Phước Phổ, Cao Ốc Long Thịnh, Phường Ghềnh Ráng, Thành Phố Quy Nhơn, Tỉnh Bình Định",
                             Avatar = "https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/avatar%2Fhusky6.webp?alt=media&token=85db917a-6c50-4860-948d-266409314974",
                             CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "ngostaff@gmail.vn",
+                            Email = "ngostaff@gmail.com",
                             IsLocked = false,
                             Name = "Ngô Staff",
                             Password = "$2y$10$yUCV0ag395.rVlDjMTOzzuh9psKpf94DajeJVYgWjuEnIc/4ftpx.",

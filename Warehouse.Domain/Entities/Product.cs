@@ -22,6 +22,8 @@ namespace Warehouse.Domain.Entities
         [StringLength(20)]
         public string Unit { get; set; } = string.Empty;
 
+        public bool IsDiscontinued { get; set; } = false;
+
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime CreatedAt { get; set; }
 
