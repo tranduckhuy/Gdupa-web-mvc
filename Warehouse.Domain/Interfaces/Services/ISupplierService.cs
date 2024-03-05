@@ -15,5 +15,7 @@ namespace Warehouse.Domain.Interfaces
         bool SupplierOwnsInformation(string supplierEmail, long supplierId);
         bool Deactive(long supplierId);
         bool Active(long supplierId);
+        int CountSupplierNotArchived();
+        int CountSupplierArchived();
     }
 }

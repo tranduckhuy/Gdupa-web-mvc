@@ -226,13 +226,14 @@
                                     <ul class="menu-bar__one-dropdown">
                                         <li>
                                             <a asp-area="" asp-controller="Product" asp-action="ProductList">
-                                                <span class="menu-bar__text">
-                                                    <span class="menu-bar__name">Product List</span>
-                                                </span>
+                                                <span class="menu-bar__text"><span class="menu-bar__name">Product List</span></span>
                                             </a>
                                         </li>
-                                        @*<li><a href="product-list.html"><span class="menu-bar__text"><span
-                                        class="menu-bar__name">Product Details</span></span></a></li>*@
+                                        <li>
+                                            <a asp-area="" asp-controller="Product" asp-action="StopSellingProducts">
+                                                <span class="menu-bar__text"><span class="menu-bar__name">Stop Selling List</span></span>
+                                            </a>
+                                        </li>
                                         <li>
                                             <a asp-area="" asp-controller="Product" asp-action="AddProduct">
                                                 <span class="menu-bar__text"><span class="menu-bar__name">Upload Product</span></span>

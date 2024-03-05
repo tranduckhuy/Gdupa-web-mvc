@@ -89,7 +89,7 @@ public static class SeedData
             {
                 UserId = 8,
                 Name = "Ngô Staff",
-                Email = "ngostaff@gmail.vn",
+                Email = "ngostaff@gmail.com",
                 Address = "08 Tống Phước Phổ, Cao Ốc Long Thịnh, Phường Ghềnh Ráng, Thành Phố Quy Nhơn, Tỉnh Bình Định",
                 Phone = "0963456711",
                 Password = "$2y$10$yUCV0ag395.rVlDjMTOzzuh9psKpf94DajeJVYgWjuEnIc/4ftpx.",

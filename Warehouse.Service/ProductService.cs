@@ -57,14 +57,30 @@ public class ProductService : IProductService
         }
     }
 
-    public bool Delete(long productId)
+    public bool DiscontinuedProduct(long productId)
     {
         var product = _dataContext.Products.Find(productId);
         if (product == null)
         {
             return false;
         }
-        _dataContext.Products.Remove(product);
+        product.IsDiscontinued = true;
+
+        _dataContext.Entry(product).State = EntityState.Modified;
+        _dataContext.SaveChanges();
+        return true;
+    }
+
+    public bool ContinueProduct(long productId)
+    {
+        var product = _dataContext.Products.Find(productId);
+        if (product == null)
+        {
+            return false;
+        }
+        product.IsDiscontinued = false;
+
+        _dataContext.Entry(product).State = EntityState.Modified;
         _dataContext.SaveChanges();
         return true;
     }
@@ -189,13 +205,13 @@ public class ProductService : IProductService
         switch (searchType)
         {
             case "Category":
-                searchProduct = searchProduct.Where(p => p.Category.Name.ToUpper().Contains(searchValue.ToUpper()));
+                searchProduct = searchProduct.Where(p => p.Category.Name.ToUpper().Contains(searchValue.ToUpper()) && p.IsDiscontinued == false);
                 break;
             case "Brand":
-                searchProduct = searchProduct.Where(p => p.Brand.Name.ToUpper().Contains(searchValue.ToUpper()));
+                searchProduct = searchProduct.Where(p => p.Brand.Name.ToUpper().Contains(searchValue.ToUpper()) && p.IsDiscontinued == false);
                 break;
             default:
-                searchProduct = searchProduct.Where(p => p.Name.ToUpper().Contains(searchValue.ToUpper()));
+                searchProduct = searchProduct.Where(p => p.Name.ToUpper().Contains(searchValue.ToUpper()) && p.IsDiscontinued == false);
                 break;
         }
 
@@ -207,6 +223,36 @@ public class ProductService : IProductService
         }
         return null!;
     }
+
+    public ProductViewModel SearchProductLock(string searchType, string searchValue)
+    {
+        IQueryable<Product> searchProduct = _dataContext.Products
+            .Include(p => p.Category)
+            .Include(p => p.Brand)
+            .Include(p => p.ProductImgs);
+
+        switch (searchType)
+        {
+            case "Category":
+                searchProduct = searchProduct.Where(p => p.Category.Name.ToUpper().Contains(searchValue.ToUpper()) && p.IsDiscontinued == true);
+                break;
+            case "Brand":
+                searchProduct = searchProduct.Where(p => p.Brand.Name.ToUpper().Contains(searchValue.ToUpper()) && p.IsDiscontinued == true);
+                break;
+            default:
+                searchProduct = searchProduct.Where(p => p.Name.ToUpper().Contains(searchValue.ToUpper()) && p.IsDiscontinued == true);
+                break;
+        }
+
+        if (searchProduct.Any())
+        {
+            var searchProductsDto = _mapper.Map<List<ProductDTO>>(searchProduct.ToList());
+            var productViewModel = new ProductViewModel { Products = searchProductsDto };
+            return productViewModel;
+        }
+        return null!;
+    }
+
     public bool AddCategory(string categoryName)
     {
         try
@@ -244,6 +290,18 @@ public class ProductService : IProductService
         {
             return false;
         }
+    }
+
+    public int CountProductLock()
+    {
+        var lockedProducts = _dataContext.Products.Count(s => s.IsDiscontinued);
+        return lockedProducts;
+    }
+
+    public int CountProductNotLock()
+    {
+        var unlockedProducts = _dataContext.Products.Count(s => !s.IsDiscontinued);
+        return unlockedProducts;
     }
 
     private bool IsCategoryNameExist(string categoryName)

@@ -258,6 +258,18 @@ namespace WarehouseWebMVC.Services
             }
         }
 
+        public int CountSupplierNotArchived()
+        {
+            var unlockedSuppliers = _dataContext.Suppliers.Count(s => !s.IsLocked);
+            return unlockedSuppliers;
+        }
+
+        public int CountSupplierArchived()
+        {
+            var lockedSuppliers = _dataContext.Suppliers.Count(s => s.IsLocked);
+            return lockedSuppliers;
+        }
+
         private static string ExtractCityFromAddress(string fullAddress)
         {
             string[] addressParts = fullAddress.Split(',');
