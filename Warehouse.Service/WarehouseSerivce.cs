@@ -28,7 +28,8 @@ namespace WarehouseWebMVC.Services
 
         private bool IsExisted(long productId)
         {
-            return _dataContext.Products.FirstOrDefault(p => p.ProductId == productId) != null ? true : false;
+            return _dataContext.Products
+                .FirstOrDefault(p => p.ProductId == productId && p.IsDiscontinued == false) != null ? true : false;
         }
 
         private bool ImportProducts(ICollection<WarehouseE> importProducts)
@@ -40,7 +41,6 @@ namespace WarehouseWebMVC.Services
 
             lock (_lockObject)
             {
-
                 try
                 {
                     using var transaction = _dataContext.Database.BeginTransaction();
@@ -127,6 +127,7 @@ namespace WarehouseWebMVC.Services
         public async Task<WarehouseImportViewModel> GetDataViewImportAsync()
         {
             var products = await _dataContext.Products
+                .Where(p => p.IsDiscontinued == false)
                 .ToListAsync();
             var productsDTO = _mapper.Map<List<ProductDTO>>(products);
             var suppliers = await _dataContext.Suppliers.ToListAsync();
@@ -153,6 +154,7 @@ namespace WarehouseWebMVC.Services
                                 .AsNoTracking()
                                 .Where(w => w.Quantity < 10 && w.Quantity > 0 && w.CreatedAt >= startDate && w.CreatedAt <= endDate)
                                 .Include(p => p.Product)
+                                .Where(w => w.Product.IsDiscontinued == false || (w.Product.IsDiscontinued && w.Quantity > 0))
                                 .OrderBy(w => w.WarehouseId)
                                 .ToListAsync();
                     warehouseViewModel.LowAlert = warehouse.Count;
@@ -163,6 +165,7 @@ namespace WarehouseWebMVC.Services
                                 .AsNoTracking()
                                 .Where(w => w.Quantity == 0 && w.CreatedAt >= startDate && w.CreatedAt <= endDate)
                                 .Include(p => p.Product)
+                                .Where(w => w.Product.IsDiscontinued == false || (w.Product.IsDiscontinued && w.Quantity > 0))
                                 .OrderBy(w => w.WarehouseId)
                                 .ToListAsync();
                     warehouseViewModel.OutOfStock = warehouse.Count;
@@ -187,6 +190,7 @@ namespace WarehouseWebMVC.Services
                                 .AsNoTracking()
                                 .Where(w => w.CreatedAt >= startDate && w.CreatedAt <= endDate)
                                 .Include(p => p.Product)
+                                .Where(w => w.Product.IsDiscontinued == false || (w.Product.IsDiscontinued && w.Quantity > 0))
                                 .OrderBy(w => w.WarehouseId);
 
             switch (searchType)
@@ -247,6 +251,8 @@ namespace WarehouseWebMVC.Services
                 var warehouse = _dataContext.Warehouse
                     .AsNoTracking()
                     .Where(w => w.CreatedAt >= startDate && w.CreatedAt <= endDate)
+                    .Include(p => p.Product)
+                    .Where(w => w.Product.IsDiscontinued == false || (w.Product.IsDiscontinued && w.Quantity > 0))
                     .OrderBy(w => w.WarehouseId)
                     .ToList();
 
@@ -308,6 +314,7 @@ namespace WarehouseWebMVC.Services
                 .AsNoTracking()
                 .Where(w => w.CreatedAt >= startDate && w.CreatedAt <= endDate)
                 .Include(p => p.Product)
+                .Where(w => w.Product.IsDiscontinued == false || (w.Product.IsDiscontinued && w.Quantity > 0))
                 .OrderBy(w => w.WarehouseId)
                 .ToList();
 
@@ -382,6 +389,7 @@ namespace WarehouseWebMVC.Services
                 .Skip(skipAmount)
                 .Take(pageSize)
                 .Include(p => p.Product)
+                .Where(w => w.Product.IsDiscontinued == false || (w.Product.IsDiscontinued && w.Quantity > 0))
                 .OrderBy(w => w.WarehouseId)
                 .ToListAsync();
 
