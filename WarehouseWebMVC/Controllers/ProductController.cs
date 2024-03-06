@@ -30,6 +30,24 @@ public class ProductController : Controller
             Response.Headers.Add("Pragma", "no-cache");
             Response.Headers.Add("Expires", "0");
             ProductViewModel productViewModel = _productService.GetAll(page);
+            ViewBag.Count = _productService.CountProductNotLock();
+            return View(productViewModel);
+        }
+        TempData["Message"] = AppConstant.MESSAGE_NOT_LOGIN;
+        return RedirectToAction("Login", "Authentication");
+    }
+
+    [Filter]
+    [HttpGet]
+    public IActionResult StopSellingProducts(int page = 1)
+    {
+        if (HttpContext.Session.GetString("User") != null)
+        {
+            Response.Headers.Add("Cache-Control", "no-store, no-cache, must-revalidate, post-check=0, pre-check=0");
+            Response.Headers.Add("Pragma", "no-cache");
+            Response.Headers.Add("Expires", "0");
+            ProductViewModel productViewModel = _productService.GetAll(page);
+            ViewBag.Count = _productService.CountProductLock();
             return View(productViewModel);
         }
         TempData["Message"] = AppConstant.MESSAGE_NOT_LOGIN;
@@ -160,15 +178,26 @@ public class ProductController : Controller
     }
 
     [HttpGet]
-    public IActionResult DeleteProduct(long productId)
+    public IActionResult DiscontinuedProduct(long productId)
     {
-        if (_productService.Delete(productId))
+        if (_productService.DiscontinuedProduct(productId))
         {
             TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
             return RedirectToAction("ProductList");
         }
         TempData["Message"] = AppConstant.MESSAGE_FAILED;
         return RedirectToAction("ProductList");
+    }
+
+    public IActionResult ContinueProduct(long productId)
+    {
+        if (_productService.ContinueProduct(productId))
+        {
+            TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
+            return RedirectToAction("StopSellingProducts");
+        }
+        TempData["Message"] = AppConstant.MESSAGE_FAILED;
+        return RedirectToAction("StopSellingProducts");
     }
 
     [HttpPost]
@@ -181,11 +210,30 @@ public class ProductController : Controller
             {
                 TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
                 ViewBag.SearchType = searchType;
+                ViewBag.Count = _productService.CountProductNotLock();
                 return View("ProductList", searchProducts);
             }
         }
         TempData["Message"] = AppConstant.NOT_FOUND;
         return RedirectToAction("ProductList");
+    }
+
+    [HttpPost]
+    public IActionResult SearchProductLock(string searchType, string searchValue)
+    {
+        if (ModelState.IsValid)
+        {
+            var searchProducts = _productService.SearchProductLock(searchType, searchValue);
+            if (searchProducts != null)
+            {
+                TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
+                ViewBag.SearchType = searchType;
+                ViewBag.Count = _productService.CountProductLock();
+                return View("StopSellingProducts", searchProducts);
+            }
+        }
+        TempData["Message"] = AppConstant.NOT_FOUND;
+        return RedirectToAction("StopSellingProducts");
     }
 
 }

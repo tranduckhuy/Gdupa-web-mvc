@@ -45,6 +45,7 @@ public class SupplierController : Controller
             Response.Headers.Add("Pragma", "no-cache");
             Response.Headers.Add("Expires", "0");
             SupplierViewModel supplierViewModel = _supplierService.GetAll(page);
+            ViewBag.Count = _supplierService.CountSupplierNotArchived();
             return View(supplierViewModel);
         }
         TempData["Message"] = AppConstant.MESSAGE_NOT_LOGIN;
@@ -60,6 +61,7 @@ public class SupplierController : Controller
             Response.Headers.Add("Pragma", "no-cache");
             Response.Headers.Add("Expires", "0");
             SupplierViewModel supplierViewModel = _supplierService.GetAll(page);
+            ViewBag.Count = _supplierService.CountSupplierArchived();
             return View(supplierViewModel);
         }
         TempData["Message"] = AppConstant.MESSAGE_NOT_LOGIN;
@@ -191,6 +193,7 @@ public class SupplierController : Controller
             {
                 TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
                 ViewBag.SearchType = searchType;
+                ViewBag.Count = _supplierService.CountSupplierNotArchived();
                 return View("SupplierList", searchSuppliers);
             }
         }
@@ -208,6 +211,7 @@ public class SupplierController : Controller
             {
                 TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
                 ViewBag.SearchType = searchType;
+                ViewBag.Count = _supplierService.CountSupplierArchived();
                 return View("SupplierArchive", searchSuppliers);
             }
         }

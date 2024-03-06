@@ -1,4 +1,4 @@
-﻿function handleDelete(id) {
+﻿function handleDiscontinued(id) {
     Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this action!",
@@ -6,10 +6,35 @@
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
+        confirmButtonText: 'Yes, discontinue it!'
     }).then((result) => {
         if (result.isConfirmed) {
-            window.location.href = '/Product/DeleteProduct?productId='+id;
+            window.location.href = '/Product/DiscontinuedProduct?productId='+id;
+        }
+        if (!result.isConfirmed) {
+            Swal.fire({
+                title: 'Canceled',
+                text: 'Product is safe for now :D',
+                icon: 'error',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'OK'
+            });
+        }
+    });
+}
+
+function handleContinue(id) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this action!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, continue it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = '/Product/ContinueProduct?productId=' + id;
         }
         if (!result.isConfirmed) {
             Swal.fire({
