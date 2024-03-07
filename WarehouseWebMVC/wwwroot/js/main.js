@@ -88,7 +88,6 @@ menuItemsWithChildren.forEach((menuItem) => {
         localStorage.setItem('menuState', JSON.stringify(menuState));
     });
 });
-
 function restoreMenuState() {
     const menuState = JSON.parse(localStorage.getItem('menuState'));
     if (menuState) {
