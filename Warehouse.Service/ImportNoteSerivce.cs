@@ -3,11 +3,12 @@ using Microsoft.CodeAnalysis;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Warehouse.Domain;
-using Warehouse.Domain.DTOs;
 using Warehouse.Domain.Entities;
-using Warehouse.Domain.Interfaces;
-using Warehouse.Domain.ViewModels;
 using Warehouse.Infrastructure.Data;
+using Warehouse.Service.Interfaces.Services;
+using Warehouse.Shared;
+using Warehouse.Shared.DTOs;
+using Warehouse.Shared.ViewModels;
 
 namespace WarehouseWebMVC.Services
 {
@@ -37,6 +38,7 @@ namespace WarehouseWebMVC.Services
                             ReasonDetail = importProducts.ReasonDetail,
                             UserId = importProducts.UserId,
                             SupplierId = importProducts.SupplierId,
+                            CreatedAt = DateTime.UtcNow.ToLocalTime()
                         };
 
                         _dataContext.ImportNotes.Add(importNote);

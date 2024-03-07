@@ -1,14 +1,13 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
-using Warehouse.Domain;
-using Warehouse.Domain.DTOs.ProductDTO;
 using Warehouse.Domain.Entities;
-using Warehouse.Domain.Interfaces;
-using Warehouse.Domain.ViewModels;
 using Warehouse.Infrastructure.Data;
+using Warehouse.Service.Interfaces.Services;
+using Warehouse.Shared;
+using Warehouse.Shared.DTOs.ProductDTO;
+using Warehouse.Shared.ViewModels;
 
 namespace WarehouseWebMVC.Services;
 

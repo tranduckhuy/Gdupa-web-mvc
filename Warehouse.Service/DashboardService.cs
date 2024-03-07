@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Warehouse.Domain.DTOs;
-using Warehouse.Domain.Interfaces;
 using Warehouse.Infrastructure.Data;
+using Warehouse.Service.Interfaces.Services;
+using Warehouse.Shared.DTOs;
 
 namespace WarehouseWebMVC.Services
 {
