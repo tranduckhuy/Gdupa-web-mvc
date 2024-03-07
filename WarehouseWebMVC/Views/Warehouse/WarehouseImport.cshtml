@@ -59,6 +59,7 @@
         .select2-search__field:focus {
             min-height: 36px !important;
         }
+
     .select2-results__message {
         text-align: center;
     }
@@ -298,6 +299,7 @@
 <script src="/js/tinymce-config.js"></script>
 <script src="/js/warehouse-import-config.js"></script>
 <script src="/js/Validator.js"></script>
+<script src="/js/select2-config.js"></script>
 <script>
     function replaceComma(price) {
         return price.toFixed(2).replace(',', '.');
@@ -307,12 +309,7 @@
     Validator('#import-form');
 </script>
 <script>
-    $('#supplierId').select2({
-        placeholder: "Choose a Supplier",
-        allowClear: true,
-        closeOnSelect: true,
-        selectOnClose: false
-    });
+    initializeSelectSearch('#supplierId', "Choose a Supplier");
 </script>
 
 
