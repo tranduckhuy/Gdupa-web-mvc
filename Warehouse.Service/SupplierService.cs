@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using Warehouse.Domain;
-using Warehouse.Domain.DTOs;
 using Warehouse.Domain.Entities;
-using Warehouse.Domain.Interfaces;
-using Warehouse.Domain.ViewModels;
 using Warehouse.Infrastructure.Data;
+using Warehouse.Shared.DTOs;
+using Warehouse.Shared;
+using Warehouse.Shared.ViewModels;
+using Warehouse.Service.Interfaces.Services;
 
 namespace WarehouseWebMVC.Services
 {

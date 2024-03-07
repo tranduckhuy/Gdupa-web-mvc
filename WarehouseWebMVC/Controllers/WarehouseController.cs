@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using Warehouse.Domain.DTOs;
-using Warehouse.Domain.Interfaces;
 using Warehouse.Infrastructure;
+using Warehouse.Service.Interfaces.Services;
+using Warehouse.Shared.DTOs;
 using WarehouseWebMVC.AuthenticationFilter;
 
 namespace WarehouseWebMVC.Controllers;

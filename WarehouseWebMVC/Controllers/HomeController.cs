@@ -1,9 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-using Warehouse.Domain.DTOs.UserDTO;
-using Warehouse.Domain.Interfaces;
+using Warehouse.Shared.DTOs.UserDTO;
 using Warehouse.Infrastructure;
 using Warehouse.Infrastructure.Utils.Helper;
+using Warehouse.Service.Interfaces.Services;
 
 namespace WarehouseWebMVC.Controllers;
 

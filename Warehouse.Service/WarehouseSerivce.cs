@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
-using Warehouse.Domain;
-using Warehouse.Domain.DTOs;
-using Warehouse.Domain.DTOs.ProductDTO;
 using Warehouse.Domain.Entities;
-using Warehouse.Domain.Interfaces;
-using Warehouse.Domain.ViewModels;
 using Warehouse.Infrastructure;
 using Warehouse.Infrastructure.Data;
+using Warehouse.Service.Interfaces.Services;
+using Warehouse.Shared;
+using Warehouse.Shared.DTOs;
+using Warehouse.Shared.DTOs.ProductDTO;
+using Warehouse.Shared.ViewModels;
 
 namespace WarehouseWebMVC.Services
 {
@@ -67,21 +67,23 @@ namespace WarehouseWebMVC.Services
                                         Quantity = importProduct.Quantity,
                                         QuantityAtBeginPeriod = 0,
                                         QuantityImport = importProduct.Quantity,
-                                        PriceImport = importProduct.PriceImport
+                                        PriceImport = importProduct.PriceImport,
+                                        CreatedAt = DateTime.UtcNow.ToLocalTime()
                                     }
                                 );
                                 break;
                             }
                             else
                             {
-                                var currentQuarter = GetQuarter(DateTime.Now);
+                                var currentQuarter = GetQuarter(DateTime.UtcNow.ToLocalTime());
                                 var existingProduct = product.FirstOrDefault(p => (p.CreatedAt.Month - 1) / 3 + 1 == currentQuarter
-                                                            && p.CreatedAt.Year == DateTime.Now.Year);
+                                                            && p.CreatedAt.Year == DateTime.UtcNow.ToLocalTime().Year);
                                 if (existingProduct != null)
                                 {
                                     existingProduct.Quantity += importProduct.Quantity;
                                     existingProduct.QuantityImport += importProduct.Quantity;
                                     existingProduct.PriceImport = importProduct.PriceImport;
+                                    existingProduct.CreatedAt = DateTime.UtcNow.ToLocalTime();
                                 }
                             }
                             _dataContext.SaveChanges();
@@ -138,8 +140,8 @@ namespace WarehouseWebMVC.Services
 
         public async Task<WarehouseViewModel> GetByStatusAsync(string status)
         {
-            int quarter = (DateTime.UtcNow.Month - 1) / 3 + 1;
-            int year = DateTime.UtcNow.Year;
+            int quarter = (DateTime.UtcNow.ToLocalTime().Month - 1) / 3 + 1;
+            int year = DateTime.UtcNow.ToLocalTime().Year;
 
             DateTime startDate = new(year, (quarter - 1) * 3 + 1, 1);
             DateTime endDate = startDate.AddMonths(3).AddDays(-1);
@@ -181,8 +183,8 @@ namespace WarehouseWebMVC.Services
 
         public WarehouseViewModel SearchProduct(string searchType, string searchValue)
         {
-            int quarter = (DateTime.UtcNow.Month - 1) / 3 + 1;
-            int year = DateTime.UtcNow.Year;
+            int quarter = (DateTime.UtcNow.ToLocalTime().Month - 1) / 3 + 1;
+            int year = DateTime.UtcNow.ToLocalTime().Year;
 
             DateTime startDate = new(year, (quarter - 1) * 3 + 1, 1);
             DateTime endDate = startDate.AddMonths(3).AddDays(-1);
@@ -217,8 +219,8 @@ namespace WarehouseWebMVC.Services
 
         public bool CheckNewQuarter()
         {
-            int currentQuarter = (DateTime.UtcNow.Month - 1) / 3 + 1;
-            int currentYear = DateTime.UtcNow.Year;
+            int currentQuarter = (DateTime.UtcNow.ToLocalTime().Month - 1) / 3 + 1;
+            int currentYear = DateTime.UtcNow.ToLocalTime().Year;
 
             var latestQuarter = _dataContext.Warehouse
                 .OrderByDescending(w => w.CreatedAt)
@@ -303,8 +305,8 @@ namespace WarehouseWebMVC.Services
         {
             if (quarter == 0 && year == 0)
             {
-                quarter = (DateTime.UtcNow.Month - 1) / 3 + 1;
-                year = DateTime.UtcNow.Year;
+                quarter = (DateTime.UtcNow.ToLocalTime().Month - 1) / 3 + 1;
+                year = DateTime.UtcNow.ToLocalTime().Year;
             }
 
             DateTime startDate = new(year, (quarter - 1) * 3 + 1, 1);
@@ -364,11 +366,11 @@ namespace WarehouseWebMVC.Services
         {
             if (quarter == 0 && year == 0)
             {
-                quarter = (DateTime.UtcNow.Month - 1) / 3 + 1;
-                year = DateTime.UtcNow.Year;
+                quarter = (DateTime.UtcNow.ToLocalTime().Month - 1) / 3 + 1;
+                year = DateTime.UtcNow.ToLocalTime().Year;
             }
 
-            if (quarter < 1 || quarter > 4 || year < 1990 || year > DateTime.UtcNow.Year) { return null!; }
+            if (quarter < 1 || quarter > 4 || year < 1990 || year > DateTime.UtcNow.ToLocalTime().Year) { return null!; }
 
             const int pageSize = 5;
             if (page < 1)
@@ -393,8 +395,8 @@ namespace WarehouseWebMVC.Services
                 .OrderBy(w => w.WarehouseId)
                 .ToListAsync();
 
-            int currentQuarter = (DateTime.UtcNow.Month - 1) / 3 + 1;
-            startDate = new DateTime(DateTime.UtcNow.Year, (currentQuarter - 1) * 3 + 1, 1);
+            int currentQuarter = (DateTime.UtcNow.ToLocalTime().Month - 1) / 3 + 1;
+            startDate = new DateTime(DateTime.UtcNow.ToLocalTime().Year, (currentQuarter - 1) * 3 + 1, 1);
             endDate = startDate.AddMonths(3).AddDays(-1);
 
             int lowAlert = await _dataContext.Warehouse.CountAsync(w => w.Quantity < 10 && w.Quantity > 0 && w.CreatedAt >= startDate && w.CreatedAt <= endDate);
@@ -419,8 +421,8 @@ namespace WarehouseWebMVC.Services
 
         public async Task<bool> CheckNewQuarterAsync()
         {
-            int currentQuarter = (DateTime.UtcNow.Month - 1) / 3 + 1;
-            int currentYear = DateTime.UtcNow.Year;
+            int currentQuarter = (DateTime.UtcNow.ToLocalTime().Month - 1) / 3 + 1;
+            int currentYear = DateTime.UtcNow.ToLocalTime().Year;
 
             var latestQuarter = await _dataContext.Warehouse
                 .OrderByDescending(w => w.CreatedAt)

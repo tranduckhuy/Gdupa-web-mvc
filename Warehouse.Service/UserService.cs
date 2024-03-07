@@ -3,15 +3,14 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
-using System.Threading;
-using Warehouse.Domain;
-using Warehouse.Domain.DTOs.UserDTO;
 using Warehouse.Domain.Entities;
-using Warehouse.Domain.Interfaces;
-using Warehouse.Domain.ViewModels;
 using Warehouse.Infrastructure.Data;
 using Warehouse.Infrastructure.Utils.Helper;
 using Warehouse.Infrastructure.Utils.Mail;
+using Warehouse.Service.Interfaces.Services;
+using Warehouse.Shared;
+using Warehouse.Shared.DTOs.UserDTO;
+using Warehouse.Shared.ViewModels;
 
 namespace WarehouseWebMVC.Services;
 
@@ -396,7 +395,7 @@ public class UserService : IUserService
 
             var userEntity = _mapper.Map<User>(addUserDTO);
 
-            userEntity.CreatedAt = DateTime.Now;
+            userEntity.CreatedAt = DateTime.UtcNow;
             userEntity.Address = addUserDTO.Address;
 
             _dataContext.Users.Add(userEntity);
