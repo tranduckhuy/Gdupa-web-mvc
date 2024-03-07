@@ -5,7 +5,6 @@
         closeOnSelect: true,
         selectOnClose: false
     });
-
     $(selector).one('select2:open', function (e) {
         var searchInput = document.querySelector('.select2-search__field');
         if (searchInput) {
