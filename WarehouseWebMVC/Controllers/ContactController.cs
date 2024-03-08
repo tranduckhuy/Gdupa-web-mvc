@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using Warehouse.Domain.ViewModels;
 using Warehouse.Infrastructure;
 using Warehouse.Infrastructure.Utils.Mail;
+using Warehouse.Shared.ViewModels;
 
 namespace WarehouseWebMVC.Controllers;
 

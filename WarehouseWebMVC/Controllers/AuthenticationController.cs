@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-using Warehouse.Domain.DTOs.UserDTO;
 using Warehouse.Domain.Entities;
-using Warehouse.Domain.Interfaces;
 using Warehouse.Infrastructure;
 using Warehouse.Infrastructure.Utils.Helper;
+using Warehouse.Service.Interfaces.Services;
+using Warehouse.Shared.DTOs.UserDTO;
 
 namespace WarehouseWebMVC.Controllers;
 

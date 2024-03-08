@@ -1,4 +1,4 @@
-@model Warehouse.Domain.DTOs.ProductDTO.AddProductDTO;
+@model  Warehouse.Shared.DTOs.ProductDTO.AddProductDTO;
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
@@ -14,6 +14,62 @@
     input[type=number]::-webkit-outer-spin-button {
         -webkit-appearance: none;
         margin: 0;
+    }
+
+    span {
+        transition: none;
+    }
+
+    .select2-container .select2-selection--single {
+        width: 100%;
+        padding: 5px 50px 5px 20px;
+        background: #FAFAFA;
+        color: #5A5A5A;
+        border: 1px solid #E4F2FF;
+        border-radius: 4px;
+        padding-left: 30px;
+        height: 55px;
+        padding-right: 30px;
+        background-color: #fff;
+    }
+
+    .select2-selection__rendered {
+        color: #5A5A5A;
+        line-height: 45px !important;
+    }
+
+    .select2-selection__clear {
+        height: 45px !important;
+        margin-right: 0 !important;
+    }
+
+    .select2-selection__arrow {
+        height: 52px !important;
+    }
+
+    .select2-selection__placeholder {
+        color: #5A5A5A !important;
+    }
+
+    .select2-dropdown {
+        border: 1px solid #E4F2FF !important;
+        box-shadow: 1px 1px 2px #BABABA;
+    }
+
+    .select2-container--default .select2-search--dropdown .select2-search__field {
+        border: 1px solid #E4F2FF !important;
+    }
+
+    .select2-search__field {
+        height: 36px !important;
+    }
+
+        .select2-search__field:focus {
+            min-height: 36px !important;
+        }
+
+    .select2-results__message {
+        text-align: center;
     }
 </style>
 
@@ -79,13 +135,17 @@
                                                 <div class="col-lg-6 col-md-6 col-12">
                                                     <div class="form-group">
                                                         <label class="sherah-wc__form-label">Category*</label>
-                                                        <select id="category-select" asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-group__input" aria-label="Default select example"></select>
+                                                        <select id="category-select" asp-for="CategoryId" asp-items="ViewBag.Categories" class="form-group__input" aria-label="Default select example">
+                                                            <option></option>
+                                                        </select>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 col-md-6 col-12">
                                                     <div class="form-group">
                                                         <label class="sherah-wc__form-label">Brand*</label>
-                                                        <select id="brand-select" asp-for="BrandId" asp-items="ViewBag.Brands" class="form-group__input" aria-label="Default select example"></select>
+                                                        <select id="brand-select" asp-for="BrandId" asp-items="ViewBag.Brands" class="form-group__input" aria-label="Default select example">
+                                                            <option></option>
+                                                        </select>
                                                     </div>
                                                 </div>
                                                 <div class="col-12">
@@ -143,7 +203,9 @@
                                                 <div class="col-lg-6 col-md-6 col-12">
                                                     <div class="form-group">
                                                         <label class="sherah-wc__form-label">Unit*</label>
-                                                        <select id="unit-select" asp-for="Unit" asp-items="ViewBag.Units" class="form-group__input" aria-label="Default select example"></select>
+                                                        <select id="unit-select" asp-for="Unit" asp-items="ViewBag.Units" class="form-group__input" aria-label="Default select example">
+                                                            <option></option>
+                                                        </select>
                                                     </div>
                                                 </div>
                                             </div>
@@ -218,16 +280,24 @@
         </div>
     </div>
 </section>
+<!-- End sherah Dashboard -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
 <script src="/js/lib/progressbar.min.js"></script>
 <script src="/js/lib/tinymce/js/tinymce/tinymce.min.js"></script>
-@*<script src="https://cdn.tiny.cloud/1/91b6oksn0skc1vp1vwcwwi1f0fqzsdvdgoq2aoqa7zpq80j1/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>*@
-<script src="https://www.gstatic.com/firebasejs/4.2.0/firebase.js"></script>
 <script src="/js/firebase/firebaseUpload.js"></script>
 <script src="/js/tinymce-config.js"></script>
 <script src="/js/Validator.js"></script>
 <script src="/js/add-category-brand-unit.js"></script>
+<script src="/js/select2-config.js"></script>
 <script async>
     Validator('#add-form');
     updateUnitDropdown();
+</script>
+<script>
+    initializeSelectSearch('#category-select', "Choose a Category");
+    initializeSelectSearch('#brand-select', "Choose a Brand");
+    initializeSelectSearch('#unit-select', "Choose a Unit");
 </script>
 

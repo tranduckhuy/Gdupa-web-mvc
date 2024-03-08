@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using Warehouse.Domain.DTOs;
-using Warehouse.Domain.DTOs.ProductDTO;
-using Warehouse.Domain.DTOs.UserDTO;
+using Warehouse.Shared.DTOs.UserDTO;
 using Warehouse.Domain.Entities;
+using Warehouse.Shared.DTOs;
+using Warehouse.Shared.DTOs.ProductDTO;
 
 namespace Warehouse.Infrastructure.MappingProfiles;
 

@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Warehouse.Domain.Interfaces;
 using Warehouse.Infrastructure.Data;
 using Warehouse.Infrastructure.MappingProfiles;
 using Warehouse.Infrastructure.Utils.Helper.Impl;
@@ -7,6 +6,7 @@ using Warehouse.Infrastructure.Utils.Helper;
 using Warehouse.Infrastructure.Utils.Mail;
 using WarehouseWebMVC.Services;
 using Microsoft.Extensions.Configuration;
+using Warehouse.Service.Interfaces.Services;
 
 namespace Warehouse.Service
 {

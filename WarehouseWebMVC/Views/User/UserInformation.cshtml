@@ -1,32 +1,56 @@
 @using System.Text
-@model Warehouse.Domain.DTOs.UserDTO.UserInformationDTO
+@model Warehouse.Shared.DTOs.UserDTO.UserInformationDTO
 @{
     ViewData["Title"] = "User";
     var message = TempData["Message"] as string;
 }
+@functions {
+    private string MaskEmail(string email)
+    {
+        if (string.IsNullOrEmpty(email))
+        {
+            return email;
+        }
+
+        StringBuilder maskedEmail = new StringBuilder(email);
+        for (int i = 0; i < email.Length; i++)
+        {
+            if (email[i] == '@')
+            {
+                break;
+            }
+            else if (i < email.IndexOf('@') - 1 && i > 0)
+            {
+                maskedEmail[i] = '*';
+            }
+        }
+
+        return maskedEmail.ToString();
+    }
+}
+
 @{
-    int startEmail = Math.Min(3, Model.Email.Length);
-    int endEmail = Math.Max(11, Model.Email.Length - 11);
     int startPhone = Math.Min(0, Model.Phone.Length);
     int endPhone = Math.Max(2, Model.Phone.Length - 2);
 }
 @functions {
-    private string MaskString(string str, int start, int end)
+    private string MaskPhone(string phone, int start, int end)
     {
-        if (string.IsNullOrEmpty(str))
+        if (string.IsNullOrEmpty(phone))
         {
-            return str;
+            return phone;
         }
 
-        StringBuilder maskedString = new StringBuilder(str);
+        StringBuilder maskedPhone = new StringBuilder(phone);
         for (int i = start; i < end; i++)
         {
-            maskedString[i] = '*';
+            maskedPhone[i] = '*';
         }
 
-        return maskedString.ToString();
+        return maskedPhone.ToString();
     }
 }
+
 <style>
     #name_input {
         max-height: 0;
@@ -210,12 +234,12 @@
                                                                                     </li>
                                                                                     <li class="sherah-dflex">
                                                                                         <h4 class="sherah-profile-info__title">Email :</h4>
-                                                                                        <p class="sherah-profile-info__text">@MaskString(Model.Email, startEmail, endEmail)</p>
+                                                                                        <p class="sherah-profile-info__text">@MaskEmail(Model.Email)</p>
                                                                                     </li>
                                                                                     <li class="sherah-dflex">
                                                                                         <h4 class="sherah-profile-info__title">Phone :</h4>
                                                                                         <p class="sherah-profile-info__text">
-                                                                                            @MaskString(Model.Phone, startPhone, endPhone)
+                                                                                            @MaskPhone(Model.Phone, startPhone, endPhone)
                                                                                             &nbsp;
                                                                                             <span>
                                                                                                 <a href="#" onclick="toggleEditPhone(event)" style="color: #6176FE">Edit</a>
