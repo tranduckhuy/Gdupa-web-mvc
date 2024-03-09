@@ -6,9 +6,11 @@
         selectOnClose: false
     });
     $(selector).one('select2:open', function (e) {
-        var searchInput = document.querySelector('.select2-search__field');
-        if (searchInput) {
-            searchInput.setAttribute('placeholder', "Search...");
+        var searchInputs = document.querySelectorAll('.select2-search__field');
+        if (searchInputs) {
+            searchInputs.forEach(function (input) {
+                input.setAttribute('placeholder', 'Search...');
+            });
         }
     });
 }
