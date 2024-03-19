@@ -198,7 +198,11 @@ public class SupplierController : Controller
             }
         }
         TempData["Message"] = AppConstant.NOT_FOUND;
-        return RedirectToAction("SupplierList");
+        ViewBag.SearchType = searchType;
+        ViewBag.Count = _supplierService.CountSupplierNotArchived();
+        var page = 1;
+        var allSupplier = _supplierService.GetAll(page);
+        return View("SupplierList", allSupplier);
     }
 
     [HttpPost]
@@ -216,7 +220,11 @@ public class SupplierController : Controller
             }
         }
         TempData["Message"] = AppConstant.NOT_FOUND;
-        return RedirectToAction("SupplierArchive");
+        ViewBag.SearchType = searchType;
+        ViewBag.Count = _supplierService.CountSupplierArchived();
+        var page = 1;
+        var allSupplier = _supplierService.GetAll(page);
+        return View("SupplierArchive", allSupplier);
     }
 
 }

@@ -138,10 +138,14 @@
                                             <div class="sherah-pcats__bar">
                                                 <div class="sherah-pcats__list list-group " id="list-tab"
                                                      role="tablist">
-                                                    <a class="list-group-item active" data-bs-toggle="list"
-                                                       href="#tab_1" role="tab">About</a>
-                                                    <a class="list-group-item" data-bs-toggle="list" href="#tab_4"
-                                                       role="tab">Edit Profile</a>
+                                                    <a class="list-group-item active" 
+                                                       data-bs-toggle="list"
+                                                       href="#tab_1" role="tab"
+                                                       style="border:1px solid #E2E7F1">About</a>
+                                                    <a class="list-group-item" 
+                                                       data-bs-toggle="list" 
+                                                       href="#tab_2" role="tab"
+                                                       style="border:1px solid #E2E7F1">Edit Profile</a>
                                                 </div>
                                             </div>
 
@@ -156,10 +160,10 @@
                                                             <h3 class="sharah-profile__title mg-btm-10">Biodata</h3>
                                                             <p class="sharah-profile__text">
 
-                                                                @Model.Name is a seasoned financial service provider with decades 
-                                                                of experience in the industry. With dedication and extensive knowledge, 
-                                                                she has built a solid reputation for delivering flexible and effective 
-                                                                financial solutions to various businesses. Professionalism, commitment 
+                                                                @Model.Name is a seasoned financial service provider with decades
+                                                                of experience in the industry. With dedication and extensive knowledge,
+                                                                she has built a solid reputation for delivering flexible and effective
+                                                                financial solutions to various businesses. Professionalism, commitment
                                                                 to client success, and flexibility in thinking are prominent characteristics of @Model.Name.
                                                             </p>
                                                             <div class="sharah-profile__meta mg-top-40">
@@ -253,137 +257,140 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="tab-pane fade" id="tab_4" role="tabpanel"
+                                                <div class="tab-pane fade" id="tab_2" role="tabpanel"
                                                      aria-labelledby="nav-home-tab">
-                                                    <div class="row">
-                                                        <div class="col-12">
-                                                            <!-- Sign in Form -->
-                                                            <form class="sherah-wc__form-main sherah-wc__form-profile sherah-form-main--v2 p-0"
-                                                                  id="update-supplier-form"
-                                                                  method="post" asp-controller="Supplier" asp-action="UpdateSupplier">
-                                                                <div class="row">
-                                                                    <div class="col-lg-12 col-md-12 col-12">
-                                                                        <div class="form-group">
-                                                                            <label class="sherah-wc__form-label">Full-Name</label>
-                                                                            <div class="form-group__input">
-                                                                                <input asp-for="SupplierId" value="@Model.SupplierId" type="text" style="display:none;" readonly />
-                                                                                <input asp-for="Avatar" type="text" id="avatarHidden" style="display:none;" readonly />
-                                                                                <input asp-for="Background" type="text" id="backgroundHidden" style="display:none;" readonly />
-                                                                                <input class="sherah-wc__form-input"
-                                                                                       asp-for="Name"
-                                                                                       value="@Model.Name"
-                                                                                       placeholder="Type here" type="text"
-                                                                                       name="Name" rules="required">
-                                                                            </div>
-                                                                            <span class="form-message"></span>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-lg-6 col-md-6 col-12">
-                                                                        <div class="form-group">
-                                                                            <label class="sherah-wc__form-label">Phone</label>
-                                                                            <div class="form-group__input">
-                                                                                <input asp-for="Phone" name="Phone"
-                                                                                       value="@Model.Phone"
-                                                                                       class="sherah-wc__form-input" rules="required|max:10|phone"
-                                                                                       placeholder="Type here" type="text">
-                                                                            </div>
-                                                                            <span class="form-message"></span>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-lg-6 col-md-6 col-12">
-                                                                        <div class="form-group">
-                                                                            <label class="sherah-wc__form-label">Fax</label>
-                                                                            <div class="form-group__input">
-                                                                                <input class="sherah-wc__form-input"
-                                                                                       asp-for="Fax"
-                                                                                       value="@Model.Fax"
-                                                                                       placeholder="Type here"
-                                                                                       type="text" name="Fax"
-                                                                                       rules="required|min:8|max:8">
-                                                                            </div>
-                                                                            <span class="form-message"></span>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-12">
-                                                                        <div class="form-group">
-                                                                            <label class="sherah-wc__form-label">Email Address</label>
-                                                                            <div class="form-group__input">
-                                                                                <input class="sherah-wc__form-input"
-                                                                                       asp-for="Email"
-                                                                                       value="@Model.Email"
-                                                                                       placeholder="Type here"
-                                                                                       type="text" name="Email"
-                                                                                       rules="required|email">
-                                                                            </div>
-                                                                            <span class="form-message"></span>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-lg-6 col-md-12 col-12">
-                                                                        <div class="form-group">
-                                                                            <label class="sherah-wc__form-label">Street</label>
-                                                                            <div class="form-group__input">
-                                                                                <input class="sherah-wc__form-input"
-                                                                                       asp-for="Street"
-                                                                                       id="street-input"
-                                                                                       placeholder="Type here"
-                                                                                       type="text" name="Street"
-                                                                                       rules="required">
-                                                                            </div>
-                                                                            <span class="form-message"></span>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-lg-6 col-md-12 col-12">
-                                                                        <div class="form-group">
-                                                                            <label class="sherah-wc__form-label">Apartment</label>
-                                                                            <div class="form-group__input">
-                                                                                <input class="sherah-wc__form-input"
-                                                                                       asp-for="Apartment"
-                                                                                       id="apartment-input"
-                                                                                       placeholder="Type here"
-                                                                                       type="text" name="Apartment">
-                                                                            </div>
-                                                                            <span class="form-message"></span>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-lg-4 col-md-6 col-12">
-                                                                        <div class="form-group">
-                                                                            <label class="sherah-wc__form-label">Province*</label>
-                                                                            <select asp-for="Province" id="city">
-                                                                                <option value="" selected id="province-option"></option>
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-lg-4 col-md-6 col-12">
-                                                                        <div class="form-group">
-                                                                            <label class="sherah-wc__form-label">District*</label>
-                                                                            <select asp-for="District" id="district">
-                                                                                <option value="" selected id="district-option"></option>
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-lg-4 col-md-6 col-12">
-                                                                        <div class="form-group">
-                                                                            <label class="sherah-wc__form-label">Ward*</label>
-                                                                            <select asp-for="Ward" id="ward">
-                                                                                <option value="" selected id="ward-option"></option>
-                                                                            </select>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+                                                    <form class="sherah-wc__form-main sherah-wc__form-profile sherah-form-main--v2 p-0"
+                                                          id="update-supplier-form"
+                                                          method="post" asp-controller="Supplier" asp-action="UpdateSupplier">
+                                                        <div class="sherah-border" style="border-radius:4px;">
+                                                            <div class="row" style="padding:30px;">
+                                                                <div class="col-12">
+                                                                    <h4 class="form-title m-0">Basic Information</h4>
 
-                                                                <div class="form-group mg-top-30 sherah-dflex sherah-dflex-gap-30 justify-content-end">
-                                                                    <button type="submit"
-                                                                            class="sherah-btn sherah-btn__primary">
-                                                                        Save
-                                                                    </button>
-                                                                    <a href="/Supplier/SupplierList" class="sherah-btn sherah-btn__third">
-                                                                        Cancel
-                                                                    </a>
+                                                                    <div class="row">
+                                                                        <div class="col-lg-12 col-md-12 col-12">
+                                                                            <div class="form-group">
+                                                                                <label class="sherah-wc__form-label">Full-Name</label>
+                                                                                <div class="form-group__input">
+                                                                                    <input asp-for="SupplierId" value="@Model.SupplierId" type="text" style="display:none;" readonly />
+                                                                                    <input asp-for="Avatar" type="text" id="avatarHidden" style="display:none;" readonly />
+                                                                                    <input asp-for="Background" type="text" id="backgroundHidden" style="display:none;" readonly />
+                                                                                    <input class="sherah-wc__form-input"
+                                                                                           asp-for="Name"
+                                                                                           value="@Model.Name"
+                                                                                           placeholder="Type here" type="text"
+                                                                                           name="Name" rules="required">
+                                                                                </div>
+                                                                                <span class="form-message"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-lg-6 col-md-6 col-12">
+                                                                            <div class="form-group">
+                                                                                <label class="sherah-wc__form-label">Phone</label>
+                                                                                <div class="form-group__input">
+                                                                                    <input asp-for="Phone" name="Phone"
+                                                                                           value="@Model.Phone"
+                                                                                           class="sherah-wc__form-input" rules="required|max:10|phone"
+                                                                                           placeholder="Type here" type="text">
+                                                                                </div>
+                                                                                <span class="form-message"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-lg-6 col-md-6 col-12">
+                                                                            <div class="form-group">
+                                                                                <label class="sherah-wc__form-label">Fax</label>
+                                                                                <div class="form-group__input">
+                                                                                    <input class="sherah-wc__form-input"
+                                                                                           asp-for="Fax"
+                                                                                           value="@Model.Fax"
+                                                                                           placeholder="Type here"
+                                                                                           type="text" name="Fax"
+                                                                                           rules="required|min:8|max:8">
+                                                                                </div>
+                                                                                <span class="form-message"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-12">
+                                                                            <div class="form-group">
+                                                                                <label class="sherah-wc__form-label">Email Address</label>
+                                                                                <div class="form-group__input">
+                                                                                    <input class="sherah-wc__form-input"
+                                                                                           asp-for="Email"
+                                                                                           value="@Model.Email"
+                                                                                           placeholder="Type here"
+                                                                                           type="text" name="Email"
+                                                                                           rules="required|email">
+                                                                                </div>
+                                                                                <span class="form-message"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-lg-6 col-md-12 col-12">
+                                                                            <div class="form-group">
+                                                                                <label class="sherah-wc__form-label">Street</label>
+                                                                                <div class="form-group__input">
+                                                                                    <input class="sherah-wc__form-input"
+                                                                                           asp-for="Street"
+                                                                                           id="street-input"
+                                                                                           placeholder="Type here"
+                                                                                           type="text" name="Street"
+                                                                                           rules="required">
+                                                                                </div>
+                                                                                <span class="form-message"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-lg-6 col-md-12 col-12">
+                                                                            <div class="form-group">
+                                                                                <label class="sherah-wc__form-label">Apartment</label>
+                                                                                <div class="form-group__input">
+                                                                                    <input class="sherah-wc__form-input"
+                                                                                           asp-for="Apartment"
+                                                                                           id="apartment-input"
+                                                                                           placeholder="Type here"
+                                                                                           type="text" name="Apartment">
+                                                                                </div>
+                                                                                <span class="form-message"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-lg-4 col-md-6 col-12">
+                                                                            <div class="form-group">
+                                                                                <label class="sherah-wc__form-label">Province*</label>
+                                                                                <select asp-for="Province" id="city">
+                                                                                    <option value="" selected id="province-option"></option>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-lg-4 col-md-6 col-12">
+                                                                            <div class="form-group">
+                                                                                <label class="sherah-wc__form-label">District*</label>
+                                                                                <select asp-for="District" id="district">
+                                                                                    <option value="" selected id="district-option"></option>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-lg-4 col-md-6 col-12">
+                                                                            <div class="form-group">
+                                                                                <label class="sherah-wc__form-label">Ward*</label>
+                                                                                <select asp-for="Ward" id="ward">
+                                                                                    <option value="" selected id="ward-option"></option>
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- End Sign in Form -->
                                                                 </div>
-                                                            </form>
-                                                            <!-- End Sign in Form -->
+                                                            </div>
                                                         </div>
-                                                    </div>
+                                                        <div class="form-group mg-top-30 sherah-dflex sherah-dflex-gap-30 justify-content-end"
+                                                             style="margin-top:30px;">
+                                                            <button type="submit"
+                                                                    class="sherah-btn sherah-btn__primary">
+                                                                Save
+                                                            </button>
+                                                            <a href="/Supplier/SupplierList" class="sherah-btn sherah-btn__third">
+                                                                Cancel
+                                                            </a>
+                                                        </div>
+                                                    </form>
                                                 </div>
 
                                             </div>
