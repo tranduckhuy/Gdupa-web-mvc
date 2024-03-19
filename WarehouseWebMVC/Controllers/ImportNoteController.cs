@@ -91,7 +91,10 @@ public class ImportNoteController : Controller
             }
         }
         TempData["Message"] = AppConstant.NOT_FOUND;
-        return RedirectToAction("ImportNoteList");
+        ViewBag.SearchType = searchType;
+        var page = 1;
+        var allImportNote = _importNoteService.GetAll(page);
+        return View("ImportNoteList", allImportNote);
     }
 
 }

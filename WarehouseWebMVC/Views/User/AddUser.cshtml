@@ -158,7 +158,7 @@
                                                     <div class="form-group">
                                                         <label class="sherah-wc__form-label">Password</label>
                                                         <div class="form-group__input">
-                                                            <input asp-for="Password" name="Password" id="pass" class="sherah-wc__form-input" rules="required|max:16|number|lower|upper|special"
+                                                            <input asp-for="Password" name="Password" id="pass" class="sherah-wc__form-input" rules="required|min:8|max:16|number|lower|upper|special"
                                                                    placeholder="Type here" type="password">
                                                         </div>
                                                         <span class="form-message"></span>

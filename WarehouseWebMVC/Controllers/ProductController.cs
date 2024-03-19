@@ -215,7 +215,12 @@ public class ProductController : Controller
             }
         }
         TempData["Message"] = AppConstant.NOT_FOUND;
-        return RedirectToAction("ProductList");
+        ViewBag.SearchType = searchType;
+        ViewBag.Count = _productService.CountProductNotLock();
+        var page = 1;
+        var isContinue = true;
+        var allProduct = _productService.GetLimit(page, isContinue);
+        return View("ProductList", allProduct);
     }
 
     [HttpPost]
@@ -233,7 +238,12 @@ public class ProductController : Controller
             }
         }
         TempData["Message"] = AppConstant.NOT_FOUND;
-        return RedirectToAction("StopSellingProducts");
+        ViewBag.SearchType = searchType;
+        ViewBag.Count = _productService.CountProductLock();
+        var page = 1;
+        var isContinue = false;
+        var allProduct = _productService.GetLimit(page, isContinue);
+        return View("StopSellingProducts", allProduct);
     }
 
 }

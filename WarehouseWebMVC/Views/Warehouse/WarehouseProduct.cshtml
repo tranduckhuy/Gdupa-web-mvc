@@ -13,9 +13,7 @@
     }
 
     .dataTables_empty {
-        min-width: 1110px;
-        display: flex;
-        justify-content: center;
+        text-align: center !important;
     }
 </style>
 
@@ -254,7 +252,7 @@
                                         <label style="margin-top: 18px;">
                                             <select name="sherah-table__vendor_length" id="quarter-select"
                                                     aria-controls="sherah-table__vendor" class="form-select form-select-sm"
-                                                    style="height:40px; width: 120px; font-size:0.75rem;color:#666;">
+                                                    style="height:40px;min-width:130px;font-size:0.75rem;color:#666;">
                                                 <option value="1" selected="@(1 == Model.Quarter ? "selected" : null)">
                                                     First Quarter
                                                 </option>
@@ -272,7 +270,7 @@
                                         <label>
                                             <select name="sherah-table__vendor_length" id="year-select"
                                                     aria-controls="sherah-table__vendor" class="form-select form-select-sm"
-                                                    style="height:40px; width: 90px; font-size:0.75rem;color:#666;">
+                                                    style="height:40px;min-width:60px; font-size:0.75rem;color:#666;">
                                                 @foreach (var year in Model.ImportYears)
                                                 {
                                                     <option value="@year"
