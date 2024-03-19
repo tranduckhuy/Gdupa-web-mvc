@@ -29,7 +29,7 @@ public class SupplierController : Controller
             Response.Headers.Add("Cache-Control", "no-store, no-cache, must-revalidate, post-check=0, pre-check=0");
             Response.Headers.Add("Pragma", "no-cache");
             Response.Headers.Add("Expires", "0");
-            SupplierViewModel supplierViewModel = _supplierService.GetAll(page);
+            SupplierViewModel supplierViewModel = _supplierService.GetLimit(page, false);
             return View(supplierViewModel);
         }
         TempData["Message"] = AppConstant.MESSAGE_NOT_LOGIN;
@@ -44,7 +44,7 @@ public class SupplierController : Controller
             Response.Headers.Add("Cache-Control", "no-store, no-cache, must-revalidate, post-check=0, pre-check=0");
             Response.Headers.Add("Pragma", "no-cache");
             Response.Headers.Add("Expires", "0");
-            SupplierViewModel supplierViewModel = _supplierService.GetAll(page);
+            SupplierViewModel supplierViewModel = _supplierService.GetLimit(page, false);
             ViewBag.Count = _supplierService.CountSupplierNotArchived();
             return View(supplierViewModel);
         }
@@ -60,7 +60,7 @@ public class SupplierController : Controller
             Response.Headers.Add("Cache-Control", "no-store, no-cache, must-revalidate, post-check=0, pre-check=0");
             Response.Headers.Add("Pragma", "no-cache");
             Response.Headers.Add("Expires", "0");
-            SupplierViewModel supplierViewModel = _supplierService.GetAll(page);
+            SupplierViewModel supplierViewModel = _supplierService.GetLimit(page, true);
             ViewBag.Count = _supplierService.CountSupplierArchived();
             return View(supplierViewModel);
         }
@@ -188,7 +188,7 @@ public class SupplierController : Controller
     {
         if (ModelState.IsValid)
         {
-            var searchSuppliers = _supplierService.SearchSupplier(searchType, searchValue);
+            var searchSuppliers = _supplierService.SearchSupplier(searchType, searchValue, false);
             if (searchSuppliers != null)
             {
                 TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
@@ -206,7 +206,7 @@ public class SupplierController : Controller
     {
         if (ModelState.IsValid)
         {
-            var searchSuppliers = _supplierService.SearchSupplierArchive(searchType, searchValue);
+            var searchSuppliers = _supplierService.SearchSupplier(searchType, searchValue, true);
             if (searchSuppliers != null)
             {
                 TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;

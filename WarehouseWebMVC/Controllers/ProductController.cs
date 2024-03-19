@@ -29,7 +29,7 @@ public class ProductController : Controller
             Response.Headers.Add("Cache-Control", "no-store, no-cache, must-revalidate, post-check=0, pre-check=0");
             Response.Headers.Add("Pragma", "no-cache");
             Response.Headers.Add("Expires", "0");
-            ProductViewModel productViewModel = _productService.GetAll(page);
+            ProductViewModel productViewModel = _productService.GetLimit(page, false);
             ViewBag.Count = _productService.CountProductNotLock();
             return View(productViewModel);
         }
@@ -46,7 +46,7 @@ public class ProductController : Controller
             Response.Headers.Add("Cache-Control", "no-store, no-cache, must-revalidate, post-check=0, pre-check=0");
             Response.Headers.Add("Pragma", "no-cache");
             Response.Headers.Add("Expires", "0");
-            ProductViewModel productViewModel = _productService.GetAll(page);
+            ProductViewModel productViewModel = _productService.GetLimit(page, true);
             ViewBag.Count = _productService.CountProductLock();
             return View(productViewModel);
         }

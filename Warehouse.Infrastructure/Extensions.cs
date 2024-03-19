@@ -12,8 +12,11 @@ namespace Warehouse.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
+            //services.AddDbContext<DataContext>(options
+            //    => options.UseSqlite(configuration.GetConnectionString("WarehouseDB"),
+            //    b => b.MigrationsAssembly("Warehouse.Infrastructure")));
             services.AddDbContext<DataContext>(options
-                => options.UseSqlite(configuration.GetConnectionString("WarehouseDB"),
+                => options.UseSqlServer(configuration.GetConnectionString("WarehouseDB"),
                 b => b.MigrationsAssembly("Warehouse.Infrastructure")));
 
             return services;

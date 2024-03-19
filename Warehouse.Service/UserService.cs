@@ -267,8 +267,7 @@ public class UserService : IUserService
                 break;
 
             default:
-                var query = $"SELECT * FROM Users WHERE {searchType} COLLATE NOCASE LIKE '%' || @searchValue || '%'";
-                searchUser = _dataContext.Users.FromSqlRaw(query, new SqliteParameter("@searchValue", searchValue));
+                searchUser = searchUser.Where(u => u.Name.ToUpper().Contains(searchValue.ToUpper()));
                 break;
         }
 

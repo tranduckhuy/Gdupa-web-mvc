@@ -384,6 +384,10 @@ namespace WarehouseWebMVC.Services
             var totalProducts = await _dataContext.Warehouse.CountAsync(w => w.CreatedAt >= startDate && w.CreatedAt <= endDate);
             var pageable = new Pageable(totalProducts, page, pageSize);
             int skipAmount = (pageable.CurrentPage - 1) * pageSize;
+            if (skipAmount < 0)
+            {
+                skipAmount = 0;
+            }
 
             var warehouse = await _dataContext.Warehouse
                 .AsNoTracking()

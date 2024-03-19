@@ -39,26 +39,32 @@ public class DataContext : DbContext
         // Default DateTime
         modelBuilder.Entity<User>()
             .Property(e => e.CreatedAt)
-            .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            .HasDefaultValueSql("CURRENT_TIMESTAMP")
+            .HasColumnType("datetime");
 
         modelBuilder.Entity<Product>()
             .Property(e => e.CreatedAt)
-            .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            .HasDefaultValueSql("CURRENT_TIMESTAMP")
+            .HasColumnType("datetime");
 
         modelBuilder.Entity<Product>()
             .Property(e => e.ModifiedAt)
-            .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            .HasDefaultValueSql("CURRENT_TIMESTAMP")
+            .HasColumnType("datetime");
 
         modelBuilder.Entity<ImportNote>()
             .Property(e => e.CreatedAt)
-            .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            .HasDefaultValueSql("CURRENT_TIMESTAMP")
+            .HasColumnType("datetime");
 
         modelBuilder.Entity<ExpenseReport>()
             .Property(e => e.CreatedAt)
-            .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            .HasDefaultValueSql("CURRENT_TIMESTAMP")
+            .HasColumnType("datetime");
         modelBuilder.Entity<WarehouseE>()
             .Property(e => e.CreatedAt)
-            .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            .HasDefaultValueSql("CURRENT_TIMESTAMP")
+            .HasColumnType("datetime");
         // ---
 
         {
