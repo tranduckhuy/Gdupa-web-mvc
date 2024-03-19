@@ -214,12 +214,12 @@ public class ProductController : Controller
                 return View("ProductList", searchProducts);
             }
         }
+
         TempData["Message"] = AppConstant.NOT_FOUND;
         ViewBag.SearchType = searchType;
         ViewBag.Count = _productService.CountProductNotLock();
         var page = 1;
-        var isContinue = true;
-        var allProduct = _productService.GetLimit(page, isContinue);
+        var allProduct = _productService.GetLimit(page, false);
         return View("ProductList", allProduct);
     }
 

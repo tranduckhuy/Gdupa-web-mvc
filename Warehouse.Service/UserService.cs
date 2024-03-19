@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Warehouse.Domain.Entities;
 using Warehouse.Infrastructure.Data;
@@ -258,6 +259,10 @@ public class UserService : IUserService
 
     public UserViewModel SearchUser(string searchType, string searchValue)
     {
+        if (string.IsNullOrEmpty(searchType) || string.IsNullOrEmpty(searchValue))
+            return null!;
+
+
         IQueryable<User> searchUser = _dataContext.Users;
 
         switch (searchType)
@@ -266,8 +271,8 @@ public class UserService : IUserService
                 searchUser = searchUser.Where(u => u.Email.ToUpper().Contains(searchValue.ToUpper()));
                 break;
 
-            default:
-                searchUser = searchUser.Where(u => u.Name.ToUpper().Contains(searchValue.ToUpper()));
+            default: 
+                searchUser = searchUser.Where(s => s.Name.ToUpper().Contains(searchValue.ToUpper()));
                 break;
         }
 
