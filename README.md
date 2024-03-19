@@ -41,4 +41,6 @@ dotnet run
 open http://localhost:5158
 
 ### Our Contributors ✨
-
+<a href="https://github.com/tranduckhuy/Gdupa-web-mvc/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=tranduckhuy/Gdupa-web-mvc" />
+</a>
