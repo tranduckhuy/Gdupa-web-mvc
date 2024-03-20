@@ -147,8 +147,12 @@
                                             <tr>
                                                 <td class="sherah-table__column-1 sherah-table__data-1" style="min-width:320px;padding:12px 16px 12px 12px;text-align:left;">
                                                     <div class="sherah-language-form__input">
-                                                        <input class="sherah-language-form__check" id="checkbox" name="checkbox" type="checkbox">
-                                                        <p class="crany-table__product--number"><a href="/Product/ProductDetail?productId=@product.ProductId" class="sherah-color1" style="font-size: 1rem;">@product.Name</a></p>
+                                                        <p class="crany-table__product--number">
+                                                            <a href="/Product/ProductDetail?productId=@product.ProductId"
+                                                               class="sherah-color1" style="font-size: 1rem;">
+                                                                @product.Name
+                                                            </a>
+                                                        </p>
                                                     </div>
                                                 </td>
                                                 <td class="sherah-table__column-3 sherah-table__data-3" style="min-width:80px;padding:16px;text-align:left;">
@@ -171,13 +175,13 @@
                                                 </td>
                                                 <td class="sherah-table__column-7 sherah-table__data-7" style="min-width:150px;padding:12px 12px 12px 0;margin-left:10px;">
                                                     <div class="sherah-table__status__group" style="justify-content:center">
-                                                        <a href="/Product/ProductDetail?productId=@product.ProductId" class="sherah-table__action sherah-color1 sherah-color1__bg--opactity">
+                                                        <a href="/Product/ProductDetail?productId=@product.ProductId" title="Detail" class="sherah-table__action sherah-color1 sherah-color1__bg--opactity">
                                                             <i class="fa-regular fa-eye"></i>
                                                         </a>
-                                                        <a href="/Product/UpdateProduct?productId=@product.ProductId" class="sherah-table__action sherah-color4 sherah-color4__bg--opactity">
+                                                        <a href="/Product/UpdateProduct?productId=@product.ProductId" title="Update" class="sherah-table__action sherah-color4 sherah-color4__bg--opactity">
                                                             <i class="fa-regular fa-pen-to-square"></i>
                                                         </a>
-                                                        <a href="#" onclick="handleContinue(@product.ProductId)" class="sherah-table__action sherah-color3 sherah-color3__bg--opactity">
+                                                        <a href="#" onclick="handleContinue(@product.ProductId)" title="Unlock" class="sherah-table__action sherah-color3 sherah-color3__bg--opactity">
                                                             <i class="fa-solid fa-lock-open"></i>
                                                         </a>
                                                     </div>

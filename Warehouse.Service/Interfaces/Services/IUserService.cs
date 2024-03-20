@@ -28,6 +28,9 @@ namespace Warehouse.Service.Interfaces.Services
 
         bool ActiveByEmail(string email, string expiryTime);
 
+        bool PromotedUser(long userId);
+        bool DemotedUser(long userId);
+
         UserViewModel GetAll(int page);
 
         UserViewModel SearchUser(string searchType, string searchValue);

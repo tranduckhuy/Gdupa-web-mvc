@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.Sqlite;
 using System.Diagnostics;
 
 namespace WarehouseWebMVC.Controllers;
@@ -8,16 +9,28 @@ public class ErrorController : Controller
     [Route("/Error/Error/{statusCode}")]
     public IActionResult Error(int? statusCode)
     {
-        if (statusCode.HasValue)
+        try
         {
-            return statusCode switch
+            if (statusCode.HasValue)
             {
-                404 => View("404"),
-                403 => View("403"),
-                _ => View("500"),
-            };
+                return statusCode switch
+                {
+                    404 => View("404"),
+                    403 => View("403"),
+                    500 => View("500"),
+                    _ => View("500")
+                };
+            }
+            else
+            {
+                return View("500");
+            }
         }
-        else
+        catch (SqliteException)
+        {
+            return View("500");
+        }
+        catch (Exception)
         {
             return View("500");
         }
