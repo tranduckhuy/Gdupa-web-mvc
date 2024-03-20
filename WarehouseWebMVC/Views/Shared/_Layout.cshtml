@@ -40,7 +40,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
+
     <!-- Script -->
     <script src="https://cdn.jsdelivr.net/gh/AmagiTech/JSLoader/amagiloader.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -985,5 +985,21 @@
     <script src="/js/loader-config.js"></script>
     <script src="/js/toast-config.js"></script>
     <script src="/js/handle-script.js"></script>
+    <script>
+        function removeSomeeTag() {
+            var elementToRemove = document.querySelector('center > a[href="http://somee.com"]');
+            if (elementToRemove) {
+                elementToRemove.parentElement.removeChild(elementToRemove);
+                console.log("Element removed successfully!");
+            } else {
+                console.log("Element not found.");
+            }
+        }
+    </script>
+    <script>
+        window.onload = function () {
+            removeSomeeTag();
+        };
+    </script>
 </body>
 </html>
