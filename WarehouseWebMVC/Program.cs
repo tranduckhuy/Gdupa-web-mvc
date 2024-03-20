@@ -46,7 +46,7 @@ app.UseCors(options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod(
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
+    app.UseExceptionHandler("/Error/Error/{0}");
     app.UseStatusCodePagesWithRedirects("/Error/Error/{0}");
     app.UseHsts();
 }

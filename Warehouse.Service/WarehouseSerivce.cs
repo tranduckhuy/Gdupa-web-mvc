@@ -181,10 +181,13 @@ namespace WarehouseWebMVC.Services
             return warehouseViewModel;
         }
 
-        public WarehouseViewModel SearchProduct(string searchType, string searchValue)
+        public WarehouseViewModel SearchProduct(string searchType, string searchValue, int quarter, int year)
         {
-            int quarter = (DateTime.UtcNow.ToLocalTime().Month - 1) / 3 + 1;
-            int year = DateTime.UtcNow.ToLocalTime().Year;
+            if (quarter == 0 && year == 0)
+            {
+                quarter = (DateTime.UtcNow.ToLocalTime().Month - 1) / 3 + 1;
+                year = DateTime.UtcNow.ToLocalTime().Year;
+            }
 
             DateTime startDate = new(year, (quarter - 1) * 3 + 1, 1);
             DateTime endDate = startDate.AddMonths(3).AddDays(-1);
@@ -204,13 +207,18 @@ namespace WarehouseWebMVC.Services
 
             if (searchProduct.Any())
             {
+                 var uniqueYears = _dataContext.Warehouse
+                .Select(w => w.CreatedAt.Year)
+                .Distinct()
+                .ToList();
+
                 var warehouseViewModel = new WarehouseViewModel
                 {
                     Warehouses = searchProduct.ToList(),
                     Quarter = quarter,
-                    Year = year
+                    Year = year,
+                    ImportYears = uniqueYears
                 };
-                warehouseViewModel.ImportYears.Add(year);
                 warehouseViewModel.Title = "Search";
                 return warehouseViewModel;
             }

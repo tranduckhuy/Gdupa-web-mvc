@@ -201,8 +201,7 @@ public class SupplierController : Controller
         ViewBag.SearchType = searchType;
         ViewBag.Count = _supplierService.CountSupplierNotArchived();
         var page = 1;
-        var isActive = true;
-        var allSupplier = _supplierService.GetLimit(page, isActive);
+        var allSupplier = _supplierService.GetLimit(page, false);
         return View("SupplierList", allSupplier);
     }
 

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Warehouse.Domain.Entities;
 using Warehouse.Infrastructure.Data;
@@ -258,6 +259,10 @@ public class UserService : IUserService
 
     public UserViewModel SearchUser(string searchType, string searchValue)
     {
+        if (string.IsNullOrEmpty(searchType) || string.IsNullOrEmpty(searchValue))
+            return null!;
+
+
         IQueryable<User> searchUser = _dataContext.Users;
 
         switch (searchType)
@@ -266,8 +271,8 @@ public class UserService : IUserService
                 searchUser = searchUser.Where(u => u.Email.ToUpper().Contains(searchValue.ToUpper()));
                 break;
 
-            default:
-                searchUser = searchUser.Where(u => u.Name.ToUpper().Contains(searchValue.ToUpper()));
+            default: 
+                searchUser = searchUser.Where(s => s.Name.ToUpper().Contains(searchValue.ToUpper()));
                 break;
         }
 
@@ -352,6 +357,48 @@ public class UserService : IUserService
             }
 
             user.IsLocked = false;
+            _dataContext.SaveChanges();
+
+            return true;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+    }
+
+    public bool PromotedUser(long userId)
+    {
+        try
+        {
+            var user = _dataContext.Users.FirstOrDefault(u => u.UserId == userId);
+            if (user == null)
+            {
+                return false;
+            }
+            user.Role = "Director";
+            _dataContext.Entry(user).State = EntityState.Modified;
+            _dataContext.SaveChanges();
+
+            return true;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+    }
+
+    public bool DemotedUser(long userId)
+    {
+        try
+        {
+            var user = _dataContext.Users.FirstOrDefault(u => u.UserId == userId);
+            if (user == null)
+            {
+                return false;
+            }
+            user.Role = "Staff";
+            _dataContext.Entry(user).State = EntityState.Modified;
             _dataContext.SaveChanges();
 
             return true;

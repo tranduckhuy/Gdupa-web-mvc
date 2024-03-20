@@ -66,7 +66,7 @@
 <!-- sherah Dashboard -->
 <section class="sherah-adashboard sherah-show">
     <div class="container">
-        <div class="row">
+        <div class="row" style="height: 650px">
             <div class="col-12">
                 <div class="sherah-body">
                     <!-- Dashboard Inner -->
@@ -79,7 +79,7 @@
                                         <li>
                                             <a asp-area="" asp-controller="Dashboard" asp-action="Dashboard">Home</a>
                                         </li>
-                                        <li class="active"><a href="#!">Supplier Archive List</a></li>
+                                        <li class="active"><a href="/Supplier/SupplierArchive">Supplier Archive List</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -144,7 +144,7 @@
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody class="sherah-table__body" style="display:block;max-height:300px;overflow-y:auto;scrollbar-width:thin;">
+                                <tbody class="sherah-table__body" style="display:block;max-height:345px;overflow-y:auto;scrollbar-width:thin;">
                                     @foreach (var supplier in Model.Suppliers)
                                     {
                                         <tr>
