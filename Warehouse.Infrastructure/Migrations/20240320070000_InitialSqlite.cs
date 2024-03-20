@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Warehouse.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Sqlserver : Migration
+    public partial class InitialSqlite : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,9 +17,9 @@ namespace Warehouse.Infrastructure.Migrations
                 name: "Brand",
                 columns: table => new
                 {
-                    BrandId = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    BrandId = table.Column<long>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -30,9 +30,9 @@ namespace Warehouse.Infrastructure.Migrations
                 name: "Category",
                 columns: table => new
                 {
-                    CategoryId = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    CategoryId = table.Column<long>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -43,16 +43,16 @@ namespace Warehouse.Infrastructure.Migrations
                 name: "Suppliers",
                 columns: table => new
                 {
-                    SupplierId = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Avatar = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Phone = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    Fax = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsLocked = table.Column<bool>(type: "bit", nullable: false),
-                    Background = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    SupplierId = table.Column<long>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
+                    Email = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
+                    Avatar = table.Column<string>(type: "TEXT", nullable: false),
+                    Address = table.Column<string>(type: "TEXT", nullable: false),
+                    Phone = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
+                    Fax = table.Column<string>(type: "TEXT", nullable: false),
+                    IsLocked = table.Column<bool>(type: "INTEGER", nullable: false),
+                    Background = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -63,16 +63,16 @@ namespace Warehouse.Infrastructure.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    UserId = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Phone = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Role = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    Avatar = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsLocked = table.Column<bool>(type: "bit", nullable: false),
+                    UserId = table.Column<long>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
+                    Email = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
+                    Address = table.Column<string>(type: "TEXT", nullable: false),
+                    Phone = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
+                    Password = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
+                    Role = table.Column<string>(type: "TEXT", maxLength: 10, nullable: false),
+                    Avatar = table.Column<string>(type: "TEXT", nullable: false),
+                    IsLocked = table.Column<bool>(type: "INTEGER", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP")
                 },
                 constraints: table =>
@@ -84,17 +84,17 @@ namespace Warehouse.Infrastructure.Migrations
                 name: "Products",
                 columns: table => new
                 {
-                    ProductId = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    ProductId = table.Column<long>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
                     Description = table.Column<string>(type: "TEXT", nullable: false),
-                    Price = table.Column<double>(type: "float", nullable: false),
-                    Unit = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    IsDiscontinued = table.Column<bool>(type: "bit", nullable: false),
+                    Price = table.Column<double>(type: "REAL", nullable: false),
+                    Unit = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
+                    IsDiscontinued = table.Column<bool>(type: "INTEGER", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
                     ModifiedAt = table.Column<DateTime>(type: "datetime", nullable: true, defaultValueSql: "CURRENT_TIMESTAMP"),
-                    CategoryId = table.Column<long>(type: "bigint", nullable: false),
-                    BrandId = table.Column<long>(type: "bigint", nullable: false)
+                    CategoryId = table.Column<long>(type: "INTEGER", nullable: false),
+                    BrandId = table.Column<long>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -117,13 +117,13 @@ namespace Warehouse.Infrastructure.Migrations
                 name: "Expenses",
                 columns: table => new
                 {
-                    ExpenseReportId = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ExpenseReportId = table.Column<long>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
                     Reason = table.Column<string>(type: "TEXT", nullable: false),
-                    Total = table.Column<double>(type: "float", nullable: false),
+                    Total = table.Column<double>(type: "REAL", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
-                    SenderId = table.Column<long>(type: "bigint", nullable: false),
-                    ReceiverId = table.Column<long>(type: "bigint", nullable: false)
+                    SenderId = table.Column<long>(type: "INTEGER", nullable: false),
+                    ReceiverId = table.Column<long>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -144,15 +144,15 @@ namespace Warehouse.Infrastructure.Migrations
                 name: "ImportNotes",
                 columns: table => new
                 {
-                    ImportNoteId = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Total = table.Column<double>(type: "float", nullable: false),
-                    Deliverer = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Reason = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ReasonDetail = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImportNoteId = table.Column<long>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Total = table.Column<double>(type: "REAL", nullable: false),
+                    Deliverer = table.Column<string>(type: "TEXT", nullable: false),
+                    Reason = table.Column<string>(type: "TEXT", nullable: false),
+                    ReasonDetail = table.Column<string>(type: "TEXT", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
-                    UserId = table.Column<long>(type: "bigint", nullable: false),
-                    SupplierId = table.Column<long>(type: "bigint", nullable: false)
+                    UserId = table.Column<long>(type: "INTEGER", nullable: false),
+                    SupplierId = table.Column<long>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -175,10 +175,10 @@ namespace Warehouse.Infrastructure.Migrations
                 name: "ProductImgs",
                 columns: table => new
                 {
-                    ImageId = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ImageURL = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProductId = table.Column<long>(type: "bigint", nullable: false)
+                    ImageId = table.Column<long>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    ImageURL = table.Column<string>(type: "TEXT", nullable: false),
+                    ProductId = table.Column<long>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -195,14 +195,14 @@ namespace Warehouse.Infrastructure.Migrations
                 name: "Warehouse",
                 columns: table => new
                 {
-                    WarehouseId = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Quantity = table.Column<int>(type: "int", nullable: false),
-                    QuantityAtBeginPeriod = table.Column<int>(type: "int", nullable: false),
-                    QuantityImport = table.Column<int>(type: "int", nullable: false),
-                    PriceImport = table.Column<double>(type: "float", nullable: false),
+                    WarehouseId = table.Column<long>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Quantity = table.Column<int>(type: "INTEGER", nullable: false),
+                    QuantityAtBeginPeriod = table.Column<int>(type: "INTEGER", nullable: false),
+                    QuantityImport = table.Column<int>(type: "INTEGER", nullable: false),
+                    PriceImport = table.Column<double>(type: "REAL", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
-                    ProductId = table.Column<long>(type: "bigint", nullable: false)
+                    ProductId = table.Column<long>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -219,12 +219,12 @@ namespace Warehouse.Infrastructure.Migrations
                 name: "ImportNoteDetails",
                 columns: table => new
                 {
-                    ImportNoteDetailId = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ImportPrice = table.Column<double>(type: "float", nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false),
-                    ImportNoteId = table.Column<long>(type: "bigint", nullable: false),
-                    ProductId = table.Column<long>(type: "bigint", nullable: false)
+                    ImportNoteDetailId = table.Column<long>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    ImportPrice = table.Column<double>(type: "REAL", nullable: false),
+                    Quantity = table.Column<int>(type: "INTEGER", nullable: false),
+                    ImportNoteId = table.Column<long>(type: "INTEGER", nullable: false),
+                    ProductId = table.Column<long>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
