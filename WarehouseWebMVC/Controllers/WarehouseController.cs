@@ -21,7 +21,7 @@ public class WarehouseController : Controller
     [Filter]
     [HttpGet]
     public async Task<IActionResult> WarehouseProduct(int page = 1, int quarter = 0, int year = 0)
-    {
+        {
         if (HttpContext.Session.GetString("User") != null)
         {
 			Stopwatch stopwatch = new Stopwatch();

@@ -110,7 +110,7 @@ function changeInput(pId) {
     var price = parseFloat(priceInput.value);
     if (price < 0 || isNaN(price)) {
         price = 0;
-        priceInput.value = '0.00';  // Set the input value to '0.00'
+        priceInput.value = '0';  // Set the input value to '0'
     }
 
     // Update total for the current row
@@ -124,9 +124,9 @@ function updateRowTotal(pId, quantityInput, price) {
     var quantity = parseInt(quantityInput.value);
 
     if (!isNaN(quantity) && !isNaN(price)) {
-        total.innerHTML = '$' + (price * quantity).toFixed(2);
+        total.innerHTML = '$' + formatCurrency(parseFloat(price * quantity));
     } else {
-        total.innerHTML = '$0.00';
+        total.innerHTML = '$0';
     }
 }
 
@@ -137,13 +137,21 @@ function updateOverallTotal() {
     var overallTotal = 0;
 
     totalElements.forEach(function (totalElement) {
-        overallTotal += parseFloat(totalElement.textContent.replace('$', ''));
+        var value = parseFloat(totalElement.textContent.replace(/[^0-9.]/g, ''));
+        if (!isNaN(value)) {
+            overallTotal += value;
+        }
     });
 
     var totalFinal = document.getElementById('total-price-final');
     var totalInput = document.getElementById('total-input');
-    totalFinal.innerHTML = '$' + overallTotal.toFixed(2);
+    totalFinal.innerHTML = '$' + formatCurrency(overallTotal);
     totalInput.value = overallTotal.toFixed(2);
+}
+
+function formatCurrency(number) {
+    let formatter = number.toLocaleString('en-US');
+    return formatter;
 }
 
 function submitData() {
