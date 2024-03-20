@@ -363,6 +363,48 @@ public class UserService : IUserService
         }
     }
 
+    public bool PromotedUser(long userId)
+    {
+        try
+        {
+            var user = _dataContext.Users.FirstOrDefault(u => u.UserId == userId);
+            if (user == null)
+            {
+                return false;
+            }
+            user.Role = "Director";
+            _dataContext.Entry(user).State = EntityState.Modified;
+            _dataContext.SaveChanges();
+
+            return true;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+    }
+
+    public bool DemotedUser(long userId)
+    {
+        try
+        {
+            var user = _dataContext.Users.FirstOrDefault(u => u.UserId == userId);
+            if (user == null)
+            {
+                return false;
+            }
+            user.Role = "Staff";
+            _dataContext.Entry(user).State = EntityState.Modified;
+            _dataContext.SaveChanges();
+
+            return true;
+        }
+        catch (Exception)
+        {
+            return false;
+        }
+    }
+
     public bool IsEmailAlreadyExists(string email)
     {
         return _dataContext.Users.Any(u => u.Email == email);

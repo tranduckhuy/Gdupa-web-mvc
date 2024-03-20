@@ -40,6 +40,7 @@ public class UserController : Controller
     }
 
     [Filter]
+    [HttpGet]
     public IActionResult UserInformation(long userId)
     {
         if (HttpContext.Session.GetString("User") != null)
@@ -190,6 +191,12 @@ public class UserController : Controller
     [HttpGet]
     public IActionResult DeactiveUser(long userId, long inforId)
     {
+        var currentUserEmail = HttpContext.Session.GetString("User");
+        if (currentUserEmail != null && _userService.UserOwnsInformation(currentUserEmail, userId))
+        {
+            TempData["Message"] = AppConstant.MESSAGE_FAILED;
+            return RedirectToAction("Users");
+        }
         if (_userService.Deactive(userId, inforId))
         {
             TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
@@ -221,6 +228,30 @@ public class UserController : Controller
         }
         TempData["Message"] = AppConstant.MESSAGE_FAILED;
         return RedirectToAction("Login", "Authentication");
+    }
+
+    [HttpGet]
+    public IActionResult PromotedUser(long userId)
+    {
+        if (_userService.PromotedUser(userId))
+        {
+            TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
+            return RedirectToAction("Users");
+        }
+        TempData["Message"] = AppConstant.MESSAGE_FAILED;
+        return RedirectToAction("Users");
+    }
+
+    [HttpGet]
+    public IActionResult DemotedUser(long userId)
+    {
+        if (_userService.DemotedUser(userId))
+        {
+            TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
+            return RedirectToAction("Users");
+        }
+        TempData["Message"] = AppConstant.MESSAGE_FAILED;
+        return RedirectToAction("Users");
     }
 
     [HttpPost]

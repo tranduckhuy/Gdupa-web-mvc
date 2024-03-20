@@ -31,7 +31,7 @@ namespace Warehouse.Infrastructure.Utils.Helper.Impl
                                     </tr>
                                     <tr>
                                         <td style='text-align:center;'>
-                                            <a href='https://localhost:7051/' title='logo' target='_blank'>
+                                            <a href='#!' title='logo'>
                                             <img width='200' src='https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/logo%2Fgdupa-high-resolution-logo-transparent.png?alt=media&token=c438141e-e081-48e3-8b9d-b270bd160fde' title='logo' alt='logo'>
                                             </a>
                                         </td>
@@ -110,7 +110,7 @@ namespace Warehouse.Infrastructure.Utils.Helper.Impl
                                     </tr>
                                     <tr>
                                         <td style='text-align:center;'>
-                                            <a href='https://localhost:7051/' title='logo' target='_blank'>
+                                            <a href='#!' title='logo'>
                                             <img width='200' src='https://firebasestorage.googleapis.com/v0/b/gdupa-2fa82.appspot.com/o/logo%2Fgdupa-high-resolution-logo-transparent.png?alt=media&token=c438141e-e081-48e3-8b9d-b270bd160fde' title='logo' alt='logo'>
                                             </a>
                                         </td>

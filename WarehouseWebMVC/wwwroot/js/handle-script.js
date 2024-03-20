@@ -148,3 +148,53 @@ function handleActiveSupplier(id) {
     });
 }
 
+function handlePromoted(id) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "Will you promoted this user?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, just do it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = '/User/PromotedUser?userId=' + id;
+        }
+        if (!result.isConfirmed) {
+            Swal.fire({
+                title: 'Canceled',
+                text: 'So sad this user can not be promoted for now :D',
+                icon: 'error',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'OK'
+            });
+        }
+    });
+}
+
+function handleDemoted(id) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "Will you demoted this user?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, just do it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = '/User/DemotedUser?userId=' + id;
+        }
+        if (!result.isConfirmed) {
+            Swal.fire({
+                title: 'Canceled',
+                text: 'So sad this user can not be demoted for now :D',
+                icon: 'error',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'OK'
+            });
+        }
+    });
+}
+
