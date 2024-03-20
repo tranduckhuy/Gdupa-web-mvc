@@ -96,7 +96,7 @@
                                                         </td>
                                                         <td class="sherah-table__column-3 sherah-table__data-3">
                                                             <div class="sherah-table__product-content">
-                                                                <p class="sherah-table__product-desc">$@ImportNoteDetail.ImportPrice</p>
+                                                                <p class="sherah-table__product-desc">$@Math.Round(ImportNoteDetail.ImportPrice, 2)</p>
                                                             </div>
                                                         </td>
                                                         <td class="sherah-table__column-4 sherah-table__data-4">
@@ -115,9 +115,9 @@
                                         </table>
                                         <div class="order-totals" style="margin-right:0;">
                                             <ul class="order-totals__list" style="min-width:50%">
-                                                <li class="order-totals__list--sub"><span>Subtotal</span> <span class="order-totals__amount" style="font-size:16px">$@Model.ImportNote.Total</span></li>
-                                                <li><span>VAT Tax</span> <span class="order-totals__amount" style="font-size:16px">$35</span></li>
-                                                <li class="order-totals__bottom"><span>Total</span> <span class="order-totals__amount" style="font-size:16px">$@((Model.ImportNote.Total) + 35)</span></li>
+                                                <li class="order-totals__list--sub"><span>Subtotal</span> <span class="order-totals__amount" style="font-size:16px">$@Math.Round(Model.ImportNote.Total, 2)</span></li>
+                                                <li><span>VAT: 5%</span> <span class="order-totals__amount" style="font-size:16px">$@Math.Round(((Model.ImportNote.Total * 5)/100), 2)</span></li>
+                                                <li class="order-totals__bottom"><span>Total</span> <span class="order-totals__amount" style="font-size:16px">$@Math.Round(((Model.ImportNote.Total) + ((Model.ImportNote.Total * 5)/100)), 2)</span></li>
                                             </ul>
                                         </div>
                                     </div>
