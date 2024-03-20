@@ -985,21 +985,13 @@
     <script src="/js/loader-config.js"></script>
     <script src="/js/toast-config.js"></script>
     <script src="/js/handle-script.js"></script>
-    <script>
-        function removeSomeeTag() {
-            var elementToRemove = document.querySelector('center > a[href="http://somee.com"]');
-            if (elementToRemove) {
-                elementToRemove.parentElement.removeChild(elementToRemove);
-                console.log("Element removed successfully!");
-            } else {
-                console.log("Element not found.");
-            }
-        }
-    </script>
+    <script src="/js/removeAddedTag.js"></script>
+
     <script>
         window.onload = function () {
             removeSomeeTag();
         };
     </script>
+    <center><a href="http://somee.com">Web hosting by Somee.com</a></center>
 </body>
 </html>
