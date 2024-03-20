@@ -84,10 +84,9 @@ public class ProductService : IProductService
         return true;
     }
 
-    public ProductViewModel GetAll(int page)
+    public ProductViewModel GetLimit(int page, bool isDiscontinued)
     {
-
-        var totalProducts = _dataContext.Products.Count();
+        var totalProducts = _dataContext.Products.Where(p => p.IsDiscontinued == isDiscontinued).Count();
         const int pageSize = 5;
         if (page < 1)
         {
@@ -96,8 +95,10 @@ public class ProductService : IProductService
         var pageable = new Pageable(totalProducts, page, pageSize);
 
         int skipAmount = (pageable.CurrentPage - 1) * pageSize;
+        if (skipAmount < 0) { skipAmount = 0; }
 
         var products = _dataContext.Products
+            .Where(p => p.IsDiscontinued == isDiscontinued)
             .Skip(skipAmount)
             .Take(pageSize)
             .Include(p => p.Category)

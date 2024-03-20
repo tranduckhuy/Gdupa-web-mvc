@@ -94,7 +94,7 @@
                                         <li>
                                             <a asp-area="" asp-controller="Dashboard" asp-action="Dashboard">Home</a>
                                         </li>
-                                        <li class="active"><a href="#!">User List</a></li>
+                                        <li class="active"><a href="/User/Users">User List</a></li>
                                     </ul>
                                 </div>
                                 <a asp-area="" asp-controller="User" asp-action="AddUser"
@@ -220,13 +220,13 @@
                                                     {
                                                         if (user.Role == "Director")
                                                         {
-                                                            <a href="#" onclick="handleDemoted(@user.UserId)"
+                                                            <a href="#" onclick="handleDemoted(@user.UserId)" title="Demoted"
                                                                class="sherah-table__action sherah-color1 sherah-color1__bg--opactity">
                                                                 <i class="fa-solid fa-circle-down"></i>
                                                             </a>
                                                         } else if (user.Role == "Staff")
                                                         {
-                                                            <a href="#" onclick="handlePromoted(@user.UserId)"
+                                                            <a href="#" onclick="handlePromoted(@user.UserId)" title="Promoted"
                                                                class="sherah-table__action sherah-color4 sherah-color4__bg--opactity">
                                                                 <i class="fa-solid fa-circle-up"></i>
                                                             </a>
@@ -234,7 +234,7 @@
                                                     }
                                                     @if (@user.IsLocked == true)
                                                     {
-                                                        <a href="#" onclick="handleActiveUser(@user.UserId, @userId)"
+                                                        <a href="#" onclick="handleActiveUser(@user.UserId, @userId)" title="Unlock"
                                                            class="sherah-table__action sherah-color3 sherah-color3__bg--opactity">
                                                             <i class="fa-solid fa-link-slash"></i>
                                                         </a>
@@ -242,7 +242,7 @@
                                                     }
                                                     else
                                                     {
-                                                        <a href="#" onclick="handleDeactiveUser(@user.UserId, @userId)"
+                                                        <a href="#" onclick="handleDeactiveUser(@user.UserId, @userId)" title="Lock"
                                                            class="sherah-table__action sherah-color2 sherah-color2__bg--offset">
                                                             <i class="fa-solid fa-link-slash"></i>
                                                         </a>

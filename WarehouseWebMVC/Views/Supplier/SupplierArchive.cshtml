@@ -11,9 +11,7 @@
 }
 <style>
     .dataTables_empty {
-        min-width: 1128px;
-        display: flex;
-        justify-content: center;
+        text-align: center !important;
     }
 </style>
 <div id="toast"></div>
@@ -68,7 +66,7 @@
 <!-- sherah Dashboard -->
 <section class="sherah-adashboard sherah-show">
     <div class="container">
-        <div class="row">
+        <div class="row" style="height: 650px">
             <div class="col-12">
                 <div class="sherah-body">
                     <!-- Dashboard Inner -->
@@ -81,7 +79,7 @@
                                         <li>
                                             <a asp-area="" asp-controller="Dashboard" asp-action="Dashboard">Home</a>
                                         </li>
-                                        <li class="active"><a href="#!">Supplier Archive List</a></li>
+                                        <li class="active"><a href="/Supplier/SupplierArchive">Supplier Archive List</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -146,57 +144,58 @@
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody class="sherah-table__body" style="display:block;max-height:300px;overflow-y:auto;scrollbar-width:thin;">
+                                <tbody class="sherah-table__body" style="display:block;max-height:345px;overflow-y:auto;scrollbar-width:thin;">
                                     @foreach (var supplier in Model.Suppliers)
                                     {
-                                        @if (@supplier.IsLocked == true)
-                                        {
-                                            <tr>
-                                                <td class="sherah-table__column-1 sherah-table__data-1"
-                                                    style="min-width:300px;padding:12px;text-align:left;">
-                                                    <div class="sherah-table__product">
-                                                        <div class="sherah-table__vendor-img">
-                                                            <img src="@supplier.Avatar" alt="User's avatar"
-                                                                 style="width:40px;height:40px;">
-                                                        </div>
-                                                        <h5 class="sherah-table__vendor--title"><a href="/Supplier/SupplierInformation?supplierId=@supplier.SupplierId">@supplier.Name</a></h5>
+                                        <tr>
+                                            <td class="sherah-table__column-1 sherah-table__data-1"
+                                                style="min-width:300px;padding:12px;text-align:left;">
+                                                <div class="sherah-table__product">
+                                                    <div class="sherah-language-form__input">
+                                                        <input class="sherah-language-form__check" id="checkbox"
+                                                               name="checkbox" type="checkbox">
                                                     </div>
-                                                </td>
-                                                <td class="sherah-table__column-2 sherah-table__data-2"
-                                                    style="min-width:210px;padding:12px;text-align:left;">
-                                                    <div class="sherah-table__product-content">
-                                                        <p class="sherah-table__product-desc">@supplier.Email</p>
+                                                    <div class="sherah-table__vendor-img">
+                                                        <img src="@supplier.Avatar" alt="User's avatar"
+                                                             style="width:40px;height:40px;">
                                                     </div>
-                                                </td>
-                                                <td class="sherah-table__column-3 sherah-table__data-3"
-                                                    style="max-width:55px;padding:12px 8px 12px 12px;text-align:left;">
-                                                    <div class="sherah-table__product-content">
-                                                        <p class="sherah-table__product-desc">@supplier.Phone</p>
-                                                    </div>
-                                                </td>
-                                                <td class="sherah-table__column-4 sherah-table__data-4"
-                                                    style="min-width:130px;padding:12px 12px 12px 0;text-align:left;">
-                                                    <div class="sherah-table__product-content">
-                                                        <p class="sherah-table__product-desc">@supplier.Address</p>
-                                                    </div>
-                                                </td>
-                                                <td class="sherah-table__column-5 sherah-table__data-5"
-                                                    style="min-width:120px;padding:12px 0;text-align:center;">
-                                                    <div class="sherah-table__status sherah-color1__bg--opactity">
-                                                        <p class="sherah-table__product-desc sherah-color1">@supplier.Fax</p>
-                                                    </div>
-                                                </td>
-                                                <td class="sherah-table__column-6 sherah-table__data-6"
-                                                    style="width: 3%;min-width:120px;padding:12px 12px 12px 0;margin-left:10px;">
-                                                    <div class="sherah-table__status__group" style="justify-content:center;">
-                                                        <a href="#" onclick="handleActiveSupplier(@supplier.SupplierId)"
-                                                           class="sherah-table__action sherah-color3 sherah-color3__bg--opactity">
-                                                            <i class="material-icons">unarchive</i>
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        }
+                                                    <h5 class="sherah-table__vendor--title"><a href="/Supplier/SupplierInformation?supplierId=@supplier.SupplierId">@supplier.Name</a></h5>
+                                                </div>
+                                            </td>
+                                            <td class="sherah-table__column-2 sherah-table__data-2"
+                                                style="min-width:210px;padding:12px;text-align:left;">
+                                                <div class="sherah-table__product-content">
+                                                    <p class="sherah-table__product-desc">@supplier.Email</p>
+                                                </div>
+                                            </td>
+                                            <td class="sherah-table__column-3 sherah-table__data-3"
+                                                style="max-width:55px;padding:12px 8px 12px 12px;text-align:left;">
+                                                <div class="sherah-table__product-content">
+                                                    <p class="sherah-table__product-desc">@supplier.Phone</p>
+                                                </div>
+                                            </td>
+                                            <td class="sherah-table__column-4 sherah-table__data-4"
+                                                style="min-width:130px;padding:12px 12px 12px 0;text-align:left;">
+                                                <div class="sherah-table__product-content">
+                                                    <p class="sherah-table__product-desc">@supplier.Address</p>
+                                                </div>
+                                            </td>
+                                            <td class="sherah-table__column-5 sherah-table__data-5"
+                                                style="min-width:120px;padding:12px 0;text-align:center;">
+                                                <div class="sherah-table__status sherah-color1__bg--opactity">
+                                                    <p class="sherah-table__product-desc sherah-color1">@supplier.Fax</p>
+                                                </div>
+                                            </td>
+                                            <td class="sherah-table__column-6 sherah-table__data-6"
+                                                style="width: 3%;min-width:120px;padding:12px 12px 12px 0;margin-left:10px;">
+                                                <div class="sherah-table__status__group" style="justify-content:center;">
+                                                    <a href="#" onclick="handleActiveSupplier(@supplier.SupplierId)"
+                                                       class="sherah-table__action sherah-color3 sherah-color3__bg--opactity">
+                                                        <i class="material-icons">unarchive</i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
                                     }
                                 </tbody>
                             </table>

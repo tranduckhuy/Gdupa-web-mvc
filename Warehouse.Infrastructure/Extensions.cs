@@ -15,6 +15,9 @@ namespace Warehouse.Infrastructure
             services.AddDbContext<DataContext>(options
                 => options.UseSqlite(configuration.GetConnectionString("WarehouseDB"),
                 b => b.MigrationsAssembly("Warehouse.Infrastructure")));
+            //services.AddDbContext<DataContext>(options
+            //    => options.UseSqlServer(configuration.GetConnectionString("WarehouseDB"),
+            //    b => b.MigrationsAssembly("Warehouse.Infrastructure")));
 
             return services;
         }

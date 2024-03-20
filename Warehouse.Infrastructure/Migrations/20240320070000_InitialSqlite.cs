@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Warehouse.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitialSqlite : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -73,7 +73,7 @@ namespace Warehouse.Infrastructure.Migrations
                     Role = table.Column<string>(type: "TEXT", maxLength: 10, nullable: false),
                     Avatar = table.Column<string>(type: "TEXT", nullable: false),
                     IsLocked = table.Column<bool>(type: "INTEGER", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP")
+                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP")
                 },
                 constraints: table =>
                 {
@@ -91,8 +91,8 @@ namespace Warehouse.Infrastructure.Migrations
                     Price = table.Column<double>(type: "REAL", nullable: false),
                     Unit = table.Column<string>(type: "TEXT", maxLength: 20, nullable: false),
                     IsDiscontinued = table.Column<bool>(type: "INTEGER", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
-                    ModifiedAt = table.Column<DateTime>(type: "TEXT", nullable: true, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    ModifiedAt = table.Column<DateTime>(type: "datetime", nullable: true, defaultValueSql: "CURRENT_TIMESTAMP"),
                     CategoryId = table.Column<long>(type: "INTEGER", nullable: false),
                     BrandId = table.Column<long>(type: "INTEGER", nullable: false)
                 },
@@ -121,7 +121,7 @@ namespace Warehouse.Infrastructure.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Reason = table.Column<string>(type: "TEXT", nullable: false),
                     Total = table.Column<double>(type: "REAL", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
                     SenderId = table.Column<long>(type: "INTEGER", nullable: false),
                     ReceiverId = table.Column<long>(type: "INTEGER", nullable: false)
                 },
@@ -150,7 +150,7 @@ namespace Warehouse.Infrastructure.Migrations
                     Deliverer = table.Column<string>(type: "TEXT", nullable: false),
                     Reason = table.Column<string>(type: "TEXT", nullable: false),
                     ReasonDetail = table.Column<string>(type: "TEXT", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
                     UserId = table.Column<long>(type: "INTEGER", nullable: false),
                     SupplierId = table.Column<long>(type: "INTEGER", nullable: false)
                 },
@@ -201,7 +201,7 @@ namespace Warehouse.Infrastructure.Migrations
                     QuantityAtBeginPeriod = table.Column<int>(type: "INTEGER", nullable: false),
                     QuantityImport = table.Column<int>(type: "INTEGER", nullable: false),
                     PriceImport = table.Column<double>(type: "REAL", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
                     ProductId = table.Column<long>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>

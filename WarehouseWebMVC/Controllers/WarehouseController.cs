@@ -120,14 +120,14 @@ public class WarehouseController : Controller
     }
 
     [HttpPost]
-    public IActionResult SearchProduct(string searchType, string searchValue)
+    public IActionResult SearchProduct(string searchType, string searchValue, int quarter = 0, int year = 0)
     {
         if (!ModelState.IsValid)
         {
             TempData["Message"] = AppConstant.BAD_REQUEST;
             return RedirectToAction("WarehouseProduct", "Warehouse");
         }
-        var warehouseProduct = _warehouseService.SearchProduct(searchType, searchValue);
+        var warehouseProduct = _warehouseService.SearchProduct(searchType, searchValue, quarter, year);
         if (warehouseProduct != null)
         {
             TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;

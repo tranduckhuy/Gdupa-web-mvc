@@ -18,10 +18,10 @@ namespace WarehouseWebMVC.Services
         {
             DashboardDTO dashboardDTO = new()
             {
-                TotalProducts = await _dataContext.Products.CountAsync(),
+                TotalProducts = await _dataContext.Products.Where(p => !p.IsDiscontinued).CountAsync(),
                 TotalImportNotes = await _dataContext.ImportNotes.CountAsync(),
-                TotalUsers = await _dataContext.Users.CountAsync(),
-                TotalSuppliers = await _dataContext.Suppliers.CountAsync()
+                TotalUsers = await _dataContext.Users.Where(u => !u.IsLocked).CountAsync(),
+                TotalSuppliers = await _dataContext.Suppliers.Where(s => !s.IsLocked).CountAsync()
             };
 
             if (year == 0)

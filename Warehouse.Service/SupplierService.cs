@@ -30,10 +30,10 @@ namespace WarehouseWebMVC.Services
             return supplier != null ? _mapper.Map<SupplierDTO>(supplier) : null!;
         }
 
-        public SupplierViewModel GetAll(int page)
+        public SupplierViewModel GetLimit(int page, bool archive)
         {
 
-            var totalSuppliers = _dataContext.Suppliers.Count();
+            var totalSuppliers = _dataContext.Suppliers.Where(s => s.IsLocked == archive).Count();
             const int pageSize = 6;
             if (page < 1)
             {
@@ -42,8 +42,10 @@ namespace WarehouseWebMVC.Services
             var pageable = new Pageable(totalSuppliers, page, pageSize);
 
             int skipAmount = (pageable.CurrentPage - 1) * pageSize;
+            if (skipAmount < 0) { skipAmount = 0; }
 
             var suppliers = _dataContext.Suppliers
+                .Where(s => s.IsLocked == archive)
                 .Skip(skipAmount)
                 .Take(pageSize)
                 .Include(p => p.ImportNotes)
@@ -154,50 +156,18 @@ namespace WarehouseWebMVC.Services
             var supplier = GetById(supplierId);
             return supplier != null && supplier.Email == supplierEmail;
         }
-        public SupplierViewModel SearchSupplier(string searchType, string searchValue)
+        public SupplierViewModel SearchSupplier(string searchType, string searchValue, bool archive)
         {
             IQueryable<Supplier> searchSupplier = _dataContext.Suppliers;
 
             switch (searchType)
             {
                 case "Email":
-                    searchSupplier = searchSupplier.Where(s => s.Email.ToUpper().Contains(searchValue.ToUpper()) && s.IsLocked == false);
+                    searchSupplier = searchSupplier.Where(s => s.Email.ToUpper().Contains(searchValue.ToUpper()) && s.IsLocked == archive);
                     break;
 
                 default:
-                    var query = $"SELECT * FROM Suppliers WHERE {searchType} COLLATE NOCASE LIKE '%' || @searchValue || '%' AND IsLocked = 0";
-                    searchSupplier = _dataContext.Suppliers.FromSqlRaw(query, new SqliteParameter("@searchValue", searchValue));
-                    break;
-            }
-
-            if (searchSupplier.Any())
-            {
-                var searchSupplierDto = _mapper.Map<List<SupplierDTO>>(searchSupplier.ToList());
-
-                foreach (var searchDto in searchSupplierDto)
-                {
-                    searchDto.Address = ExtractCityFromAddress(searchDto.Address);
-                }
-
-                var supplierViewModel = new SupplierViewModel { Suppliers = searchSupplierDto };
-                return supplierViewModel;
-            }
-            return null!;
-        }
-
-        public SupplierViewModel SearchSupplierArchive(string searchType, string searchValue)
-        {
-            IQueryable<Supplier> searchSupplier = _dataContext.Suppliers;
-
-            switch (searchType)
-            {
-                case "Email":
-                    searchSupplier = searchSupplier.Where(s => s.Email.ToUpper().Contains(searchValue.ToUpper()) && s.IsLocked == true);
-                    break;
-
-                default:
-                    var query = $"SELECT * FROM Suppliers WHERE {searchType} COLLATE NOCASE LIKE '%' || @searchValue || '%' AND IsLocked = 1";
-                    searchSupplier = _dataContext.Suppliers.FromSqlRaw(query, new SqliteParameter("@searchValue", searchValue));
+                    searchSupplier = searchSupplier.Where(s => s.Name.ToUpper().Contains(searchValue.ToUpper()) && s.IsLocked == archive);
                     break;
             }
 

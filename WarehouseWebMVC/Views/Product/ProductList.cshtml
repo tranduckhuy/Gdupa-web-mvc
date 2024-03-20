@@ -88,7 +88,7 @@
                                     <h2 class="sherah-breadcrumb__title">Product list</h2>
                                     <ul class="sherah-breadcrumb__list">
                                         <li><a asp-area="" asp-controller="Dashboard" asp-action="Dashboard">Home</a></li>
-                                        <li class="active"><a href="#!">Product List</a></li>
+                                        <li class="active"><a href="/Product/ProductList">Product List</a></li>
                                     </ul>
                                 </div>
                                 <!-- End Sherah Breadcrumb -->
@@ -174,13 +174,13 @@
                                                 </td>
                                                 <td class="sherah-table__column-7 sherah-table__data-7" style="min-width:150px;padding:12px 12px 12px 0;margin-left:10px;">
                                                     <div class="sherah-table__status__group" style="justify-content:center">
-                                                        <a href="/Product/ProductDetail?productId=@product.ProductId" class="sherah-table__action sherah-color1 sherah-color1__bg--opactity">
+                                                        <a href="/Product/ProductDetail?productId=@product.ProductId" title="Detail" class="sherah-table__action sherah-color1 sherah-color1__bg--opactity">
                                                             <i class="fa-regular fa-eye"></i>
                                                         </a>
-                                                        <a href="/Product/UpdateProduct?productId=@product.ProductId" class="sherah-table__action sherah-color4 sherah-color4__bg--opactity">
+                                                        <a href="/Product/UpdateProduct?productId=@product.ProductId" title="Update" class="sherah-table__action sherah-color4 sherah-color4__bg--opactity">
                                                             <i class="fa-regular fa-pen-to-square"></i>
                                                         </a>
-                                                        <a href="#" onclick="handleDiscontinued(@product.ProductId)" class="sherah-table__action sherah-color2 sherah-color2__bg--offset">
+                                                        <a href="#" onclick="handleDiscontinued(@product.ProductId)" title="Disconinued" class="sherah-table__action sherah-color2 sherah-color2__bg--offset">
                                                             <i class="fa-solid fa-lock"></i>
                                                         </a>
                                                     </div>

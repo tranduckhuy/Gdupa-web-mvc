@@ -11,8 +11,8 @@ using Warehouse.Infrastructure.Data;
 namespace Warehouse.Infrastructure.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240305144131_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20240320070000_InitialSqlite")]
+    partial class InitialSqlite
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -97,7 +97,7 @@ namespace Warehouse.Infrastructure.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("TEXT")
+                        .HasColumnType("datetime")
                         .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<string>("Reason")
@@ -159,7 +159,7 @@ namespace Warehouse.Infrastructure.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("TEXT")
+                        .HasColumnType("datetime")
                         .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<string>("Deliverer")
@@ -310,7 +310,7 @@ namespace Warehouse.Infrastructure.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("TEXT")
+                        .HasColumnType("datetime")
                         .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<string>("Description")
@@ -322,7 +322,7 @@ namespace Warehouse.Infrastructure.Migrations
 
                     b.Property<DateTime?>("ModifiedAt")
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("TEXT")
+                        .HasColumnType("datetime")
                         .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<string>("Name")
@@ -590,7 +590,7 @@ namespace Warehouse.Infrastructure.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("TEXT")
+                        .HasColumnType("datetime")
                         .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<string>("Email")
@@ -740,7 +740,7 @@ namespace Warehouse.Infrastructure.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("TEXT")
+                        .HasColumnType("datetime")
                         .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<double>("PriceImport")

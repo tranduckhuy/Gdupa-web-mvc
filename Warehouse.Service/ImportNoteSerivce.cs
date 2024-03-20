@@ -128,18 +128,13 @@ namespace WarehouseWebMVC.Services
             switch (searchType)
             {
                 case "Supplier":
-                    searchImportNote = searchImportNote.Where(r => r.Supplier.Name.ToUpper().Contains(searchValue.ToUpper()));
+                    searchImportNote = searchImportNote.Where(s => s.Supplier.Name.ToUpper().Contains(searchValue.ToUpper()));
                     break;
                 case "Deliverer":
-                    searchImportNote = searchImportNote.Where(r => EF.Functions.Collate(r.Deliverer, "NOCASE").Contains(searchValue));
+                    searchImportNote = searchImportNote.Where(s => s.Deliverer.ToUpper().Contains(searchValue.ToUpper()));
                     break;
                 default:
-                    var query = @"SELECT ImportNotes.*, Users.*
-                                  FROM ImportNotes
-                                  JOIN Users ON ImportNotes.UserId = Users.UserId
-                                  WHERE Users.Name COLLATE NOCASE LIKE '%' || @searchValue || '%'";
-                    searchImportNote = _dataContext.ImportNotes.FromSqlRaw(query, new SqliteParameter("@searchValue", searchValue));
-                    searchImportNote = searchImportNote
+                    searchImportNote = searchImportNote.Where(s => s.User.Name.ToUpper().Contains(searchValue.ToUpper()))
                         .Include(i => i.User)
                         .Include(i => i.Supplier);
                     break;

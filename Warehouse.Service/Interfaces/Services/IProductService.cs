@@ -5,7 +5,7 @@ namespace Warehouse.Service.Interfaces.Services
 {
     public interface IProductService
     {
-        ProductViewModel GetAll(int page);
+        ProductViewModel GetLimit(int page, bool isDiscontinued);
         CRUProductVM GetByIdForCRU(long productId);
         ProductDTO GetById(long productId);
         ProductViewModel SearchProduct(string searchType, string searchValue);

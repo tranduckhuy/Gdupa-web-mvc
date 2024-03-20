@@ -6,9 +6,8 @@ namespace Warehouse.Service.Interfaces.Services
     public interface ISupplierService
     {
         SupplierDTO GetById(long supplierId);
-        SupplierViewModel GetAll(int page);
-        SupplierViewModel SearchSupplier(string searchType, string searchValue);
-        SupplierViewModel SearchSupplierArchive(string searchType, string searchValue);
+        SupplierViewModel GetLimit(int page, bool archive);
+        SupplierViewModel SearchSupplier(string searchType, string searchValue, bool archive);
         bool AddSupplier(SupplierDTO addSupplierDTO);
         bool UpdateSupplier(SupplierDTO updateSupplierDTO);
         bool IsEmailAlreadyExists(string email);

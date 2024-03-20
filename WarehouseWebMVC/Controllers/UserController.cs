@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using Warehouse.Infrastructure;
 using Warehouse.Infrastructure.Utils.Helper;
 using Warehouse.Service.Interfaces.Services;
@@ -257,9 +258,9 @@ public class UserController : Controller
     [HttpPost]
     public IActionResult SearchUser(string searchType, string searchValue)
     {
+        var searchUsers = _userService.SearchUser(searchType, searchValue);
         if (ModelState.IsValid)
         {
-            var searchUsers = _userService.SearchUser(searchType, searchValue);
             if (searchUsers != null)
             {
                 TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
@@ -268,6 +269,9 @@ public class UserController : Controller
             }
         }
         TempData["Message"] = AppConstant.NOT_FOUND;
-        return RedirectToAction("Users");
+        ViewBag.SearchType = searchType;
+        var page = 1;
+        var allUsers = _userService.GetAll(page);
+        return View("Users", allUsers);
     }
 }

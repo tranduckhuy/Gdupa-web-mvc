@@ -13,7 +13,7 @@ namespace Warehouse.Service.Interfaces.Services
 
         Task<WarehouseImportViewModel> GetDataViewImportAsync();
 
-        WarehouseViewModel SearchProduct(string searchType, string searchValue);
+        WarehouseViewModel SearchProduct(string searchType, string searchValue, int quarter, int year);
 
         Task<bool> CheckNewQuarterAsync();
 
