@@ -8,8 +8,7 @@ namespace Warehouse.Service.Interfaces.Services
         ProductViewModel GetLimit(int page, bool isDiscontinued);
         CRUProductVM GetByIdForCRU(long productId);
         ProductDTO GetById(long productId);
-        ProductViewModel SearchProduct(string searchType, string searchValue);
-        ProductViewModel SearchProductLock(string searchType, string searchValue);
+        ProductViewModel SearchProduct(string searchType, string searchValue, bool isContinued);
         AddProductDTO Add(AddProductDTO addProductDTO);
         bool AddCategory(string categoryName);
         bool AddBrand(string brandName);

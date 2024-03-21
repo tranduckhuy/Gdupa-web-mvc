@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Warehouse.Domain.Entities;
 using Warehouse.Infrastructure.Data;
@@ -195,52 +196,29 @@ public class ProductService : IProductService
         }
     }
 
-    public ProductViewModel SearchProduct(string searchType, string searchValue)
+    public ProductViewModel SearchProduct(string searchType, string searchValue, bool isContinued)
     {
-        IQueryable<Product> searchProduct = _dataContext.Products
-            .Include(p => p.Category)
-            .Include(p => p.Brand)
-            .Include(p => p.ProductImgs);
+        IQueryable<Product> searchProduct;
 
         switch (searchType)
         {
             case "Category":
-                searchProduct = searchProduct.Where(p => p.Category.Name.ToUpper().Contains(searchValue.ToUpper()) && p.IsDiscontinued == false);
+                searchProduct = _dataContext.Products
+                    .Include(p => p.Category)
+                    .Include(p => p.Brand)
+                    .Where(p => p.Category.Name.ToUpper().Contains(searchValue.ToUpper()) && p.IsDiscontinued == isContinued);
                 break;
             case "Brand":
-                searchProduct = searchProduct.Where(p => p.Brand.Name.ToUpper().Contains(searchValue.ToUpper()) && p.IsDiscontinued == false);
+                searchProduct = _dataContext.Products
+                    .Include(p => p.Category)
+                    .Include(p => p.Brand)
+                    .Where(p => p.Brand.Name.ToUpper().Contains(searchValue.ToUpper()) && p.IsDiscontinued == isContinued);
                 break;
             default:
-                searchProduct = searchProduct.Where(p => p.Name.ToUpper().Contains(searchValue.ToUpper()) && p.IsDiscontinued == false);
-                break;
-        }
-
-        if (searchProduct.Any())
-        {
-            var searchProductsDto = _mapper.Map<List<ProductDTO>>(searchProduct.ToList());
-            var productViewModel = new ProductViewModel { Products = searchProductsDto };
-            return productViewModel;
-        }
-        return null!;
-    }
-
-    public ProductViewModel SearchProductLock(string searchType, string searchValue)
-    {
-        IQueryable<Product> searchProduct = _dataContext.Products
-            .Include(p => p.Category)
-            .Include(p => p.Brand)
-            .Include(p => p.ProductImgs);
-
-        switch (searchType)
-        {
-            case "Category":
-                searchProduct = searchProduct.Where(p => p.Category.Name.ToUpper().Contains(searchValue.ToUpper()) && p.IsDiscontinued == true);
-                break;
-            case "Brand":
-                searchProduct = searchProduct.Where(p => p.Brand.Name.ToUpper().Contains(searchValue.ToUpper()) && p.IsDiscontinued == true);
-                break;
-            default:
-                searchProduct = searchProduct.Where(p => p.Name.ToUpper().Contains(searchValue.ToUpper()) && p.IsDiscontinued == true);
+                var query = $"SELECT * FROM Products WHERE {searchType} COLLATE NOCASE LIKE '%' || @searchValue || '%' AND IsDiscontinued == {isContinued}";
+                searchProduct = _dataContext.Products.FromSqlRaw(query, new SqliteParameter("@searchValue", searchValue))
+                                                     .Include(p => p.Category)
+                                                     .Include(p => p.Brand);
                 break;
         }
 

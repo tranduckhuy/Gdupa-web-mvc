@@ -205,7 +205,7 @@ public class ProductController : Controller
     {
         if (ModelState.IsValid)
         {
-            var searchProducts = _productService.SearchProduct(searchType, searchValue);
+            var searchProducts = _productService.SearchProduct(searchType, searchValue, false);
             if (searchProducts != null)
             {
                 TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
@@ -228,7 +228,7 @@ public class ProductController : Controller
     {
         if (ModelState.IsValid)
         {
-            var searchProducts = _productService.SearchProductLock(searchType, searchValue);
+            var searchProducts = _productService.SearchProduct(searchType, searchValue, true);
             if (searchProducts != null)
             {
                 TempData["Message"] = AppConstant.MESSAGE_SUCCESSFUL;
@@ -241,8 +241,7 @@ public class ProductController : Controller
         ViewBag.SearchType = searchType;
         ViewBag.Count = _productService.CountProductLock();
         var page = 1;
-        var isContinue = false;
-        var allProduct = _productService.GetLimit(page, isContinue);
+        var allProduct = _productService.GetLimit(page, true);
         return View("StopSellingProducts", allProduct);
     }
 

@@ -271,8 +271,9 @@ public class UserService : IUserService
                 searchUser = searchUser.Where(u => u.Email.ToUpper().Contains(searchValue.ToUpper()));
                 break;
 
-            default: 
-                searchUser = searchUser.Where(s => s.Name.ToUpper().Contains(searchValue.ToUpper()));
+            default:
+                var query = $"SELECT * FROM Users WHERE {searchType} COLLATE NOCASE LIKE '%' || @searchValue || '%'";
+                searchUser = _dataContext.Users.FromSqlRaw(query, new SqliteParameter("@searchValue", searchValue));
                 break;
         }
 

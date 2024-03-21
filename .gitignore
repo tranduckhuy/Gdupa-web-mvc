@@ -365,3 +365,6 @@ FodyWeavers.xsd
 # ignore appsetting
 # /WarehouseWebMVC/appsettings.json
 /WarehouseWebMVC/.vscode
+
+# ignore database
+*.db

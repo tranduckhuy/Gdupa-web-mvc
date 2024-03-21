@@ -128,15 +128,26 @@ namespace WarehouseWebMVC.Services
             switch (searchType)
             {
                 case "Supplier":
-                    searchImportNote = searchImportNote.Where(s => s.Supplier.Name.ToUpper().Contains(searchValue.ToUpper()));
+                    searchImportNote = searchImportNote.Where(r => r.Supplier.Name.ToUpper().Contains(searchValue.ToUpper()));
                     break;
                 case "Deliverer":
-                    searchImportNote = searchImportNote.Where(s => s.Deliverer.ToUpper().Contains(searchValue.ToUpper()));
+                    var queryDeliver = $"SELECT * " +
+                                $"FROM ImportNotes " +
+                                $"JOIN Users ON ImportNotes.UserId = Users.UserId " +
+                                $"WHERE Deliverer COLLATE NOCASE LIKE '%' || @searchValue || '%'";
+                    searchImportNote = _dataContext.ImportNotes.FromSqlRaw(queryDeliver, new SqliteParameter("@searchValue", searchValue))
+                                                               .Include(i => i.User)
+                                                               .Include(i => i.Supplier);
                     break;
                 default:
-                    searchImportNote = searchImportNote.Where(s => s.User.Name.ToUpper().Contains(searchValue.ToUpper()))
-                        .Include(i => i.User)
-                        .Include(i => i.Supplier);
+                    var queryCreator = $"SELECT * " +
+                                $"FROM ImportNotes " +
+                                $"JOIN Users ON ImportNotes.UserId = Users.UserId " +
+                                $"WHERE Users.Name COLLATE NOCASE LIKE '%' || @searchValue || '%'";
+                    searchImportNote = _dataContext.ImportNotes.FromSqlRaw(queryCreator, new SqliteParameter("@searchValue", searchValue))
+                                                               .Include(i => i.User)
+                                                               .Include(i => i.Supplier);
+                        
                     break;
             }
 

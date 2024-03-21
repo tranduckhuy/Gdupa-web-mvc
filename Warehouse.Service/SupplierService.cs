@@ -167,7 +167,8 @@ namespace WarehouseWebMVC.Services
                     break;
 
                 default:
-                    searchSupplier = searchSupplier.Where(s => s.Name.ToUpper().Contains(searchValue.ToUpper()) && s.IsLocked == archive);
+                    var query = $"SELECT * FROM Suppliers WHERE {searchType} COLLATE NOCASE LIKE '%' || @searchValue || '%' AND IsLocked = {archive}";
+                    searchSupplier = _dataContext.Suppliers.FromSqlRaw(query, new SqliteParameter("@searchValue", searchValue));
                     break;
             }
 

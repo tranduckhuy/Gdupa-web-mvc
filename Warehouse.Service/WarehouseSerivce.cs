@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using OfficeOpenXml;
 using Warehouse.Domain.Entities;
@@ -191,26 +192,31 @@ namespace WarehouseWebMVC.Services
 
             DateTime startDate = new(year, (quarter - 1) * 3 + 1, 1);
             DateTime endDate = startDate.AddMonths(3).AddDays(-1);
-            IQueryable<WarehouseE> searchProduct = _dataContext.Warehouse
-                                .AsNoTracking()
-                                .Where(w => w.CreatedAt >= startDate && w.CreatedAt <= endDate)
-                                .Include(p => p.Product)
-                                .Where(w => w.Product.IsDiscontinued == false || (w.Product.IsDiscontinued && w.Quantity > 0))
-                                .OrderBy(w => w.WarehouseId);
+            IQueryable<WarehouseE> searchProduct;
 
             switch (searchType)
             {
                 default:
-                    searchProduct = searchProduct.Where(w => w.Product.Name.ToUpper().Contains(searchValue.ToUpper()));
+                    var query = $"SELECT * " +
+                                $"FROM Warehouse " +
+                                $"INNER JOIN Products ON Warehouse.ProductId = Products.ProductId " +
+                                $"WHERE Products.Name COLLATE NOCASE LIKE '%' || @searchValue || '%' " +
+                                $"ORDER BY WarehouseId";
+
+                    searchProduct = _dataContext.Warehouse.FromSqlRaw(query, new SqliteParameter("@searchValue", searchValue))
+                                                          .AsNoTracking()
+                                                          .Include(p => p.Product)
+                                                          .Where(w => w.CreatedAt >= startDate && w.CreatedAt <= endDate)
+                                                          .Where(w => w.Product.IsDiscontinued == false || (w.Product.IsDiscontinued && w.Quantity > 0));
                     break;
             }
 
             if (searchProduct.Any())
             {
-                 var uniqueYears = _dataContext.Warehouse
-                .Select(w => w.CreatedAt.Year)
-                .Distinct()
-                .ToList();
+                var uniqueYears = _dataContext.Warehouse
+               .Select(w => w.CreatedAt.Year)
+               .Distinct()
+               .ToList();
 
                 var warehouseViewModel = new WarehouseViewModel
                 {
