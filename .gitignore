@@ -367,6 +367,5 @@ FodyWeavers.xsd
 /WarehouseWebMVC/.vscode
 
 # ignore database
-*.db
 *.db-shm
 *.db-wal
