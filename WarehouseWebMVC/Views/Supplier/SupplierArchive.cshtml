@@ -153,10 +153,6 @@
                                             <td class="sherah-table__column-1 sherah-table__data-1"
                                                 style="min-width:300px;padding:12px;text-align:left;">
                                                 <div class="sherah-table__product">
-                                                    <div class="sherah-language-form__input">
-                                                        <input class="sherah-language-form__check" id="checkbox"
-                                                               name="checkbox" type="checkbox">
-                                                    </div>
                                                     <div class="sherah-table__vendor-img">
                                                         <img src="@supplier.Avatar" alt="User's avatar"
                                                              style="width:40px;height:40px;">
@@ -184,13 +180,16 @@
                                             </td>
                                             <td class="sherah-table__column-5 sherah-table__data-5"
                                                 style="min-width:120px;padding:12px 0;text-align:center;">
-                                                <div class="sherah-table__status sherah-color1__bg--opactity">
-                                                    <p class="sherah-table__product-desc sherah-color1">@supplier.Fax</p>
+                                                <div class="sherah-table__status sherah-color4__bg--opactity">
+                                                    <p class="sherah-table__product-desc sherah-color4">@supplier.Fax</p>
                                                 </div>
                                             </td>
                                             <td class="sherah-table__column-6 sherah-table__data-6"
                                                 style="width: 3%;min-width:120px;padding:12px 12px 12px 0;margin-left:10px;">
                                                 <div class="sherah-table__status__group" style="justify-content:center;">
+                                                    <a href="/Supplier/SupplierInformation?supplierId=@supplier.SupplierId" title="Detail" class="sherah-table__action sherah-color1 sherah-color1__bg--opactity">
+                                                        <i class="fa-regular fa-eye"></i>
+                                                    </a>
                                                     <a href="#" onclick="handleActiveSupplier(@supplier.SupplierId)"
                                                        class="sherah-table__action sherah-color3 sherah-color3__bg--opactity">
                                                         <i class="material-icons">unarchive</i>
