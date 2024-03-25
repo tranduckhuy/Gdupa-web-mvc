@@ -1,6 +1,9 @@
 # GDUPA
 Gdupa is a project used for warehouse import management and product management.
 
+#### Demo: https://www.gdupawebapp.somee.com
+
+
 ## Prerequisites
 * .NET SDK 7.0
 
